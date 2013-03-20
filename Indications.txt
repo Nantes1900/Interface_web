@@ -1,0 +1,11 @@
+Creer un repertoire où installer le framework
+
+A l'aide de la console, se placer dans ce répertoire, et faire "git init"
+
+Ensuite "git pull https://github.com/Azheil/Nantes1900-Rework.git"
+
+Puis toujours dans la console, dans le dossier parent du repertoire de travail, faire "chmod -R u+rwx,o+rwx /nom_du_repertoire"
+
+%%Rajouter le baratinage Apache etc.%%
+
+Enfin, dans votre navigateur, chargez "nantes1900-rework/index.php/welcome"
