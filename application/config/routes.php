@@ -32,7 +32,7 @@
 | would be loaded.
 */
 
-$route['default_controller'] = "welcome";
+$route['default_controller'] = "accueil";
 
 # for CI 1.7.2 compatibility, scaffolding is deprecated
 $route['scaffolding_trigger'] = sha1(time());
