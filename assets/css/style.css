@@ -87,7 +87,7 @@ error{
 
 .banniere
 {
-	background-image: url("http://nantes1900-interface_web/assets/images/bandeau.jpg");
+	background-image: url("../images/bandeau.jpg");
 	width: 900px;
 	height: 230px;
 }

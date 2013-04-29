@@ -3,14 +3,14 @@
 class Accueil extends CI_Controller
 {
 
-	public function index()
-	{
-		$this->accueil();
-	}
+    public function index()
+    {
+        $this->accueil();
+    }
 
-	public function __construct()
-	{
-		parent::__construct();
+    public function __construct()
+    {
+        parent::__construct();
 
 		//Ce code sera executé charque fois que ce contrôleur sera appelé
 		
