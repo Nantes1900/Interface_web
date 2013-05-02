@@ -50,7 +50,7 @@ $active_record = TRUE;
 
 $db['default']['hostname'] = 'localhost';
 $db['default']['username'] = 'panative';
-$db['default']['password'] = 'A21X07E90L';
+$db['default']['password'] = 'nantes1900';
 $db['default']['database'] = 'nantes1900';
 $db['default']['dbdriver'] = 'postgre';
 $db['default']['dbprefix'] = '';
