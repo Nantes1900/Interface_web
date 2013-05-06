@@ -21,9 +21,9 @@ class Signin extends CI_Controller {
 
 	public function check_signin()
 	{
-		
 		if ($this->form_validation->run('signin') == FALSE) //TODO : Rajouter dans la validation si le nom d'utilisateur existe déjà ou pas
 		{
+                        $this->load->view('accueil/body');
                         $this->load->view('accueil/signin/formulaire_signin');
 			$this->load->view('footer');
                 }

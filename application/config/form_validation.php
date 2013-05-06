@@ -4,7 +4,7 @@ $config = array(
                     array(
                         'field'=>'username',
                         'label'=>'Username',
-                        'rules'=>'trim|required|min_length[5]|max_length[12]|xss_clean'
+                        'rules'=>'trim|required|min_length[2]|max_length[20]|xss_clean'
                     ),
                     array(
                         'field'=>'password1',
@@ -14,17 +14,17 @@ $config = array(
                     array(
                         'field'=>'password2',
                         'label'=>'Password2',
-                        'rules'=>'required',
+                        'rules'=>'required'
                     ),
                     array(
                         'field'=>'nom',
                         'label'=>'Nom',
-                        'rules'=>'trim|required|min_length[2]|max_length[12]|xss_clean'
+                        'rules'=>'trim|required|min_length[2]|max_length[40]|xss_clean'
                     ),
                     array(
                         'field'=>'prenom',
                         'label'=>'Prenom',
-                        'rules'=>'trim|required|min_length[2]|max_length[12]|xss_clean'
+                        'rules'=>'trim|required|min_length[2]|max_length[40]|xss_clean'
                     )
                 ),
     
@@ -32,7 +32,7 @@ $config = array(
                     array(
                         'field'=>'username',
                         'label'=>'Username',
-                        'rules'=>'trim|required|min_length[5]|max_length[12]|xss_clean'
+                        'rules'=>'trim|required|min_length[2]|max_length[20]|xss_clean'
                     ),
                     array(
                         'field'=>'password',
