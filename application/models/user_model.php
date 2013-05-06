@@ -96,7 +96,21 @@ class User_model extends CI_Model
             return $user_level;
             
         }
-
+        
+        //get an user by its username in an array
+        private function get_user($username)
+	{
+		//Création de la requête
+		$this->db->select('username','password','user_level','timestamp','nom','prenom','adresse_postale','email','telephone','profession');
+		$this->db->from('users');
+		$this->db->where('username', $username);
+		$query = $this->db->get();
+                
+                $result = $query->result_array();
+                
+		return $result['0'];
+		
+	}
 }
 
 /* End of file login_model.php */
