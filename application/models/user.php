@@ -5,7 +5,8 @@
  * it relies on user_model to connect to the database
  * 
  */
-class user
+
+class User
 {
     protected $_userName;
     protected $_hashedPassword;
@@ -18,7 +19,7 @@ class user
     protected $_phoneNumber;
     protected $_job;        //these are the common traits of an user
     
-    
+
     
     //with an user's login, we use the user_model to query the db and hydrate with it's answer the new user object
     //with an array of datas (typically the result of a db query), we directly call the hydrate function

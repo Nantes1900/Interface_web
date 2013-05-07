@@ -152,9 +152,9 @@ class User_model extends CI_Model
         //user entity $notUser allow not querying this particular user (often self)
         public function get_user_list ($speUserLevel = null,User $notUser = null){
             //db query
-            $this->db->select('username','user_level','timestamp','nom','prenom','adresse_postale','email','telephone','profession');
+            $this->db->select('username, user_level, timestamp, nom, prenom, adresse_postale, email, telephone, profession');
             $this->db->from('users');
-            $this->db->order_by('username','desc');
+            $this->db->order_by('username','asc');
             if ($speUserLevel != null){
                 $this->db->where('user_level',$speUserLevel);               
             }
@@ -165,11 +165,10 @@ class User_model extends CI_Model
             
             //converting to an array of user entities
             $tempArray = $query->result_array();
-            $resultArray = array();
+            $resultArray = array();         
             foreach ($tempArray as $userArray){
-                $resultArray[] = new user($userArray);
-            }
-            
+                $resultArray[] = new User($userArray);
+            }           
             return $resultArray;
         }
 }
