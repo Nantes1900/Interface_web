@@ -30,7 +30,7 @@ class Data_center extends CI_Controller
         
         public function data_center()
         {
-            if ( $this->session->userdata('user_level') == 5)
+            if ( $this->session->userdata('user_level') == 5 || $this->session->userdata('user_level') == 4)
             {
                 $this->load->view('data_center/data_center');
             }
