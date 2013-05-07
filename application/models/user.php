@@ -21,10 +21,15 @@ class user
     
     
     //with an user's login, we use the user_model to query the db and hydrate with it's answer the new user object
-    public function __construct($userLogin) {
+    //with an array of datas (typically the result of a db query), we directly call the hydrate function
+    public function __construct($userData) {
         $userManager=new User_model();
-        if($userManager->check_ifuserexists($userLogin)!=0){
-            $this->hydrate($userManager->get_user($userLogin));          
+        if (is_array($userData)){
+            $this->hydrate($userData);
+        }else{
+            if($userManager->check_ifuserexists($userData)!=0){
+                $this->hydrate($userManager->get_user($userData));          
+            }
         }
     }
 
@@ -59,6 +64,15 @@ class user
         }
         if (isset($donnees['profession'])){
             $this->set_job($donnees['profession']);
+        }
+    }
+    
+    //save an user's change in the database
+    public function save(){
+        
+        $userManager=new User_model();
+        if($userManager->check_ifuserexists($this->get_userName())!=0){
+            $userManager->modify_user($this);
         }
     }
     
@@ -100,7 +114,7 @@ class user
     }
 
     public function set_firstName($_firstName) {
-        $this->_firstName = $_firstName;
+        $this->_firstName = (string) $_firstName;
     }
 
     public function get_name() {
@@ -108,7 +122,7 @@ class user
     }
 
     public function set_name($_name) {
-        $this->_name = $_name;
+        $this->_name = (string) $_name;
     }
 
     public function get_adress() {
@@ -116,7 +130,7 @@ class user
     }
 
     public function set_adress($_adress) {
-        $this->_adress = $_adress;
+        $this->_adress = (string) $_adress;
     }
 
     public function get_email() {
@@ -140,7 +154,7 @@ class user
     }
 
     public function set_job($_job) {
-        $this->_job = $_job;
+        $this->_job = (string) $_job;
     }
 }
 
