@@ -20,9 +20,9 @@ class User
     protected $_job;        //these are the common traits of an user
     
 
-    
-    //with an user's login, we use the user_model to query the db and hydrate with it's answer the new user object
+        
     //with an array of datas (typically the result of a db query), we directly call the hydrate function
+    //with an user's login, we use the user_model to query the db and hydrate with it's answer the new user object
     public function __construct($userData) {
         $userManager=new User_model();
         if (is_array($userData)){
@@ -98,10 +98,30 @@ class User
         return $this->_userLevel;
     }
 
+    public function get_userLevelType() {
+        switch ($this->_userLevel) {
+            case 1:
+                return 'visiteur';
+                break;
+            case 3:
+                return 'informateur';
+                break;
+            case 4:
+                return 'moderateur';
+                break;
+            case 5:
+                return 'chercheur';
+                break;
+            case 9:
+                return 'administrateur';
+                break;
+        }
+    }
+    
     public function set_userLevel($_userLevel) {
         $this->_userLevel = $_userLevel;
     }
-
+    
     public function get_creationDate() {
         return $this->_creationDate;
     }

@@ -182,6 +182,18 @@ $config = array(
                         'label'=>'Datation_indication_fin',
                         'rules'=>'trim|max_length[20]|xss_clean'
                     )
+                ),
+    'change_level' => array(
+                    array(
+                        'field'=>'username',
+                        'label'=>'username',
+                        'rules'=>'trim|required|min_length[2]|max_length[20]|xss_clean'
+                    ),
+                    array(
+                        'field'=>'userLevel',
+                        'label'=>'userLevel',
+                        'rules'=>'trim|required|xss_clean'
+                    )
                 )
 );
 
