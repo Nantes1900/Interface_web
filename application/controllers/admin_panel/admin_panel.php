@@ -72,4 +72,5 @@ class Admin_panel extends CI_Controller {
         }
 }
 
-?>
+/* End of file admin_panel.php */
+/* Location : ./application/controllers/admin_panel/admin_panel.php */

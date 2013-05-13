@@ -43,6 +43,7 @@ class Accueil extends CI_Controller
                         {
                             $this->load->view('accueil/admin_panel_anchor');
                         }
+                        $this->load->view('accueil/profile_panel_anchor');
                         
 			$this->load->view('footer');
 		}
