@@ -3,7 +3,8 @@
     <h1>Admin panel</h1>
     
     <h2>Members</h2> 
-
+    <p>test css</p>
+    <div class="classyTable">
     <table>
         <thead>
             <tr>
@@ -39,5 +40,5 @@
             <?php }  ?>
         </tbody>
     </table>
-
+    </div>
 </html>
