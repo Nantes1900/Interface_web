@@ -1,8 +1,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" > 
 
-    <h1>Admin panel</h1>
+    <h1>Centre d'administration</h1>
     
-    <h2>Members</h2>
+    <h2>Liste des membres</h2>
     
 <!--    sorting form-->
     <?php echo form_open('admin_panel/admin_panel/index') ?>
@@ -33,11 +33,10 @@
             <option value="desc">Décroissant</option>
         </select>
         <br/>
-        <label for="speAttribute">Rechercher un:</label>
+        <label for="speAttribute">Rechercher un(e):</label>
         <select name="speAttribute" id="speAttribute">
             <option value="username">Nom d'utilisateur</option>
-<!--            <option value="user_level">Niveau d'utilisateur</option> doesn't work because int
-            <option value="timestamp">Date de création</option> doesn't work because int-->
+<!--            <option value="timestamp">Date de création</option> doesn't work-->
             <option value="nom">Nom</option>
             <option value="prenom">Prenom</option>
             <option value="adresse_postale">Adresse</option>

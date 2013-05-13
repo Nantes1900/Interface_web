@@ -38,7 +38,7 @@ class Admin_panel extends CI_Controller {
             $speUserLevel = $this->input->post('speUserLevel');
             if($speUserLevel=='null'){$speUserLevel=null;}
             $orderBy = $this->input->post('orderBy');
-            if($orderBy='null'){$orderBy = 'username';}
+            if($orderBy == null){$orderBy = 'username';}
             $orderDirection = $this->input->post('orderDirection');
             if($this->form_validation->run('sort_user')==TRUE){ //we check there is no xss in the field
                 $speAttributeValue = $this->input->post('speAttributeValue');
