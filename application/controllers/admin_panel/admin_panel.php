@@ -30,7 +30,7 @@ class Admin_panel extends CI_Controller {
             $this->load->view('header');
 	}   
         
-        public function admin_panel(){     
+        public function admin_panel(){     //this render the admin_panel page
             
             $userManager = new User_model();
             $data = array();
@@ -57,6 +57,7 @@ class Admin_panel extends CI_Controller {
             $data['listUser'] = $userManager->get_user_list($speUserLevel,$orderBy,$orderDirection,$speAttribute,$speAttributeValue); 
             
             $this->load->view('admin_panel/admin_panel', $data);
+            $this->load->view('footer');
         }
         
         //change the level of an user (form)

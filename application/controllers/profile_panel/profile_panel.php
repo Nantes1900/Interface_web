@@ -29,9 +29,21 @@ class Profile_panel extends CI_Controller {
             $this->load->view('header');
     }   
     
-    public function profile_panel(){
+    public function profile_panel(){ //render the profile_panel page
         $data = array();
-        $this->load->view('profile_panel/profile_panel');
+        $userName = $this->session->userdata('username');
+        $currentUser = new User($userName);
+        $data['user'] = $currentUser;
+        $this->load->view('profile_panel/profile_panel', $data);
+        $this->load->view('footer');
+    }
+    
+    public function change_profile(){ //change some of the user information
+        
+        if($this->form_validation->run('change_profile')==TRUE){
+            
+        }
+        redirect('profile_panel/profile_panel', 'refresh');
     }
 }
 
