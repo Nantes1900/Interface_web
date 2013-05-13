@@ -2,8 +2,7 @@
 
     <h1>Admin panel</h1>
     
-    <h2>Members</h2> 
-    <p>test css</p>
+    <h2>Members</h2>
     <div class="classyTable">
     <table>
         <thead>
