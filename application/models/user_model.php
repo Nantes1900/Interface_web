@@ -150,16 +150,19 @@ class User_model extends CI_Model
         //get a list of user entities, with some parameter restriction
         //$speUserLevel allow specifiying a particular user level
         //user entity $notUser allow not querying this particular user (often self)
-        public function get_user_list ($speUserLevel = null,User $notUser = null){
+        public function get_user_list ($speUserLevel = null,$orderBy='username', $orderDirection='asc',$speAttribute = null, $speAttributeValue = null, User $notUser = null){
             //db query
             $this->db->select('username, user_level, timestamp, nom, prenom, adresse_postale, email, telephone, profession');
             $this->db->from('users');
-            $this->db->order_by('username','asc');
+            $this->db->order_by($orderBy,$orderDirection);
             if ($speUserLevel != null){
                 $this->db->where('user_level',$speUserLevel);               
             }
             if ($notUser != null){
                 $this->db->where('username !=',$notUser->get_userName());  
+            }
+            if ($speAttribute!=null && $speAttributeValue!=null){
+                $this->db->like($speAttribute,$speAttributeValue);
             }
             $query = $this->db->get();
             

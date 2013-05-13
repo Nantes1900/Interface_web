@@ -130,6 +130,14 @@ if ( ! function_exists('conc_2_date'))
                                 'date_precision'=>$date_precision);
         }
 }
+if ( ! function_exists('dateFR_to_timestamp')){
+    //convertit date jj/mm/AAAA en timestamp
+    function dateFR_to_timestamp($date) {
+        list($day, $month, $year) = explode('/', $date);
+        $timestamp = mktime(0, 0, 0, $month, $day, $year);
+        return $timestamp;
+    }
+}
 
 /* End of file dates_helper.php */
 /* Location : ./application/helpers/dates_helper.php */

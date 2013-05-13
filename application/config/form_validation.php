@@ -194,6 +194,13 @@ $config = array(
                         'label'=>'userLevel',
                         'rules'=>'trim|required|xss_clean'
                     )
+                ),
+    'sort_user' => array(
+                    array(
+                        'field'=>'speAttributeValue',
+                        'label'=>'speAttributeValue',
+                        'rules'=>'trim|max_length[50]|xss_clean'
+                    )
                 )
 );
 
