@@ -136,7 +136,7 @@ class User_model extends CI_Model
         public function get_user($username)
 	{
 		//Création de la requête
-		$this->db->select('username','password','user_level','timestamp','nom','prenom','adresse_postale','email','telephone','profession');
+		$this->db->select('username, password, user_level, timestamp, nom, prenom, adresse_postale, email, telephone, profession');
 		$this->db->from('users');
 		$this->db->where('username', $username);
 		$query = $this->db->get();
