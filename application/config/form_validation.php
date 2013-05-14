@@ -182,6 +182,57 @@ $config = array(
                         'label'=>'Datation_indication_fin',
                         'rules'=>'trim|max_length[20]|xss_clean'
                     )
+                ),
+    'change_level' => array(
+                    array(
+                        'field'=>'username',
+                        'label'=>'username',
+                        'rules'=>'trim|required|min_length[2]|max_length[20]|xss_clean'
+                    ),
+                    array(
+                        'field'=>'userLevel',
+                        'label'=>'userLevel',
+                        'rules'=>'trim|required|xss_clean'
+                    )
+                ),
+    'sort_user' => array(
+                    array(
+                        'field'=>'speAttributeValue',
+                        'label'=>'speAttributeValue',
+                        'rules'=>'trim|max_length[50]|xss_clean'
+                    )
+                ),
+    'change_profile' => array(
+                    array(
+                        'field'=>'firstName',
+                        'label'=>'Nom',
+                        'rules'=>'trim|min_length[2]|max_length[40]|xss_clean'
+                    ),
+                    array(
+                        'field'=>'name',
+                        'label'=>'Prenom',
+                        'rules'=>'trim|min_length[2]|max_length[40]|xss_clean'
+                    ),
+                    array(
+                        'field'=>'email',
+                        'label'=>'email',
+                        'rules'=>'trim|valid_email|xss_clean'
+                    ),
+                    array(
+                        'field'=>'newPW',
+                        'label'=>'new password',
+                        'rules'=>'trim|matches[newPW2]|xss_clean'
+                    ),
+                    array(
+                        'field'=>'newPW2',
+                        'label'=>'confirmed new password',
+                        'rules'=>'xss_clean'
+                    ),
+                    array(
+                        'field'=>'password',
+                        'label'=>'password',
+                        'rules'=>'trim|required|xss_clean|callback_check_login_info'
+                    )
                 )
 );
 

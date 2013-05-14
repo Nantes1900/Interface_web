@@ -5,7 +5,8 @@
  * it relies on user_model to connect to the database
  * 
  */
-class user
+
+class User
 {
     protected $_userName;
     protected $_hashedPassword;
@@ -18,13 +19,18 @@ class user
     protected $_phoneNumber;
     protected $_job;        //these are the common traits of an user
     
-    
-    
+
+        
+    //with an array of datas (typically the result of a db query), we directly call the hydrate function
     //with an user's login, we use the user_model to query the db and hydrate with it's answer the new user object
-    public function __construct($userLogin) {
+    public function __construct($userData) {
         $userManager=new User_model();
-        if($userManager->check_ifuserexists($userLogin)!=0){
-            $this->hydrate($userManager->get_user($userLogin));          
+        if (is_array($userData)){
+            $this->hydrate($userData);
+        }else{
+            if($userManager->check_ifuserexists($userData)!=0){
+                $this->hydrate($userManager->get_user($userData));          
+            }
         }
     }
 
@@ -62,6 +68,15 @@ class user
         }
     }
     
+    //save an user's change in the database
+    public function save(){
+        
+        $userManager=new User_model();
+        if($userManager->check_ifuserexists($this->get_userName())!=0){
+            $userManager->modify_user($this);
+        }
+    }
+    
     //getters and setters
     public function get_userName() {
         return $this->_userName;
@@ -83,10 +98,30 @@ class user
         return $this->_userLevel;
     }
 
+    public function get_userLevelType() {
+        switch ($this->_userLevel) {
+            case 1:
+                return 'visiteur';
+                break;
+            case 3:
+                return 'informateur';
+                break;
+            case 4:
+                return 'moderateur';
+                break;
+            case 5:
+                return 'chercheur';
+                break;
+            case 9:
+                return 'administrateur';
+                break;
+        }
+    }
+    
     public function set_userLevel($_userLevel) {
         $this->_userLevel = $_userLevel;
     }
-
+    
     public function get_creationDate() {
         return $this->_creationDate;
     }
@@ -100,7 +135,7 @@ class user
     }
 
     public function set_firstName($_firstName) {
-        $this->_firstName = $_firstName;
+        $this->_firstName = (string) $_firstName;
     }
 
     public function get_name() {
@@ -108,7 +143,7 @@ class user
     }
 
     public function set_name($_name) {
-        $this->_name = $_name;
+        $this->_name = (string) $_name;
     }
 
     public function get_adress() {
@@ -116,7 +151,7 @@ class user
     }
 
     public function set_adress($_adress) {
-        $this->_adress = $_adress;
+        $this->_adress = (string) $_adress;
     }
 
     public function get_email() {
@@ -140,7 +175,7 @@ class user
     }
 
     public function set_job($_job) {
-        $this->_job = $_job;
+        $this->_job = (string) $_job;
     }
 }
 
