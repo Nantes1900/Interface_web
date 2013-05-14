@@ -231,7 +231,7 @@ $config = array(
                     array(
                         'field'=>'password',
                         'label'=>'password',
-                        'rules'=>'trim|required|xss_clean|callback_check_login_info'
+                        'rules'=>'trim|required|xss_clean|callback_check_password'
                     )
                 )
 );

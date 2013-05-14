@@ -9,35 +9,35 @@
                 <td>
                     <label for="firstName">Nom</label>
                     <input type="text" name="firstName" id="firstName" maxlength="40" 
-                           value="<?php echo $user->get_firstName() ?>" placeholder="<?php echo $user->get_firstName() ?>"/>
+                           value="<?php echo $user->get_firstName() ?>" />
                 </td>
             </tr>
             <tr>
                 <td>
                     <label for="name">Prénom</label>
                     <input type="text" name="name" id="name" maxlength="40" 
-                           value="<?php echo $user->get_name() ?>" placeholder="<?php echo $user->get_name() ?>"/>
+                           value="<?php echo $user->get_name() ?>" />
                 </td>
             </tr>
             <tr>
                 <td>
-                    <label for="adress">Adresse</label>
-                    <input type="text" name="adress" id="adress" 
-                           value="<?php echo $user->get_adress() ?>" placeholder="<?php echo $user->get_adress() ?>"/>
+                    <label for="theAdress">Adresse</label>
+                    <input type="text" name="theAdress" id="theAdress" 
+                           value="<?php echo $user->get_adress() ?>" />
                 </td>
             </tr>
             <tr>
                 <td>
                     <label for="phoneNumber">Numéro de téléphone</label>
                     <input type="text" name="phoneNumber" id="phoneNumber" 
-                           value="<?php echo $user->get_phoneNumber() ?>" placeholder="<?php echo $user->get_phoneNumber() ?>"/>
+                           value="<?php echo $user->get_phoneNumber() ?>" />
                 </td>
             </tr>
             <tr>
                 <td>
                     <label for="job">Profession</label>
                     <input type="text" name="job" id="job" 
-                           value="<?php echo $user->get_job() ?>" placeholder="<?php echo $user->get_job() ?>"/>
+                           value="<?php echo $user->get_job() ?>" />
                 </td>
             </tr>
         </table>
@@ -47,7 +47,7 @@
                 <td>
                     <label for="email">E-mail</label>
                     <input type="email" name="adress" id="adress" type="email"
-                           value="<?php echo $user->get_email() ?>" placeholder="<?php echo $user->get_email() ?>"/>
+                           value="<?php echo $user->get_email() ?>" />
                 </td>
             </tr>
             <tr>
@@ -55,12 +55,14 @@
                     <label for="password">Mot de passe</label>
                     <input type="password" name="password" id="password" />
                 </td>
+                <td class="error_form"><?php echo form_error('password'); ?></td>
             </tr>
             <tr>
                 <td>
                     <label for="newPW">Nouveau mot de passe</label>
                     <input type="password" name="newPW" id="newPW" />
                 </td>
+                <td class="error_form"><?php echo form_error('newPW'); ?></td>
             </tr>
             <tr>
                 <td>
@@ -70,7 +72,7 @@
             </tr>
             <tr>
                 <td>
-                    <input type="submit" value="enregistrer vos modifications" />
+                    <input type="submit" value="Enregistrer vos modifications" />
                 </td>
             </tr>
         </table>
