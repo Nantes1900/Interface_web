@@ -2,7 +2,7 @@
 
     <table>
 
-	<?php echo form_open('signin'); ?>
+	<?php echo form_open('accueil/signin'); ?>
 
 	<tr><td>Nom d'utilisateur:</td></tr>
         <tr>

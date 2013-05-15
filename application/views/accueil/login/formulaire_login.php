@@ -4,7 +4,7 @@
         
         <h1><?php echo $titre; ?></h1>
         
-	<?php echo form_open('login'); ?>
+	<?php echo form_open('accueil/login'); ?>
 
 	<tr><td>Nom d'utilisateur:</td></tr>
         <tr>
@@ -20,6 +20,6 @@
 
 	</form>
     </table>
-	<p><?php echo anchor('accueil/signin', 'Nouveau sur le site ? Cliquez-ici pour vous inscrire'); ?></p>
+	<p><?php echo anchor('accueil/accueil/signin', 'Nouveau sur le site ? Cliquez-ici pour vous inscrire'); ?></p>
 
 </html>
