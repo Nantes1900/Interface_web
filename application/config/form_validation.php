@@ -4,7 +4,7 @@ $config = array(
                     array(
                         'field'=>'username',
                         'label'=>'Username',
-                        'rules'=>'trim|required|min_length[2]|max_length[30]|xss_clean'
+                        'rules'=>'trim|required|min_length[2]|max_length[30]|xss_clean|callback_check_existence'
                     ),
                     array(
                         'field'=>'password1',

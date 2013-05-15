@@ -64,7 +64,7 @@ class Profile_panel extends CI_Controller {
             
     }
     
-    public function check_password(){
+    public function check_password(){ //callback function of form_validation that checks password
         $userName = $this->session->userdata('username');
         $currentUser = new User($userName);
         $password = $this->input->post('password');
