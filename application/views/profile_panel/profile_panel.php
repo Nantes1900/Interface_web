@@ -1,6 +1,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" > 
 
     <h1>Profil personnel</h1>
+    
+    <p> Vous êtes <?php echo $user->get_userName(); ?> et avez les droits suivants : <?php echo $user->get_userLevelType(); ?></p>
+    
     <p style="font-size : 11px;" >Pour valider tout changement, renseignez votre mot de passe</p>
     <?php echo form_open('profile_panel/profile_panel/change_profile') ?>
         <h2>Informations générales</h2>

@@ -41,6 +41,16 @@ class Signin extends CI_Controller {
 			
 		}
 	}
+        
+        public function check_existence() { //callback function of form_validation that check if a username already exists
+            $userName = $this->input->post('username');
+            if ($this->signin->check_ifuserexists($userName)==0){
+                return TRUE;
+            } else {
+                $this->form_validation->set_message('check_existence', 'Le nom d\'utilisateur est déjà pris');
+                return FALSE;
+            }            
+        }
 }
 
 /* End of file signin.php */
