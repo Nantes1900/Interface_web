@@ -4,7 +4,7 @@ $config = array(
                     array(
                         'field'=>'username',
                         'label'=>'Username',
-                        'rules'=>'trim|required|min_length[2]|max_length[20]|xss_clean'
+                        'rules'=>'trim|required|min_length[2]|max_length[30]|xss_clean'
                     ),
                     array(
                         'field'=>'password1',
@@ -32,7 +32,7 @@ $config = array(
                     array(
                         'field'=>'username',
                         'label'=>'Username',
-                        'rules'=>'trim|required|min_length[2]|max_length[20]|xss_clean'
+                        'rules'=>'trim|required|min_length[2]|max_length[30]|xss_clean'
                     ),
                     array(
                         'field'=>'password',
@@ -187,7 +187,7 @@ $config = array(
                     array(
                         'field'=>'username',
                         'label'=>'username',
-                        'rules'=>'trim|required|min_length[2]|max_length[20]|xss_clean'
+                        'rules'=>'trim|required|min_length[2]|max_length[30]|xss_clean'
                     ),
                     array(
                         'field'=>'userLevel',
@@ -214,9 +214,24 @@ $config = array(
                         'rules'=>'trim|min_length[2]|max_length[40]|xss_clean'
                     ),
                     array(
+                        'field'=>'theAdress',
+                        'label'=>'adresse',
+                        'rules'=>'xss_clean'
+                    ),
+                    array(
+                        'field'=>'phoneNumber',
+                        'label'=>'phone number',
+                        'rules'=>'trim|max_length[30]|xss_clean'
+                    ),
+                    array(
+                        'field'=>'job',
+                        'label'=>'job',
+                        'rules'=>'trim|max_length[80]|xss_clean'
+                    ),
+                    array(
                         'field'=>'email',
                         'label'=>'email',
-                        'rules'=>'trim|valid_email|xss_clean'
+                        'rules'=>'trim|valid_email|max_length[49]|xss_clean'
                     ),
                     array(
                         'field'=>'newPW',
