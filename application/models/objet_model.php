@@ -88,7 +88,7 @@ class Objet_model extends CI_Model
             }
         }
         
-        public function modify_objet (Objet $objet){
+        public function update_objet (Objet $objet){
             
             $attributeArray = $objet->get_attributes();
             foreach ($attributeArray as $attribute => $value){

@@ -59,7 +59,7 @@ class Objet{
     public  function save(){
         $objetManager = new Objet_model();
         if ($objetManager->exist($this->get_objet_id())){
-            $objetManager->modify_objet($this);
+            $objetManager->update_objet($this);
         }
     }
     
