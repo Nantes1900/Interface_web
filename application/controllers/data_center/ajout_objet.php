@@ -28,7 +28,7 @@ class Ajout_objet extends CI_Controller
 	{
             parent::__construct();
             
-            $this->load->model('objet_model','objet');
+            $this->load->model('objet_model');
             $this->load->library('form_validation');
             $this->load->helper(array('form'));
             $this->load->view('header');            
@@ -60,7 +60,7 @@ class Ajout_objet extends CI_Controller
                 $objetdata['mots_cles'] = $this->input->post('mots_cles');
                 $objetdata['username'] = $this->session->userdata('username');
                 
-                $this->objet->ajout_objet($objetdata);            
+                $this->objet_model->ajout_objet($objetdata);            
                 redirect('data_center/data_center/','refresh');
                 
                 /** @todo Ajouter une page de confirmation du succès d'ajout de l'objet */

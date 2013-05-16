@@ -52,16 +52,16 @@ class Import_csv extends CI_Controller
                         
                         if( $csv_type == 'relation')
                         {
-                            $this->load->model('relation_model','relation');
+                            $this->load->model('relation_model');
                             
-                            $this->relation->import_csv($data);
+                            $this->relation_model->import_csv($data);
                         }
                         
                         if( $csv_type == 'objet')
                         {
-                            $this->load->model('objet_model','objet');
+                            $this->load->model('objet_model');
                             
-                            $this->objet->import_csv($data);
+                            $this->objet_model->import_csv($data);
                         }
                         
                         delete_files($csv_file['file_path']);

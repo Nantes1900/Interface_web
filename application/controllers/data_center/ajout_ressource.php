@@ -55,7 +55,7 @@ class Ajout_ressource extends CI_Controller
         public function formulaire_texte()
         {
                        
-            $this->load->model('ressource_texte_model','ressource_texte');
+            $this->load->model('ressource_texte_model');
             
             if ($this->form_validation->run('ajout_texte') == FALSE) /** @todo Rajouter dans la validation si une ressource du même nom existe déjà ou pas */
             {
@@ -92,7 +92,7 @@ class Ajout_ressource extends CI_Controller
                 $textedata['date'] = $date_infos['date'];
                 $textedata['date_precision'] = $date_infos['date_precision'];
                     
-                $this->ressource_texte->ajout_texte($textedata);            
+                $this->ressource_texte_model->ajout_texte($textedata);            
                 redirect('data_center/data_center/','refresh');
                 
                 /** @todo Ajouter une page de confirmation du succès d'ajout de l'objet */
