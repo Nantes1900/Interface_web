@@ -32,6 +32,7 @@ class Ajout_objet extends CI_Controller
             parent::__construct();
             
             $this->load->model('objet_model');
+            require('application/models/objet.php');
             $this->load->library('form_validation');
             $this->load->helper(array('form'));
             $this->load->view('header');   

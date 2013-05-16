@@ -62,6 +62,32 @@ class Objet_model extends CI_Model
             }
         }
         
+        //get first objet from table with $attribute set at $value
+        public function get_objet ($attribute,$value){
+            
+            $this->db->select('*');
+            $this->db->from('objet');
+            $this->db->where($attribute, $value);
+            $query = $this->db->get();
+            $result = $query->result_array();
+            
+            return $result['0'];
+            
+        }
+        
+        public function exist($objet_id){
+            
+            $this->db->select('objet_id');
+            $this->db->from('objet');
+            $this->db->where('objet_id', $objet_id);
+            $numberOfInstance = $this->db->count_all_results(); //Renvoie 0 si le $objet_id n'existe pas
+            if ($numberOfInstance==0){
+                return FALSE;
+            } else {
+                return TRUE;
+            }
+        }
+        
 }
 
 /* End of file objet_model.php */
