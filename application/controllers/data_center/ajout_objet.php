@@ -17,7 +17,10 @@ class Ajout_objet extends CI_Controller
          */
 	public function index()
 	{
-            $this->formulaire(); /** @todo Ajouter une sécurité par vérification du user_level*/
+            $userLevel = $this->session->userdata('user_level');
+            $data['userLevel'] = $userLevel;
+            $this->load->view('data_center/data_center',$data);
+            $this->formulaire(); /** @todo Ajouter une sécurité par vérification de la connection*/
 	}
 
         /**
@@ -31,8 +34,7 @@ class Ajout_objet extends CI_Controller
             $this->load->model('objet_model');
             $this->load->library('form_validation');
             $this->load->helper(array('form'));
-            $this->load->view('header');            
-            $this->load->view('data_center/data_center');
+            $this->load->view('header');   
 	}
         
         /**

@@ -18,6 +18,9 @@ class Ajout_ressource extends CI_Controller
          */
 	public function index()
 	{
+            $userLevel = $this->session->userdata('user_level');
+            $data['userLevel'] = $userLevel;
+            $this->load->view('data_center/data_center',$data);
             $this->choix_ressource(); /** @todo Ajouter une sécurité par vérification du user_level*/
 	}
 
@@ -33,8 +36,7 @@ class Ajout_ressource extends CI_Controller
             
             $this->load->library('form_validation');
             $this->load->helper(array('form','dates'));
-            $this->load->view('header');            
-            $this->load->view('data_center/data_center');
+            $this->load->view('header');
 	}
         
         /**
@@ -54,7 +56,9 @@ class Ajout_ressource extends CI_Controller
          */
         public function formulaire_texte()
         {
-                       
+            $userLevel = $this->session->userdata('user_level');
+            $data['userLevel'] = $userLevel;
+            $this->load->view('data_center/data_center',$data);           
             $this->load->model('ressource_texte_model');
             
             if ($this->form_validation->run('ajout_texte') == FALSE) /** @todo Rajouter dans la validation si une ressource du même nom existe déjà ou pas */

@@ -5,6 +5,9 @@ class Import_csv extends CI_Controller
 
 	public function index()
 	{
+            $userLevel = $this->session->userdata('user_level');
+            $data['userLevel'] = $userLevel;
+            $this->load->view('data_center/data_center',$data);
             $this->formulaire();
 	}
 
@@ -17,7 +20,6 @@ class Import_csv extends CI_Controller
             $this->load->library('upload');
             $this->load->helper(array('form','csv','file'));
             $this->load->view('header');
-            $this->load->view('data_center/data_center');
 	}
         
         function formulaire()
