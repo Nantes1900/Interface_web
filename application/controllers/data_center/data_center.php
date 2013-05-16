@@ -15,7 +15,11 @@ class Data_center extends CI_Controller
 
 	public function index()
 	{
-            $this->data_center(); /** @todo Déplacer la sécurité par vérification du user_level ici*/
+            if ( $this->session->userdata('username') ) {
+                $this->data_center();
+            }else{
+                $this->load->view('accueil/login/formulaire_login',array('titre'=>'Vous n\'êtes pas connecté. Veuillez vous connecter :'));
+            }            
 	}
 
 	public function __construct()
@@ -30,14 +34,9 @@ class Data_center extends CI_Controller
         
         public function data_center()
         {
-            if ( $this->session->userdata('user_level') == 5 || $this->session->userdata('user_level') == 4)
-            {
-                $this->load->view('data_center/data_center');
-            }
-            else if ( !$this->session->userdata('username') )
-            {
-                $this->load->view('accueil/login/formulaire_login',array('titre'=>'Vous n\'êtes pas connecté. Veuillez vous connecter :'));
-            }
+            $userLevel = $this->session->userdata('user_level');
+            $data['userLevel'] = $userLevel;
+            $this->load->view('data_center/data_center',$data);
             
         }
         

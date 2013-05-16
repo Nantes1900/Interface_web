@@ -17,7 +17,10 @@ class Ajout_objet extends CI_Controller
          */
 	public function index()
 	{
-            $this->formulaire(); /** @todo Ajouter une sécurité par vérification du user_level*/
+            $userLevel = $this->session->userdata('user_level');
+            $data['userLevel'] = $userLevel;
+            $this->load->view('data_center/data_center',$data);
+            $this->formulaire(); /** @todo Ajouter une sécurité par vérification de la connection*/
 	}
 
         /**
@@ -28,11 +31,11 @@ class Ajout_objet extends CI_Controller
 	{
             parent::__construct();
             
-            $this->load->model('objet_model','objet');
+            $this->load->model('objet_model');
+            require('application/models/objet.php');
             $this->load->library('form_validation');
             $this->load->helper(array('form'));
-            $this->load->view('header');            
-            $this->load->view('data_center/data_center');
+            $this->load->view('header');   
 	}
         
         /**
@@ -60,7 +63,7 @@ class Ajout_objet extends CI_Controller
                 $objetdata['mots_cles'] = $this->input->post('mots_cles');
                 $objetdata['username'] = $this->session->userdata('username');
                 
-                $this->objet->ajout_objet($objetdata);            
+                $this->objet_model->ajout_objet($objetdata);            
                 redirect('data_center/data_center/','refresh');
                 
                 /** @todo Ajouter une page de confirmation du succès d'ajout de l'objet */

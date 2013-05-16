@@ -5,6 +5,9 @@ class Import_csv extends CI_Controller
 
 	public function index()
 	{
+            $userLevel = $this->session->userdata('user_level');
+            $data['userLevel'] = $userLevel;
+            $this->load->view('data_center/data_center',$data);
             $this->formulaire();
 	}
 
@@ -17,7 +20,6 @@ class Import_csv extends CI_Controller
             $this->load->library('upload');
             $this->load->helper(array('form','csv','file'));
             $this->load->view('header');
-            $this->load->view('data_center/data_center');
 	}
         
         function formulaire()
@@ -52,16 +54,16 @@ class Import_csv extends CI_Controller
                         
                         if( $csv_type == 'relation')
                         {
-                            $this->load->model('relation_model','relation');
+                            $this->load->model('relation_model');
                             
-                            $this->relation->import_csv($data);
+                            $this->relation_model->import_csv($data);
                         }
                         
                         if( $csv_type == 'objet')
                         {
-                            $this->load->model('objet_model','objet');
+                            $this->load->model('objet_model');
                             
-                            $this->objet->import_csv($data);
+                            $this->objet_model->import_csv($data);
                         }
                         
                         delete_files($csv_file['file_path']);

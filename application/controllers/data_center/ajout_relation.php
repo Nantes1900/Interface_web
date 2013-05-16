@@ -18,6 +18,9 @@ class Ajout_relation extends CI_Controller
          */
 	public function index()
 	{
+            $userLevel = $this->session->userdata('user_level');
+            $data['userLevel'] = $userLevel;
+            $this->load->view('data_center/data_center',$data);
             $this->formulaire(); /** @todo Ajouter une sécurité par vérification du user_level*/
 	}
 
@@ -29,12 +32,11 @@ class Ajout_relation extends CI_Controller
 	{
             parent::__construct();
             
-            $this->load->model('relation_model','relation');
-            $this->load->model('objet_model','objet');
+            $this->load->model('relation_model');
+            $this->load->model('objet_model');
             $this->load->library('form_validation');
             $this->load->helper(array('form','dates'));
             $this->load->view('header');
-            $this->load->view('data_center/data_center');
 	}
         
         /**
@@ -47,10 +49,10 @@ class Ajout_relation extends CI_Controller
         {
             
             //On va récupérer une liste des objets existants dans la base, afin de les proposer
-            $objet_list = $this->objet->get_objet_list();
+            $objet_list = $this->objet_model->get_objet_list();
             
             //On va récupérer une liste des types de relation existants dans la base, afin de les proposer
-            $type_relation_list = $this->relation->get_type_relation_list();
+            $type_relation_list = $this->relation_model->get_type_relation_list();
             
             if ($this->form_validation->run('ajout_relation') == FALSE)
             {
@@ -77,7 +79,7 @@ class Ajout_relation extends CI_Controller
                 
                 $relationdata['parent'] = $this->input->post('parent')? 'true':'false';
                              
-                $this->relation->ajout_relation($relationdata);            
+                $this->relation_model->ajout_relation($relationdata);            
                 redirect('data_center/data_center/','refresh');
                 
                 /** @todo Ajouter une page de confirmation du succès d'ajout de l'objet */
