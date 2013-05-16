@@ -88,6 +88,18 @@ class Objet_model extends CI_Model
             }
         }
         
+        public function modify_objet (Objet $objet){
+            
+            $attributeArray = $objet->get_attributes();
+            foreach ($attributeArray as $attribute => $value){
+                $dbAttribute = substr($attribute, 1); //we must delete the _ of the _attribute_name
+                $this->db->set($dbAttribute,$value);
+            }
+            $this->db->where('objet_id',$objet->get_objet_id());
+            
+            $this->db->update('objet');
+        }
+        
 }
 
 /* End of file objet_model.php */

@@ -45,6 +45,24 @@ class Objet{
         }
     }
     
+    //return an associative array of all attributes except objet_id with their value
+    //beware, attribute name are like _objet_id
+    public function get_attributes(){
+        foreach ($this as $attribute => $value){
+            if (isset($value) && ($attribute!='_objet_id') ){
+                $attributeArray[$attribute]=$value;
+            }
+        }
+        return $attributeArray;
+    }
+    
+    public  function save(){
+        $objetManager = new Objet_model();
+        if ($objetManager->exist($this->get_objet_id())){
+            $objetManager->modify_objet($this);
+        }
+    }
+    
     //getters and setters
     public function get_objet_id() {
         return $this->_objet_id;
