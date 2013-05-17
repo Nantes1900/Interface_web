@@ -34,6 +34,7 @@ class Ajout_relation extends CI_Controller
             
             $this->load->model('relation_model');
             $this->load->model('objet_model');
+            require ('application/models/objet.php');
             $this->load->library('form_validation');
             $this->load->helper(array('form','dates'));
             $this->load->view('header');
