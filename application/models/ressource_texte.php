@@ -55,6 +55,7 @@ class Ressource_texte {
     public  function save(){
         $ressourceManager = new Ressource_texte_model();
         if ($ressourceManager->exist($this->get_objet_id())){
+            $this->set_last_modified(date('Y-m-d H:i:s'));
             $ressourceManager->update_ressource($this);
         }
     }
