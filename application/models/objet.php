@@ -59,8 +59,14 @@ class Objet{
     public  function save(){
         $objetManager = new Objet_model();
         if ($objetManager->exist($this->get_objet_id())){
+            $this->set_last_modified(date('Y-m-d H:i:s'));
             $objetManager->update_objet($this);
         }
+    }
+    
+    public function validate(){
+        $this->set_validation(TRUE);
+        $this->save();
     }
     
     //getters and setters

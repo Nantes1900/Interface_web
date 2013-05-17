@@ -10,7 +10,7 @@
                     <td> Selectionner le premier objet :</td>
                     <td> <select name="objet1">
                             <?php foreach($objet_list as $objet): 
-                                    echo '<option value="'.$objet['objet_id'].'">'.$objet['nom_objet'].'</option>'; 
+                                    echo '<option value="'.$objet->get_objet_id().'">'.$objet->get_nom_objet().'</option>'; 
                                   endforeach; ?>
                             
                          </select> </td>
@@ -19,7 +19,7 @@
                     <td> Selectionner le second objet :</td>
                     <td> <select name="objet2">
                             <?php foreach($objet_list as $objet): 
-                                    echo '<option value="'.$objet['objet_id'].'">'.$objet['nom_objet'].'</option>'; 
+                                    echo '<option value="'.$objet->get_objet_id().'">'.$objet->get_nom_objet().'</option>'; 
                                   endforeach; ?>
                             
                          </select> </td>

@@ -35,7 +35,7 @@ class Ressource_texte {
         if (is_array($ressourceTxtData)){
             $this->hydrate($ressourceTxtData);
         } else {
-            $ressourceTxtManager = new ressource_texte_model();
+            $ressourceTxtManager = new Ressource_texte_model();
             if ($ressourceTxtManager->exist($ressourceTxtData)){
                 $this->hydrate($ressourceTxtManager->get_ressource('ressource_textuelle_id', $ressourceTxtData));
             }
@@ -52,6 +52,17 @@ class Ressource_texte {
         }
     }
     
+    public  function save(){
+        $ressourceManager = new Ressource_texte_model();
+        if ($ressourceManager->exist($this->get_objet_id())){
+            $ressourceManager->update_ressource($this);
+        }
+    }
+    
+    public function validate(){
+        $this->set_validation(TRUE);
+        $this->save();
+    }
     
     //getters and setters
     //
