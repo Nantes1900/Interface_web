@@ -63,7 +63,6 @@ class Ressource_texte_model extends CI_Model
                 $dbAttribute = substr($attribute, 1); //we must delete the _ of the _attribute_name
                 $this->db->set($dbAttribute,$value);
             }
-            $this->db->set('last_modified', date('Y-m-d H:i:s')); 
             $this->db->where('ressource_textuelle_id',$ressource->get_ressource_textuelle_id());
             
             $this->db->update('ressource_textuelle');

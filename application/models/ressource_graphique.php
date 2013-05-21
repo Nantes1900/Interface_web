@@ -1,14 +1,13 @@
-<?php
-
-if (!defined('BASEPATH')) exit('No direct script access allowed');
+<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 /**
- * This class aims at having more natural representation of ressource_texte object
- * it relies on ressource_texte_model to connect to the database
+ * This class aims at having more natural representation of ressource_graphique object
+ * it relies on ressource_graphique_model to connect to the database
+ *
  * @author paulyves
  */
-class Ressource_texte {
-    protected $_ressource_textuelle_id;   
+class Ressource_graphique {
+    protected $_ressource_graphique_id;   
     protected $_username;
     protected $_titre;
     protected $_description;
@@ -26,24 +25,33 @@ class Ressource_texte {
     protected $_date_creation;
     protected $_date_maj;
     protected $_last_modified;
-    protected $_sous_categorie;
+    protected $_legende;
+    protected $_couleur;
+    protected $_image;
+    protected $_original;
     protected $_pagination;
+    protected $_dimension;
+    protected $_date_prise_vue;
+    protected $_localisation;
+    protected $_cote;
+    protected $_technique;
+    protected $_type_support;
     
     //with an array of datas (typically the result of a db query), we directly call the hydrate function
-    //with a ressource_textuelle_id, we use the ressource_texte_model to query the db and hydrate with its answer the new objet entity
-    public function __construct($ressourceTxtData) {
-        if (is_array($ressourceTxtData)){
-            $this->hydrate($ressourceTxtData);
+    //with a ressource_graphique_id, we use the ressource_texte_model to query the db and hydrate with its answer the new objet entity
+    public function __construct($ressourceGraphData) {
+        if (is_array($ressourceGraphData)){
+            $this->hydrate($ressourceGraphData);
         } else {
-            $ressourceTxtManager = new Ressource_texte_model();
-            if ($ressourceTxtManager->exist($ressourceTxtData)){
-                $this->hydrate($ressourceTxtManager->get_ressource('ressource_textuelle_id', $ressourceTxtData));
+            $ressourceGraphManager = new Ressource_graphique_model();
+            if ($ressourceGraphManager->exist($ressourceGraphData)){
+                $this->hydrate($ressourceGraphManager->get_ressource('ressource_graphique_id', $ressourceGraphData));
             }
         }
     }
     
-    public function hydrate(array $ressourceTxtData) {
-        foreach ($ressourceTxtData as $key => $value) { //key correspond to attribute name, value to it's value
+    public function hydrate(array $ressourceGraphData) {
+        foreach ($ressourceGraphData as $key => $value) { //key correspond to attribute name, value to it's value
             $method = 'set_'.$key;   //we create a set_ method corresponding to the key
             if (method_exists($this, $method)){ //security if wrong key name
                 //calling the created setter method
@@ -53,8 +61,8 @@ class Ressource_texte {
     }
     
     public  function save(){
-        $ressourceManager = new Ressource_texte_model();
-        if ($ressourceManager->exist($this->get_ressource_textuelle_id())){
+        $ressourceManager = new Ressource_graphique_model();
+        if ($ressourceManager->exist($this->get_ressource_graphique_id())){
             $this->set_last_modified(date('Y-m-d H:i:s'));
             $ressourceManager->update_ressource($this);
         }
@@ -67,25 +75,25 @@ class Ressource_texte {
     
     //getters and setters
     //
-    //return an associative array of all attributes except _ressource_textuelle_id with their value
-    //beware of underscore, attribute name are like _ressource_textuelle_id
+    //return an associative array of all attributes except _ressource_graphique_id with their value
+    //beware of underscore, attribute name are like _ressource_graphique_id
     public function get_attributes(){
         foreach ($this as $attribute => $value){
-            if (isset($value) && ($attribute!='_ressource_textuelle_id') ){
+            if (isset($value) && ($attribute!='_ressource_graphique_id') ){
                 $attributeArray[$attribute]=$value;
             }
         }
         return $attributeArray;
     }
     
-    public function get_ressource_textuelle_id() {
-        return $this->_ressource_textuelle_id;
+    public function get_ressource_graphique_id() {
+        return $this->_ressource_graphique_id;
     }
 
-    public function set_ressource_textuelle_id($_ressource_textuelle_id) {
-        $this->_ressource_textuelle_id = $_ressource_textuelle_id;
+    public function set_ressource_graphique_id($_ressource_graphique_id) {
+        $this->_ressource_graphique_id = $_ressource_graphique_id;
     }
-    
+
     public function get_username() {
         return $this->_username;
     }
@@ -222,12 +230,36 @@ class Ressource_texte {
         $this->_last_modified = $_last_modified;
     }
 
-    public function get_sous_categorie() {
-        return $this->_sous_categorie;
+    public function get_legende() {
+        return $this->_legende;
     }
 
-    public function set_sous_categorie($_sous_categorie) {
-        $this->_sous_categorie = $_sous_categorie;
+    public function set_legende($_legende) {
+        $this->_legende = $_legende;
+    }
+
+    public function get_couleur() {
+        return $this->_couleur;
+    }
+
+    public function set_couleur($_couleur) {
+        $this->_couleur = $_couleur;
+    }
+
+    public function get_image() {
+        return $this->_image;
+    }
+
+    public function set_image($_image) {
+        $this->_image = $_image;
+    }
+
+    public function get_original() {
+        return $this->_original;
+    }
+
+    public function set_original($_original) {
+        $this->_original = $_original;
     }
 
     public function get_pagination() {
@@ -238,9 +270,58 @@ class Ressource_texte {
         $this->_pagination = $_pagination;
     }
 
+    public function get_dimension() {
+        return $this->_dimension;
+    }
 
+    public function set_dimension($_dimension) {
+        $this->_dimension = $_dimension;
+    }
+
+    public function get_date_prise_vue() {
+        return $this->_date_prise_vue;
+    }
+
+    public function set_date_prise_vue($_date_prise_vue) {
+        $this->_date_prise_vue = $_date_prise_vue;
+    }
+
+    public function get_localisation() {
+        return $this->_localisation;
+    }
+
+    public function set_localisation($_localisation) {
+        $this->_localisation = $_localisation;
+    }
+
+    public function get_cote() {
+        return $this->_cote;
+    }
+
+    public function set_cote($_cote) {
+        $this->_cote = $_cote;
+    }
+
+    public function get_technique() {
+        return $this->_technique;
+    }
+
+    public function set_technique($_technique) {
+        $this->_technique = $_technique;
+    }
+
+    public function get_type_support() {
+        return $this->_type_support;
+    }
+
+    public function set_type_support($_type_support) {
+        $this->_type_support = $_type_support;
+    }
+
+
+    
 }
 
-/* End of file ressource_texte.php */
-/* Location : ./application/models/ressource_texte.php */
+/* End of file ressource_graphique.php */
+/* Location : ./application/models/ressource_graphique.php */
 
