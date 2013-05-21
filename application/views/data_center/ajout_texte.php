@@ -84,3 +84,5 @@
             <tr><td><input type="submit" value="Ajouter cette ressource" /><tr><td>
                             
         </table>
+    </form>
+</html>

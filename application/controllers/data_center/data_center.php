@@ -34,9 +34,8 @@ class Data_center extends CI_Controller
         
         public function data_center()
         {
-            $userLevel = $this->session->userdata('user_level');
-            $data['userLevel'] = $userLevel;
-            $this->load->view('data_center/data_center',$data);
+            
+            $this->load->view('data_center/data_center');
             
         }
         

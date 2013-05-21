@@ -141,6 +141,73 @@ $config = array(
                         'rules'=>'trim|is_natural_no_zero|max_length[4]|xss_clean|callback_check_date'
                     )
                 ),
+    'ajout_image' => array(
+                    array(
+                        'field'=>'titre',
+                        'label'=>'Titre',
+                        'rules'=>'trim|required|min_length[5]|max_length[50]|xss_clean|callback_check_titre[image]'
+                    ),
+                    array(
+                        'field'=>'reference_ressource',
+                        'label'=>'Reference_ressource',
+                        'rules'=>'trim|max_length[200]|xss_clean'
+                    ),
+                    array(
+                        'field'=>'disponibilite',
+                        'label'=>'Disponibilite',
+                        'rules'=>'trim|max_length[200]|xss_clean'
+                    ),
+                    array(
+                        'field'=>'description',
+                        'label'=>'Description',
+                        'rules'=>'trim|max_length[200]|xss_clean'
+                    ),
+                    array(
+                        'field'=>'auteurs',
+                        'label'=>'Auteurs',
+                        'rules'=>'trim|max_length[20]|xss_clean'
+                    ),
+                    array(
+                        'field'=>'editeur',
+                        'label'=>'editeur',
+                        'rules'=>'trim|max_length[20]|xss_clean'
+                    ),
+                    array(
+                        'field'=>'ville_edition',
+                        'label'=>'Ville_edition',
+                        'rules'=>'trim|max_length[20]|xss_clean'
+                    ),
+                    array(
+                        'field'=>'mots_cles',
+                        'label'=>'Mots_cles',
+                        'rules'=>'trim|max_length[200]|xss_clean'
+                    ),
+                    array(
+                        'field'=>'sous_categorie',
+                        'label'=>'Sous_categorie',
+                        'rules'=>'trim|max_length[20]|xss_clean'
+                    ),
+                    array(
+                        'field'=>'pagination',
+                        'label'=>'Pagination',
+                        'rules'=>'trim|is_natural|max_length[20]|xss_clean'
+                    ),
+                    array(
+                        'field'=>'jour',
+                        'label'=>'Jour',
+                        'rules'=>'trim|is_natural|max_length[2]|xss_clean' 
+                    ),
+                    array(
+                        'field'=>'mois',
+                        'label'=>'Mois',
+                        'rules'=>'trim|is_natural|max_length[2]|xss_clean'  
+                    ),
+                    array(
+                        'field'=>'annee',
+                        'label'=>'Annee',
+                        'rules'=>'trim|is_natural_no_zero|max_length[4]|xss_clean|callback_check_date'
+                    )
+                ),
     'ajout_relation' => array(
                     array(
                         'field'=>'jour_debut',

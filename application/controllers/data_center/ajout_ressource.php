@@ -56,9 +56,8 @@ class Ajout_ressource extends CI_Controller
          */
         public function formulaire_texte()
         {
-            $userLevel = $this->session->userdata('user_level');
-            $data['userLevel'] = $userLevel;
-            $this->load->view('data_center/data_center',$data);           
+            
+            $this->load->view('data_center/data_center');           
             $this->load->model('ressource_texte_model');
             
             if ($this->form_validation->run('ajout_texte') == FALSE) 
@@ -106,6 +105,20 @@ class Ajout_ressource extends CI_Controller
             
         }
         
+        public function formulaire_image(){
+            require ('application/models/ressource_graphique.php');
+            $this->load->view('data_center/data_center');           
+            $this->load->model('ressource_graphique_model');
+            $this->load->library('upload');
+            
+            if($this->form_validation->run('ajout_image') == FALSE){
+                $this->load->view('data_center/ajout_image');
+                $this->load->view('footer');   
+            } else {
+                
+            }
+        } //separate upload and form?
+        
         public function check_date(){ //callback function checking date validity
             $day = (int) $this->input->post('jour');
             $month = (int) $this->input->post('mois');
@@ -118,8 +131,11 @@ class Ajout_ressource extends CI_Controller
         }
         
         public function check_titre($title,$typeRessource){ //callback function checking if titre already exist
-            if ($typeRessource=='texte'){
+            if ($typeRessource == 'texte'){
                 $ressourceManager = new Ressource_texte_model();
+            }
+            if ($typeRessource == 'image'){
+                $ressourceManager = new Ressource_graphique_model();
             }
             $existingRessource = $ressourceManager->get_ressource('titre', $title);
             if (isset($existingRessource)){
