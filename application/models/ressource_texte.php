@@ -8,7 +8,7 @@ if (!defined('BASEPATH')) exit('No direct script access allowed');
  * @author paulyves
  */
 class Ressource_texte {
-    protected $_ressource_textuelle_id;
+    protected $_ressource_textuelle_id;   
     protected $_username;
     protected $_titre;
     protected $_description;
@@ -85,7 +85,7 @@ class Ressource_texte {
     public function set_ressource_textuelle_id($_ressource_textuelle_id) {
         $this->_ressource_textuelle_id = $_ressource_textuelle_id;
     }
-
+    
     public function get_username() {
         return $this->_username;
     }

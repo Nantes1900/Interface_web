@@ -61,7 +61,7 @@ class Ajout_ressource extends CI_Controller
             $this->load->view('data_center/data_center',$data);           
             $this->load->model('ressource_texte_model');
             
-            if ($this->form_validation->run('ajout_texte') == FALSE) /** @todo Rajouter dans la validation si une ressource du même nom existe déjà ou pas */
+            if ($this->form_validation->run('ajout_texte') == FALSE) 
             {
                 $this->load->view('data_center/ajout_texte');
                 $this->load->view('footer');
@@ -106,7 +106,29 @@ class Ajout_ressource extends CI_Controller
             
         }
         
+        public function check_date(){ //callback function checking date validity
+            $day = (int) $this->input->post('jour');
+            $month = (int) $this->input->post('mois');
+            $year = (int) $this->input->post('annee');
+            $valid = checkdate($month,$day,$year);
+            if (!$valid){
+                $this->form_validation->set_message('check_date', 'Date invalide');
+            }
+            return $valid;
+        }
         
+        public function check_titre($title,$typeRessource){ //callback function checking if titre already exist
+            if ($typeRessource=='texte'){
+                $ressourceManager = new Ressource_texte_model();
+            }
+            $existingRessource = $ressourceManager->get_ressource('titre', $title);
+            if (isset($existingRessource)){
+                $this->form_validation->set_message('check_titre', 'Titre déjà existant');
+                return FALSE;
+            } else {
+                return TRUE;
+            }
+        }
 }
 
 /* End of file ajout_ressource.php */

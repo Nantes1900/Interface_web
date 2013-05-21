@@ -78,7 +78,7 @@ $config = array(
                     array(
                         'field'=>'titre',
                         'label'=>'Titre',
-                        'rules'=>'trim|required|min_length[5]|max_length[50]|xss_clean'
+                        'rules'=>'trim|required|min_length[5]|max_length[50]|xss_clean|callback_check_titre[texte]'
                     ),
                     array(
                         'field'=>'reference_ressource',
@@ -128,17 +128,17 @@ $config = array(
                     array(
                         'field'=>'jour',
                         'label'=>'Jour',
-                        'rules'=>'trim|is_natural|max_length[2]|xss_clean' //TODO : Rajouter une custom rule vérifiant la validité de la date
+                        'rules'=>'trim|is_natural|max_length[2]|xss_clean' 
                     ),
                     array(
                         'field'=>'mois',
                         'label'=>'Mois',
-                        'rules'=>'trim|is_natural|max_length[2]|xss_clean' //TODO : Rajouter une custom rule vérifiant la validité de la date
+                        'rules'=>'trim|is_natural|max_length[2]|xss_clean'  
                     ),
                     array(
                         'field'=>'annee',
                         'label'=>'Annee',
-                        'rules'=>'trim|is_natural_no_zero|max_length[4]|xss_clean'
+                        'rules'=>'trim|is_natural_no_zero|max_length[4]|xss_clean|callback_check_date'
                     )
                 ),
     'ajout_relation' => array(
