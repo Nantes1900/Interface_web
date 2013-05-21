@@ -89,6 +89,16 @@ class Ajout_relation extends CI_Controller
             
         }
         
+        public function check_date($input, $boundary){ //callback function checking date_debut or date_fin validity
+            $day = (int) $this->input->post('jour_'.$boundary);
+            $month = (int) $this->input->post('mois_'.$boundary);
+            $year = (int) $this->input->post('annee_'.$boundary);
+            $valid = checkdate($month,$day,$year);
+            if (!$valid){
+                $this->form_validation->set_message('check_date', 'Date invalide');
+            }
+            return $valid;
+        }
         
 }
 

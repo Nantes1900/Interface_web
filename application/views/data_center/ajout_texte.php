@@ -50,11 +50,11 @@
             </tr>
             <tr>
 			<td> Jour </td>
-			<td> <input type=text name=jour value="<?php echo set_value('jour'); ?>" size="3"> </td>
+			<td> <input type=text name=jour value="<?php echo set_value('jour'); ?>" size="3" maxlength="2"> </td>
 			<td> Mois </td>
-			<td> <input type=text name=mois value="<?php echo set_value('mois'); ?>" size="3"> </td>
+			<td> <input type=text name=mois value="<?php echo set_value('mois'); ?>" size="3" maxlength="2"> </td>
 			<td> Année </td>
-			<td> <input type=text name=annee value="<?php echo set_value('annee'); ?>" size="5"> </td>
+			<td> <input type=text name=annee value="<?php echo set_value('annee'); ?>" size="5" maxlength="4"> </td>
             </tr>
             <tr>
                 <td class="error_form"><?php echo form_error('jour'); ?></td>

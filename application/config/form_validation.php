@@ -155,7 +155,7 @@ $config = array(
                     array(
                         'field'=>'annee_debut',
                         'label'=>'Annee_debut',
-                        'rules'=>'trim|is_natural_no_zero|max_length[4]|xss_clean'
+                        'rules'=>'trim|is_natural_no_zero|max_length[4]|xss_clean|callback_check_date[debut]'
                     ),
                     array(
                         'field'=>'jour_fin',
@@ -170,7 +170,7 @@ $config = array(
                     array(
                         'field'=>'annee_fin',
                         'label'=>'Annee_fin',
-                        'rules'=>'trim|is_natural_no_zero|max_length[4]|xss_clean'
+                        'rules'=>'trim|is_natural_no_zero|max_length[4]|xss_clean|callback_check_date[fin]'
                     ),
                     array(
                         'field'=>'datation_indication_debut',
