@@ -193,6 +193,26 @@ $config = array(
                         'rules'=>'trim|is_natural|max_length[20]|xss_clean'
                     ),
                     array(
+                        'field'=>'legende',
+                        'label'=>'Legende',
+                        'rules'=>'trim|max_length[200]|xss_clean'
+                    ),
+                    array(
+                        'field'=>'localisation',
+                        'label'=>'Lieu de prise de vue',
+                        'rules'=>'trim|max_length[200]|xss_clean'
+                    ),
+                    array(
+                        'field'=>'technique',
+                        'label'=>'Technique',
+                        'rules'=>'trim|max_length[200]|xss_clean'
+                    ),
+                    array(
+                        'field'=>'type_support',
+                        'label'=>'type de support',
+                        'rules'=>'trim|max_length[200]|xss_clean'
+                    ),
+                    array(
                         'field'=>'jour',
                         'label'=>'Jour',
                         'rules'=>'trim|is_natural|max_length[2]|xss_clean' 
@@ -206,6 +226,21 @@ $config = array(
                         'field'=>'annee',
                         'label'=>'Annee',
                         'rules'=>'trim|is_natural_no_zero|max_length[4]|xss_clean|callback_check_date'
+                    ),
+                    array(
+                        'field'=>'jourPrise',
+                        'label'=>'Jour',
+                        'rules'=>'trim|is_natural|max_length[2]|xss_clean' 
+                    ),
+                    array(
+                        'field'=>'moisPrise',
+                        'label'=>'Mois',
+                        'rules'=>'trim|is_natural|max_length[2]|xss_clean'  
+                    ),
+                    array(
+                        'field'=>'anneePrise',
+                        'label'=>'Annee',
+                        'rules'=>'trim|is_natural_no_zero|max_length[4]|xss_clean|callback_check_date[Prise]'
                     )
                 ),
     'ajout_relation' => array(

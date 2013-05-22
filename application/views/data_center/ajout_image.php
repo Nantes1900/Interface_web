@@ -1,7 +1,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" > 
 
     <h1>Formulaire d'ajout d'une ressource graphique (image, photo, etc.)</h1>
-        
+    
+   
+    <div style="color : red;"><?php echo $error;?></div>    
+    
     <?php echo form_open_multipart('data_center/ajout_ressource/formulaire_image'); ?>
     
         <table border=0>
@@ -67,7 +70,27 @@
                 <td class="error_form"><?php echo form_error('annee'); ?></td>
             </tr>
          
-        </table>    
+        </table>
+    <table>
+        
+            <tr>
+                <td> Date de prise de vue </td>
+            </tr>
+            <tr>
+		<td> Jour </td>
+                <td> <input type=text name=jourPrise value="<?php echo set_value('jourPrise'); ?>" size="3" maxlength="2"> </td>
+		<td> Mois </td>
+		<td> <input type=text name=moisPrise value="<?php echo set_value('moisPrise'); ?>" size="3" maxlength="2"> </td>
+		<td> Année </td>
+		<td> <input type=text name=anneePrise value="<?php echo set_value('anneePrise'); ?>" size="5" maxlength="4"> </td>
+            </tr>
+            <tr>
+                <td class="error_form"><?php echo form_error('jourPrise'); ?></td>
+                <td class="error_form"><?php echo form_error('moisPrise'); ?></td>
+                <td class="error_form"><?php echo form_error('anneePrise'); ?></td>
+            </tr>
+         
+        </table> 
         <table>
             
             <tr>
@@ -81,16 +104,31 @@
                 <td class="error_form"><?php echo form_error('legende'); ?></td>
             </tr>
             <tr>
+                <td> Lieu de la prise de vue </td>
+                <td> <input type="text" name="localisation" value="<?php echo set_value('localisation'); ?>" size="30"> </td>
+                <td class="error_form"><?php echo form_error('localisation'); ?></td>
+            </tr>
+            <tr>
+                <td> Technique utilisée </td>
+                <td> <input type="text" name="technique" value="<?php echo set_value('technique'); ?>" size="30"> </td>
+                <td class="error_form"><?php echo form_error('technique'); ?></td>
+            </tr>
+            <tr>
+                <td> Support de la ressource </td>
+                <td> <input type="text" name="type_support" value="<?php echo set_value('type_support'); ?>" size="30"> </td>
+                <td class="error_form"><?php echo form_error('type_support'); ?></td>
+            </tr>
+            <tr>
                 <td> Couleur </td>
                 <td> 
-                    <input type="radio" name="couleur" value="TRUE">Couleur <br/>
-                    <input type="radio" name="couleur" value="FALSE">Noir et blanc
+                    <input type="radio" name="couleur" value="TRUE" <?php echo set_select('couleur', 'TRUE'); ?> >Couleur <br/>
+                    <input type="radio" name="couleur" value="FALSE" <?php echo set_select('couleur', 'FALSE'); ?> >Noir et blanc
                 </td>                
             </tr>
             <tr>
                 <td> Télécharger image </td>
                 <td> 
-                    <input type="file" name="csv_file">
+                    <input type="file" name="image">
                 </td>                
             </tr>  
             <tr>

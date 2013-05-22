@@ -16,7 +16,8 @@ class Ressource_graphique_model extends CI_Model
 	$this->load->database();
 
     }
-        
+    
+    //beware, the arg $ressource should not exist in the database
     public function ajout_ressource (Ressource_graphique $ressource){
         
         $attributeArray = $ressource->get_attributes();
@@ -36,8 +37,9 @@ class Ressource_graphique_model extends CI_Model
         $this->db->where($attribute, $value);
         $query = $this->db->get();
         $result = $query->result_array();
-            
-        return $result['0'];
+        if (isset($result['0'])){    
+            return $result['0'];
+        }
             
     }
         
