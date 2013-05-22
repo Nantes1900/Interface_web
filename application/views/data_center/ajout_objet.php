@@ -40,6 +40,6 @@
             <tr><td><input type="submit" value="Ajouter cet objet" /><tr><td>
                             
         </table>
-	
+</form>
 
 </html>

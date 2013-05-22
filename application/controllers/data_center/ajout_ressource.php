@@ -18,9 +18,8 @@ class Ajout_ressource extends CI_Controller
          */
 	public function index()
 	{
-            $userLevel = $this->session->userdata('user_level');
-            $data['userLevel'] = $userLevel;
-            $this->load->view('data_center/data_center',$data);
+            
+            $this->load->view('data_center/data_center');
             $this->choix_ressource(); /** @todo Ajouter une sécurité par vérification du user_level*/
 	}
 
@@ -56,12 +55,11 @@ class Ajout_ressource extends CI_Controller
          */
         public function formulaire_texte()
         {
-            $userLevel = $this->session->userdata('user_level');
-            $data['userLevel'] = $userLevel;
-            $this->load->view('data_center/data_center',$data);           
+            
+            $this->load->view('data_center/data_center');           
             $this->load->model('ressource_texte_model');
             
-            if ($this->form_validation->run('ajout_texte') == FALSE) /** @todo Rajouter dans la validation si une ressource du même nom existe déjà ou pas */
+            if ($this->form_validation->run('ajout_texte') == FALSE) 
             {
                 $this->load->view('data_center/ajout_texte');
                 $this->load->view('footer');
@@ -106,7 +104,104 @@ class Ajout_ressource extends CI_Controller
             
         }
         
+        public function formulaire_image(){
+            require ('application/models/ressource_graphique.php');
+            $this->load->view('data_center/data_center');           
+            $this->load->model('ressource_graphique_model');
+            $dir = './assets/images/';
+            $config['upload_path'] = $dir;
+            $config['allowed_types'] = 'jpg|jpeg|gif|png';
+            $config['max_size']	= '100';
+            $config['max_width']  = '1024';
+            $config['max_height']  = '768';
+            $this->load->library('upload',$config);
+            
+            if($this->form_validation->run('ajout_image') == FALSE){
+                
+                $this->load->view('data_center/ajout_image', array('error' => ' ' ));
+                $this->load->view('footer');   
+                
+            } else {
+                
+                $this->upload->initialize($config);
+                if ( ! $this->upload->do_upload('image')){
+                    $error = array('error' => $this->upload->display_errors());
+                    $this->load->view('data_center/ajout_image', $error);
+		} else {
+                    //getting info about upload
+                    $imageData = $this->upload->data();
+                    
+                    //creating a Ressource_graphique entity out of post data
+                    $array = array();
+                    $ressource = new Ressource_graphique($array);
+                    $ressource->set_date_creation(date('Y-m-d H:i:s'));
+                    $ressource->set_username($this->session->userdata('username'));
+                    $ressource->set_titre($this->input->post('titre'));
+                    $ressource->set_description($this->input->post('description'));
+                    $ressource->set_reference_ressource($this->input->post('reference_ressource'));
+                    $ressource->set_theme_ressource($this->input->post('theme_ressource'));
+                    $ressource->set_auteurs($this->input->post('auteurs'));
+                    $ressource->set_editeur($this->input->post('editeur'));
+                    $ressource->set_ville_edition($this->input->post('ville_edition'));
+                    $date_infos = conc_date($this->input->post('jour'),$this->input->post('mois'),$this->input->post('annee'));
+                    $ressource->set_date_debut_ressource($date_infos['date']);
+                    $ressource->set_date_precision($date_infos['date_precision']);
+                    $ressource->set_mots_cles($this->input->post('mots_cles'));
+                    $ressource->set_legende($this->input->post('legende'));
+                    $ressource->set_couleur($this->input->post('couleur'));
+                    if ( ! $this->input->post('pagination')) {
+                        $ressource->set_pagination('0');
+                    } else {
+                        $textedata['pagination'] = $this->input->post('pagination');
+                    }
+                    //as title is unique, we add the title to the name of the image
+                    rename($dir . $imageData['file_name'], $dir .$ressource->get_titre().$imageData['file_name']);
+                    $ressource->set_image($ressource->get_titre().$imageData['file_name']);
+                    
+                    $ressource->set_dimension($imageData['image_size_str']);
+                    
+                    $date_infos = conc_date($this->input->post('jourPrise'),$this->input->post('moisPrise'),$this->input->post('anneePrise'));
+                    $ressource->set_date_prise_vue($date_infos['date']);
+                    
+                    $ressource->set_localisation($this->input->post('localisation'));
+                    
+                    $ressource->set_technique($this->input->post('technique'));
+                    $ressource->set_type_support($this->input->post('type_support'));
+                    
+                    //we set the manager and add $ressource in the database
+                    $ressourceManager = new Ressource_graphique_model();
+                    $ressourceManager->ajout_ressource($ressource);
+                    redirect('data_center/data_center/','refresh');
+                }
+            }
+        } //separate upload and form?
         
+        public function check_date($field, $extension=null){ //callback function checking date validity
+            $day = (int) $this->input->post('jour'.$extension);
+            $month = (int) $this->input->post('mois'.$extension);
+            $year = (int) $this->input->post('annee'.$extension);
+            $valid = checkdate($month,$day,$year);
+            if (!$valid){
+                $this->form_validation->set_message('check_date', 'Date invalide');
+            }
+            return $valid;
+        }
+        
+        public function check_titre($title,$typeRessource){ //callback function checking if titre already exist
+            if ($typeRessource == 'texte'){
+                $ressourceManager = new Ressource_texte_model();
+            }
+            if ($typeRessource == 'image'){
+                $ressourceManager = new Ressource_graphique_model();
+            }
+            $existingRessource = $ressourceManager->get_ressource('titre', $title);
+            if (isset($existingRessource)){
+                $this->form_validation->set_message('check_titre', 'Titre déjà existant');
+                return FALSE;
+            } else {
+                return TRUE;
+            }
+        }
 }
 
 /* End of file ajout_ressource.php */

@@ -29,6 +29,44 @@ class Ressource_texte_model extends CI_Model
             $this->db->set('date_precision', $textedata['date_precision']);
             $this->db->insert('ressource_textuelle'); //Exécution            
         }
+        
+        //get first ressource_textuelle from table with $attribute set at $value
+        public function get_ressource ($attribute,$value){
+            
+            $this->db->select('*');
+            $this->db->from('ressource_textuelle');
+            $this->db->where($attribute, $value);
+            $query = $this->db->get();
+            $result = $query->result_array();
+            
+            return $result['0'];
+            
+        }
+        
+        public function exist($ressource_txt_id){
+            
+            $this->db->select('ressource_textuelle_id');
+            $this->db->from('ressource_textuelle');
+            $this->db->where('ressource_textuelle_id', $ressource_txt_id);
+            $numberOfInstance = $this->db->count_all_results(); //Renvoie 0 si le $objet_id n'existe pas
+            if ($numberOfInstance==0){
+                return FALSE;
+            } else {
+                return TRUE;
+            }
+        }
+        
+        public function update_ressource (Ressource_texte $ressource){
+            
+            $attributeArray = $ressource->get_attributes();
+            foreach ($attributeArray as $attribute => $value){
+                $dbAttribute = substr($attribute, 1); //we must delete the _ of the _attribute_name
+                $this->db->set($dbAttribute,$value);
+            }
+            $this->db->where('ressource_textuelle_id',$ressource->get_ressource_textuelle_id());
+            
+            $this->db->update('ressource_textuelle');
+        }
 
 }
 

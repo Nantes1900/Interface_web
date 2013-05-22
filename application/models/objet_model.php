@@ -24,11 +24,23 @@ class Objet_model extends CI_Model
             $this->db->insert('objet'); //Exécution
         }
 
-        public function get_objet_list()
+        public function get_objet_list($orderBy='objet_id', $orderDirection='asc',$speAttribute = null, $speAttributeValue = null)
         {
-            $this->db->select('objet_id, nom_objet');
-            $query = $this->db->get('objet');
-            return $query->result_array();
+            $this->db->select('*');
+            $this->db->from('objet');
+            $this->db->order_by($orderBy,$orderDirection);
+            if ($speAttribute!=null && $speAttributeValue!=null){
+                $this->db->like($speAttribute,$speAttributeValue);
+            }
+            $query = $this->db->get();
+            
+            //converting to an array of Objet entities
+            $tempArray = $query->result_array();
+            $resultArray = array();         
+            foreach ($tempArray as $objetArray){
+                $resultArray[] = new Objet($objetArray);
+            }           
+            return $resultArray;
         }
         
         public function get_objet_by_name($name)
@@ -88,7 +100,7 @@ class Objet_model extends CI_Model
             }
         }
         
-        public function modify_objet (Objet $objet){
+        public function update_objet (Objet $objet){
             
             $attributeArray = $objet->get_attributes();
             foreach ($attributeArray as $attribute => $value){

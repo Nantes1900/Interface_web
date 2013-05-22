@@ -10,7 +10,7 @@
                     <td> Selectionner le premier objet :</td>
                     <td> <select name="objet1">
                             <?php foreach($objet_list as $objet): 
-                                    echo '<option value="'.$objet['objet_id'].'">'.$objet['nom_objet'].'</option>'; 
+                                    echo '<option value="'.$objet->get_objet_id().'">'.$objet->get_nom_objet().'</option>'; 
                                   endforeach; ?>
                             
                          </select> </td>
@@ -19,7 +19,7 @@
                     <td> Selectionner le second objet :</td>
                     <td> <select name="objet2">
                             <?php foreach($objet_list as $objet): 
-                                    echo '<option value="'.$objet['objet_id'].'">'.$objet['nom_objet'].'</option>'; 
+                                    echo '<option value="'.$objet->get_objet_id().'">'.$objet->get_nom_objet().'</option>'; 
                                   endforeach; ?>
                             
                          </select> </td>
@@ -39,11 +39,11 @@
             
             <tr>
                     <td> Jour </td>
-                    <td> <input type=text name=jour_debut value="<?php echo set_value('jour_debut'); ?>" size="3"> </td>
+                    <td> <input type=text name=jour_debut value="<?php echo set_value('jour_debut'); ?>" size="3" maxlength="2"> </td>
                     <td> Mois </td>
-                    <td> <input type=text name=mois_debut value="<?php echo set_value('mois_debut'); ?>" size="3"> </td>
+                    <td> <input type=text name=mois_debut value="<?php echo set_value('mois_debut'); ?>" size="3" maxlength="2"> </td>
                     <td> Année </td>
-                    <td> <input type=text name=annee_debut value="<?php echo set_value('annee_debut'); ?>" size="5"> </td>
+                    <td> <input type=text name=annee_debut value="<?php echo set_value('annee_debut'); ?>" size="5" maxlength="4"> </td>
             </tr>
             <tr>
                     <td class="error_form"><?php echo form_error('jour_debut'); ?></td>
@@ -52,11 +52,11 @@
             </tr>
             <tr>
                     <td> Jour </td>
-                    <td> <input type=text name=jour_fin value="<?php echo set_value('jour_fin'); ?>" size="3"> </td>
+                    <td> <input type=text name=jour_fin value="<?php echo set_value('jour_fin'); ?>" size="3" maxlength="2"> </td>
                     <td> Mois </td>
-                    <td> <input type=text name=mois_fin value="<?php echo set_value('mois_fin'); ?>" size="3"> </td>
+                    <td> <input type=text name=mois_fin value="<?php echo set_value('mois_fin'); ?>" size="3" maxlength="2"> </td>
                     <td> Année </td>
-                    <td> <input type=text name=annee_fin value="<?php echo set_value('annee_fin'); ?>" size="5"> </td>
+                    <td> <input type=text name=annee_fin value="<?php echo set_value('annee_fin'); ?>" size="5" maxlength="4"> </td>
             </tr>
             <tr>
                     <td class="error_form"><?php echo form_error('jour_fin'); ?></td>
