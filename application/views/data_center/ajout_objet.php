@@ -13,17 +13,17 @@
             </tr>
             <tr> 
                     <td> Résumé </td>
-                    <td> <textarea name=resume value="<?php echo set_value('resume'); ?>" rows="10" cols="75"></textarea> </td>
+                    <td> <textarea name=resume value="<?php echo set_value('resume'); ?>" rows="10" cols="75"><?php echo set_value('resume'); ?></textarea> </td>
                     <td class="error_form"><?php echo form_error('resume'); ?></td>
             </tr>
             <tr>
                     <td> Historique </td>
-                    <td> <textarea name=historique value="<?php echo set_value('historique'); ?>" rows="10" cols="75"></textarea> </td>
+                    <td> <textarea name=historique value="<?php echo set_value('historique'); ?>" rows="10" cols="75"><?php echo set_value('historique'); ?></textarea> </td>
                     <td class="error_form"><?php echo form_error('historique'); ?></td>
             </tr>
             <tr>
                     <td> Description </td>
-                    <td> <textarea name=description value="<?php echo set_value('description'); ?>" rows="5" cols="75"></textarea> </td>
+                    <td> <textarea name=description value="<?php echo set_value('description'); ?>" rows="5" cols="75"><?php echo set_value('description'); ?></textarea> </td>
                     <td class="error_form"><?php echo form_error('description'); ?></td>
             </tr>
             <tr>

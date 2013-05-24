@@ -1,12 +1,12 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 /**
- * Manager of Ressource_graphique, connect to database and interact with Ressource_graphique entities
+ * Manager of Ressource_video, connect to database and interact with Ressource_video entities
  *
  * @author paulyves
  */
 
-class Ressource_graphique_model extends CI_Model
+class Ressource_video_model extends CI_Model
 {
     public function __construct()
     {
@@ -18,7 +18,7 @@ class Ressource_graphique_model extends CI_Model
     }
     
     //beware, the arg $ressource should not exist in the database
-    public function ajout_ressource (Ressource_graphique $ressource){
+    public function ajout_ressource (Ressource_video $ressource){
         
         $attributeArray = $ressource->get_attributes();
         foreach ($attributeArray as $attribute => $value){
@@ -26,14 +26,14 @@ class Ressource_graphique_model extends CI_Model
             $this->db->set($dbAttribute,$value);
         }
         
-        $this->db->insert('ressource_graphique');
+        $this->db->insert('ressource_video');
     }
     
     //get first ressource_textuelle from table with $attribute set at $value
     public function get_ressource ($attribute,$value){
             
         $this->db->select('*');
-        $this->db->from('ressource_graphique');
+        $this->db->from('ressource_video');
         $this->db->where($attribute, $value);
         $query = $this->db->get();
         $result = $query->result_array();
@@ -43,11 +43,11 @@ class Ressource_graphique_model extends CI_Model
             
     }
         
-    public function exist($ressource_graph_id){
+    public function exist($ressource_video_id){
             
-        $this->db->select('ressource_graphique_id');
-        $this->db->from('ressource_graphique');
-        $this->db->where('ressource_graphique_id', $ressource_graph_id);
+        $this->db->select('ressource_video_id');
+        $this->db->from('ressource_video');
+        $this->db->where('ressource_video_id', $ressource_video_id);
         $numberOfInstance = $this->db->count_all_results(); //Renvoie 0 si le $objet_id n'existe pas
          if ($numberOfInstance==0){
             return FALSE;
@@ -56,19 +56,19 @@ class Ressource_graphique_model extends CI_Model
         }
     }
         
-    public function update_ressource (Ressource_graphique $ressource){
+    public function update_ressource (Ressource_video $ressource){
             
         $attributeArray = $ressource->get_attributes();
         foreach ($attributeArray as $attribute => $value){
             $dbAttribute = substr($attribute, 1); //we must delete the _ of the _attribute_name
             $this->db->set($dbAttribute,$value);
         }
-        $this->db->where('ressource_graphique_id',$ressource->get_ressource_graphique_id());
+        $this->db->where('ressource_video_id',$ressource->get_ressource_video_id());
             
-        $this->db->update('ressource_graphique');
+        $this->db->update('ressource_video');
     }
 }
 
 
-/* End of file ressource_graphique_model.php */
-/* Location: ./application/models/ressource_graphique_model.php */
+/* End of file ressource_video_model.php */
+/* Location: ./application/models/ressource_video_model.php */

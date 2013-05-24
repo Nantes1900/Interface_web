@@ -1,14 +1,12 @@
-<?php
+<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 /**
- * This class aims at having more natural representation of ressource_texte object
- * it relies on ressource_texte_model to connect to the database
+ * abstract class from which every Ressource_*** will inherit
+ *
  * @author paulyves
  */
-class Ressource_texte {
-    protected $_ressource_textuelle_id;   
+abstract class Ressource {
     protected $_username;
     protected $_titre;
     protected $_description;
@@ -26,24 +24,31 @@ class Ressource_texte {
     protected $_date_creation;
     protected $_date_maj;
     protected $_last_modified;
-    protected $_sous_categorie;
-    protected $_pagination;
     
     //with an array of datas (typically the result of a db query), we directly call the hydrate function
-    //with a ressource_textuelle_id, we use the ressource_texte_model to query the db and hydrate with its answer the new objet entity
-    public function __construct($ressourceTxtData) {
-        if (is_array($ressourceTxtData)){
-            $this->hydrate($ressourceTxtData);
+    //with a ressource_***_id, we use the ressource_***_model to query the db and hydrate with its answer the new objet entity
+    public function __construct($ressourceData) {
+        if (is_array($ressourceData)){
+            $this->hydrate($ressourceData);
         } else {
-            $ressourceTxtManager = new Ressource_texte_model();
-            if ($ressourceTxtManager->exist($ressourceTxtData)){
-                $this->hydrate($ressourceTxtManager->get_ressource('ressource_textuelle_id', $ressourceTxtData));
-            }
+            $className = get_class($this);
+            $managerName = $className.'_model';
+            $ressourceManager = new $managerName();
+            if ($ressourceManager->exist($ressourceData)){
+                if ($className == 'Ressource_texte')
+                    $this->hydrate($ressourceManager->get_ressource('ressource_textuelle_id', $ressourceData));
+                }
+                if ($className == 'Ressource_graphique'){
+                    $this->hydrate($ressourceManager->get_ressource('ressource_graphique_id', $ressourceData));
+                }
+                if ($className == 'Ressource_video'){
+                    $this->hydrate($ressourceManager->get_ressource('ressource_video_id', $ressourceData));
+                }
         }
     }
     
-    public function hydrate(array $ressourceTxtData) {
-        foreach ($ressourceTxtData as $key => $value) { //key correspond to attribute name, value to it's value
+    public function hydrate(array $ressourceData) {
+        foreach ($ressourceData as $key => $value) { //key correspond to attribute name, value to it's value
             $method = 'set_'.$key;   //we create a set_ method corresponding to the key
             if (method_exists($this, $method)){ //security if wrong key name
                 //calling the created setter method
@@ -53,8 +58,15 @@ class Ressource_texte {
     }
     
     public  function save(){
-        $ressourceManager = new Ressource_texte_model();
-        if ($ressourceManager->exist($this->get_ressource_textuelle_id())){
+        $className = get_class($this);
+        $managerName = $className.'_model';
+        $ressourceManager = new $managerName(); //to improve
+        if ($className=='Ressource_texte'){
+            $getRessourceMethod = 'get_ressource_textuelle_id';
+        } else {
+            $getRessourceMethod = 'get_'.strtolower($className).'_id';
+        }
+        if ($ressourceManager->exist($this->$getRessourceMethod())){
             $this->set_last_modified(date('Y-m-d H:i:s'));
             $ressourceManager->update_ressource($this);
         }
@@ -67,23 +79,15 @@ class Ressource_texte {
     
     //getters and setters
     //
-    //return an associative array of all attributes except _ressource_textuelle_id with their value
-    //beware of underscore, attribute name are like _ressource_textuelle_id
+    //return an associative array of all attributes except _ressource_*graphique***_id with their value
+    //beware of underscore, attribute name are like _ressource_graphique_id
     public function get_attributes(){
         foreach ($this as $attribute => $value){
-            if (isset($value) && ($attribute!='_ressource_textuelle_id') ){
-                $attributeArray[$attribute]=$value;
+            if (isset($value) && (!preg_match("#ressource_[a-z]*_id#", $attribute))){
+                $attributeArray[$attribute]=$value;                
             }
         }
         return $attributeArray;
-    }
-    
-    public function get_ressource_textuelle_id() {
-        return $this->_ressource_textuelle_id;
-    }
-
-    public function set_ressource_textuelle_id($_ressource_textuelle_id) {
-        $this->_ressource_textuelle_id = $_ressource_textuelle_id;
     }
     
     public function get_username() {
@@ -222,25 +226,9 @@ class Ressource_texte {
         $this->_last_modified = $_last_modified;
     }
 
-    public function get_sous_categorie() {
-        return $this->_sous_categorie;
-    }
-
-    public function set_sous_categorie($_sous_categorie) {
-        $this->_sous_categorie = $_sous_categorie;
-    }
-
-    public function get_pagination() {
-        return $this->_pagination;
-    }
-
-    public function set_pagination($_pagination) {
-        $this->_pagination = $_pagination;
-    }
-
 
 }
 
-/* End of file ressource_texte.php */
-/* Location : ./application/models/ressource_texte.php */
+/* End of file ressource.php */
+/* Location : ./application/models/ressource.php */
 
