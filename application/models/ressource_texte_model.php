@@ -42,9 +42,9 @@ class Ressource_texte_model extends CI_Model
             $this->db->where($attribute, $value);
             $query = $this->db->get();
             $result = $query->result_array();
-            
-            return $result['0'];
-            
+            if (isset($result['0'])){    
+                return $result['0'];
+            }
         }
         
         public function exist($ressource_txt_id){

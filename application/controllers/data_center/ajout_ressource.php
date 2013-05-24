@@ -37,6 +37,8 @@ class Ajout_ressource extends CI_Controller
             //Ce code sera executé charque fois que ce contrôleur sera appelé
             
             $this->load->library('form_validation');
+            $this->load->model('objet_model');
+            require ('application/models/objet.php');
             $this->load->helper(array('form','dates'));
             $this->load->view('header');
 	}
@@ -64,7 +66,9 @@ class Ajout_ressource extends CI_Controller
             
             if ($this->form_validation->run('ajout_texte') == FALSE) 
             {
-                $this->load->view('data_center/ajout_texte');
+                $objet_list = $this->objet_model->get_objet_list();
+                $data = array('objet_list' => $objet_list);
+                $this->load->view('data_center/ajout_texte',$data);
                 $this->load->view('footer');
             }
             else
@@ -96,15 +100,20 @@ class Ajout_ressource extends CI_Controller
                                 
                 $textedata['date'] = $date_infos['date'];
                 $textedata['date_precision'] = $date_infos['date_precision'];
-                    
-                $this->ressource_texte_model->ajout_texte($textedata);            
+                //querying    
+                $this->ressource_texte_model->ajout_texte($textedata);
+                
+                $ressource_id = $this->ressource_texte_model->last_insert_id();
+                $objet_id = $this->input->post('objet');
+                //eventually adding a related documentation
+                if ($objet_id!=null){
+                    $this->ressource_texte_model->add_documentation($objet_id, $ressource_id);
+                    redirect('accueil/accueil/','refresh');
+                }
                 redirect('data_center/data_center/','refresh');
                 
                 /** @todo Ajouter une page de confirmation du succès d'ajout de l'objet */
             }
-         
-        /** @todo Coder les générations de formulaires pour l'ajout des autres types de ressources*/
-            
         }
         
         public function formulaire_image(){
