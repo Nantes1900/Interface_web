@@ -198,6 +198,11 @@ $config = array(
                         'rules'=>'trim|max_length[200]|xss_clean'
                     ),
                     array(
+                        'field'=>'couleur',
+                        'label'=>'Couleur',
+                        'rules'=>'trim|max_length[200]|xss_clean'
+                    ),
+                    array(
                         'field'=>'technique',
                         'label'=>'Technique',
                         'rules'=>'trim|max_length[200]|xss_clean'

@@ -123,7 +123,8 @@
                 <td> 
                     <input type="radio" name="couleur" value="TRUE" <?php echo set_select('couleur', 'TRUE'); ?> >Couleur <br/>
                     <input type="radio" name="couleur" value="FALSE" <?php echo set_select('couleur', 'FALSE'); ?> >Noir et blanc
-                </td>                
+                </td>
+                <td class="error_form"><?php echo form_error('couleur'); ?></td>
             </tr>
             <tr>
                 <td> Télécharger image </td>

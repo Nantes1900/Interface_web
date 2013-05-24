@@ -29,6 +29,10 @@ class Ressource_graphique_model extends CI_Model
         $this->db->insert('ressource_graphique');
     }
     
+    public function last_insert_id(){
+        return $this->db->insert_id();
+    }
+    
     //get first ressource_textuelle from table with $attribute set at $value
     public function get_ressource ($attribute,$value){
             
@@ -66,6 +70,12 @@ class Ressource_graphique_model extends CI_Model
         $this->db->where('ressource_graphique_id',$ressource->get_ressource_graphique_id());
             
         $this->db->update('ressource_graphique');
+    }
+    
+    public function add_documentation($objet_id, $ressource_id){
+        $this->db->set('objet_id',$objet_id);
+        $this->db->set('ressource_graphique_id', $ressource_id);
+        $this->db->insert('documentation_graphique');
     }
 }
 
