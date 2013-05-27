@@ -43,6 +43,7 @@ class Objet_model extends CI_Model
             return $resultArray;
         }
         
+        //return objet_id out of the name
         public function get_objet_by_name($name)
         {
             $this->db->select('objet_id');
@@ -74,7 +75,7 @@ class Objet_model extends CI_Model
             }
         }
         
-        //get first objet from table with $attribute set at $value
+        //get first objet from table as an associative array with $attribute set at $value
         public function get_objet ($attribute,$value){
             
             $this->db->select('*');

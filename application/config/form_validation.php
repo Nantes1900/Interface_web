@@ -45,7 +45,7 @@ $config = array(
                     array(
                         'field'=>'nom_objet',
                         'label'=>'Nom_objet',
-                        'rules'=>'trim|required|min_length[5]|max_length[20]|xss_clean'
+                        'rules'=>'trim|required|min_length[5]|max_length[20]|xss_clean|callback_check_nom'
                     ),
                     array(
                         'field'=>'resume',
