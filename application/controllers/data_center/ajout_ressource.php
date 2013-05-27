@@ -108,7 +108,6 @@ class Ajout_ressource extends CI_Controller
                 //eventually adding a related documentation
                 if ($objet_id!=null){
                     $this->ressource_texte_model->add_documentation($objet_id, $ressource_id);
-                    redirect('accueil/accueil/','refresh');
                 }
                 redirect('data_center/data_center/','refresh');
                 
@@ -129,15 +128,17 @@ class Ajout_ressource extends CI_Controller
             $this->load->library('upload',$config);
             
             if($this->form_validation->run('ajout_image') == FALSE){
-                
-                $this->load->view('data_center/ajout_image', array('error' => ' ' ));
+                $objet_list = $this->objet_model->get_objet_list();
+                $data = array('objet_list' => $objet_list, 'error' => ' ');
+                $this->load->view('data_center/ajout_image', $data);
                 $this->load->view('footer');   
                 
             } else {
                 
                 if ( ! $this->upload->do_upload('image')){
-                    $error = array('error' => $this->upload->display_errors());
-                    $this->load->view('data_center/ajout_image', $error);
+                    $objet_list = $this->objet_model->get_objet_list();
+                    $data = array('objet_list' => $objet_list,'error' => $this->upload->display_errors());
+                    $this->load->view('data_center/ajout_image', $data);
 		} else {
                     //getting info about upload
                     $imageData = $this->upload->data();
@@ -182,6 +183,13 @@ class Ajout_ressource extends CI_Controller
                     //we set the manager and add $ressource in the database
                     $ressourceManager = new Ressource_graphique_model();
                     $ressourceManager->ajout_ressource($ressource);
+                    
+                    $ressource_id = $this->ressource_graphique_model->last_insert_id();
+                    $objet_id = $this->input->post('objet');
+                    //eventually adding a related documentation
+                    if ($objet_id!=null){
+                        $this->ressource_graphique_model->add_documentation($objet_id, $ressource_id);
+                    }
                     redirect('data_center/data_center/','refresh');
                 }
             }
@@ -199,14 +207,17 @@ class Ajout_ressource extends CI_Controller
             set_time_limit(120); //change the max execution time of php to 120 sec for this method
             if($this->form_validation->run('ajout_video') == FALSE){
                 
-                $this->load->view('data_center/ajout_video', array('error' => ' ' ));
+                $objet_list = $this->objet_model->get_objet_list();
+                $data = array('objet_list' => $objet_list, 'error' => ' ');
+                $this->load->view('data_center/ajout_video', $data);
                 $this->load->view('footer');   
                 
             } else {
                 
                 if ( ! $this->upload->do_upload('video')){
-                    $error = array('error' => $this->upload->display_errors());
-                    $this->load->view('data_center/ajout_video', $error);
+                    $objet_list = $this->objet_model->get_objet_list();
+                    $data = array('objet_list' => $objet_list,'error' => $this->upload->display_errors());
+                    $this->load->view('data_center/ajout_video', $data);
 		} else {
                     //getting info about upload
                     $videoData = $this->upload->data();

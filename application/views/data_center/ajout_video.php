@@ -129,6 +129,18 @@
                     <input type="file" name="video">
                 </td>                
             </tr>
+            <tr>
+                    <td> Créer un lien de documentation vers un objet </td>
+                    <td>
+                        <select name="objet">
+                            <option value=""> Aucun </option>
+                            <?php foreach($objet_list as $objet): 
+                                    echo '<option value="'.$objet->get_objet_id().'">'.$objet->get_nom_objet().'</option>'; 
+                                  endforeach; ?>
+                            
+                        </select>
+                    </td>
+            </tr>
             <tr><td><input type="submit" value="Ajouter cette ressource" /><tr><td>
         </table>
     </form>
