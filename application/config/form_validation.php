@@ -447,6 +447,13 @@ $config = array(
                         'label'=>'password',
                         'rules'=>'trim|required|xss_clean|callback_check_password'
                     )
+                ),
+    'sort_objet' => array(
+                    array(
+                        'field'=>'speAttributeValue',
+                        'label'=>'speAttributeValue',
+                        'rules'=>'trim|max_length[50]|xss_clean'
+                    )
                 )
 );
 
