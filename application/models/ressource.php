@@ -68,6 +68,7 @@ abstract class Ressource {
         }
         if ($ressourceManager->exist($this->$getRessourceMethod())){
             $this->set_last_modified(date('Y-m-d H:i:s'));
+            $this->_date_maj[] = $this->get_last_modified();
             $ressourceManager->update_ressource($this);
         }
     }

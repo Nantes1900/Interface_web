@@ -30,6 +30,10 @@ class Ressource_texte_model extends CI_Model
             $this->db->insert('ressource_textuelle'); //Exécution            
         }
         
+        public function last_insert_id(){
+            return $this->db->insert_id();
+        }
+        
         //get first ressource_textuelle from table with $attribute set at $value
         public function get_ressource ($attribute,$value){
             
@@ -38,9 +42,9 @@ class Ressource_texte_model extends CI_Model
             $this->db->where($attribute, $value);
             $query = $this->db->get();
             $result = $query->result_array();
-            
-            return $result['0'];
-            
+            if (isset($result['0'])){    
+                return $result['0'];
+            }
         }
         
         public function exist($ressource_txt_id){
@@ -66,6 +70,12 @@ class Ressource_texte_model extends CI_Model
             $this->db->where('ressource_textuelle_id',$ressource->get_ressource_textuelle_id());
             
             $this->db->update('ressource_textuelle');
+        }
+        
+        public function add_documentation($objet_id, $ressource_id){
+            $this->db->set('objet_id',$objet_id);
+            $this->db->set('ressource_textuelle_id', $ressource_id);
+            $this->db->insert('documentation_textuelle');
         }
 
 }

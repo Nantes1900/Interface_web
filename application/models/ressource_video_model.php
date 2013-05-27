@@ -29,6 +29,10 @@ class Ressource_video_model extends CI_Model
         $this->db->insert('ressource_video');
     }
     
+    public function last_insert_id(){
+        return $this->db->insert_id();
+    }
+    
     //get first ressource_textuelle from table with $attribute set at $value
     public function get_ressource ($attribute,$value){
             
@@ -66,6 +70,12 @@ class Ressource_video_model extends CI_Model
         $this->db->where('ressource_video_id',$ressource->get_ressource_video_id());
             
         $this->db->update('ressource_video');
+    }
+    
+    public function add_documentation($objet_id, $ressource_id){
+        $this->db->set('objet_id',$objet_id);
+        $this->db->set('ressource_video_id', $ressource_id);
+        $this->db->insert('documentation_video');
     }
 }
 

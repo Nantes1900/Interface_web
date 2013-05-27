@@ -123,7 +123,8 @@
                 <td> 
                     <input type="radio" name="couleur" value="TRUE" <?php echo set_select('couleur', 'TRUE'); ?> >Couleur <br/>
                     <input type="radio" name="couleur" value="FALSE" <?php echo set_select('couleur', 'FALSE'); ?> >Noir et blanc
-                </td>                
+                </td>
+                <td class="error_form"><?php echo form_error('couleur'); ?></td>
             </tr>
             <tr>
                 <td> Télécharger image </td>
@@ -136,7 +137,18 @@
                 <td> <input type="text" name="pagination" value="<?php echo set_value('pagination'); ?>"> </td>
                 <td class="error_form"><?php echo form_error('pagination'); ?></td>
             </tr>
-            
+            <tr>
+                    <td> Créer un lien de documentation vers un objet </td>
+                    <td>
+                        <select name="objet">
+                            <option value=""> Aucun </option>
+                            <?php foreach($objet_list as $objet): 
+                                    echo '<option value="'.$objet->get_objet_id().'">'.$objet->get_nom_objet().'</option>'; 
+                                  endforeach; ?>
+                            
+                        </select>
+                    </td>
+            </tr>
             <tr><td><input type="submit" value="Ajouter cette ressource" /><tr><td>
                             
         </table>
