@@ -10,7 +10,8 @@
  */
 class View_data extends CI_Controller {
    
-    public function index(){
+    //check what ressource is targeted and if it exist, then call the proper function
+    public function index(){ 
         if($this->session->userdata('username')){
             $dataType = $this->input->post('type');
             $data_id = $this->input->post('data_id');
@@ -40,6 +41,20 @@ class View_data extends CI_Controller {
         $this->load->library('form_validation');
         $this->load->view('header');
     }   
+    
+    public function view_objet($objet_id){
+        $objet = new Objet($objet_id);
+        
+        $linkedObjetArray = $this->objet_model->get_linked_objet($objet_id);
+        
+        $data = array ('objet'=>$objet);
+        $sidebarData = array ('linkedObjetArray'=>$linkedObjetArray);
+        
+        $this->load->view('view_data/linked_sidebar', $sidebarData);
+        $this->load->view('view_data/view_objet', $data);
+        
+        $this->load->view('footer');
+    }
     
 }
 

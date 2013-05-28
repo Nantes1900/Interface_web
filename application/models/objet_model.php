@@ -122,6 +122,7 @@ class Objet_model extends CI_Model
             $this->db->from('objet');
             $this->db->join('relation','objet.objet_id=relation.objet_id_1');
             $this->db->join('type_relation','relation.type_relation_id=type_relation.type_relation_id');
+            $this->db->order_by('nom_objet','asc');
             $this->db->where('objet_id_2', $objet_id);
             $query = $this->db->get();
             
@@ -133,6 +134,7 @@ class Objet_model extends CI_Model
             $this->db->from('objet');
             $this->db->join('relation','objet.objet_id=relation.objet_id_2');
             $this->db->join('type_relation','relation.type_relation_id=type_relation.type_relation_id');
+            $this->db->order_by('nom_objet','asc');
             $this->db->where('objet_id_1', $objet_id);
             $query = $this->db->get();
             
