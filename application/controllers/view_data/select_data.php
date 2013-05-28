@@ -1,7 +1,7 @@
 <?php
 
 /**
- * admin_panel class
+ * select_data class
  * 
  * Accessible à tous
  * Menu permettant de sélectionner des objets, ressources... pour les visualiser
@@ -27,7 +27,6 @@ class Select_data extends CI_Controller {
         require ('application/models/objet.php');
         $this->load->model('objet_model');
         $this->load->library('form_validation');
-        $this->load->helper('dates_helper');
         $this->load->view('header');
     }   
     

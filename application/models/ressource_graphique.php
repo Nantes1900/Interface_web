@@ -6,7 +6,7 @@
  *
  * @author paulyves
  */
-require ('application/models/ressource.php');
+require_once ('application/models/ressource.php');
 
 class Ressource_graphique extends Ressource {
     protected $_ressource_graphique_id;

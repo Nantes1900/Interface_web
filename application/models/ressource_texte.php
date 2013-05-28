@@ -7,7 +7,7 @@ if (!defined('BASEPATH')) exit('No direct script access allowed');
  * it relies on ressource_texte_model to connect to the database
  * @author paulyves
  */
-require ('application/models/ressource.php');
+require_once ('application/models/ressource.php');
 
 class Ressource_texte extends Ressource {
     protected $_ressource_textuelle_id;

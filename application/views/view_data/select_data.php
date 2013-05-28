@@ -4,7 +4,7 @@
     
     <h2>Liste des objets</h2>
 <!--    sorting form-->
-    <?php echo form_open('view_data/select_data/index') ?>
+    <?php echo form_open('view_data/select_data') ?>
         <label for="orderBy">Trier par:</label>
         <select name="orderBy" id="orderBy">
             <option value="nom_objet">Nom de l'objet</option>
@@ -38,7 +38,7 @@
     <table>
         <thead>
             <tr>
-                <th>Objet</th><th>Créateur</th><th>Résumé</th><th>Mots-clés</th>
+                <th>Objet</th><th>Créateur</th><th>Résumé</th><th>Mots-clés</th><th>Visualiser</th>
             </tr>
         </thead>
         <tbody>
@@ -48,6 +48,13 @@
                     <td><?php echo $objet->get_username(); ?></td>
                     <td><?php echo $objet->get_resume(); ?></td>
                     <td><?php echo $objet->get_mots_cles(); ?></td>
+                    <td>
+                        <?php echo form_open('view_data/view_data') ?>
+                            <input type="hidden" name="data_id" value="<?php echo $objet->get_objet_id(); ?>" />
+                            <input type="hidden" name="type" value="objet" />
+                            <input type="submit" value="Voir cet objet" />
+                        </form>
+                    </td>
                 </tr>
             <?php }  ?>
         </tbody>
