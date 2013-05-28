@@ -47,7 +47,7 @@ class Ajout_objet extends CI_Controller
         public function formulaire()
         {
             
-            if ($this->form_validation->run('ajout_objet') == FALSE) /** @todo Rajouter dans la validation si un objet du même nom existe déjà ou pas */
+            if ($this->form_validation->run('ajout_objet') == FALSE) 
             {
                 $this->load->view('data_center/ajout_objet');
                 $this->load->view('footer');
@@ -68,8 +68,18 @@ class Ajout_objet extends CI_Controller
                 
                 /** @todo Ajouter une page de confirmation du succès d'ajout de l'objet */
             }
-         
-            
+        }
+        
+        
+        
+        public function check_nom($name){
+            $objet = $this->objet_model->get_objet('nom_objet', $name);
+            if ($objet!=null){
+                $this->form_validation->set_message('check_nom', 'Cet objet existe déjà');
+                return FALSE;
+            } else {
+                return TRUE;
+            }
         }
         
         

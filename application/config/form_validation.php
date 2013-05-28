@@ -45,7 +45,7 @@ $config = array(
                     array(
                         'field'=>'nom_objet',
                         'label'=>'Nom_objet',
-                        'rules'=>'trim|required|min_length[5]|max_length[20]|xss_clean'
+                        'rules'=>'trim|required|min_length[5]|max_length[20]|xss_clean|callback_check_nom'
                     ),
                     array(
                         'field'=>'resume',
@@ -446,6 +446,13 @@ $config = array(
                         'field'=>'password',
                         'label'=>'password',
                         'rules'=>'trim|required|xss_clean|callback_check_password'
+                    )
+                ),
+    'sort_objet' => array(
+                    array(
+                        'field'=>'speAttributeValue',
+                        'label'=>'speAttributeValue',
+                        'rules'=>'trim|max_length[50]|xss_clean'
                     )
                 )
 );

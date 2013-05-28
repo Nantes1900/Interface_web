@@ -77,6 +77,12 @@ class Ajout_relation extends CI_Controller
                 $relationdata['date_debut_relation'] = $dates_infos['date_debut'];
                 $relationdata['date_fin_relation'] = $dates_infos['date_fin'];
                 $relationdata['date_precision'] = $dates_infos['date_precision'];
+//                $date_infos = conc_date($this->input->post('jour_debut'),$this->input->post('mois_debut'),$this->input->post('annee_debut'));                                
+//                $relationdata['date_debut_relation'] = $date_infos['date'];
+//                $relationdata['date_precision'] = $date_infos['date_precision'];
+//                $date_infos = conc_date($this->input->post('jour_fin'),$this->input->post('mois_fin'),$this->input->post('annee_fin'));                                
+//                $relationdata['date_fin_relation'] = $date_infos['date'];
+                
                 
                 $relationdata['parent'] = $this->input->post('parent')? 'true':'false';
                              

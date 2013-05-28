@@ -39,10 +39,15 @@ class Accueil extends CI_Controller
                         
                 $this->load->view('accueil/data_center_anchor');
                         
-                if ( $this->session->userdata('user_level') == 9 ){
-                    $this->load->view('accueil/admin_panel_anchor');
-                }
-                $this->load->view('accueil/profile_panel_anchor');
+
+                        $this->load->view('accueil/select_data_anchor');
+                        
+                        if ( $this->session->userdata('user_level') == 9 )
+                        {
+                            $this->load->view('accueil/admin_panel_anchor');
+                        }
+                        $this->load->view('accueil/profile_panel_anchor');
+
                         
 		$this->load->view('footer');
 	}

@@ -28,12 +28,12 @@ class Relation_model extends CI_Model
                 $this->db->set('datation_indication_fin', $relationdata['datation_indication_fin']);
             }
             
-            if (array_key_exists('datation_debut_relation', $relationdata))
+            if (array_key_exists('date_debut_relation', $relationdata))
             {
                 $this->db->set('date_debut_relation', $relationdata['date_debut_relation']);
             }
             
-            if (array_key_exists('datation_fin_relation', $relationdata))
+            if (array_key_exists('date_debut_relation', $relationdata))
             {
                 $this->db->set('date_fin_relation', $relationdata['date_fin_relation']);
             }

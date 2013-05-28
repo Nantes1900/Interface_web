@@ -43,6 +43,7 @@ class Objet_model extends CI_Model
             return $resultArray;
         }
         
+        //return objet_id out of the name
         public function get_objet_by_name($name)
         {
             $this->db->select('objet_id');
@@ -74,7 +75,7 @@ class Objet_model extends CI_Model
             }
         }
         
-        //get first objet from table with $attribute set at $value
+        //get first objet from table as an associative array with $attribute set at $value
         public function get_objet ($attribute,$value){
             
             $this->db->select('*');
@@ -110,6 +111,38 @@ class Objet_model extends CI_Model
             $this->db->where('objet_id',$objet->get_objet_id());
             
             $this->db->update('objet');
+        }
+        
+        //return a list of associative arrays linked by the relation table to the $objet_id argument
+        //the type of relation is given by a third join on type_relation
+        //arrays are like objet_id, nom_objet, username, resume, type relation, date_debut_relation, date_fin_relation, parent
+        public function get_linked_objet($objet_id){
+            $this->db->select('objet_id,nom_objet, objet.username AS username, resume, type_relation, date_debut_relation, 
+                                date_fin_relation, parent');
+            $this->db->from('objet');
+            $this->db->join('relation','objet.objet_id=relation.objet_id_1');
+            $this->db->join('type_relation','relation.type_relation_id=type_relation.type_relation_id');
+            $this->db->order_by('nom_objet','asc');
+            $this->db->where('objet_id_2', $objet_id);
+            $query = $this->db->get();
+            
+            $resultArray = $query->result_array();
+            
+            //second request for inversed roles
+            $this->db->select('objet_id,nom_objet, objet.username AS username, resume, type_relation, date_debut_relation, 
+                                date_fin_relation, parent');
+            $this->db->from('objet');
+            $this->db->join('relation','objet.objet_id=relation.objet_id_2');
+            $this->db->join('type_relation','relation.type_relation_id=type_relation.type_relation_id');
+            $this->db->order_by('nom_objet','asc');
+            $this->db->where('objet_id_1', $objet_id);
+            $query = $this->db->get();
+            
+            foreach ($query->result_array() as $row){
+                $resultArray[]=$row;
+            }
+                
+            return $resultArray;
         }
         
 }

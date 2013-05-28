@@ -2,9 +2,7 @@
 /* CSS par défaut */
 
 html{
-	width:1024px;
-	margin-left:auto;
-	margin-right:auto;
+
 }
 
 
@@ -21,12 +19,26 @@ html{
 /* Styles globaux*/
 
 body{
-	width: 900px;
+	width:60%;
+	margin-left:15%;
+	margin-right:75%;
 	font-family:Verdana;
 	background: center;
 	background-repeat: repeat;
 	background-position: 0 0;
 	text-align:left;	
+}
+
+div.rightSidebar{
+        width:20%;
+	margin-left:60%;
+	margin-right:auto;
+	font-family:Verdana;
+	background: center;
+	background-repeat: repeat;
+	background-position: 0 0;
+	text-align:left;	
+        position:absolute;
 }
 
 h1{
@@ -119,6 +131,42 @@ error{
 .menu{
 	
 }
+
+/*helpboxes in <li> elements*/
+li.helpbox{
+    position:relative; /*this is the key*/
+    text-decoration:none;
+}
+
+li.helpbox span{display: none}
+
+li.helpbox:hover span{ /*the span will display just on :hover state*/
+    display:block;
+    position:absolute;
+    top:120%;
+    right:88%;
+    width:100%;
+    border:5px solid #9e5555;
+    background-color:#B98585; color:#000;
+    text-align: center;
+    padding:10px;
+  }
+
+  li.helpbox:hover span:after{ /*the span will display just on :hover state*/
+    content:'';
+    position:absolute;
+    top:-11px;
+    width:10px;
+    height:10px;
+    border-top:5px solid #9e5555;
+    border-left:5px solid #9e5555;
+    background:#B98585;
+    left:97%;
+    margin-left:-3%;
+    -moz-transform:rotate(45deg);
+    -webkit-transform:rotate(45deg);
+    transform:rotate(45deg);
+  }
 
 /*table*/
 .classyTable {
