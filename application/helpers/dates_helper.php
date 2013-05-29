@@ -142,11 +142,16 @@ if ( ! function_exists('dateFR_to_timestamp')){
 }
 
 if ( ! function_exists('to_date_dmY')){
-    //convertit date AAAA-mm-jj en jj/mm/AAAA
+    //convert date AAAA-mm-dd to dd/mm/AAAA
     function to_date_dmy($date) {
-        list($year, $month, $day) = explode('-', $date);
-        $newDate = $day.'/'.$month.'/'.$year;
-        return $newDate;
+        //first we check that the format is valid
+        if (preg_match("#\d\d\d\d-\d\d-\d\d#", $date)){
+            list($year, $month, $day) = explode('-', $date);
+            $newDate = $day.'/'.$month.'/'.$year;
+            return $newDate;
+        } else { //if non valid format, we do nothing
+            return $date;
+        }
     }
 }
 
