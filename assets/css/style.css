@@ -149,6 +149,7 @@ li.helpbox:hover span{ /*the span will display just on :hover state*/
     border:5px solid #9e5555;
     background-color:#B98585; color:#000;
     text-align: center;
+    font-size : small;
     padding:10px;
   }
 
@@ -167,7 +168,15 @@ li.helpbox:hover span{ /*the span will display just on :hover state*/
     -webkit-transform:rotate(45deg);
     transform:rotate(45deg);
   }
-
+  /* for invisible buttons */
+  button.invisible { 
+      width:15%;
+      background:none;
+      border:none; 
+      cursor:hand; 
+      cursor:pointer;
+  }
+  
 /*table*/
 .classyTable {
 	margin:0px;padding:0px;

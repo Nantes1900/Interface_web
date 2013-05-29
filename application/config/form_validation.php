@@ -93,27 +93,27 @@ $config = array(
                     array(
                         'field'=>'description',
                         'label'=>'Description',
-                        'rules'=>'trim|max_length[200]|xss_clean'
+                        'rules'=>'trim|max_length[255]|xss_clean'
                     ),
                     array(
                         'field'=>'auteurs',
                         'label'=>'Auteurs',
-                        'rules'=>'trim|max_length[20]|xss_clean'
+                        'rules'=>'trim|max_length[40]|xss_clean'
                     ),
                     array(
                         'field'=>'editeur',
                         'label'=>'editeur',
-                        'rules'=>'trim|max_length[20]|xss_clean'
+                        'rules'=>'trim|max_length[40]|xss_clean'
                     ),
                     array(
                         'field'=>'ville_edition',
                         'label'=>'Ville_edition',
-                        'rules'=>'trim|max_length[20]|xss_clean'
+                        'rules'=>'trim|max_length[40]|xss_clean'
                     ),
                     array(
                         'field'=>'mots_cles',
                         'label'=>'Mots_cles',
-                        'rules'=>'trim|max_length[200]|xss_clean'
+                        'rules'=>'trim|max_length[255]|xss_clean'
                     ),
                     array(
                         'field'=>'sous_categorie',
@@ -160,27 +160,27 @@ $config = array(
                     array(
                         'field'=>'description',
                         'label'=>'Description',
-                        'rules'=>'trim|max_length[200]|xss_clean'
+                        'rules'=>'trim|max_length[255]|xss_clean'
                     ),
                     array(
                         'field'=>'auteurs',
                         'label'=>'Auteurs',
-                        'rules'=>'trim|max_length[20]|xss_clean'
+                        'rules'=>'trim|max_length[40]|xss_clean'
                     ),
                     array(
                         'field'=>'editeur',
                         'label'=>'editeur',
-                        'rules'=>'trim|max_length[20]|xss_clean'
+                        'rules'=>'trim|max_length[40]|xss_clean'
                     ),
                     array(
                         'field'=>'ville_edition',
                         'label'=>'Ville_edition',
-                        'rules'=>'trim|max_length[20]|xss_clean'
+                        'rules'=>'trim|max_length[40]|xss_clean'
                     ),
                     array(
                         'field'=>'mots_cles',
                         'label'=>'Mots_cles',
-                        'rules'=>'trim|max_length[200]|xss_clean'
+                        'rules'=>'trim|max_length[255]|xss_clean'
                     ),
                     array(
                         'field'=>'pagination',
@@ -262,27 +262,27 @@ $config = array(
                     array(
                         'field'=>'description',
                         'label'=>'Description',
-                        'rules'=>'trim|max_length[200]|xss_clean'
+                        'rules'=>'trim|max_length[255]|xss_clean'
                     ),
                     array(
                         'field'=>'auteurs',
                         'label'=>'Auteurs',
-                        'rules'=>'trim|max_length[20]|xss_clean'
+                        'rules'=>'trim|max_length[40]|xss_clean'
                     ),
                     array(
                         'field'=>'editeur',
                         'label'=>'editeur',
-                        'rules'=>'trim|max_length[20]|xss_clean'
+                        'rules'=>'trim|max_length[40]|xss_clean'
                     ),
                     array(
                         'field'=>'ville_edition',
                         'label'=>'Ville_edition',
-                        'rules'=>'trim|max_length[20]|xss_clean'
+                        'rules'=>'trim|max_length[40]|xss_clean'
                     ),
                     array(
                         'field'=>'mots_cles',
                         'label'=>'Mots_cles',
-                        'rules'=>'trim|max_length[200]|xss_clean'
+                        'rules'=>'trim|max_length[255]|xss_clean'
                     ),
                     array(
                         'field'=>'duree',

@@ -6,7 +6,7 @@
         <p> <?php echo $objet->get_resume(); ?> </p>
         
         <h2> Description </h2>
-        <p> <?php echo $objet->get_description(); ?> </p>
+        <p> <?php echo $objet->get_description(); ?> </p> 
         
         <h2> Historique </h2>
         <p> <?php echo $objet->get_historique(); ?> </p>
