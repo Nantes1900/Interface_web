@@ -8,7 +8,7 @@
                 <span> 
                     <?php echo $objetArray['resume']; ?> 
                     <br/>
-                    <?php echo 'du '.$objetArray['date_debut_relation'].' au '.$objetArray['date_fin_relation'] ?>
+                    <?php echo 'du '.to_date_dmy($objetArray['date_debut_relation']).' au '.to_date_dmy($objetArray['date_fin_relation']); ?>
                 </span>
             </li>
         <?php } ?>

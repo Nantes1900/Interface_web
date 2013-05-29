@@ -39,6 +39,7 @@ class View_data extends CI_Controller {
         $this->load->model('ressource_texte_model');
         $this->load->model('ressource_video_model');
         $this->load->library('form_validation');
+        $this->load->helper('dates');
         $this->load->view('header');
     }   
     
