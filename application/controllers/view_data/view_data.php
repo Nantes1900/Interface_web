@@ -47,9 +47,14 @@ class View_data extends CI_Controller {
         $objet = new Objet($objet_id);
         
         $linkedObjetArray = $this->objet_model->get_linked_objet($objet_id);
+        $linkedRessTxtArray = $this->ressource_texte_model->get_linked_ressource($objet_id);
+        $linkedRessGraphArray = $this->ressource_graphique_model->get_linked_ressource($objet_id);
+        $linkedRessVidArray = $this->ressource_video_model->get_linked_ressource($objet_id);
         
         $data = array ('objet'=>$objet);
-        $sidebarData = array ('linkedObjetArray'=>$linkedObjetArray);
+        $sidebarData = array ('linkedObjetArray'=>$linkedObjetArray, 'linkedRessTxtArray'=>$linkedRessTxtArray,
+                                'linkedRessGraphArray'=>$linkedRessGraphArray, 'linkedRessVidArray'=>$linkedRessVidArray);
+        
         
         $this->load->view('view_data/linked_sidebar', $sidebarData);
         $this->load->view('view_data/view_objet', $data);

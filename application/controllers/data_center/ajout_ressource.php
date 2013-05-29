@@ -255,6 +255,13 @@ class Ajout_ressource extends CI_Controller
                     //we set the manager and add $ressource in the database
                     $ressourceManager = new Ressource_video_model();
                     $ressourceManager->ajout_ressource($ressource);
+                    
+                    $ressource_id = $this->ressource_video_model->last_insert_id();
+                    $objet_id = $this->input->post('objet');
+                    //eventually adding a related documentation
+                    if ($objet_id!=null){
+                        $this->ressource_video_model->add_documentation($objet_id, $ressource_id);
+                    }
                     redirect('data_center/data_center/','refresh');
                 }
             }

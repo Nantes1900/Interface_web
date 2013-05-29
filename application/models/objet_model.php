@@ -115,9 +115,9 @@ class Objet_model extends CI_Model
         
         //return a list of associative arrays linked by the relation table to the $objet_id argument
         //the type of relation is given by a third join on type_relation
-        //arrays are like objet_id, nom_objet, username, resume, type relation, date_debut_relation, date_fin_relation, parent
+        //arrays are like relation_id, objet_id, nom_objet, username, resume, type relation, date_debut_relation, date_fin_relation, parent
         public function get_linked_objet($objet_id){
-            $this->db->select('objet_id,nom_objet, objet.username AS username, resume, type_relation, date_debut_relation, 
+            $this->db->select('relation_id, objet_id,nom_objet, objet.username AS username, resume, type_relation, date_debut_relation, 
                                 date_fin_relation, parent');
             $this->db->from('objet');
             $this->db->join('relation','objet.objet_id=relation.objet_id_1');
@@ -129,7 +129,7 @@ class Objet_model extends CI_Model
             $resultArray = $query->result_array();
             
             //second request for inversed roles
-            $this->db->select('objet_id,nom_objet, objet.username AS username, resume, type_relation, date_debut_relation, 
+            $this->db->select('relation_id, objet_id,nom_objet, objet.username AS username, resume, type_relation, date_debut_relation, 
                                 date_fin_relation, parent');
             $this->db->from('objet');
             $this->db->join('relation','objet.objet_id=relation.objet_id_2');

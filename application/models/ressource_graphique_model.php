@@ -78,37 +78,22 @@ class Ressource_graphique_model extends CI_Model
         $this->db->insert('documentation_graphique');
     }
     
-    //return a list of associative arrays linked by the relation table to the $objet_id argument
-    //the type of relation is given by a third join on type_relation
-    //arrays are like objet_id, nom_objet, username, resume, type relation, date_debut_relation, date_fin_relation, parent
-    public function get_linked_objet($ressource_id){
-        $this->db->select('objet_id,nom_objet, objet.username AS username, resume, type_relation, date_debut_relation, 
-                                date_fin_relation, parent');
-        $this->db->from('objet');
-        $this->db->join('relation','objet.objet_id=relation.objet_id_1');
-        $this->db->join('type_relation','relation.type_relation_id=type_relation.type_relation_id');
-        $this->db->order_by('nom_objet','asc');
-        $this->db->where('objet_id_2', $objet_id);
+   //return a list of associative arrays linked by the documentation_graphique table to the $objet_id argument
+   //arrays are like documentation_graphique_id, ressource_graphique_id, titre, 
+   //username, description, reference_ressource, date_debut_ressource
+   public function get_linked_ressource($objet_id){
+        $this->db->select('documentation_graphique_id, ressource_graphique.ressource_graphique_id AS ressource_id, titre,
+                        ressource_graphique.username AS username, description, reference_ressource, date_debut_ressource AS date');
+        $this->db->from('ressource_graphique');
+        $this->db->join('documentation_graphique AS d','ressource_graphique.ressource_graphique_id=d.ressource_graphique_id');
+        $this->db->order_by('titre','asc');
+        $this->db->where('objet_id', $objet_id);
         $query = $this->db->get();
             
         $resultArray = $query->result_array();
-            
-        //second request for inversed roles
-        $this->db->select('objet_id,nom_objet, objet.username AS username, resume, type_relation, date_debut_relation, 
-                                date_fin_relation, parent');
-        $this->db->from('objet');
-        $this->db->join('relation','objet.objet_id=relation.objet_id_2');
-        $this->db->join('type_relation','relation.type_relation_id=type_relation.type_relation_id');
-        $this->db->order_by('nom_objet','asc');
-        $this->db->where('objet_id_1', $objet_id);
-        $query = $this->db->get();
-            
-        foreach ($query->result_array() as $row){
-            $resultArray[]=$row;
-        }
-                
         return $resultArray;
-        }
+   }
+        
 }
 
 
