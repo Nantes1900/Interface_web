@@ -135,7 +135,7 @@ class Ajout_ressource extends CI_Controller
                 
             } else {
                 
-                if ($_FILES && $_FILES['image']['name'] !== "") {
+                if ($_FILES && $_FILES['image']['name'] !== "") { //we want to make image uploading optional
                 
                     if ( ! $this->upload->do_upload('image')){
                         $objet_list = $this->objet_model->get_objet_list();
@@ -146,41 +146,13 @@ class Ajout_ressource extends CI_Controller
                         $imageData = $this->upload->data();
                     
                         //creating a Ressource_graphique entity out of post data
-                        $array = array();
-                        $ressource = new Ressource_graphique($array);
-                        $ressource->set_date_creation(date('Y-m-d H:i:s'));
-                        $ressource->set_username($this->session->userdata('username'));
-                        $ressource->set_titre($this->input->post('titre'));
-                        $ressource->set_description($this->input->post('description'));
-                        $ressource->set_reference_ressource($this->input->post('reference_ressource'));
-                        $ressource->set_theme_ressource($this->input->post('theme_ressource'));
-                        $ressource->set_auteurs($this->input->post('auteurs'));
-                        $ressource->set_editeur($this->input->post('editeur'));
-                        $ressource->set_ville_edition($this->input->post('ville_edition'));
-                        $date_infos = conc_date($this->input->post('jour'),$this->input->post('mois'),$this->input->post('annee'));
-                        $ressource->set_date_debut_ressource($date_infos['date']);
-                        $ressource->set_date_precision($date_infos['date_precision']);
-                        $ressource->set_mots_cles($this->input->post('mots_cles'));
-                        $ressource->set_legende($this->input->post('legende'));
-                        $ressource->set_couleur($this->input->post('couleur'));
-                        if ( ! $this->input->post('pagination')) {
-                            $ressource->set_pagination('0');
-                        } else {
-                            $textedata['pagination'] = $this->input->post('pagination');
-                        }
+                        $ressource =  $this->form_img_basic(); //just basic posted data collecting
+                        
                         //as title is unique, we add the title to the name of the image
                         rename($dir . $imageData['file_name'], $dir .$ressource->get_titre().$imageData['file_name']);
                         $ressource->set_image($ressource->get_titre().$imageData['file_name']);
                     
                         $ressource->set_dimension($imageData['image_size_str']);
-                    
-                        $date_infos = conc_date($this->input->post('jourPrise'),$this->input->post('moisPrise'),$this->input->post('anneePrise'));
-                        $ressource->set_date_prise_vue($date_infos['date']);
-                    
-                        $ressource->set_localisation($this->input->post('localisation'));
-                    
-                        $ressource->set_technique($this->input->post('technique'));
-                        $ressource->set_type_support($this->input->post('type_support'));
                     
                         //we set the manager and add $ressource in the database
                         $ressourceManager = new Ressource_graphique_model();
@@ -196,36 +168,7 @@ class Ajout_ressource extends CI_Controller
                     }
                 } else {
                     //creating a Ressource_graphique entity out of post data
-                    $array = array();
-                    $ressource = new Ressource_graphique($array);
-                    $ressource->set_date_creation(date('Y-m-d H:i:s'));
-                    $ressource->set_username($this->session->userdata('username'));
-                    $ressource->set_titre($this->input->post('titre'));
-                    $ressource->set_description($this->input->post('description'));
-                    $ressource->set_reference_ressource($this->input->post('reference_ressource'));
-                    $ressource->set_theme_ressource($this->input->post('theme_ressource'));
-                    $ressource->set_auteurs($this->input->post('auteurs'));
-                    $ressource->set_editeur($this->input->post('editeur'));
-                    $ressource->set_ville_edition($this->input->post('ville_edition'));
-                    $date_infos = conc_date($this->input->post('jour'),$this->input->post('mois'),$this->input->post('annee'));
-                    $ressource->set_date_debut_ressource($date_infos['date']);
-                    $ressource->set_date_precision($date_infos['date_precision']);
-                    $ressource->set_mots_cles($this->input->post('mots_cles'));
-                    $ressource->set_legende($this->input->post('legende'));
-                    $ressource->set_couleur($this->input->post('couleur'));
-                    if ( ! $this->input->post('pagination')) {
-                        $ressource->set_pagination('0');
-                    } else {
-                        $textedata['pagination'] = $this->input->post('pagination');
-                    }
-                    
-                    $date_infos = conc_date($this->input->post('jourPrise'),$this->input->post('moisPrise'),$this->input->post('anneePrise'));
-                    $ressource->set_date_prise_vue($date_infos['date']);
-                    
-                    $ressource->set_localisation($this->input->post('localisation'));
-                    
-                    $ressource->set_technique($this->input->post('technique'));
-                    $ressource->set_type_support($this->input->post('type_support'));
+                    $ressource =  $this->form_img_basic();
                     
                     //we set the manager and add $ressource in the database
                     $ressourceManager = new Ressource_graphique_model();
@@ -240,6 +183,38 @@ class Ajout_ressource extends CI_Controller
                     redirect('data_center/data_center/','refresh');
                 }
             }
+        }
+        
+        //the basic posted data collecting called twice in formulaire_image
+        private function form_img_basic(){
+            $array = array();
+            $ressource = new Ressource_graphique($array);
+            $ressource->set_date_creation(date('Y-m-d H:i:s'));
+            $ressource->set_username($this->session->userdata('username'));
+            $ressource->set_titre($this->input->post('titre'));
+            $ressource->set_description($this->input->post('description'));
+            $ressource->set_reference_ressource($this->input->post('reference_ressource'));
+            $ressource->set_theme_ressource($this->input->post('theme_ressource'));
+            $ressource->set_auteurs($this->input->post('auteurs'));
+            $ressource->set_editeur($this->input->post('editeur'));
+            $ressource->set_ville_edition($this->input->post('ville_edition'));
+            $date_infos = conc_date($this->input->post('jour'),$this->input->post('mois'),$this->input->post('annee'));
+            $ressource->set_date_debut_ressource($date_infos['date']);
+            $ressource->set_date_precision($date_infos['date_precision']);
+            $ressource->set_mots_cles($this->input->post('mots_cles'));
+            $ressource->set_legende($this->input->post('legende'));
+            $ressource->set_couleur($this->input->post('couleur'));
+            if ( ! $this->input->post('pagination')) {
+                $ressource->set_pagination('0');
+            } else {
+                $textedata['pagination'] = $this->input->post('pagination');
+            }
+            $date_infos = conc_date($this->input->post('jourPrise'),$this->input->post('moisPrise'),$this->input->post('anneePrise'));
+            $ressource->set_date_prise_vue($date_infos['date']);
+            $ressource->set_localisation($this->input->post('localisation'));
+            $ressource->set_technique($this->input->post('technique'));
+            $ressource->set_type_support($this->input->post('type_support'));
+            return $ressource;
         }
         
         public function formulaire_video(){
