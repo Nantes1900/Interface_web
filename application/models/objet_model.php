@@ -145,6 +145,25 @@ class Objet_model extends CI_Model
             return $resultArray;
         }
         
+    //return a list of associative arrays linked by the documentation_*** table to the $objet_id argument
+    //arrays are like documentation_***_id, ressource_***_id, titre, 
+    //username, description, reference_ressource, date_debut_ressource
+    public function get_linked_ressource($objet_id,$typeRessource){
+        $this->db->select('documentation_'.$typeRessource.'_id, ressource_'.$typeRessource.'.ressource_'.$typeRessource.'_id AS ressource_id, 
+                            titre, ressource_'.$typeRessource.'.username AS username, description, 
+                                reference_ressource, date_debut_ressource AS date');
+        
+        $this->db->from('ressource_'.$typeRessource);
+        $this->db->join('documentation_'.$typeRessource.' AS d',
+                        'ressource_'.$typeRessource.'.ressource_'.$typeRessource.'_id=d.ressource_'.$typeRessource.'_id');
+        $this->db->order_by('titre','asc');
+        $this->db->where('objet_id', $objet_id);
+        $query = $this->db->get();
+            
+        $resultArray = $query->result_array();
+        return $resultArray;
+    }
+        
 }
 
 /* End of file objet_model.php */

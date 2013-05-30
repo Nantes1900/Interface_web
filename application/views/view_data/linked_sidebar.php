@@ -23,40 +23,61 @@
         <h2>Ressources en relation</h2>
         
         <?php foreach ($linkedRessTxtArray as $ressArray){ ?>
-            <li class="helpbox">
-                <?php echo $ressArray['titre']; ?>
-                <span> 
-                    <?php echo $ressArray['description']; ?> 
-                    <br/>
-                    <?php echo 'Ref : '.$ressArray['reference_ressource']; ?>
-                    <br/>
-                    <?php echo 'à partir du '.to_date_dmy($ressArray['date']); ?>
-                </span>
-            </li>
+            <?php echo form_open('view_data/view_data', array('style'=>'margin:0px')) ?>
+                <li class="helpbox">
+                    <?php echo $ressArray['titre']; ?>
+                    <input type="hidden" name="data_id" value="<?php echo $ressArray['ressource_id']; ?>" />
+                    <input type="hidden" name="type" value="ressource_texte" />
+                    <button type="submit" class="invisible"> 
+                        <?php echo img(array('src'=>'assets/utils/zoom.png','alt'=>'voir objet','width'=>'50%')); ?>
+                    </button>  
+                    <span> 
+                        <?php echo $ressArray['description']; ?> 
+                        <br/>
+                        <?php echo 'Ref : '.$ressArray['reference_ressource']; ?>
+                        <br/>
+                        <?php echo 'à partir du '.to_date_dmy($ressArray['date']); ?>
+                    </span>
+                </li>
+            </form>
         <?php } ?>
         <?php foreach ($linkedRessGraphArray as $ressArray){ ?>
-            <li class="helpbox">
-                <?php echo $ressArray['titre']; ?>
-                <span> 
-                    <?php echo $ressArray['description']; ?> 
-                    <br/>
-                    <?php echo 'Ref : '.$ressArray['reference_ressource']; ?>
-                    <br/>
-                    <?php echo 'à partir du '.to_date_dmy($ressArray['date']); ?>
-                </span>
-            </li>
+            <?php echo form_open('view_data/view_data', array('style'=>'margin:0px')) ?>
+                <li class="helpbox">
+                    <?php echo $ressArray['titre']; ?>
+                    <input type="hidden" name="data_id" value="<?php echo $ressArray['ressource_id']; ?>" />
+                    <input type="hidden" name="type" value="ressource_graphique" />
+                    <button type="submit" class="invisible"> 
+                        <?php echo img(array('src'=>'assets/utils/zoom.png','alt'=>'voir objet','width'=>'50%')); ?>
+                    </button>
+                    <span> 
+                        <?php echo $ressArray['description']; ?> 
+                        <br/>
+                        <?php echo 'Ref : '.$ressArray['reference_ressource']; ?>
+                        <br/>
+                        <?php echo 'à partir du '.to_date_dmy($ressArray['date']); ?>
+                    </span>
+                </li>
+            </form>
         <?php } ?>
         <?php foreach ($linkedRessVidArray as $ressArray){ ?>
-            <li class="helpbox">
-                <?php echo $ressArray['titre']; ?>
-                <span> 
-                    <?php echo $ressArray['description']; ?> 
-                    <br/>
-                    <?php echo 'Ref : '.$ressArray['reference_ressource']; ?>
-                    <br/>
-                    <?php echo 'à partir du '.to_date_dmy($ressArray['date']); ?>
-                </span>
+            <?php echo form_open('view_data/view_data', array('style'=>'margin:0px')) ?>
+                <li class="helpbox">
+                    <?php echo $ressArray['titre']; ?>
+                    <input type="hidden" name="data_id" value="<?php echo $ressArray['ressource_id']; ?>" />
+                    <input type="hidden" name="type" value="ressource_video" />
+                    <button type="submit" class="invisible"> 
+                        <?php echo img(array('src'=>'assets/utils/zoom.png','alt'=>'voir objet','width'=>'50%')); ?>
+                    </button>
+                    <span> 
+                        <?php echo $ressArray['description']; ?> 
+                        <br/>
+                        <?php echo 'Ref : '.$ressArray['reference_ressource']; ?>
+                        <br/>
+                        <?php echo 'à partir du '.to_date_dmy($ressArray['date']); ?>
+                    </span>
             </li>
+            </form>
         <?php } ?>
         
     </div>
