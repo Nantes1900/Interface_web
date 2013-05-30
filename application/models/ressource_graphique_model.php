@@ -78,6 +78,20 @@ class Ressource_graphique_model extends CI_Model
         $this->db->insert('documentation_graphique');
     }
     
+    //return a list of associative arrays linked by documentation_graphique table to the $ressource_id argument
+    //arrays are like documentation_graphique_id, objet_id, nom_objet, username, resume, 
+    public function get_linked_objet($ressource_id){
+        $this->db->select('documentation_graphique_id, objet.objet_id, nom_objet, username, resume');
+        $this->db->from('objet');
+        $this->db->join('documentation_graphique AS d', 'objet.objet_id=d.objet_id');
+        $this->db->order_by('nom_objet','asc');
+        $this->db->where('ressource_graphique_id', $ressource_id);
+        $query = $this->db->get();
+            
+        $resultArray = $query->result_array();
+        return $resultArray;
+    }
+    
    //return a list of associative arrays linked by the documentation_graphique table to the $objet_id argument
    //arrays are like documentation_graphique_id, ressource_graphique_id, titre, 
    //username, description, reference_ressource, date_debut_ressource

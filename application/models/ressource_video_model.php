@@ -78,6 +78,20 @@ class Ressource_video_model extends CI_Model
         $this->db->insert('documentation_video');
     }
     
+    //return a list of associative arrays linked by documentation_video table to the $ressource_id argument
+    //arrays are like documentation_video_id, objet_id, nom_objet, username, resume, 
+    public function get_linked_objet($ressource_id){
+        $this->db->select('documentation_video_id, objet.objet_id, nom_objet, username, resume');
+        $this->db->from('objet');
+        $this->db->join('documentation_video AS d', 'objet.objet_id=d.objet_id');
+        $this->db->order_by('nom_objet','asc');
+        $this->db->where('ressource_video_id', $ressource_id);
+        $query = $this->db->get();
+            
+        $resultArray = $query->result_array();
+        return $resultArray;
+    }
+    
     //return a list of associative arrays linked by the documentation_video table to the $objet_id argument
     //arrays are like documentation_video_id, ressource_video_id, titre, 
     //username, description, reference_ressource, date_debut_ressource

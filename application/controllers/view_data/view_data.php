@@ -17,6 +17,8 @@ class View_data extends CI_Controller {
             $data_id = $this->input->post('data_id');
             if (($dataType == 'objet') && ($this->objet_model->exist($data_id))){
                 $this->view_objet($data_id);
+            } elseif($dataType == 'ressource_texte' || $dataType == 'ressource_graphique'|| $dataType == 'ressource_video') {
+                $this->view_ressource($data_id, $dataType);
             } else {
                 $this->load->view('view_data/error',array('error'=>'La ressource recherchée est inexistante'));
             }
@@ -47,9 +49,9 @@ class View_data extends CI_Controller {
         $objet = new Objet($objet_id);
         
         $linkedObjetArray = $this->objet_model->get_linked_objet($objet_id);
-        $linkedRessTxtArray = $this->ressource_texte_model->get_linked_ressource($objet_id);
-        $linkedRessGraphArray = $this->ressource_graphique_model->get_linked_ressource($objet_id);
-        $linkedRessVidArray = $this->ressource_video_model->get_linked_ressource($objet_id);
+        $linkedRessTxtArray = $this->objet_model->get_linked_ressource($objet_id, 'textuelle');
+        $linkedRessGraphArray = $this->objet_model->get_linked_ressource($objet_id, 'graphique');
+        $linkedRessVidArray = $this->objet_model->get_linked_ressource($objet_id, 'video');
         
         $data = array ('objet'=>$objet);
         $sidebarData = array ('linkedObjetArray'=>$linkedObjetArray, 'linkedRessTxtArray'=>$linkedRessTxtArray,
@@ -60,6 +62,27 @@ class View_data extends CI_Controller {
         $this->load->view('view_data/view_objet', $data);
         
         $this->load->view('footer');
+    }
+    
+    public function view_ressource ($ressource_id, $typeRessource){
+        //getting the kind of ressource
+        $typeRessource = ucfirst($typeRessource);
+        $managerName = $typeRessource.'_model';
+        
+        if (class_exists($typeRessource) && class_exists($managerName)){
+            $ressource = new $typeRessource($ressource_id);
+            $ressourceManager = new $managerName();
+           
+            $linkedObjetArray = $ressourceManager->get_linked_objet($ressource_id);
+            
+            $data = array ('ressource'=>$ressource, 'typeRessource'=>strtolower($typeRessource));
+            $sidebarData = array ('linkedObjetArray'=>$linkedObjetArray);
+           
+            $this->load->view('view_data/linked_sidebar_ress', $sidebarData);
+            $this->load->view('view_data/view_ressource', $data);
+      
+            $this->load->view('footer');
+        }
     }
     
 }

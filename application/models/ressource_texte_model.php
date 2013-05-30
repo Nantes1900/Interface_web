@@ -78,6 +78,21 @@ class Ressource_texte_model extends CI_Model
             $this->db->insert('documentation_textuelle');
         }
         
+        //return a list of associative arrays linked by documentation_textuelle table to the $ressource_id argument
+        //arrays are like documentation_textuelle_id, objet_id, nom_objet, username, resume, 
+        public function get_linked_objet($ressource_id){
+            $this->db->select('documentation_textuelle_id, objet.objet_id AS objet_id, nom_objet, username, resume');
+            $this->db->from('objet');
+            $this->db->join('documentation_textuelle AS d', 'objet.objet_id=d.objet_id');
+            $this->db->order_by('nom_objet','asc');
+            $this->db->where('ressource_textuelle_id', $ressource_id);
+            $query = $this->db->get();
+            
+            $resultArray = $query->result_array();
+            return $resultArray;
+        }
+        
+        
         //return a list of associative arrays linked by the documentation_textuelle table to the $objet_id argument
         //arrays are like documentation_textuelle_id, ressource_textuelle_id, titre, 
         //username, description, reference_ressource, date_debut_ressource

@@ -17,6 +17,7 @@
         <h3> Mots-clés </h3>
         <p> <?php echo $objet->get_mots_cles(); ?> </p>
         
-        
+        <h3> Informations fournies par </h3>
+        <p> <?php echo $objet->get_username(); ?> </p>
     </body>
 </html>
