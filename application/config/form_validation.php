@@ -200,7 +200,7 @@ $config = array(
                     array(
                         'field'=>'couleur',
                         'label'=>'Couleur',
-                        'rules'=>'trim|max_length[200]|xss_clean'
+                        'rules'=>'trim|required'
                     ),
                     array(
                         'field'=>'technique',
