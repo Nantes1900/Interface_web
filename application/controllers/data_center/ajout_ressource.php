@@ -235,45 +235,38 @@ class Ajout_ressource extends CI_Controller
                 $this->load->view('footer');   
                 
             } else {
+                if ($_FILES && $_FILES['video']['name'] !== "") { //we want to make video uploading optional
                 
-                if ( ! $this->upload->do_upload('video')){
-                    $objet_list = $this->objet_model->get_objet_list();
-                    $data = array('objet_list' => $objet_list,'error' => $this->upload->display_errors());
-                    $this->load->view('data_center/ajout_video', $data);
-		} else {
-                    //getting info about upload
-                    $videoData = $this->upload->data();
+                    if ( ! $this->upload->do_upload('video')){
+                        $objet_list = $this->objet_model->get_objet_list();
+                        $data = array('objet_list' => $objet_list,'error' => $this->upload->display_errors());
+                        $this->load->view('data_center/ajout_video', $data);
+                    } else {
+                        //getting info about upload
+                        $videoData = $this->upload->data();
                     
-                    //creating a Ressource_video entity out of post data
-                
-                    $ressource = new Ressource_video(array());
-                    $ressource->set_date_creation(date('Y-m-d H:i:s'));
-                    $ressource->set_username($this->session->userdata('username'));
-                    $ressource->set_titre($this->input->post('titre'));
-                    $ressource->set_description($this->input->post('description'));
-                    $ressource->set_reference_ressource($this->input->post('reference_ressource'));
-                    $ressource->set_disponibilite($this->input->post('disponibilité'));
-                    $ressource->set_theme_ressource($this->input->post('theme_ressource'));
-                    $ressource->set_auteurs($this->input->post('auteurs'));
-                    $ressource->set_editeur($this->input->post('editeur'));
-                    $ressource->set_ville_edition($this->input->post('ville_edition'));
-                    $date_infos = conc_date($this->input->post('jour'),$this->input->post('mois'),$this->input->post('annee'));
-                    $ressource->set_date_debut_ressource($date_infos['date']);
-                    $ressource->set_date_precision($date_infos['date_precision']);
-                    $ressource->set_mots_cles($this->input->post('mots_cles'));
-                    $ressource->set_duree($this->input->post('duree'));
-                    $ressource->set_diffusion($this->input->post('diffusion'));
-                    $ressource->set_versionvideo($imageData['versionvideo']);
-                    $ressource->set_distribution($this->input->post('distribution'));
-                    $ressource->set_production($this->input->post('production'));
+                        //creating a Ressource_video entity out of post data
+                        $ressource = $this->form_vid_basic();
                  
-                    //as title is unique, we add the title to the name of the image
-                    rename($dir . $videoData['file_name'], $dir .$ressource->get_titre().$videoData['file_name']);
-                    $ressource->set_video($ressource->get_titre().$videoData['file_name']);
+                        //as title is unique, we add the title to the name of the image
+                        rename($dir . $videoData['file_name'], $dir .$ressource->get_titre().$videoData['file_name']);
+                        $ressource->set_video($ressource->get_titre().$videoData['file_name']);
                     
-                    $date_infos = conc_date($this->input->post('jourProd'),$this->input->post('moisProd'),$this->input->post('anneeProd'));
-                    $ressource->set_date_production($date_infos['date']);
-                  
+                        //we set the manager and add $ressource in the database
+                        $ressourceManager = new Ressource_video_model();
+                        $ressourceManager->ajout_ressource($ressource);
+                    
+                        $ressource_id = $this->ressource_video_model->last_insert_id();
+                        $objet_id = $this->input->post('objet');
+                        //eventually adding a related documentation
+                        if ($objet_id!=null){
+                            $this->ressource_video_model->add_documentation($objet_id, $ressource_id);
+                        }
+                        redirect('data_center/data_center/','refresh');
+                    }
+                } else {
+                    //creating a Ressource_video entity out of post data
+                    $ressource = $this->form_vid_basic();
                     //we set the manager and add $ressource in the database
                     $ressourceManager = new Ressource_video_model();
                     $ressourceManager->ajout_ressource($ressource);
@@ -287,6 +280,32 @@ class Ajout_ressource extends CI_Controller
                     redirect('data_center/data_center/','refresh');
                 }
             }
+        }
+        
+        private function form_vid_basic(){
+            $ressource = new Ressource_video(array());
+            $ressource->set_date_creation(date('Y-m-d H:i:s'));
+            $ressource->set_username($this->session->userdata('username'));
+            $ressource->set_titre($this->input->post('titre'));
+            $ressource->set_description($this->input->post('description'));
+            $ressource->set_reference_ressource($this->input->post('reference_ressource'));
+            $ressource->set_disponibilite($this->input->post('disponibilité'));
+            $ressource->set_theme_ressource($this->input->post('theme_ressource'));
+            $ressource->set_auteurs($this->input->post('auteurs'));
+            $ressource->set_editeur($this->input->post('editeur'));
+            $ressource->set_ville_edition($this->input->post('ville_edition'));
+            $date_infos = conc_date($this->input->post('jour'),$this->input->post('mois'),$this->input->post('annee'));
+            $ressource->set_date_debut_ressource($date_infos['date']);
+            $ressource->set_date_precision($date_infos['date_precision']);
+            $ressource->set_mots_cles($this->input->post('mots_cles'));
+            $ressource->set_duree($this->input->post('duree'));
+            $ressource->set_diffusion($this->input->post('diffusion'));
+            $ressource->set_versionvideo($imageData['versionvideo']);
+            $ressource->set_distribution($this->input->post('distribution'));
+            $ressource->set_production($this->input->post('production'));
+            $date_infos = conc_date($this->input->post('jourProd'),$this->input->post('moisProd'),$this->input->post('anneeProd'));
+            $ressource->set_date_production($date_infos['date']);
+            return $ressource;
         }
         
         public function check_date($field, $extension=null){ //callback function checking date validity
