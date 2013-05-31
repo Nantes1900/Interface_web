@@ -131,7 +131,7 @@
             </tr>
             <tr>
                 <td> Lien vers la page hébergeant vidéo </td>
-                <td> <input type="text" name="video_link" value="<?php echo set_value('video_link'); ?>" size="255"> </td>
+                <td> <input type="text" name="video_link" value="<?php echo set_value('video_link'); ?>" size="30" maxlength="255"> </td>
                 <td class="error_form"><?php echo form_error('video_link'); ?></td>              
             </tr>
             <tr>

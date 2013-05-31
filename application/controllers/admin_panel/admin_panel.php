@@ -30,7 +30,7 @@ class Admin_panel extends CI_Controller {
             $this->load->view('header');
 	}   
         
-        public function admin_panel(){     //this render the admin_panel page
+        private function admin_panel(){     //this render the admin_panel page
             
             $userManager = new User_model();
             $data = array();
