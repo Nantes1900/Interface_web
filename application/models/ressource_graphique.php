@@ -13,6 +13,7 @@ class Ressource_graphique extends Ressource {
     protected $_legende;
     protected $_couleur;
     protected $_image;
+    protected $_image_link;
     protected $_original;
     protected $_pagination;
     protected $_dimension;
@@ -22,7 +23,7 @@ class Ressource_graphique extends Ressource {
     protected $_technique;
     protected $_type_support;
     
-   
+
     //getters and setters
    
     
@@ -56,6 +57,14 @@ class Ressource_graphique extends Ressource {
 
     public function set_image($_image) {
         $this->_image = $_image;
+    }
+    
+    public function get_image_link() {
+        return $this->_image_link;
+    }
+
+    public function set_image_link($_image_link) {
+        $this->_image_link = $_image_link;
     }
 
     public function get_original() {

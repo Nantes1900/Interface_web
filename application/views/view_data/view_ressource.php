@@ -67,6 +67,10 @@
                     echo $ressource->get_legende(); 
                   } 
             ?>
+            <?php if($ressource->get_image_link()!=null){ ?>
+                    <br/>
+                    <a href="<?php echo $ressource->get_image_link(); ?>" target="_blank"> Lien vers l'image </a>
+            <?php } ?>
             <br/>
             <?php if($ressource->get_dimension()!=null){
                         echo 'Dimension: '.$ressource->get_dimension().'<br/>';
@@ -93,6 +97,10 @@
                     <video src="<?php echo base_url().'assets/video/'.$ressource->get_video(); ?>" controls >
                         Si la vidéo n'apparait pas, essayez avec un autre navigateur
                     </video>
+            <?php } ?>
+            <?php if($ressource->get_video_link()!=null){ ?>
+                    <br/>
+                    <a href="<?php echo $ressource->get_video_link(); ?>" target="_blank"> Site hébergeant la vidéo </a>
             <?php } ?>
             <br/>
             <?php if($ressource->get_date_production()!=null){

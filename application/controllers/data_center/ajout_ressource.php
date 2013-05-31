@@ -204,6 +204,7 @@ class Ajout_ressource extends CI_Controller
             $ressource->set_mots_cles($this->input->post('mots_cles'));
             $ressource->set_legende($this->input->post('legende'));
             $ressource->set_couleur($this->input->post('couleur'));
+            $ressource->set_image_link($this->input->post('image_link'));
             if ( ! $this->input->post('pagination')) {
                 $ressource->set_pagination('0');
             } else {
@@ -299,6 +300,7 @@ class Ajout_ressource extends CI_Controller
             $ressource->set_date_precision($date_infos['date_precision']);
             $ressource->set_mots_cles($this->input->post('mots_cles'));
             $ressource->set_duree($this->input->post('duree'));
+            $ressource->set_video_link($this->input->post('video_link'));
             $ressource->set_diffusion($this->input->post('diffusion'));
             $ressource->set_versionvideo($imageData['versionvideo']);
             $ressource->set_distribution($this->input->post('distribution'));
