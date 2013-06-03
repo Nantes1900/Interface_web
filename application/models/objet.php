@@ -60,6 +60,7 @@ class Objet{
         $objetManager = new Objet_model();
         if ($objetManager->exist($this->get_objet_id())){
             $this->set_last_modified(date('Y-m-d H:i:s'));
+            $this->_date_maj[]=$this->get_last_modified();
             $objetManager->update_objet($this);
         }
     }
@@ -131,7 +132,13 @@ class Objet{
     }
 
     public function set_validation($_validation) {
-        $this->_validation = $_validation;
+        if (is_string($_validation) && $_validation=="f"){
+            $this->_validation = FALSE;
+        }elseif (is_string($_validation)){
+            $this->_validation = TRUE;
+        }else{
+            $this->_validation = $_validation;
+        }
     }
 
     public function get_archive_objet() {
@@ -139,7 +146,13 @@ class Objet{
     }
 
     public function set_archive_objet($_archive_objet) {
-        $this->_archive_objet = $_archive_objet;
+        if (is_string($_archive_objet) && $_archive_objet=="f"){
+            $this->archive_objet = FALSE;
+        }elseif (is_string($_validation)){
+            $this->archive_objet = TRUE;
+        }else{
+            $this->archive_objet = $_validation;
+        }
     }
 
     public function get_mots_cles() {

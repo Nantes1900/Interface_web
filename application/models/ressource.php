@@ -184,7 +184,13 @@ abstract class Ressource {
     }
 
     public function set_archive_ressource($_archive_ressource) {
-        $this->_archive_ressource = $_archive_ressource;
+        if (is_string($_archive_ressource) && $_archive_ressource=="f"){
+            $this->_archive_ressource = FALSE;
+        }elseif (is_string($_validation)){
+            $this->_archive_ressource = TRUE;
+        }else{
+            $this->_archive_ressource = $_validation;
+        }
     }
 
     public function get_validation() {
@@ -192,7 +198,13 @@ abstract class Ressource {
     }
 
     public function set_validation($_validation) {
-        $this->_validation = $_validation;
+        if (is_string($_validation) && $_validation=="f"){
+            $this->_validation = FALSE;
+        }elseif (is_string($_validation)){
+            $this->_validation = TRUE;
+        }else{
+            $this->_validation = $_validation;
+        }
     }
 
     public function get_mots_cles() {
