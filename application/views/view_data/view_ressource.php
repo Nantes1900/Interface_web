@@ -60,10 +60,17 @@
             </p> 
         <?php } ?>  
         
-        <?php if ($typeRessource == 'ressource_graphique' && ($ressource->get_image()!=null || $ressource->get_legende()!=null)){ ?>
+        <?php if ($typeRessource == 'ressource_graphique'){ ?>
             <h2> Image </h2>
-            <?php echo img(array('src'=>'assets/images/'.$ressource->get_image(),'alt'=>$ressource->get_legende())); ?>
-            <?php echo $ressource->get_legende(); ?>
+            <?php if($ressource->get_image()!=null || $ressource->get_legende()!=null){
+                    echo img(array('src'=>'assets/images/'.$ressource->get_image())); 
+                    echo $ressource->get_legende(); 
+                  } 
+            ?>
+            <?php if($ressource->get_image_link()!=null){ ?>
+                    <br/>
+                    <a href="<?php echo $ressource->get_image_link(); ?>" target="_blank"> Lien vers l'image </a>
+            <?php } ?>
             <br/>
             <?php if($ressource->get_dimension()!=null){
                         echo 'Dimension: '.$ressource->get_dimension().'<br/>';
@@ -82,6 +89,40 @@
                   }
             ?>
         <?php } ?>    
+            
+        <?php if($typeRessource == 'ressource_video'){  ?>
+            
+            <h2> Video </h2>
+            <?php if($ressource->get_video()!=null){ ?>
+                    <video src="<?php echo base_url().'assets/video/'.$ressource->get_video(); ?>" controls >
+                        Si la vidéo n'apparait pas, essayez avec un autre navigateur
+                    </video>
+            <?php } ?>
+            <?php if($ressource->get_video_link()!=null){ ?>
+                    <br/>
+                    <a href="<?php echo $ressource->get_video_link(); ?>" target="_blank"> Site hébergeant la vidéo </a>
+            <?php } ?>
+            <br/>
+            <?php if($ressource->get_date_production()!=null){
+                        echo 'Date de production: '.  to_date_dmy($ressource->get_date_production()).'<br/>';
+                  }
+                  if($ressource->get_duree()!=null){
+                        echo 'Durée de la vidéo: '.$ressource->get_duree().'<br/>';
+                  }
+                  if($ressource->get_diffusion()!=null){
+                        echo 'Diffusion: '.$ressource->get_diffusion().'<br/>';
+                  }
+                  if($ressource->get_versionvideo()!=null){
+                        echo 'Version de la vidéo: '.$ressource->get_versionvideo().'<br/>';
+                  }
+                  if($ressource->get_distribution()!=null){
+                        echo 'Distribution: '.$ressource->get_distribution().'<br/>';
+                  }
+                  if($ressource->get_production()!=null){
+                        echo 'Production: '.$ressource->get_production().'<br/>';
+                  }
+            ?>
+        <?php } ?>
             
         <?php if ($typeRessource != 'ressource_video' && $ressource->get_pagination()!=null){ ?>
             <h2> Pagination </h2>

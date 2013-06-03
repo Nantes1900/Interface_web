@@ -60,12 +60,17 @@ class Objet{
         $objetManager = new Objet_model();
         if ($objetManager->exist($this->get_objet_id())){
             $this->set_last_modified(date('Y-m-d H:i:s'));
+            if($this->_date_maj!=null){ //date maj arrays are not true array but string like "{value1, value2, ...}" 
+                $this->_date_maj= substr($this->_date_maj, 0,  strlen($this->_date_maj)-1 ).','.$this->get_last_modified().'}';
+            }else{
+                $this->_date_maj='{'.$this->get_last_modified().'}';
+            }
             $objetManager->update_objet($this);
         }
     }
     
     public function validate(){
-        $this->set_validation(TRUE);
+        $this->set_validation('t');
         $this->save();
     }
     

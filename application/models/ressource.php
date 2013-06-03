@@ -68,13 +68,17 @@ abstract class Ressource {
         }
         if ($ressourceManager->exist($this->$getRessourceMethod())){
             $this->set_last_modified(date('Y-m-d H:i:s'));
-            $this->_date_maj[] = $this->get_last_modified();
+            if($this->_date_maj!=null){ //date maj arrays are not true array but string like "{value1, value2, ...}" 
+                $this->_date_maj= substr($this->_date_maj, 0,  strlen($this->_date_maj)-1 ).','.$this->get_last_modified().'}';
+            }else{
+                $this->_date_maj='{'.$this->get_last_modified().'}';
+            }
             $ressourceManager->update_ressource($this);
         }
     }
     
     public function validate(){
-        $this->set_validation(TRUE);
+        $this->set_validation('t');
         $this->save();
     }
     

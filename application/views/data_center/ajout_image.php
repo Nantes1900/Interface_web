@@ -131,7 +131,12 @@
                 <td> 
                     <input type="file" name="image">
                 </td>                
-            </tr>  
+            </tr>
+            <tr>
+                <td> URL image </td>
+                <td> <input type="text" name="image_link" value="<?php echo set_value('image_link'); ?>" size="30" maxlength="255"> </td>
+                <td class="error_form"><?php echo form_error('image_link'); ?></td>              
+            </tr>
             <tr>
                 <td> Pagination </td>
                 <td> <input type="text" name="pagination" value="<?php echo set_value('pagination'); ?>"> </td>

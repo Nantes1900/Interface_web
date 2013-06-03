@@ -40,6 +40,11 @@ class Accueil extends CI_Controller
                 $this->load->view('accueil/data_center_anchor');
                         
 
+                        if ( $this->session->userdata('user_level') == 4 )
+                        {
+                            $this->load->view('accueil/moderation_anchor');
+                        }
+                        
                         $this->load->view('accueil/select_data_anchor');
                         
                         if ( $this->session->userdata('user_level') == 9 )

@@ -18,10 +18,16 @@ class Ajout_relation extends CI_Controller
          */
 	public function index()
 	{
-            $userLevel = $this->session->userdata('user_level');
-            $data['userLevel'] = $userLevel;
-            $this->load->view('data_center/data_center',$data);
-            $this->formulaire(); /** @todo Ajouter une sécurité par vérification du user_level*/
+            if($this->session->userdata('username')){
+                $userLevel = $this->session->userdata('user_level');
+                $data['userLevel'] = $userLevel;
+                $this->load->view('data_center/data_center',$data);
+                if ($userLevel==4 || $userLevel==5){
+                    $this->formulaire();
+                }
+            } else {
+                $this->load->view('accueil/login/formulaire_login',array('titre'=>'Vous n\'êtes pas connecté. Veuillez vous connecter :'));
+            }
 	}
 
         /**
@@ -43,10 +49,10 @@ class Ajout_relation extends CI_Controller
         /**
          * Génére le formulaire permettant d'ajouter une relation à la base, valide les données et les transmets au modèle relation_model
          * 
-         * @access public
+         * @access private
          * 
          */
-        public function formulaire()
+        private function formulaire()
         {
             
             //On va récupérer une liste des objets existants dans la base, afin de les proposer

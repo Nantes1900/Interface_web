@@ -17,10 +17,16 @@ class Ajout_objet extends CI_Controller
          */
 	public function index()
 	{
-            $userLevel = $this->session->userdata('user_level');
-            $data['userLevel'] = $userLevel;
-            $this->load->view('data_center/data_center',$data);
-            $this->formulaire(); /** @todo Ajouter une sécurité par vérification de la connection*/
+            if($this->session->userdata('username')){
+                $userLevel = $this->session->userdata('user_level');
+                $data['userLevel'] = $userLevel;
+                $this->load->view('data_center/data_center',$data);
+                if ($userLevel==4 || $userLevel==5){
+                    $this->formulaire();
+                }
+            } else {
+                $this->load->view('accueil/login/formulaire_login',array('titre'=>'Vous n\'êtes pas connecté. Veuillez vous connecter :'));
+            }
 	}
 
         /**
@@ -41,10 +47,10 @@ class Ajout_objet extends CI_Controller
         /**
          * Génére le formulaire permettant d'ajouter un objet à la base, valide les données et les transmets au modèle objet_model
          * 
-         * @access public
+         * @access private
          * 
          */
-        public function formulaire()
+        private function formulaire()
         {
             
             if ($this->form_validation->run('ajout_objet') == FALSE) 

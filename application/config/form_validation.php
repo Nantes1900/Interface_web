@@ -198,9 +198,14 @@ $config = array(
                         'rules'=>'trim|max_length[200]|xss_clean'
                     ),
                     array(
+                        'field'=>'image_link',
+                        'label'=>'url de l\'image',
+                        'rules'=>'trim|max_length[255]|prep_url|xss_clean'
+                    ),
+                    array(
                         'field'=>'couleur',
                         'label'=>'Couleur',
-                        'rules'=>'trim|max_length[200]|xss_clean'
+                        'rules'=>'trim|required'
                     ),
                     array(
                         'field'=>'technique',
@@ -283,6 +288,11 @@ $config = array(
                         'field'=>'mots_cles',
                         'label'=>'Mots_cles',
                         'rules'=>'trim|max_length[255]|xss_clean'
+                    ),
+                    array(
+                        'field'=>'video_link',
+                        'label'=>'Lien vers la page',
+                        'rules'=>'trim|max_length[255]|prep_url|xss_clean'
                     ),
                     array(
                         'field'=>'duree',

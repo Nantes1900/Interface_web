@@ -11,6 +11,7 @@ require_once ('application/models/ressource.php');
 class Ressource_video extends Ressource {
     protected $_ressource_video_id;
     protected $_video;
+    protected $_video_link;
     protected $_date_production;
     protected $_duree;
     protected $_diffusion;
@@ -37,6 +38,14 @@ class Ressource_video extends Ressource {
         $this->_video = $_video;
     }
 
+    public function get_video_link() {
+        return $this->_video_link;
+    }
+
+    public function set_video_link($_video_link) {
+        $this->_video_link = $_video_link;
+    }
+       
     public function get_date_production() {
         return $this->_date_production;
     }

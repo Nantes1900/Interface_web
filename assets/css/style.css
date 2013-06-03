@@ -99,7 +99,7 @@ error{
 
 .banniere
 {
-	background-image: url("../images/bandeau.jpg");
+	background-image: url("../utils/bandeau.jpg");
 	width: 900px;
 	height: 230px;
 }

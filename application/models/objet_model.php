@@ -24,7 +24,7 @@ class Objet_model extends CI_Model
             $this->db->insert('objet'); //Exécution
         }
 
-        public function get_objet_list($orderBy='objet_id', $orderDirection='asc',$speAttribute = null, $speAttributeValue = null)
+        public function get_objet_list($orderBy='objet_id', $orderDirection='asc',$speAttribute = null, $speAttributeValue = null, $valid = null)
         {
             $this->db->select('*');
             $this->db->from('objet');
@@ -32,6 +32,8 @@ class Objet_model extends CI_Model
             if ($speAttribute!=null && $speAttributeValue!=null){
                 $this->db->like($speAttribute,$speAttributeValue);
             }
+            if ($valid!=null){$this->db->where('validation', $valid);}
+            
             $query = $this->db->get();
             
             //converting to an array of Objet entities
