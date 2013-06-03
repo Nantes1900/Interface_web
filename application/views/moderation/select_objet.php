@@ -4,7 +4,7 @@
     
     <h2>Liste des objets</h2>
 <!--    sorting form-->
-    <?php echo form_open('moderation/modify_objet/select_objet') ?>
+    <?php echo form_open('moderation/modify_objet') ?>
         <label for="orderBy">Trier par:</label>
         <select name="orderBy" id="orderBy">
             <option value="nom_objet">Nom de l'objet</option>
@@ -27,6 +27,8 @@
         </select>
         <input type="text" name="speAttributeValue" maxlength="50"/>
         <br/>
+        <input type="checkbox" name="validation" value="TRUE">Objets non validés uniquement
+        <br/>
         <input type="submit" value="Trier" />
 
 
@@ -38,7 +40,7 @@
     <table>
         <thead>
             <tr>
-                <th>Objet</th><th>Créateur</th><th>Résumé</th><th>Mots-clés</th><th>Validation</th><th>Modifier</th>
+                <th>Objet</th><th>Créateur</th><th>Résumé</th><th>Mots-clés</th><th>Validation</th><th>Modifier/Valider</th>
             </tr>
         </thead>
         <tbody>
@@ -48,11 +50,10 @@
                     <td><?php echo $objet->get_username(); ?></td>
                     <td><?php echo $objet->get_resume(); ?></td>
                     <td><?php echo $objet->get_mots_cles(); ?></td>
-                    <td><?php echo var_dump($objet->get_validation()); ?></td>
+                    <td><?php echo $objet->get_validation()=='t'?'validé':'non validé'; ?></td>
                     <td>
-                        <?php echo form_open('moderation/modify_objet/modify') ?>
-                            <input type="hidden" name="data_id" value="<?php echo $objet->get_objet_id(); ?>" />
-                            <input type="hidden" name="type" value="objet" />
+                        <?php echo form_open('moderation/modify_objet') ?>
+                            <input type="hidden" name="objet_id" value="<?php echo $objet->get_objet_id(); ?>" />
                             <input type="submit" value="Modifier cet objet" />
                         </form>
                     </td>

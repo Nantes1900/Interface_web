@@ -68,13 +68,17 @@ abstract class Ressource {
         }
         if ($ressourceManager->exist($this->$getRessourceMethod())){
             $this->set_last_modified(date('Y-m-d H:i:s'));
-            $this->_date_maj[] = $this->get_last_modified();
+            if($this->_date_maj!=null){ //date maj arrays are not true array but string like "{value1, value2, ...}" 
+                $this->_date_maj= substr($this->_date_maj, 0,  strlen($this->_date_maj)-1 ).','.$this->get_last_modified().'}';
+            }else{
+                $this->_date_maj='{'.$this->get_last_modified().'}';
+            }
             $ressourceManager->update_ressource($this);
         }
     }
     
     public function validate(){
-        $this->set_validation(TRUE);
+        $this->set_validation('t');
         $this->save();
     }
     
@@ -184,13 +188,7 @@ abstract class Ressource {
     }
 
     public function set_archive_ressource($_archive_ressource) {
-        if (is_string($_archive_ressource) && $_archive_ressource=="f"){
-            $this->_archive_ressource = FALSE;
-        }elseif (is_string($_validation)){
-            $this->_archive_ressource = TRUE;
-        }else{
-            $this->_archive_ressource = $_validation;
-        }
+        $this->_archive_ressource = $_archive_ressource;
     }
 
     public function get_validation() {
@@ -198,13 +196,7 @@ abstract class Ressource {
     }
 
     public function set_validation($_validation) {
-        if (is_string($_validation) && $_validation=="f"){
-            $this->_validation = FALSE;
-        }elseif (is_string($_validation)){
-            $this->_validation = TRUE;
-        }else{
-            $this->_validation = $_validation;
-        }
+        $this->_validation = $_validation;
     }
 
     public function get_mots_cles() {
