@@ -14,6 +14,8 @@ class Modify_ressource extends CI_Controller{
                     $this->select_ressource($typeRessource);
                 }elseif($typeRessource=='ressource_texte'){
                     $this->modify_texte($this->input->post('ressource_id'));
+                }elseif ($typeRessource=='ressource_graphique') {
+                    $this->modify_image($this->input->post('ressource_id'));
                 }
             }
         } else {
@@ -27,7 +29,9 @@ class Modify_ressource extends CI_Controller{
 
         //Ce code sera executé charque fois que ce contrôleur sera appelé
         require_once ('application/models/ressource_texte.php');
+        require_once ('application/models/ressource_graphique.php');
         $this->load->model('ressource_texte_model');
+        $this->load->model('ressource_graphique_model');
         $this->load->helper('dates');
         $this->load->library('form_validation');
         $this->load->view('header');
@@ -94,8 +98,87 @@ class Modify_ressource extends CI_Controller{
                 $ressource->set_validation('f');
             }
             $ressource->save();
-            redirect('moderation/moderation_center/','refresh');
+            redirect('moderation/modify_ressource/index/ressource_texte','refresh');
         }
+    }
+    
+    private function modify_image($ressource_id){
+        $ressource = new Ressource_graphique($ressource_id);
+        $this->load->view('data_center/data_center');           
+        $this->load->model('ressource_graphique_model');
+        $dir = './assets/images/';
+        $config['upload_path'] = $dir;
+        $config['allowed_types'] = 'jpg|jpeg|gif|png';
+        $config['max_size']	= '100';
+        $config['max_width']  = '1024';
+        $config['max_height']  = '768';
+        $this->load->library('upload',$config);
+        
+        if ($this->form_validation->run('ajout_image') == FALSE) {
+            $this->load->view('moderation/modify_image',array('ressource'=>$ressource, 'error'=>''));
+            $this->load->view('footer');
+        }else{
+            if ($_FILES && $_FILES['image']['name'] !== "") { //we want to make image re-uploading optional
+                if ( ! $this->upload->do_upload('image')){
+                    $data = array('ressource' => $ressource,'error' => $this->upload->display_errors());
+                    $this->load->view('moderation/modify_image',$data);
+                    $this->load->view('footer');
+                }else{
+                    //getting info about upload
+                    $imageData = $this->upload->data();
+                    
+                    //modifiying $ressource out of post data
+                    $ressource =  $this->mod_img_basic($ressource); //just basic posted data collecting
+                    //as title is unique, we add the title to the name of the image
+                    rename($dir . $imageData['file_name'], $dir .$ressource->get_titre().$imageData['file_name']);
+                    $ressource->set_image($ressource->get_titre().$imageData['file_name']);
+                    $ressource->set_dimension($imageData['image_size_str']);
+                    
+                    $ressource->save();
+                    redirect('moderation/modify_ressource/index/ressource_graphique','refresh');
+                }
+            }else{
+                //modifiying $ressource out of post data
+                $ressource =  $this->mod_img_basic($ressource); //just basic posted data collecting
+                $ressource->save();
+                redirect('moderation/modify_ressource/index/ressource_graphique','refresh');
+            }
+        }
+    }
+    
+    //basic treatment for posted image form
+    function mod_img_basic(Ressource_graphique $ressource){
+        $attrArray = array('titre','description','reference_ressource','auteurs','editeur','ville_edition','couleur',
+                            'mots_cles','legende','image_link','localisation','technique','type_support');
+        foreach($attrArray as $attr){
+            $setMethod = 'set_'.$attr;
+            $ressource->$setMethod($this->input->post($attr));
+        }
+        $date_infos = conc_date($this->input->post('jour'),$this->input->post('mois'),$this->input->post('annee'));
+        $ressource->set_date_debut_ressource($date_infos['date']);
+        $ressource->set_date_precision($date_infos['date_precision']);
+        $date_infos = conc_date($this->input->post('jourPrise'),$this->input->post('moisPrise'),$this->input->post('anneePrise'));
+        $ressource->set_date_prise_vue($date_infos['date']);
+        if ($this->input->post('validation')==TRUE){ //beware, in database, booleans are t (for TRUE) and f (FALSE)
+            $ressource->set_validation('t');
+        }else{
+            $ressource->set_validation('f');
+        }
+        if ($this->input->post('pagination')!=null){
+                $ressource->set_pagination($this->input->post('pagination'));
+        }
+        return $ressource;
+    }
+    
+    public function check_date($field, $extension=null){ //callback function checking date validity
+        $day = (int) $this->input->post('jour'.$extension);
+        $month = (int) $this->input->post('mois'.$extension);
+        $year = (int) $this->input->post('annee'.$extension);
+        $valid = checkdate($month,$day,$year);
+        if (!$valid){
+            $this->form_validation->set_message('check_date', 'Date invalide');
+        }
+        return $valid;
     }
     
     public function check_titre($title,$typeRessource){

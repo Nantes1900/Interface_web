@@ -1,11 +1,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" > 
 
-	<h1>Modification de la ressource textuelle : <?php echo $ressource->get_titre(); ?></h1>
+    <h1>Modification de la ressource graphique : <?php echo $ressource->get_titre(); ?></h1>
         
-        <?php echo form_open('moderation/modify_ressource/index/ressource_texte'); ?>
-        <input type="hidden" name="ressource_id" value="<?php echo $ressource->get_ressource_textuelle_id(); ?>" />
+    <?php echo form_open_multipart('moderation/modify_ressource/index/ressource_graphique'); ?>
+        <input type="hidden" name="ressource_id" value="<?php echo $ressource->get_ressource_graphique_id(); ?>" />
         <table border=0>
-		
+            
             <tr><td>Créateur</td><td><?php echo $ressource->get_username(); ?></td></tr>
             <tr> 
                     <td> Titre </td> 
@@ -45,7 +45,6 @@
             
         </table>
         <table>
-        
             <tr>
                     <td> Date d'édition </td>
             </tr>
@@ -63,7 +62,23 @@
                 <td class="error_form"><?php echo form_error('mois'); ?></td>
                 <td class="error_form"><?php echo form_error('annee'); ?></td>
             </tr>
-         
+            <tr>
+                <td> Date de prise de vue </td>
+            </tr>
+            <tr>
+                <?php $arrayDate = break_date_Ymd($ressource->get_date_prise_vue()); ?>
+		<td> Jour </td>
+                <td> <input type=text name=jourPrise value="<?php echo $arrayDate['day']; ?>" size="3" maxlength="2"> </td>
+		<td> Mois </td>
+		<td> <input type=text name=moisPrise value="<?php echo $arrayDate['month']; ?>" size="3" maxlength="2"> </td>
+		<td> Année </td>
+		<td> <input type=text name=anneePrise value="<?php echo $arrayDate['year']; ?>" size="5" maxlength="4"> </td>
+            </tr>
+            <tr>
+                <td class="error_form"><?php echo form_error('jourPrise'); ?></td>
+                <td class="error_form"><?php echo form_error('moisPrise'); ?></td>
+                <td class="error_form"><?php echo form_error('anneePrise'); ?></td>
+            </tr>
         </table>    
         <table>
             
@@ -73,17 +88,50 @@
                     <td class="error_form"><?php echo form_error('mots_cles'); ?></td>
             </tr>
             <tr>
-                    <td> Sous-catégorie </td>
-                    <td> <input type="text" name="sous_categorie" value="<?php echo $ressource->get_sous_categorie(); ?>" size="30"> </td>
-                    <td class="error_form"><?php echo form_error('sous_categorie'); ?></td>
-            </tr>  
-            <tr>
-                    <td> Pagination </td>
-                    <td> <input type="text" name="pagination" value="<?php echo $ressource->get_pagination(); ?>"> </td>
-                    <td class="error_form"><?php echo form_error('pagination'); ?></td>
+                <td> Légende </td>
+                <td> <input type="text" name="legende" value="<?php echo $ressource->get_legende(); ?>" size="30"> </td>
+                <td class="error_form"><?php echo form_error('legende'); ?></td>
             </tr>
-            
-           <tr>
+            <tr>
+                <td> Lieu de la prise de vue </td>
+                <td> <input type="text" name="localisation" value="<?php echo $ressource->get_localisation(); ?>" size="30"> </td>
+                <td class="error_form"><?php echo form_error('localisation'); ?></td>
+            </tr>
+            <tr>
+                <td> Technique utilisée </td>
+                <td> <input type="text" name="technique" value="<?php echo $ressource->get_technique(); ?>" size="30"> </td>
+                <td class="error_form"><?php echo form_error('technique'); ?></td>
+            </tr>
+            <tr>
+                <td> Support de la ressource </td>
+                <td> <input type="text" name="type_support" value="<?php echo $ressource->get_type_support(); ?>" size="30"> </td>
+                <td class="error_form"><?php echo form_error('type_support'); ?></td>
+            </tr>
+            <tr>
+                <td> Couleur </td>
+                <td> 
+                    <input type="radio" name="couleur" value="t" <?php if($ressource->get_couleur()=='t'){echo 'checked';} ?> >Couleur <br/>
+                    <input type="radio" name="couleur" value="f" <?php if($ressource->get_couleur()=='f'){echo 'checked';} ?> >Noir et blanc
+                </td>
+                <td class="error_form"><?php echo form_error('couleur'); ?></td>
+            </tr>
+            <tr>
+                <td> Télécharger une nouvelle image </td>
+                <td> 
+                    <input type="file" name="image">
+                </td>                
+            </tr>
+            <tr>
+                <td> URL image </td>
+                <td> <input type="text" name="image_link" value="<?php echo $ressource->get_image_link(); ?>" size="30" maxlength="255"> </td>
+                <td class="error_form"><?php echo form_error('image_link'); ?></td>              
+            </tr>
+            <tr>
+                <td> Pagination </td>
+                <td> <input type="text" name="pagination" value="<?php echo $ressource->get_pagination(); ?>"> </td>
+                <td class="error_form"><?php echo form_error('pagination'); ?></td>
+            </tr>
+            <tr>
                 <td><input type="checkbox" name="validation" value="TRUE" <?php if($ressource->get_validation()=='t'){echo 'checked';} ?>>Valider</td>
             </tr>
             

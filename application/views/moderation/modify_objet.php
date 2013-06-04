@@ -6,7 +6,7 @@
         <input type="hidden" name="objet_id" value="<?php echo $objet->get_objet_id(); ?>" />
         <table border=0>
 		
-            <tr><td>Auteur</td><td><?php echo $objet->get_username(); ?></td></tr>
+            <tr><td>Créateur</td><td><?php echo $objet->get_username(); ?></td></tr>
             <tr> 
                     <td> Nom </td> 
                     <td> <input type=text name=nom_objet value="<?php echo $objet->get_nom_objet(); ?>" size="30"/> </td>

@@ -81,7 +81,7 @@ class Modify_objet extends CI_Controller{
                 $objet->set_validation('f');
             }
             $objet->save();
-            redirect('moderation/moderation_center/','refresh');
+            redirect('moderation/modify_objet/','refresh');
         }
     }
     

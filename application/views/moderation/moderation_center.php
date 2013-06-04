@@ -9,6 +9,8 @@
             
             <tr><td><?php echo anchor('moderation/modify_ressource/index/ressource_texte', 'modifier et/ou valider une ressource textuelle'); ?></td></tr
             
+            <tr><td><?php echo anchor('moderation/modify_ressource/index/ressource_graphique', 'modifier et/ou valider une ressource graphique'); ?></td></tr
+            
         </table>
 	
 

@@ -21,7 +21,7 @@
         <select name="speAttribute" id="speAttribute">
             <option value="titre">Titre de la ressource</option>
             <option value="username">Pseudo du créateur</option>
-            <option value="theme_ressource">Thème de la ressource</option>
+            <option value="reference">Référence de la ressource</option>
             <option value="mots_cles">Mot-clé</option>
             <option value="description">Description</option>
             <option value="auteur">Auteur</option>
@@ -29,7 +29,7 @@
         </select>
         <input type="text" name="speAttributeValue" maxlength="50"/>
         <br/>
-        <input type="checkbox" name="validation" value="TRUE">Objets non validés uniquement
+        <input type="checkbox" name="validation" value="TRUE">Ressources non validés uniquement
         <br/>
         <input type="submit" value="Trier" />
 
@@ -42,7 +42,7 @@
     <table>
         <thead>
             <tr>
-                <th>Ressource</th><th>Créateur</th><th>Référence</th><th>Mots-clés</th><th>Validation</th><th>Modifier/Valider</th>
+                <th>Ressource</th><th>Créateur</th><th>Auteur(s)</th><th>Référence</th><th>Mots-clés</th><th>Validation</th><th>Modifier/Valider</th>
             </tr>
         </thead>
         <tbody>
@@ -50,6 +50,7 @@
                 <tr>
                     <td><?php echo $ressource->get_titre(); ?></td>
                     <td><?php echo $ressource->get_username(); ?></td>
+                    <td><?php echo $ressource->get_auteurs(); ?></td>
                     <td><?php echo $ressource->get_reference_ressource(); ?></td>
                     <td><?php echo $ressource->get_mots_cles(); ?></td>
                     <td><?php echo $ressource->get_validation()=='t'?'validé':'non validé'; ?></td>

@@ -44,8 +44,27 @@ class Ressource_graphique_model extends CI_Model
         if (isset($result['0'])){    
             return $result['0'];
         }
-            
     }
+    
+    public function get_ressource_list($orderBy='objet_id', $orderDirection='asc',$speAttribute = null, $speAttributeValue = null, $valid = null){
+            $this->db->select('*');
+            $this->db->from('ressource_graphique');
+            $this->db->order_by($orderBy,$orderDirection);
+            if ($speAttribute!=null && $speAttributeValue!=null){
+                $this->db->like($speAttribute,$speAttributeValue);
+            }
+            if ($valid!=null){$this->db->where('validation', $valid);}
+            
+            $query = $this->db->get();
+            
+            //converting to an array of Objet entities
+            $tempArray = $query->result_array();
+            $resultArray = array();         
+            foreach ($tempArray as $objetArray){
+                $resultArray[] = new Ressource_graphique($objetArray);
+            }           
+            return $resultArray;
+        }
         
     public function exist($ressource_graph_id){
             
