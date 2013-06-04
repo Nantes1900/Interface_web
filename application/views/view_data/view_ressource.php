@@ -135,5 +135,17 @@
         <h3> Informations fournies par </h3>
         <p> <?php echo $ressource->get_username(); ?> </p>
         
+        <?php if($this->session->userdata('user_level') == 4){ ?>
+                <?php echo form_open('moderation/modify_ressource/index/'.$typeRessource) ?>
+                            <input type="hidden" name="ressource_id" value="<?php if($typeRessource=='ressource_texte'){
+                                                                                    echo $ressource->get_ressource_textuelle_id();
+                                                                                  } else {
+                                                                                    $getMethod='get_'.$typeRessource.'_id';
+                                                                                    echo $ressource->$getMethod(); 
+                                                                                  } ?>" />
+                            <input type="submit" value="Modifier cette ressource" />
+                </form>
+        <?php } ?>
+        
     </body>
 </html>
