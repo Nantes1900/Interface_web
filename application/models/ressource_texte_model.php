@@ -47,6 +47,26 @@ class Ressource_texte_model extends CI_Model
             }
         }
         
+        public function get_ressource_list($orderBy='objet_id', $orderDirection='asc',$speAttribute = null, $speAttributeValue = null, $valid = null){
+            $this->db->select('*');
+            $this->db->from('ressource_textuelle');
+            $this->db->order_by($orderBy,$orderDirection);
+            if ($speAttribute!=null && $speAttributeValue!=null){
+                $this->db->like($speAttribute,$speAttributeValue);
+            }
+            if ($valid!=null){$this->db->where('validation', $valid);}
+            
+            $query = $this->db->get();
+            
+            //converting to an array of Objet entities
+            $tempArray = $query->result_array();
+            $resultArray = array();         
+            foreach ($tempArray as $objetArray){
+                $resultArray[] = new Ressource_texte($objetArray);
+            }           
+            return $resultArray;
+        }
+        
         public function exist($ressource_txt_id){
             
             $this->db->select('ressource_textuelle_id');

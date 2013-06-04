@@ -67,7 +67,7 @@
             
             <tr>
                     <td> Mots-clés </td>
-                    <td> <textarea name=mots_cles value="<?php echo set_value('mots_cles'); ?>" rows="2" cols="75"></textarea> </td>
+                    <td> <textarea name=mots_cles value="<?php echo set_value('mots_cles'); ?>" rows="2" cols="75"><?php echo set_value('mots_cles'); ?></textarea> </td>
                     <td class="error_form"><?php echo form_error('mots_cles'); ?></td>
             </tr>
             <tr>

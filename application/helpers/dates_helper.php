@@ -155,5 +155,17 @@ if ( ! function_exists('to_date_dmY')){
     }
 }
 
+if ( ! function_exists('break_date_Ymd')){
+    //convert date AAAA-mm-dd to arraylist 'year','month','date'
+    function break_date_Ymd($date) {
+        if (preg_match("#\d\d\d\d-\d\d-\d\d#", $date)){
+            list($year, $month, $day) = explode('-', $date);
+            return array('year'=>$year,'month'=>$month,'day'=>$day);
+        } else {
+            return $date;
+        }
+    }
+}
+
 /* End of file dates_helper.php */
 /* Location : ./application/helpers/dates_helper.php */
