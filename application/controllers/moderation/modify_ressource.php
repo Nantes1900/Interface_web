@@ -16,6 +16,8 @@ class Modify_ressource extends CI_Controller{
                     $this->modify_texte($this->input->post('ressource_id'));
                 }elseif ($typeRessource=='ressource_graphique') {
                     $this->modify_image($this->input->post('ressource_id'));
+                }elseif ($typeRessource=='ressource_video') {
+                    $this->modify_video($this->input->post('ressource_id'));
                 }
             }
         } else {
@@ -30,8 +32,10 @@ class Modify_ressource extends CI_Controller{
         //Ce code sera executé charque fois que ce contrôleur sera appelé
         require_once ('application/models/ressource_texte.php');
         require_once ('application/models/ressource_graphique.php');
+        require_once ('application/models/ressource_video.php');
         $this->load->model('ressource_texte_model');
         $this->load->model('ressource_graphique_model');
+        $this->load->model('ressource_video_model');
         $this->load->helper('dates');
         $this->load->library('form_validation');
         $this->load->view('header');
@@ -104,8 +108,6 @@ class Modify_ressource extends CI_Controller{
     
     private function modify_image($ressource_id){
         $ressource = new Ressource_graphique($ressource_id);
-        $this->load->view('data_center/data_center');           
-        $this->load->model('ressource_graphique_model');
         $dir = './assets/images/';
         $config['upload_path'] = $dir;
         $config['allowed_types'] = 'jpg|jpeg|gif|png';
@@ -166,6 +168,69 @@ class Modify_ressource extends CI_Controller{
         }
         if ($this->input->post('pagination')!=null){
                 $ressource->set_pagination($this->input->post('pagination'));
+        }
+        return $ressource;
+    }
+    
+    private function modify_video($ressource_id){
+        $ressource = new Ressource_video($ressource_id);
+        $dir = './assets/video/';
+        $config['upload_path'] = $dir;
+        $config['allowed_types'] = 'avi|flv|wmv|mpeg|mp3|mp4';
+        $config['max_size']	= '102400';
+        $this->load->library('upload',$config);
+        set_time_limit(120); //change the max execution time of php to 120 sec for this method
+        if($this->form_validation->run('ajout_video') == FALSE){
+            
+            $this->load->view('moderation/modify_video',array('ressource'=>$ressource, 'error'=>''));
+            $this->load->view('footer');
+                
+        } else {
+            if ($_FILES && $_FILES['video']['name'] !== "") { //we want to make video uploading optional
+                if ( ! $this->upload->do_upload('video')){
+                    $data = array('ressource' => $ressource,'error' => $this->upload->display_errors());
+                    $this->load->view('moderation/modify_video',$data);
+                    $this->load->view('footer');
+                }else{
+                    //getting info about upload
+                    $videoData = $this->upload->data();
+                    
+                    //modifiying $ressource out of post data
+                    $ressource =  $this->mod_vid_basic($ressource); //just basic posted data collecting
+                 
+                    //as title is unique, we add the title to the name of the image
+                    rename($dir . $videoData['file_name'], $dir .$ressource->get_titre().$videoData['file_name']);
+                    $ressource->set_video($ressource->get_titre().$videoData['file_name']);
+                    
+                    $ressource->save();
+                    redirect('moderation/modify_ressource/index/ressource_video','refresh');
+                }
+            }else{
+                //modifiying $ressource out of post data
+                $ressource =  $this->mod_vid_basic($ressource); //just basic posted data collecting
+                $ressource->save();
+                redirect('moderation/modify_ressource/index/ressource_video','refresh');
+            }
+        }
+    }
+    
+    //basic treatment for posted image form
+    function mod_vid_basic(Ressource_video $ressource){
+        $attrArray = array('titre','description','reference_ressource','auteurs','editeur','ville_edition','duree',
+                            'mots_cles','diffusion','versionvideo','distribution','production','video_link');
+        foreach($attrArray as $attr){
+            $setMethod = 'set_'.$attr;
+            $ressource->$setMethod($this->input->post($attr));
+        }
+        $date_infos = conc_date($this->input->post('jour'),$this->input->post('mois'),$this->input->post('annee'));
+        $ressource->set_date_debut_ressource($date_infos['date']);
+        $ressource->set_date_precision($date_infos['date_precision']);
+        $date_infos = conc_date($this->input->post('jourProd'),$this->input->post('moisProd'),$this->input->post('anneeProd'));
+        $ressource->set_date_production($date_infos['date']);
+        if ($this->input->post('validation')==TRUE){ //beware, in database, booleans are t (for TRUE) and f (FALSE)
+            $ressource->set_validation('t');
+        }else{
+            $ressource->set_validation('f');
         }
         return $ressource;
     }

@@ -7,10 +7,11 @@
            
             <tr><td><?php echo anchor('moderation/modify_objet', 'modifier et/ou valider un objet historique'); ?></td></tr>
             
-            <tr><td><?php echo anchor('moderation/modify_ressource/index/ressource_texte', 'modifier et/ou valider une ressource textuelle'); ?></td></tr
+            <tr><td><?php echo anchor('moderation/modify_ressource/index/ressource_texte', 'modifier et/ou valider une ressource textuelle'); ?></td></tr>
             
-            <tr><td><?php echo anchor('moderation/modify_ressource/index/ressource_graphique', 'modifier et/ou valider une ressource graphique'); ?></td></tr
+            <tr><td><?php echo anchor('moderation/modify_ressource/index/ressource_graphique', 'modifier et/ou valider une ressource graphique'); ?></td></tr>
             
+            <tr><td><?php echo anchor('moderation/modify_ressource/index/ressource_video', 'modifier et/ou valider une ressource video'); ?></td></tr>
         </table>
 	
 
