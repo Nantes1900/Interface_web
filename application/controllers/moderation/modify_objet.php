@@ -85,6 +85,16 @@ class Modify_objet extends CI_Controller{
         }
     }
     
+    public function delete_objet(){
+        if ( $this->session->userdata('user_level') == 4 ){
+            $objet_id = $this->input->post('objet_id');
+            $this->objet_model->delete($objet_id);
+            redirect('moderation/modify_objet/','refresh');
+        }else{
+            redirect('accueil/accueil/','refresh');
+        }
+    }
+    
     public function check_nom($name){
         $objet = $this->objet_model->get_objet('nom_objet', $name);
         $objet_id = $this->input->post('objet_id');

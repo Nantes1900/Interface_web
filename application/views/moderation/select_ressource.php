@@ -42,7 +42,8 @@
     <table>
         <thead>
             <tr>
-                <th>Ressource</th><th>Créateur</th><th>Auteur(s)</th><th>Référence</th><th>Mots-clés</th><th>Validation</th><th>Modifier/Valider</th>
+                <th>Ressource</th><th>Créateur</th><th>Auteur(s)</th><th>Référence</th><th>Mots-clés</th><th>Validation</th>
+                <th>Modifier/Valider</th><th>Supprimer</th>
             </tr>
         </thead>
         <tbody>
@@ -63,6 +64,17 @@
                                                                                     echo $ressource->$getMethod(); 
                                                                                   } ?>" />
                             <input type="submit" value="Modifier cette ressource" />
+                        </form>
+                    </td>
+                    <td>
+                        <?php echo form_open('moderation/modify_ressource/delete_ressource/'.$typeRessource) ?>
+                            <input type="hidden" name="ressource_id" value="<?php if($typeRessource=='ressource_texte'){
+                                                                                    echo $ressource->get_ressource_textuelle_id();
+                                                                                  } else {
+                                                                                    $getMethod='get_'.$typeRessource.'_id';
+                                                                                    echo $ressource->$getMethod(); 
+                                                                                  } ?>" />
+                            <input type="submit" value="Supprimer cette ressource" />
                         </form>
                     </td>
                 </tr>

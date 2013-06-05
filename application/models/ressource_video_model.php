@@ -46,6 +46,26 @@ class Ressource_video_model extends CI_Model
         }
             
     }
+    
+    public function get_ressource_list($orderBy='objet_id', $orderDirection='asc',$speAttribute = null, $speAttributeValue = null, $valid = null){
+            $this->db->select('*');
+            $this->db->from('ressource_video');
+            $this->db->order_by($orderBy,$orderDirection);
+            if ($speAttribute!=null && $speAttributeValue!=null){
+                $this->db->like($speAttribute,$speAttributeValue);
+            }
+            if ($valid!=null){$this->db->where('validation', $valid);}
+            
+            $query = $this->db->get();
+            
+            //converting to an array of Objet entities
+            $tempArray = $query->result_array();
+            $resultArray = array();         
+            foreach ($tempArray as $objetArray){
+                $resultArray[] = new Ressource_video($objetArray);
+            }           
+            return $resultArray;
+        }
         
     public function exist($ressource_video_id){
             
@@ -106,6 +126,13 @@ class Ressource_video_model extends CI_Model
             
         $resultArray = $query->result_array();
         return $resultArray;
+    }
+    
+    //simply delete the ressource_video with $ressource_id in the database
+   //beware, it will delete all depending infos (some documentation of documentation table for example)
+    public function delete($ressource_id){
+        $this->db->where('ressource_video_id',$ressource_id);
+        $this->db->delete('ressource_video'); 
     }
 }
 
