@@ -52,46 +52,45 @@ class Ajout_relation extends CI_Controller
          * @access private
          * 
          */
-        private function formulaire()
-        {
+        public function formulaire(){
+            $userLevel = $this->session->userdata('user_level');
+            if ($userLevel==4 || $userLevel==5){
+                //On va récupérer une liste des objets existants dans la base, afin de les proposer
+                $objet_list = $this->objet_model->get_objet_list();
             
-            //On va récupérer une liste des objets existants dans la base, afin de les proposer
-            $objet_list = $this->objet_model->get_objet_list();
+                //On va récupérer une liste des types de relation existants dans la base, afin de les proposer
+                $type_relation_list = $this->relation_model->get_type_relation_list();
             
-            //On va récupérer une liste des types de relation existants dans la base, afin de les proposer
-            $type_relation_list = $this->relation_model->get_type_relation_list();
-            
-            if ($this->form_validation->run('ajout_relation') == FALSE)
-            {
-                $data = array('objet_list' => $objet_list,'type_relation_list' => $type_relation_list);
+                if ($this->form_validation->run('ajout_relation') == FALSE){
+                    $data = array('objet_list' => $objet_list,'type_relation_list' => $type_relation_list);
                 
-                $this->load->view('data_center/ajout_relation', $data);
-                $this->load->view('footer');
-            }
-            else
-            {
-                $relationdata = array();
-                $relationdata['objet_id_1'] = $this->input->post('objet1');
-                $relationdata['objet_id_2'] = $this->input->post('objet2');
-                $relationdata['type_relation_id'] = $this->input->post('type_relation');
-                $relationdata['username'] = $this->session->userdata('username');
-                $relationdata['datation_indication_debut'] = $this->input->post('datation_indication_debut');
-                $relationdata['datation_indication_fin'] = $this->input->post('datation_indication_fin');
+                    $this->load->view('data_center/ajout_relation', $data);
+                    $this->load->view('footer');
+                }else{
+                    $relationdata = array();
+                    $relationdata['objet_id_1'] = $this->input->post('objet1');
+                    $relationdata['objet_id_2'] = $this->input->post('objet2');
+                    $relationdata['type_relation_id'] = $this->input->post('type_relation');
+                    $relationdata['username'] = $this->session->userdata('username');
+                    $relationdata['datation_indication_debut'] = $this->input->post('datation_indication_debut');
+                    $relationdata['datation_indication_fin'] = $this->input->post('datation_indication_fin');
                 
-                $dates_infos = conc_2_date($this->input->post('jour_debut'),$this->input->post('mois_debut'),$this->input->post('annee_debut'),$this->input->post('jour_fin'),$this->input->post('mois_fin'),$this->input->post('annee_fin'));
+                    $dates_infos = conc_2_date($this->input->post('jour_debut'),$this->input->post('mois_debut'),$this->input->post('annee_debut'),$this->input->post('jour_fin'),$this->input->post('mois_fin'),$this->input->post('annee_fin'));
                                 
-                $relationdata['date_debut_relation'] = $dates_infos['date_debut'];
-                $relationdata['date_fin_relation'] = $dates_infos['date_fin'];
-                $relationdata['date_precision'] = $dates_infos['date_precision'];
+                    $relationdata['date_debut_relation'] = $dates_infos['date_debut'];
+                    $relationdata['date_fin_relation'] = $dates_infos['date_fin'];
+                    $relationdata['date_precision'] = $dates_infos['date_precision'];
                                 
-                $relationdata['parent'] = $this->input->post('parent')? 'true':'false';
+                    $relationdata['parent'] = $this->input->post('parent')? 'true':'false';
                              
-                $this->relation_model->ajout_relation($relationdata);            
-                redirect('data_center/data_center/','refresh');
+                    $this->relation_model->ajout_relation($relationdata);            
+                    redirect('data_center/data_center/','refresh');
                 
                 /** @todo Ajouter une page de confirmation du succès d'ajout de l'objet */
+                }
+            }else{
+                redirect('accueil/accueil','refresh');
             }
-         
             
         }
         

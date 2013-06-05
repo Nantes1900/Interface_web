@@ -165,6 +165,13 @@ class Objet_model extends CI_Model
         $resultArray = $query->result_array();
         return $resultArray;
     }
+    
+    //simply delete the objet with $objet_id in the database
+    //beware, it will delete all depending infos (some relation of relation table for example)
+    public function delete($objet_id){
+        $this->db->where('objet_id',$objet_id);
+        $this->db->delete('objet'); 
+    }
         
 }
 
