@@ -235,6 +235,18 @@ class Modify_ressource extends CI_Controller{
         return $ressource;
     }
     
+    public function delete_ressource($typeRessource){
+        if ( $this->session->userdata('user_level') == 4 ){
+            $ressource_id = $this->input->post('ressource_id');
+            $typeRessourceModel= ucfirst($typeRessource).'_model';
+            $ressourceManager = new $typeRessourceModel();
+            $ressourceManager->delete($ressource_id);
+            redirect('moderation/modify_ressource/index/'.$typeRessource,'refresh');
+        }else{
+            redirect('accueil/accueil/','refresh');
+        }
+    }
+    
     public function check_date($field, $extension=null){ //callback function checking date validity
         $day = (int) $this->input->post('jour'.$extension);
         $month = (int) $this->input->post('mois'.$extension);
