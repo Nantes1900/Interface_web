@@ -194,6 +194,7 @@ class Ajout_ressource extends CI_Controller
             $ressource->set_titre($this->input->post('titre'));
             $ressource->set_description($this->input->post('description'));
             $ressource->set_reference_ressource($this->input->post('reference_ressource'));
+            $ressource->set_disponibilite($this->input->post('disponibilite'));
             $ressource->set_theme_ressource($this->input->post('theme_ressource'));
             $ressource->set_auteurs($this->input->post('auteurs'));
             $ressource->set_editeur($this->input->post('editeur'));
@@ -290,7 +291,7 @@ class Ajout_ressource extends CI_Controller
             $ressource->set_titre($this->input->post('titre'));
             $ressource->set_description($this->input->post('description'));
             $ressource->set_reference_ressource($this->input->post('reference_ressource'));
-            $ressource->set_disponibilite($this->input->post('disponibilité'));
+            $ressource->set_disponibilite($this->input->post('disponibilite'));
             $ressource->set_theme_ressource($this->input->post('theme_ressource'));
             $ressource->set_auteurs($this->input->post('auteurs'));
             $ressource->set_editeur($this->input->post('editeur'));

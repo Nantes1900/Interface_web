@@ -101,7 +101,7 @@ class Ressource_texte_model extends CI_Model
         //return a list of associative arrays linked by documentation_textuelle table to the $ressource_id argument
         //arrays are like documentation_textuelle_id, objet_id, nom_objet, username, resume, 
         public function get_linked_objet($ressource_id){
-            $this->db->select('documentation_textuelle_id, objet.objet_id AS objet_id, nom_objet, username, resume');
+            $this->db->select('documentation_textuelle_id AS documentation_id, objet.objet_id AS objet_id, nom_objet, username, resume');
             $this->db->from('objet');
             $this->db->join('documentation_textuelle AS d', 'objet.objet_id=d.objet_id');
             $this->db->order_by('nom_objet','asc');
@@ -134,6 +134,11 @@ class Ressource_texte_model extends CI_Model
         public function delete($ressource_id){
             $this->db->where('ressource_textuelle_id',$ressource_id);
             $this->db->delete('ressource_textuelle'); 
+        }
+        
+        public function delete_documentation($documentation_id){
+            $this->db->where('documentation_textuelle_id',$documentation_id);
+            $this->db->delete('documentation_textuelle');
         }
 
 }

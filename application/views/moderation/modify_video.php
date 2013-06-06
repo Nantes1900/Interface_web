@@ -2,7 +2,7 @@
 
     <h1>Modification de la ressource vidéo : <?php echo $ressource->get_titre(); ?></h1>
         
-    <?php echo form_open_multipart('moderation/modify_ressource/index/ressource_video'); ?>
+    <?php echo form_open_multipart('moderation/modify_ressource/index/ressource_video/modify'); ?>
         <input type="hidden" name="ressource_id" value="<?php echo $ressource->get_ressource_video_id(); ?>" />
         <table border=0>
             

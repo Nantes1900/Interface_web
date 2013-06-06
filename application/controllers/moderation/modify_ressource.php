@@ -7,11 +7,11 @@
  */
 
 class Modify_ressource extends CI_Controller{
-    public function index($typeRessource){
+    public function index($typeRessource,$goal='modify'){
         if($this->session->userdata('username')){
             if ( $this->session->userdata('user_level') == 4 ){
                 if($this->input->post('ressource_id')==null){
-                    $this->select_ressource($typeRessource);
+                    $this->select_ressource($typeRessource,$goal);
                 }elseif($typeRessource=='ressource_texte'){
                     $this->modify_texte($this->input->post('ressource_id'));
                 }elseif ($typeRessource=='ressource_graphique') {
@@ -41,38 +41,42 @@ class Modify_ressource extends CI_Controller{
         $this->load->view('header');
     } 
     
-    private function select_ressource($typeRessource){
-        //managing the sort option
-        $orderBy = $this->input->post('orderBy');
-        if($orderBy == null){$orderBy = 'titre';}
-        $orderDirection = $this->input->post('orderDirection');
-        if($this->form_validation->run('sort_objet')==TRUE){ //we check there is no xss in the field
-            $speAttributeValue = $this->input->post('speAttributeValue');
-            if(!empty($speAttributeValue)){ //if something is specified we set the values
-                $speAttribute = $this->input->post('speAttribute');
-            } else { //if nothing specified as specific value we set to null
+    public function select_ressource($typeRessource,$goal){
+        if ( $this->session->userdata('user_level') == 4 ){
+            //managing the sort option
+            $orderBy = $this->input->post('orderBy');
+            if($orderBy == null){$orderBy = 'titre';}
+            $orderDirection = $this->input->post('orderDirection');
+            if($this->form_validation->run('sort_objet')==TRUE){ //we check there is no xss in the field
+                $speAttributeValue = $this->input->post('speAttributeValue');
+                if(!empty($speAttributeValue)){ //if something is specified we set the values
+                    $speAttribute = $this->input->post('speAttribute');
+                } else { //if nothing specified as specific value we set to null
+                    $speAttribute = null;
+                    $speAttributeValue = null;
+                }
+            } else { //in case of xss attempt, no sorting on this
                 $speAttribute = null;
                 $speAttributeValue = null;
             }
-        } else { //in case of xss attempt, no sorting on this
-            $speAttribute = null;
-            $speAttributeValue = null;
-        }
-        if ($this->input->post('validation')==TRUE){ //we check if we only want non validated objet
-            $valid = 'f';
-        } else {
-            $valid = null;
-        }
+            if ($this->input->post('validation')==TRUE){ //we check if we only want non validated objet
+                $valid = 'f';
+            } else {
+                $valid = null;
+            }
         
-        //creating the list
-        $data = array();
-        $data['typeRessource']=$typeRessource;
-        $typeRessource= ucfirst($typeRessource).'_model';
-        $ressourceManager = new $typeRessource();
-        $data['listRessource'] = $ressourceManager->get_ressource_list($orderBy,$orderDirection,$speAttribute,$speAttributeValue,$valid);
+            //creating the list
+            $data = array('typeRessource'=>$typeRessource,'goal'=>$goal);
+            
+            $typeRessource= ucfirst($typeRessource).'_model';
+            $ressourceManager = new $typeRessource();
+            $data['listRessource'] = $ressourceManager->get_ressource_list($orderBy,$orderDirection,$speAttribute,$speAttributeValue,$valid);
         
-        $this->load->view('moderation/select_ressource', $data);
-        $this->load->view('footer');
+            $this->load->view('moderation/select_ressource', $data);
+            $this->load->view('footer');
+        }else{
+            redirect('accueil/accueil/','refresh');
+        }
     }
     
     private function modify_texte($ressource_id){
@@ -102,7 +106,7 @@ class Modify_ressource extends CI_Controller{
                 $ressource->set_validation('f');
             }
             $ressource->save();
-            redirect('moderation/modify_ressource/index/ressource_texte','refresh');
+            redirect('moderation/modify_ressource/index/ressource_texte/modify','refresh');
         }
     }
     
@@ -137,21 +141,21 @@ class Modify_ressource extends CI_Controller{
                     $ressource->set_dimension($imageData['image_size_str']);
                     
                     $ressource->save();
-                    redirect('moderation/modify_ressource/index/ressource_graphique','refresh');
+                    redirect('moderation/modify_ressource/index/ressource_graphique/modify','refresh');
                 }
             }else{
                 //modifiying $ressource out of post data
                 $ressource =  $this->mod_img_basic($ressource); //just basic posted data collecting
                 $ressource->save();
-                redirect('moderation/modify_ressource/index/ressource_graphique','refresh');
+                redirect('moderation/modify_ressource/index/ressource_graphique/modify','refresh');
             }
         }
     }
     
     //basic treatment for posted image form
     function mod_img_basic(Ressource_graphique $ressource){
-        $attrArray = array('titre','description','reference_ressource','auteurs','editeur','ville_edition','couleur',
-                            'mots_cles','legende','image_link','localisation','technique','type_support');
+        $attrArray = array('titre','description','reference_ressource','disponibilite','auteurs','editeur','ville_edition',
+                            'couleur','mots_cles','legende','image_link','localisation','technique','type_support');
         foreach($attrArray as $attr){
             $setMethod = 'set_'.$attr;
             $ressource->$setMethod($this->input->post($attr));
@@ -216,8 +220,8 @@ class Modify_ressource extends CI_Controller{
     
     //basic treatment for posted image form
     function mod_vid_basic(Ressource_video $ressource){
-        $attrArray = array('titre','description','reference_ressource','auteurs','editeur','ville_edition','duree',
-                            'mots_cles','diffusion','versionvideo','distribution','production','video_link');
+        $attrArray = array('titre','description','reference_ressource','disponibilite','auteurs','editeur','ville_edition',
+                            'duree','mots_cles','diffusion','versionvideo','distribution','production','video_link');
         foreach($attrArray as $attr){
             $setMethod = 'set_'.$attr;
             $ressource->$setMethod($this->input->post($attr));
@@ -242,6 +246,105 @@ class Modify_ressource extends CI_Controller{
             $ressourceManager = new $typeRessourceModel();
             $ressourceManager->delete($ressource_id);
             redirect('moderation/modify_ressource/index/'.$typeRessource,'refresh');
+        }else{
+            redirect('accueil/accueil/','refresh');
+        }
+    }
+    
+    public function add_doc($typeRessource){
+        if ( $this->session->userdata('user_level') == 4 ){
+            $ressource_id = $this->input->post('ressource_id');
+            $this->select_objet('add_doc', $ressource_id, $typeRessource);
+        }else{
+            redirect('accueil/accueil/','refresh');
+        }
+    }
+    
+    //powerful method to render a sorted list of objet, with various button to different controllers, depending on input attributes
+    //slightly different than in modify_objet because args are not the same
+    public function select_objet($goal,$ressource_id,$typeRessource){
+        if ( $this->session->userdata('user_level') == 4 ){
+            //managing the sort option
+            $orderBy = $this->input->post('orderBy');
+            if($orderBy == null){$orderBy = 'nom_objet';}
+            $orderDirection = $this->input->post('orderDirection');
+            if($this->form_validation->run('sort_objet')==TRUE){ //we check there is no xss in the field
+                $speAttributeValue = $this->input->post('speAttributeValue');
+                if(!empty($speAttributeValue)){ //if something is specified we set the values
+                    $speAttribute = $this->input->post('speAttribute');
+                } else { //if nothing specified as specific value we set to null
+                    $speAttribute = null;
+                    $speAttributeValue = null;
+                }
+            } else { //in case of xss attempt, no sorting on this
+                $speAttribute = null;
+                $speAttributeValue = null;
+            }
+            if ($this->input->post('validation')==TRUE){ //we check if we only want non validated objet
+                $valid = 'f';
+            } else {
+                $valid = null;
+            }
+        
+            //creating the list
+            require_once ('application/models/objet.php');
+            $this->load->model('objet_model');
+            
+            $data = array('listObjet' => $this->objet_model->get_objet_list($orderBy,$orderDirection,$speAttribute,$speAttributeValue,$valid));
+            $data['goal']=$goal;
+            $ressourceMethod = ucfirst($typeRessource);
+            $data['ressource'] = new $ressourceMethod($ressource_id);
+            $data['typeRessource'] = $typeRessource;
+            $this->load->view('moderation/select_objet', $data);
+            $this->load->view('footer');
+        }else{
+            redirect('accueil/accueil/','refresh');
+        }
+    }
+    
+    public function add_doc_form($typeRessource){
+        if ( $this->session->userdata('user_level') == 4 ){
+            $ressource_id = $this->input->post('ressource_id');
+            $objet_id = $this->input->post('objet_id');
+            $typeRessourceModel= ucfirst($typeRessource).'_model';
+            $ressourceManager = new $typeRessourceModel();
+            $ressourceManager->add_documentation($objet_id,$ressource_id);
+            $this->select_ressource($typeRessource, 'documentation');
+        }else{
+            redirect('accueil/accueil/','refresh');
+        }
+    }
+    
+    public function delete_doc($typeRessource){
+        if ( $this->session->userdata('user_level') == 4 ){
+            $ressource_id = $this->input->post('ressource_id');
+            
+            $typeRessourceModel= ucfirst($typeRessource).'_model';//adding list of documentation as arg for webpage
+            $ressourceManager = new $typeRessourceModel();
+            $data = array('documentationArray'=>$ressourceManager->get_linked_objet($ressource_id));
+            $data['typeRessource']=$typeRessource;
+            
+            $typeRessource = ucfirst($typeRessource); //adding the ressource as argument for webpage
+            $ressource = new $typeRessource($ressource_id);
+            $data['ressource']=$ressource;
+            
+            $this->load->view('moderation/delete_documentation', $data);
+            $this->load->view('footer');
+        }else{
+            redirect('accueil/accueil/','refresh');
+        }
+    }
+    
+    public function delete_documentation($typeRessource){
+        if ( $this->session->userdata('user_level') == 4 ){
+            $ressource_id = $this->input->post('ressource_id');
+            $documentation_id = $this->input->post('documentation_id');
+            
+            $typeRessourceModel= ucfirst($typeRessource).'_model';//adding list of documentation as arg for webpage
+            $ressourceManager = new $typeRessourceModel();
+            $ressourceManager->delete_documentation($documentation_id);
+            
+            $this->delete_doc($typeRessource);
         }else{
             redirect('accueil/accueil/','refresh');
         }

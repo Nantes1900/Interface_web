@@ -2,7 +2,7 @@
 
 	<h1>Modification de la ressource textuelle : <?php echo $ressource->get_titre(); ?></h1>
         
-        <?php echo form_open('moderation/modify_ressource/index/ressource_texte'); ?>
+        <?php echo form_open('moderation/modify_ressource/index/ressource_texte/modify'); ?>
         <input type="hidden" name="ressource_id" value="<?php echo $ressource->get_ressource_textuelle_id(); ?>" />
         <table border=0>
 		
