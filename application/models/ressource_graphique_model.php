@@ -100,7 +100,7 @@ class Ressource_graphique_model extends CI_Model
     //return a list of associative arrays linked by documentation_graphique table to the $ressource_id argument
     //arrays are like documentation_graphique_id, objet_id, nom_objet, username, resume, 
     public function get_linked_objet($ressource_id){
-        $this->db->select('documentation_graphique_id, objet.objet_id, nom_objet, username, resume');
+        $this->db->select('documentation_graphique_id AS documentation_id, objet.objet_id, nom_objet, username, resume');
         $this->db->from('objet');
         $this->db->join('documentation_graphique AS d', 'objet.objet_id=d.objet_id');
         $this->db->order_by('nom_objet','asc');
@@ -132,6 +132,11 @@ class Ressource_graphique_model extends CI_Model
     public function delete($ressource_id){
         $this->db->where('ressource_graphique_id',$ressource_id);
         $this->db->delete('ressource_graphique'); 
+    }
+    
+    public function delete_documentation($documentation_id){
+        $this->db->where('documentation_graphique_id',$documentation_id);
+        $this->db->delete('documentation_graphique');
     }
         
 }

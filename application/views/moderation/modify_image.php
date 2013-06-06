@@ -2,7 +2,7 @@
 
     <h1>Modification de la ressource graphique : <?php echo $ressource->get_titre(); ?></h1>
         
-    <?php echo form_open_multipart('moderation/modify_ressource/index/ressource_graphique'); ?>
+    <?php echo form_open_multipart('moderation/modify_ressource/index/ressource_graphique/modify'); ?>
         <input type="hidden" name="ressource_id" value="<?php echo $ressource->get_ressource_graphique_id(); ?>" />
         <table border=0>
             

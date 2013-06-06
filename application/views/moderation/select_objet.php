@@ -4,7 +4,8 @@
     
     <h1>Selection de données</h1>
     
-    <h2>Liste des objets <?php if($goal=='add_relation'){ echo 'à lier à '.$objetSource->get_nom_objet();} ?></h2>
+    <h2>Liste des objets <?php if($goal=='add_relation'){ echo 'à lier à '.$objetSource->get_nom_objet();}
+                                if($goal=='add_doc'){ echo 'à lier à la ressource '.$ressource->get_titre(); } ?></h2>
 <!--    sorting form-->
     <?php if($goal=='modify' || $goal=='relation'){
               echo form_open('moderation/modify_objet/index/'.$goal);
@@ -58,6 +59,9 @@
                 <?php if($goal=='add_relation'){ ?>
                     <th>Lier à cet objet à <?php echo $objetSource->get_nom_objet();?></th>
                 <?php } ?>
+                <?php if($goal=='add_doc'){ ?>
+                    <th>Lier à cet objet à <?php echo $ressource->get_titre();?></th>
+                <?php } ?>
             </tr>
         </thead>
         <tbody>
@@ -101,6 +105,20 @@
                             <?php echo form_open('moderation/modify_objet/add_relation_form') ?>
                                 <input type="hidden" name="objet1_id" value="<?php echo $objetSource->get_objet_id(); ?>" />
                                 <input type="hidden" name="objet2_id" value="<?php echo $objet->get_objet_id(); ?>" />
+                                <input type="submit" value="Relier" />
+                            </form>
+                        </td>
+                    <?php } ?>
+                    <?php if($goal=='add_doc'){ ?>
+                        <td>
+                            <?php echo form_open('moderation/modify_ressource/add_doc_form/'.$typeRessource) ?>
+                                <input type="hidden" name="ressource_id" value="<?php if($typeRessource=='ressource_texte'){
+                                                                                        echo $ressource->get_ressource_textuelle_id();
+                                                                                    } else {
+                                                                                        $getMethod='get_'.$typeRessource.'_id';
+                                                                                        echo $ressource->$getMethod(); 
+                                                                                    } ?>" />
+                                <input type="hidden" name="objet_id" value="<?php echo $objet->get_objet_id(); ?>" />
                                 <input type="submit" value="Relier" />
                             </form>
                         </td>
