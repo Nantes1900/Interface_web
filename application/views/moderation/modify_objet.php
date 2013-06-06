@@ -2,7 +2,7 @@
 
 	<h1>Modification de l'objet : <?php echo $objet->get_nom_objet(); ?></h1>
         
-        <?php echo form_open('moderation/modify_objet'); ?>
+        <?php echo form_open('moderation/modify_objet/index/modify'); ?>
         <input type="hidden" name="objet_id" value="<?php echo $objet->get_objet_id(); ?>" />
         <table border=0>
 		

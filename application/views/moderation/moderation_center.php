@@ -5,7 +5,9 @@
         <table>
             <tr><td>Vous souhaitez :</td></tr>
            
-            <tr><td><?php echo anchor('moderation/modify_objet', 'Modifier, valider ou supprimer un objet historique'); ?></td></tr>
+            <tr><td><?php echo anchor('moderation/modify_objet/index/modify', 'Modifier, valider ou supprimer un objet historique'); ?></td></tr>
+            
+            <tr><td><?php echo anchor('moderation/modify_objet/index/relation', 'Gérer les relations entre objet historique'); ?></td></tr>
             
             <tr><td><?php echo anchor('moderation/modify_ressource/index/ressource_texte', 'Modifier, valider ou supprimer une ressource textuelle'); ?></td></tr>
             
