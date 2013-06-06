@@ -154,8 +154,8 @@ class Modify_ressource extends CI_Controller{
     
     //basic treatment for posted image form
     function mod_img_basic(Ressource_graphique $ressource){
-        $attrArray = array('titre','description','reference_ressource','auteurs','editeur','ville_edition','couleur',
-                            'mots_cles','legende','image_link','localisation','technique','type_support');
+        $attrArray = array('titre','description','reference_ressource','disponibilite','auteurs','editeur','ville_edition',
+                            'couleur','mots_cles','legende','image_link','localisation','technique','type_support');
         foreach($attrArray as $attr){
             $setMethod = 'set_'.$attr;
             $ressource->$setMethod($this->input->post($attr));
@@ -220,8 +220,8 @@ class Modify_ressource extends CI_Controller{
     
     //basic treatment for posted image form
     function mod_vid_basic(Ressource_video $ressource){
-        $attrArray = array('titre','description','reference_ressource','auteurs','editeur','ville_edition','duree',
-                            'mots_cles','diffusion','versionvideo','distribution','production','video_link');
+        $attrArray = array('titre','description','reference_ressource','disponibilite','auteurs','editeur','ville_edition',
+                            'duree','mots_cles','diffusion','versionvideo','distribution','production','video_link');
         foreach($attrArray as $attr){
             $setMethod = 'set_'.$attr;
             $ressource->$setMethod($this->input->post($attr));
