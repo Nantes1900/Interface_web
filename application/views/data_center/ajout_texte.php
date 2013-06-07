@@ -1,8 +1,18 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" > 
 
-	<h1>Formulaire d'ajout d'une ressource textuelle (livre, lettre, etc.)</h1>
+	<h1>
+            Formulaire d'ajout d'une ressource textuelle (livre, lettre, etc.)
+            <?php if(isset($linkedObjet)){
+                echo 'liée à '.$linkedObjet->get_nom_objet();
+            } ?>
+        </h1>
         
-        <?php echo form_open('data_center/ajout_ressource/formulaire_texte'); ?>
+        <?php if(!isset($linkedObjet)){
+                    echo form_open('data_center/ajout_ressource/formulaire_texte');
+              }else{
+                    echo form_open('data_center/ajout_ressource/formulaire_texte/'.$linkedObjet->get_objet_id());    
+              }
+       ?>
         
         <table border=0>
 		
@@ -80,18 +90,27 @@
                     <td> <input type="text" name="pagination" value="<?php echo set_value('pagination'); ?>"> </td>
                     <td class="error_form"><?php echo form_error('pagination'); ?></td>
             </tr>
-            <tr>
-                    <td> Créer un lien de documentation vers un objet </td>
-                    <td>
-                        <select name="objet">
-                            <option value=""> Aucun </option>
-                            <?php foreach($objet_list as $objet): 
-                                    echo '<option value="'.$objet->get_objet_id().'">'.$objet->get_nom_objet().'</option>'; 
-                                  endforeach; ?>
+            <?php if(!isset($linkedObjet)){ ?>
+                    <tr>
+                        <td> Créer un lien de documentation vers un objet </td>
+                        <td>
+                            <select name="objet">
+                                <option value=""> Aucun </option>
+                                <?php foreach($objet_list as $objet): 
+                                        echo '<option value="'.$objet->get_objet_id().'">'.$objet->get_nom_objet().'</option>'; 
+                                      endforeach; ?>
                             
-                        </select>
+                            </select>
+                        </td>
+                    </tr>
+            <?php }else{ ?>
+                <tr>
+                    <td>
+                        <input type="hidden" name="objet" value="<?php echo $linkedObjet->get_objet_id(); ?>" />
                     </td>
-            </tr>
+                </tr>
+            <?php } ?>
+            
             <tr><td><input type="submit" value="Ajouter cette ressource" /><tr><td>
                             
         </table>
