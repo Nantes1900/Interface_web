@@ -49,21 +49,20 @@ class User_model extends CI_Model
 	}
         
         //Ajout d'un utilisateur à la BDD
-        public function create_user($userdata)
-	{
+        public function create_user($userdata){
 
-		//Chargement de la gestion de hashage de mot de passe
-		$this->load->helper('security');
+            //Chargement de la gestion de hashage de mot de passe
+            $this->load->helper('security');
 
-		//Création de la requête
-		$this->db->set('username', $userdata['username']);
-		$this->db->set('password', do_hash($userdata['password']));
-		$this->db->set('user_level', 1); //Par défaut, l'utilisateur possède les droits les plus bas
-		$this->db->set('timestamp', now());
-		$this->db->set('nom', $userdata['nom']);
-		$this->db->set('prenom', $userdata['prenom']);
-		$this->db->insert('users'); //Exécution
-
+            //Création de la requête
+            $this->db->set('username', $userdata['username']);
+            $this->db->set('password', do_hash($userdata['password']));
+            $this->db->set('user_level', 1); //Par défaut, l'utilisateur possède les droits les plus bas
+            $this->db->set('timestamp', now());
+            $this->db->set('nom', $userdata['nom']);
+            $this->db->set('prenom', $userdata['prenom']);
+            $this->db->set('email', $userdata['email']);
+            $this->db->insert('users'); //Exécution
 
 	}
 
@@ -150,7 +149,7 @@ class User_model extends CI_Model
         //get a list of user entities, with some parameter restriction
         //$speUserLevel allow specifiying a particular user level
         //user entity $notUser allow not querying this particular user (often self)
-        public function get_user_list ($speUserLevel = null,$orderBy='username', $orderDirection='asc',$speAttribute = null, $speAttributeValue = null, User $notUser = null){
+        public function get_user_list ($speUserLevel = null,$orderBy='username', $orderDirection='asc',$speAttribute = null, $speAttributeValue = null, $notUser = null){
             //db query
             $this->db->select('username, user_level, timestamp, nom, prenom, adresse_postale, email, telephone, profession');
             $this->db->from('users');
@@ -158,8 +157,8 @@ class User_model extends CI_Model
             if ($speUserLevel != null){
                 $this->db->where('user_level',$speUserLevel);               
             }
-            if ($notUser != null){
-                $this->db->where('username !=',$notUser->get_userName());  
+            if ($notUser!=null){
+                $this->db->where('username !=',$notUser);  
             }
             if ($speAttribute!=null && $speAttributeValue!=null){
                 $this->db->like($speAttribute,$speAttributeValue);

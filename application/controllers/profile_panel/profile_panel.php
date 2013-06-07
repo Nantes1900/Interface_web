@@ -76,6 +76,19 @@ class Profile_panel extends CI_Controller {
             return FALSE;
         }
     }
+    
+    public function check_unique_mail(){
+            $mail = $this->input->post('email');
+            $userName = $this->session->userdata('username');
+            $currentUser = new User($userName);
+            $userList = $this->user_model->get_user_list(null,'username','asc','email',$mail);
+            if(!isset($userList['0']) || $userList['0']->get_email()==$currentUser->get_email() ){
+                return TRUE;
+            } else {
+                $this->form_validation->set_message('check_unique_mail', 'L\'adresse mail : '.$mail.' est déjà prise');
+                return FALSE;
+            }  
+    }
 }
 
 /* End of file profile_panel.php */

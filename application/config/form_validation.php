@@ -17,6 +17,11 @@ $config = array(
                         'rules'=>'required'
                     ),
                     array(
+                        'field'=>'email',
+                        'label'=>'email',
+                        'rules'=>'trim|required|valid_email|max_length[50]|xss_clean|callback_check_unique_mail'
+                    ),
+                    array(
                         'field'=>'nom',
                         'label'=>'Nom',
                         'rules'=>'trim|required|min_length[2]|max_length[40]|xss_clean'
@@ -440,7 +445,7 @@ $config = array(
                     array(
                         'field'=>'email',
                         'label'=>'email',
-                        'rules'=>'trim|valid_email|max_length[49]|xss_clean'
+                        'rules'=>'trim|valid_email|max_length[50]|xss_clean|callback_check_unique_mail'
                     ),
                     array(
                         'field'=>'newPW',

@@ -29,6 +29,11 @@
             <td><input type="text" name="prenom" value="<?php echo set_value('prenom'); ?>" size="50" /></td>
             <td class="error_form"><?php echo form_error('prenom'); ?></td>
         </tr>
+        <tr><td>Adresse email :</td></tr>
+        <tr>
+            <td><input type="email" name="email" value="<?php echo set_value('email'); ?>" size="50" /></td>
+            <td class="error_form"><?php echo form_error('email'); ?></td>
+        </tr>
 	
         <tr><td><input type="submit" value="Cr&eacute;er un compte" /><tr><td>
 
