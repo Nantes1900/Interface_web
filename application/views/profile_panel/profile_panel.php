@@ -14,6 +14,7 @@
                     <input type="text" name="firstName" id="firstName" maxlength="40" 
                            value="<?php echo $user->get_firstName() ?>" />
                 </td>
+                <td class="error_form"><?php echo form_error('firstName'); ?></td>
             </tr>
             <tr>
                 <td>
@@ -21,6 +22,7 @@
                     <input type="text" name="name" id="name" maxlength="40" 
                            value="<?php echo $user->get_name() ?>" />
                 </td>
+                <td class="error_form"><?php echo form_error('name'); ?></td>
             </tr>
             <tr>
                 <td>
@@ -28,6 +30,7 @@
                     <input type="text" name="theAdress" id="theAdress" 
                            value="<?php echo $user->get_adress() ?>" />
                 </td>
+                <td class="error_form"><?php echo form_error('theAdress'); ?></td>
             </tr>
             <tr>
                 <td>
@@ -35,6 +38,7 @@
                     <input type="text" name="phoneNumber" id="phoneNumber" 
                            value="<?php echo $user->get_phoneNumber() ?>" />
                 </td>
+                <td class="error_form"><?php echo form_error('phoneNumber'); ?></td>
             </tr>
             <tr>
                 <td>
@@ -42,6 +46,7 @@
                     <input type="text" name="job" id="job" 
                            value="<?php echo $user->get_job() ?>" />
                 </td>
+                <td class="error_form"><?php echo form_error('job'); ?></td>
             </tr>
         </table>
         <h2>Sécurité</h2>
@@ -49,9 +54,10 @@
             <tr>
                 <td>
                     <label for="email">E-mail</label>
-                    <input type="email" name="adress" id="adress" type="email"
+                    <input type="email" name="email" id="email" 
                            value="<?php echo $user->get_email() ?>" />
                 </td>
+                <td class="error_form"><?php echo form_error('email'); ?></td>
             </tr>
             <tr>
                 <td>

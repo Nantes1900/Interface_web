@@ -26,5 +26,18 @@
                             <input type="submit" value="Modifier cet objet" />
                 </form>
         <?php } ?>
+        <?php echo form_open('data_center/ajout_ressource/add_on_the_fly')?>
+            <p>
+                Ajouter une ressource liée à cet objet :
+                <select name="typeFormulaire">
+                       <option value="formulaire_texte"> texte </option>
+                       <option value="formulaire_image"> image </option>
+                       <option value="formulaire_video"> vidéo </option>
+                </select>
+                <input type="hidden" name="objet_id" value="<?php echo $objet->get_objet_id(); ?>" />
+                <input type="submit" value="Ajouter ressource" />
+            </p>
+        </form>
+        
     </body>
 </html>

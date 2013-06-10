@@ -2,25 +2,25 @@
 
 	<h1>Modération de données</h1>
         
-        <table>
-            <tr><td>Vous souhaitez :</td></tr>
-           
-            <tr><td><?php echo anchor('moderation/modify_objet/index/modify', 'Modifier, valider ou supprimer un objet historique'); ?></td></tr>
+        <p>Vous souhaitez :</p>
+        <div class='menu'>
+            <ul id='navigation'>
+                <li><?php echo anchor('moderation/modify_objet/index/modify', 'Modifier, valider ou supprimer un objet historique'); ?></li>
             
-            <tr><td><?php echo anchor('moderation/modify_objet/index/relation', 'Gérer les relations entre objet historique'); ?></td></tr>
+                <li><?php echo anchor('moderation/modify_objet/index/relation', 'Gérer les relations entre objet historique'); ?></li>
             
-            <tr><td><?php echo anchor('moderation/modify_ressource/index/ressource_texte/modify', 'Modifier, valider ou supprimer une ressource textuelle'); ?></td></tr>
+                <li><?php echo anchor('moderation/modify_ressource/index/ressource_texte/modify', 'Modifier, valider ou supprimer une ressource textuelle'); ?></tli>
             
-            <tr><td><?php echo anchor('moderation/modify_ressource/index/ressource_texte/documentation', 'Gérer la documentation textuelle vers un objet historique'); ?></td></tr>
+                <li><?php echo anchor('moderation/modify_ressource/index/ressource_texte/documentation', 'Gérer la documentation textuelle vers un objet historique'); ?></li>
             
-            <tr><td><?php echo anchor('moderation/modify_ressource/index/ressource_graphique/modify', 'Modifier, valider ou supprimer une ressource graphique'); ?></td></tr>
+                <li><?php echo anchor('moderation/modify_ressource/index/ressource_graphique/modify', 'Modifier, valider ou supprimer une ressource graphique'); ?></li>
             
-            <tr><td><?php echo anchor('moderation/modify_ressource/index/ressource_graphique/documentation', 'Gérer la documentation graphique vers un objet historique'); ?></td></tr>
+                <li><?php echo anchor('moderation/modify_ressource/index/ressource_graphique/documentation', 'Gérer la documentation graphique vers un objet historique'); ?></li>
             
-            <tr><td><?php echo anchor('moderation/modify_ressource/index/ressource_video/modify', 'Modifier, valider ou supprimer une ressource video'); ?></td></tr>
+                <li><?php echo anchor('moderation/modify_ressource/index/ressource_video/modify', 'Modifier, valider ou supprimer une ressource video'); ?></li>
             
-            <tr><td><?php echo anchor('moderation/modify_ressource/index/ressource_video/documentation', 'Gérer la documentation video vers un objet historique'); ?></td></tr>
-        </table>
-	
+                <li><?php echo anchor('moderation/modify_ressource/index/ressource_video/documentation', 'Gérer la documentation video vers un objet historique'); ?></li>
+            </ul>
+        </div>
 
 </html>

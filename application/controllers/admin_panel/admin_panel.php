@@ -24,7 +24,7 @@ class Admin_panel extends CI_Controller {
 
             //Ce code sera executé charque fois que ce contrôleur sera appelé
             $this->load->model('user_model');
-            require ('application/models/user.php');
+            require_once ('application/models/user.php');
             $this->load->library('form_validation');
             $this->load->helper('dates_helper');
             $this->load->view('header');
@@ -53,9 +53,7 @@ class Admin_panel extends CI_Controller {
                 $speAttributeValue = null;
             }
             //creating the list
-            
-            $data['listUser'] = $userManager->get_user_list($speUserLevel,$orderBy,$orderDirection,$speAttribute,$speAttributeValue); 
-            
+            $data['listUser'] = $userManager->get_user_list($speUserLevel,$orderBy,$orderDirection,$speAttribute,$speAttributeValue,$this->session->userdata('username')); 
             $this->load->view('admin_panel/admin_panel', $data);
             $this->load->view('footer');
         }

@@ -58,7 +58,7 @@ class Ajout_ressource extends CI_Controller
          * @access public
          * 
          */
-        public function formulaire_texte()
+        public function formulaire_texte($linkedObjet_id = null)
         {
             
             $this->load->view('data_center/data_center');           
@@ -67,7 +67,12 @@ class Ajout_ressource extends CI_Controller
             if ($this->form_validation->run('ajout_texte') == FALSE) 
             {
                 $objet_list = $this->objet_model->get_objet_list();
-                $data = array('objet_list' => $objet_list);
+                if(isset($linkedObjet_id)){ //we check if we are adding a ressource to an objet 'on the fly'
+                    $linkedObjet = new Objet($linkedObjet_id);
+                } else {
+                    $linkedObjet = null;
+                }
+                $data = array('objet_list' => $objet_list,'linkedObjet'=>$linkedObjet);
                 $this->load->view('data_center/ajout_texte',$data);
                 $this->load->view('footer');
             }
@@ -115,7 +120,7 @@ class Ajout_ressource extends CI_Controller
             }
         }
         
-        public function formulaire_image(){
+        public function formulaire_image($linkedObjet_id = null){
             require ('application/models/ressource_graphique.php');
             $this->load->view('data_center/data_center');           
             $this->load->model('ressource_graphique_model');
@@ -129,7 +134,12 @@ class Ajout_ressource extends CI_Controller
             
             if($this->form_validation->run('ajout_image') == FALSE){
                 $objet_list = $this->objet_model->get_objet_list();
-                $data = array('objet_list' => $objet_list, 'error' => ' ');
+                if(isset($linkedObjet_id)){ //we check if we are adding a ressource to an objet 'on the fly'
+                    $linkedObjet = new Objet($linkedObjet_id);
+                } else {
+                    $linkedObjet = null;
+                }
+                $data = array('objet_list' => $objet_list, 'error' => ' ','linkedObjet'=>$linkedObjet);
                 $this->load->view('data_center/ajout_image', $data);
                 $this->load->view('footer');   
                 
@@ -139,7 +149,13 @@ class Ajout_ressource extends CI_Controller
                 
                     if ( ! $this->upload->do_upload('image')){
                         $objet_list = $this->objet_model->get_objet_list();
+                        if(isset($linkedObjet_id)){ //we check if we are adding a ressource to an objet 'on the fly'
+                            $linkedObjet = new Objet($linkedObjet_id);
+                        } else {
+                            $linkedObjet = null;
+                        }
                         $data = array('objet_list' => $objet_list,'error' => $this->upload->display_errors());
+                        $data['linkedObjet'] = $linkedObjet;
                         $this->load->view('data_center/ajout_image', $data);
                     } else {
                         //getting info about upload
@@ -219,7 +235,7 @@ class Ajout_ressource extends CI_Controller
             return $ressource;
         }
         
-        public function formulaire_video(){
+        public function formulaire_video($linkedObjet_id = null){
             require ('application/models/ressource_video.php');
             $this->load->view('data_center/data_center');           
             $this->load->model('ressource_video_model');
@@ -232,7 +248,12 @@ class Ajout_ressource extends CI_Controller
             if($this->form_validation->run('ajout_video') == FALSE){
                 
                 $objet_list = $this->objet_model->get_objet_list();
-                $data = array('objet_list' => $objet_list, 'error' => ' ');
+                if(isset($linkedObjet_id)){ //we check if we are adding a ressource to an objet 'on the fly'
+                    $linkedObjet = new Objet($linkedObjet_id);
+                } else {
+                    $linkedObjet = null;
+                }
+                $data = array('objet_list' => $objet_list, 'error' => ' ','linkedObjet'=>$linkedObjet);
                 $this->load->view('data_center/ajout_video', $data);
                 $this->load->view('footer');   
                 
@@ -241,7 +262,13 @@ class Ajout_ressource extends CI_Controller
                 
                     if ( ! $this->upload->do_upload('video')){
                         $objet_list = $this->objet_model->get_objet_list();
+                        if(isset($linkedObjet_id)){ //we check if we are adding a ressource to an objet 'on the fly'
+                            $linkedObjet = new Objet($linkedObjet_id);
+                        } else {
+                            $linkedObjet = null;
+                        }
                         $data = array('objet_list' => $objet_list,'error' => $this->upload->display_errors());
+                        $data['linkedObjet'] = $linkedObjet;
                         $this->load->view('data_center/ajout_video', $data);
                     } else {
                         //getting info about upload
@@ -309,6 +336,13 @@ class Ajout_ressource extends CI_Controller
             $date_infos = conc_date($this->input->post('jourProd'),$this->input->post('moisProd'),$this->input->post('anneeProd'));
             $ressource->set_date_production($date_infos['date']);
             return $ressource;
+        }
+        
+        //call a form to add a ressource with specific objet_id as arg
+        public function add_on_the_fly(){
+            $typeFormulaire = $this->input->post('typeFormulaire');
+            $objet_id = $this->input->post('objet_id');
+            $this->$typeFormulaire($objet_id);
         }
         
         public function check_date($field, $extension=null){ //callback function checking date validity

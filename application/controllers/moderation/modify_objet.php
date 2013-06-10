@@ -97,7 +97,7 @@ class Modify_objet extends CI_Controller{
         if ( $this->session->userdata('user_level') == 4 ){
             $objet_id = $this->input->post('objet_id');
             $this->objet_model->delete($objet_id);
-            redirect('moderation/modify_objet/','refresh');
+            redirect('moderation/modify_objet/index/modify','refresh');
         }else{
             redirect('accueil/accueil/','refresh');
         }

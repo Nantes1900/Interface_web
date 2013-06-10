@@ -20,7 +20,7 @@ html{
 
 body{
 	width:60%;
-	margin-left:15%;
+	margin-left:20%;
 	margin-right:75%;
 	font-family:Verdana;
 	background: center;
@@ -39,6 +39,71 @@ div.rightSidebar{
 	background-position: 0 0;
 	text-align:left;	
         position:absolute;
+}
+div.leftSidebar{
+        width:15%;
+	margin-left:-19%;
+	margin-right:auto;
+	font-family:Verdana;
+	background: center;
+	background-repeat: repeat;
+	background-position: 0 0;
+	text-align:left;	
+        position:absolute;
+        top : 15%;
+}
+div.leftSidebar a{
+        text-decoration:none;
+        color:#000;
+        display:inline;
+}
+
+div.leftSidebar ul{
+    list-style-type:none;
+    margin:0;
+    padding:0;
+} 
+
+div.leftSidebar li{
+    background-color:#B98585;
+    border: 1px #9e5555 solid;
+    border-radius: 2px;
+    cursor:hand; 
+    cursor:pointer;
+}
+div.leftSidebar li:hover{
+    background-color:#C69D9D;
+}
+/*this is about having a dropdown menu in the left sidebar*/
+#navigation ul {display: none;}
+#navigation li:hover ul {display: block;}
+#navigation ul li{
+    margin-left : 10%;
+}
+
+div.menu a{
+        text-decoration:none;
+        color:#000;
+        display:inline;
+}
+
+div.menu ul{
+    list-style-type:none;
+    margin:0;
+    padding:0;
+    width: 50%;
+} 
+
+div.menu li{
+    background-color:#B98585;
+    border: 1px #9e5555 solid;
+    border-radius: 2px;
+    cursor:hand; 
+    cursor:pointer;
+}
+div.menu li ul{width: 100%;}
+div.menu li:hover{
+    background-color:#C69D9D;
 }
 
 h1{
@@ -122,15 +187,6 @@ error{
 }
 
 
-/* nav */
-
-#nav{
-	
-}
-
-.menu{
-	
-}
 
 /*helpboxes in <li> elements*/
 li.helpbox{
