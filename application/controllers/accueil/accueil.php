@@ -32,6 +32,7 @@ class Accueil extends CI_Controller
 
             $data = array('username' => $this->session->userdata('username'));
 
+<<<<<<< HEAD
             $this->load->view('accueil/welcome', $data);
 
 
@@ -52,6 +53,14 @@ class Accueil extends CI_Controller
                             $this->load->view('accueil/admin_panel_anchor');
                         }
                         $this->load->view('accueil/profile_panel_anchor');
+=======
+			$this->load->view('accueil/welcome');
+                        
+			$this->load->view('footer');
+		}
+
+	}
+>>>>>>> paulyves
 
                         
 		$this->load->view('footer');
