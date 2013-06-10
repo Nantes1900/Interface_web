@@ -22,9 +22,11 @@
         <h2>Menu</h2>
         <ul id='navigation'>
             <li>
-                <?php echo anchor('accueil', 'Revenir à la page d&rsquo;accueil'); ?>
+                <?php echo img(array('src'=>'assets/utils/go-home.png','width'=>'8%')); ?>
+                <?php echo anchor('accueil', 'Accueil'); ?>
             </li>
             <li>
+                <?php echo img(array('src'=>'assets/utils/db_add.png','width'=>'8%')); ?>
                 <?php echo anchor('data_center/data_center', 'Ajout de données'); ?>
                 <ul>
                     <?php if($this->session->userdata('user_level') == 4 || $this->session->userdata('user_level') == 5){ ?>
@@ -37,29 +39,37 @@
             </li>
             <?php if($this->session->userdata('user_level') == 4) { ?>
                     <li>
+                        <?php echo img(array('src'=>'assets/utils/db_update.png','width'=>'8%')); ?>
                         <?php echo anchor('moderation/moderation_center', 'Modération de données');?>
+                        <ul>
+                            <li><?php echo anchor('moderation/modify_objet/index/modify', 'Modifier un objet historique'); ?></li>
+                            <li><?php echo anchor('moderation/modify_objet/index/relation', 'Relier des objets'); ?></li>
+                            <li><?php echo anchor('moderation/modify_ressource/index/ressource_texte/modify', 'Modifier une ressource textuelle'); ?></li>
+                            <li><?php echo anchor('moderation/modify_ressource/index/ressource_texte/documentation', 'Documenter (texte) un objet'); ?></li>
+                            <li><?php echo anchor('moderation/modify_ressource/index/ressource_graphique/modify', 'Modifier une ressource graphique'); ?></li>
+                            <li><?php echo anchor('moderation/modify_ressource/index/ressource_graphique/documentation', 'Documenter (image) un objet'); ?></li>
+                            <li><?php echo anchor('moderation/modify_ressource/index/ressource_video/modify', 'Modifier une ressource video'); ?></li>
+                            <li><?php echo anchor('moderation/modify_ressource/index/ressource_video/documentation', 'Documenter (video) un objet'); ?></li>
+                        </ul>
                     </li>
             <?php } ?>
             <li>
+                <?php echo img(array('src'=>'assets/utils/zoom-2.png','width'=>'8%')); ?>
                 <?php echo anchor('view_data/select_data', 'Visualisation de données'); ?>
             </li>
             <li>
+                <?php echo img(array('src'=>'assets/utils/edit-user.png','width'=>'8%')); ?>
                 <?php echo anchor('profile_panel/profile_panel', 'Consulter profil personnel'); ?>
             </li>
             <?php if($this->session->userdata('user_level') == 9) { ?>
                     <li>
+                        <?php echo img(array('src'=>'assets/utils/edit-group.png','width'=>'8%')); ?>
                         <?php echo anchor('admin_panel/admin_panel', 'Centre d\'administration');?>
                     </li>
             <?php } ?>
             <li>
+                <?php echo img(array('src'=>'assets/utils/system-logout.png','width'=>'8%')); ?>
                 <?php echo anchor('accueil/login/logout', 'D&eacute;connexion'); ?>
-            </li>
-            <li>
-                c'est pas un lien
-                <ul>
-                    <li>child one</li>
-                    <li> child two</li>
-                </ul>
             </li>
         </ul>
     </div>

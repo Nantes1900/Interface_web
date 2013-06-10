@@ -55,7 +55,7 @@ div.leftSidebar{
 div.leftSidebar a{
         text-decoration:none;
         color:#000;
-        display:block;
+        display:inline;
 }
 
 div.leftSidebar ul{
@@ -80,6 +80,32 @@ div.leftSidebar li:hover{
 #navigation ul li{
     margin-left : 10%;
 }
+
+div.menu a{
+        text-decoration:none;
+        color:#000;
+        display:inline;
+}
+
+div.menu ul{
+    list-style-type:none;
+    margin:0;
+    padding:0;
+    width: 50%;
+} 
+
+div.menu li{
+    background-color:#B98585;
+    border: 1px #9e5555 solid;
+    border-radius: 2px;
+    cursor:hand; 
+    cursor:pointer;
+}
+div.menu li ul{width: 100%;}
+div.menu li:hover{
+    background-color:#C69D9D;
+}
+
 h1{
 	color:#9e5555;	
 	text-align: left;
@@ -161,15 +187,6 @@ error{
 }
 
 
-/* nav */
-
-#nav{
-	
-}
-
-.menu{
-	
-}
 
 /*helpboxes in <li> elements*/
 li.helpbox{
