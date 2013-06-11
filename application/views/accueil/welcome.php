@@ -29,6 +29,10 @@
             <?php echo anchor('profile_panel/profile_panel', 'Consulter profil personnel'); ?>
         </li>
         <li>
+                <?php echo img(array('src'=>'assets/utils/contact.png','width'=>'4%')); ?>
+                <?php echo anchor('profile_panel/contact_panel', 'Liste des autres membres'); ?>
+            </li>
+        <li>
             <?php echo img(array('src'=>'assets/utils/system-logout.png','width'=>'4%')); ?>
             <?php echo anchor('accueil/login/logout', 'D&eacute;connexion'); ?>
         </li>

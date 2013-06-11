@@ -59,7 +59,7 @@
             </li>
             <li>
                 <?php echo img(array('src'=>'assets/utils/edit-user.png','width'=>'8%')); ?>
-                <?php echo anchor('profile_panel/profile_panel', 'Consulter profil personnel'); ?>
+                <?php echo anchor('profile_panel/profile_panel', 'Profil personnel'); ?>
             </li>
             <?php if($this->session->userdata('user_level') == 9) { ?>
                     <li>
@@ -67,6 +67,10 @@
                         <?php echo anchor('admin_panel/admin_panel', 'Centre d\'administration');?>
                     </li>
             <?php } ?>
+            <li>
+                <?php echo img(array('src'=>'assets/utils/contact.png','width'=>'8%')); ?>
+                <?php echo anchor('profile_panel/contact_panel', 'Contacts'); ?>
+            </li>
             <li>
                 <?php echo img(array('src'=>'assets/utils/system-logout.png','width'=>'8%')); ?>
                 <?php echo anchor('accueil/login/logout', 'D&eacute;connexion'); ?>
