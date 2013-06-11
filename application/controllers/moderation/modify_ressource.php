@@ -9,7 +9,7 @@
 class Modify_ressource extends CI_Controller{
     public function index($typeRessource,$goal='modify'){
         if($this->session->userdata('username')){
-            if ( $this->session->userdata('user_level') == 4 ){
+            if ( $this->session->userdata('user_level') >= 5 ){
                 if($this->input->post('ressource_id')==null){
                     $this->select_ressource($typeRessource,$goal);
                 }elseif($typeRessource=='ressource_texte'){
@@ -42,7 +42,7 @@ class Modify_ressource extends CI_Controller{
     } 
     
     public function select_ressource($typeRessource,$goal){
-        if ( $this->session->userdata('user_level') == 4 ){
+        if ( $this->session->userdata('user_level') >= 5 ){
             //managing the sort option
             $orderBy = $this->input->post('orderBy');
             if($orderBy == null){$orderBy = 'titre';}
@@ -240,7 +240,7 @@ class Modify_ressource extends CI_Controller{
     }
     
     public function delete_ressource($typeRessource){
-        if ( $this->session->userdata('user_level') == 4 ){
+        if ( $this->session->userdata('user_level') >= 5 ){
             $ressource_id = $this->input->post('ressource_id');
             $typeRessourceModel= ucfirst($typeRessource).'_model';
             $ressourceManager = new $typeRessourceModel();
@@ -252,7 +252,7 @@ class Modify_ressource extends CI_Controller{
     }
     
     public function add_doc($typeRessource){
-        if ( $this->session->userdata('user_level') == 4 ){
+        if ( $this->session->userdata('user_level') >= 5 ){
             $ressource_id = $this->input->post('ressource_id');
             $this->select_objet('add_doc', $ressource_id, $typeRessource);
         }else{
@@ -263,7 +263,7 @@ class Modify_ressource extends CI_Controller{
     //powerful method to render a sorted list of objet, with various button to different controllers, depending on input attributes
     //slightly different than in modify_objet because args are not the same
     public function select_objet($goal,$ressource_id,$typeRessource){
-        if ( $this->session->userdata('user_level') == 4 ){
+        if ( $this->session->userdata('user_level') >= 5 ){
             //managing the sort option
             $orderBy = $this->input->post('orderBy');
             if($orderBy == null){$orderBy = 'nom_objet';}
@@ -303,7 +303,7 @@ class Modify_ressource extends CI_Controller{
     }
     
     public function add_doc_form($typeRessource){
-        if ( $this->session->userdata('user_level') == 4 ){
+        if ( $this->session->userdata('user_level') >= 5 ){
             $ressource_id = $this->input->post('ressource_id');
             $objet_id = $this->input->post('objet_id');
             $typeRessourceModel= ucfirst($typeRessource).'_model';
@@ -316,7 +316,7 @@ class Modify_ressource extends CI_Controller{
     }
     
     public function delete_doc($typeRessource){
-        if ( $this->session->userdata('user_level') == 4 ){
+        if ( $this->session->userdata('user_level') >= 5 ){
             $ressource_id = $this->input->post('ressource_id');
             
             $typeRessourceModel= ucfirst($typeRessource).'_model';//adding list of documentation as arg for webpage
@@ -336,7 +336,7 @@ class Modify_ressource extends CI_Controller{
     }
     
     public function delete_documentation($typeRessource){
-        if ( $this->session->userdata('user_level') == 4 ){
+        if ( $this->session->userdata('user_level') >= 5 ){
             $ressource_id = $this->input->post('ressource_id');
             $documentation_id = $this->input->post('documentation_id');
             

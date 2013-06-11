@@ -107,10 +107,10 @@ class User
                 return 'informateur';
                 break;
             case 4:
-                return 'moderateur';
+                return 'chercheur';
                 break;
             case 5:
-                return 'chercheur';
+                return 'moderateur';
                 break;
             case 9:
                 return 'administrateur';

@@ -63,16 +63,26 @@ class Objet_model extends CI_Model
         public function import_csv($data)
         {
             
-            foreach($data as $objetcsv)
-            {
+            foreach($data as $objetcsv){
                 $objetdata['username'] = $this->session->userdata('username');
-                $objetdata['nom_objet'] = $objetcsv['Nom de l\'objet'];
-                $objetdata['resume'] = $objetcsv['Résumé'];
-                $objetdata['historique'] = $objetcsv['Historique'];
-                $objetdata['description'] = $objetcsv['Description'];
-                $objetdata['adresse_postale'] = $objetcsv['Adresse'];
-                $objetdata['mots_cles'] = $objetcsv['Mots-clefs'];
-                
+                if(isset($objetcsv['Nom de l\'objet'])){
+                    $objetdata['nom_objet'] = $objetcsv['Nom de l\'objet'];
+                }
+                if(isset($objetcsv['Résumé'])){
+                    $objetdata['resume'] = $objetcsv['Résumé'];
+                }
+                if(isset($objetcsv['Historique'])){
+                    $objetdata['historique'] = $objetcsv['Historique'];
+                }
+                if(isset($objetcsv['Description'])){
+                    $objetdata['description'] = $objetcsv['Description'];
+                }
+                if(isset($objetcsv['Adresse'])){
+                    $objetdata['adresse_postale'] = $objetcsv['Adresse'];
+                }
+                if(isset($objetcsv['Mots-clefs'])){
+                    $objetdata['mots_cles'] = $objetcsv['Mots-clefs'];
+                }
                 $this->ajout_objet($objetdata);
             }
         }

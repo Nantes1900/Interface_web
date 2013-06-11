@@ -20,7 +20,7 @@
         <h3> Informations fournies par </h3>
         <p> <?php echo $objet->get_username(); ?> </p>
         
-        <?php if($this->session->userdata('user_level') == 4){ ?>
+        <?php if($this->session->userdata('user_level') >= 5){ ?>
                 <?php echo form_open('moderation/modify_objet/index/modify') ?>
                             <input type="hidden" name="objet_id" value="<?php echo $objet->get_objet_id(); ?>" />
                             <input type="submit" value="Modifier cet objet" />

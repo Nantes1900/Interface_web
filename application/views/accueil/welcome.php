@@ -8,7 +8,7 @@
             <?php echo img(array('src'=>'assets/utils/db_add.png','width'=>'4%')); ?>
             <?php echo anchor('data_center/data_center', 'Ajout de données'); ?>
         </li>
-        <?php if($this->session->userdata('user_level') == 4) { ?>
+        <?php if($this->session->userdata('user_level') >= 5) { ?>
             <li>
                 <?php echo img(array('src'=>'assets/utils/db_update.png','width'=>'4%')); ?>
                 <?php echo anchor('moderation/moderation_center', 'Modération de données');?>
@@ -29,10 +29,13 @@
             <?php echo anchor('profile_panel/profile_panel', 'Consulter profil personnel'); ?>
         </li>
         <li>
+                <?php echo img(array('src'=>'assets/utils/contact.png','width'=>'4%')); ?>
+                <?php echo anchor('profile_panel/contact_panel', 'Liste des autres membres'); ?>
+            </li>
+        <li>
             <?php echo img(array('src'=>'assets/utils/system-logout.png','width'=>'4%')); ?>
             <?php echo anchor('accueil/login/logout', 'D&eacute;connexion'); ?>
         </li>
     </ul>
 </div>
 
-<p></p>

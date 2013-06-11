@@ -14,7 +14,7 @@ class Ressource_graphique extends Ressource {
     protected $_couleur;
     protected $_image;
     protected $_image_link;
-    protected $_original;
+    protected $_original; //unused
     protected $_pagination;
     protected $_dimension;
     protected $_date_prise_vue;

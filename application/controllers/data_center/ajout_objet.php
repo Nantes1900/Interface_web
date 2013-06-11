@@ -21,7 +21,7 @@ class Ajout_objet extends CI_Controller
                 $userLevel = $this->session->userdata('user_level');
                 $data['userLevel'] = $userLevel;
                 $this->load->view('data_center/data_center',$data);
-                if ($userLevel==4 || $userLevel==5){
+                if ($userLevel>=4){
                     $this->formulaire();
                 }
             } else {

@@ -22,7 +22,7 @@ class Ajout_relation extends CI_Controller
                 $userLevel = $this->session->userdata('user_level');
                 $data['userLevel'] = $userLevel;
                 $this->load->view('data_center/data_center',$data);
-                if ($userLevel==4 || $userLevel==5){
+                if ($userLevel>=4){
                     $this->formulaire();
                 }
             } else {
@@ -54,7 +54,7 @@ class Ajout_relation extends CI_Controller
          */
         public function formulaire(){
             $userLevel = $this->session->userdata('user_level');
-            if ($userLevel==4 || $userLevel==5){
+            if ($userLevel>=4){
                 //On va récupérer une liste des objets existants dans la base, afin de les proposer
                 $objet_list = $this->objet_model->get_objet_list();
             

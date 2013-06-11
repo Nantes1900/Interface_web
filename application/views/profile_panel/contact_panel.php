@@ -1,11 +1,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" > 
 
-    <h1>Centre d'administration</h1>
+    <h1>Contacts</h1>
     
     <h2>Liste des membres</h2>
     
 <!--    sorting form-->
-    <?php echo form_open('admin_panel/admin_panel/index') ?>
+    <?php echo form_open('profile_panel/contact_panel/index') ?>
         <label for="speUserLevel">Niveau spécifique:</label>
         <select name="speUserLevel" id="speUserLevel">
             <option value="null" selected>Tous</option>
@@ -63,17 +63,7 @@
                 <tr>
                     <td><?php echo $user->get_userName(); ?></td>
                     <td>
-                        <?php echo form_open('admin_panel/admin_panel/change_level') ?>
-                            <input type="hidden" name="username" value="<?php echo $user->get_userName(); ?>" />
-                                <select name="userLevel">
-                                    <option value="1" <?php if ($user->get_userLevel()==1){echo 'selected';}?>>Visiteur</option>
-                                    <option value="3" <?php if ($user->get_userLevel()==3){echo 'selected';}?>>Informateur</option>
-                                    <option value="4" <?php if ($user->get_userLevel()==4){echo 'selected';}?>>Chercheur</option>
-                                    <option value="5" <?php if ($user->get_userLevel()==5){echo 'selected';}?>>Moderateur</option>
-                                    <option value="9" <?php if ($user->get_userLevel()==9){echo 'selected';}?>>Administrateur</option>
-                                </select>    
-                            <input type="submit" value="changer le niveau d'utilisateur" />
-                        </form>
+                        <?php echo $user->get_userLevelType(); ?>
                     </td>
                     <td><?php echo date('d/m/Y',$user->get_creationDate()); ?></td>
                     <td><?php echo $user->get_firstName(); ?></td>
