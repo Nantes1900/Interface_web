@@ -29,7 +29,7 @@
                 <?php echo img(array('src'=>'assets/utils/db_add.png','width'=>'8%')); ?>
                 <?php echo anchor('data_center/data_center', 'Ajout de données'); ?>
                 <ul>
-                    <?php if($this->session->userdata('user_level') == 4 || $this->session->userdata('user_level') == 5){ ?>
+                    <?php if($this->session->userdata('user_level') >= 4){ ?>
                             <li><?php echo anchor('data_center/ajout_objet', 'un objet historique'); ?></li>
                             <li><?php echo anchor('data_center/ajout_relation', 'un relation entre deux objets historiques'); ?></li>
                             <li><?php echo anchor('data_center/import_csv', 'plusieurs éléments à partir d\'un fichier CSV'); ?></li>
@@ -37,7 +37,7 @@
                     <li><?php echo anchor('data_center/ajout_ressource', 'une ressource'); ?></li>
                 </ul>
             </li>
-            <?php if($this->session->userdata('user_level') == 4) { ?>
+            <?php if($this->session->userdata('user_level') >= 5) { ?>
                     <li>
                         <?php echo img(array('src'=>'assets/utils/db_update.png','width'=>'8%')); ?>
                         <?php echo anchor('moderation/moderation_center', 'Modération de données');?>

@@ -68,8 +68,8 @@
                                 <select name="userLevel">
                                     <option value="1" <?php if ($user->get_userLevel()==1){echo 'selected';}?>>Visiteur</option>
                                     <option value="3" <?php if ($user->get_userLevel()==3){echo 'selected';}?>>Informateur</option>
-                                    <option value="4" <?php if ($user->get_userLevel()==4){echo 'selected';}?>>Moderateur</option>
-                                    <option value="5" <?php if ($user->get_userLevel()==5){echo 'selected';}?>>Chercheur</option>
+                                    <option value="4" <?php if ($user->get_userLevel()==4){echo 'selected';}?>>Chercheur</option>
+                                    <option value="5" <?php if ($user->get_userLevel()==5){echo 'selected';}?>>Moderateur</option>
                                     <option value="9" <?php if ($user->get_userLevel()==9){echo 'selected';}?>>Administrateur</option>
                                 </select>    
                             <input type="submit" value="changer le niveau d'utilisateur" />

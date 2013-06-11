@@ -9,7 +9,7 @@
 class Moderation_center extends CI_Controller{
     public function index(){
         if ( $this->session->userdata('username') ) {
-            if ( $this->session->userdata('user_level') == 4 ){
+            if ( $this->session->userdata('user_level') >= 5 ){
                 $this->moderation_center();                    
             }
         }else{

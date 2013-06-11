@@ -10,7 +10,7 @@ class Modify_objet extends CI_Controller{
     
     public function index($goal){
         if($this->session->userdata('username')){
-            if ( $this->session->userdata('user_level') == 4 ){
+            if ( $this->session->userdata('user_level') >= 5 ){
                 if($this->input->post('objet_id')==null){
                     $this->select_objet($goal);
                 }else{
@@ -37,7 +37,7 @@ class Modify_objet extends CI_Controller{
     
     //powerful method to render a sorted list of objet, with various button to different controllers, depending on input attributes
     public function select_objet($goal,$objet1_id=null){
-        if ( $this->session->userdata('user_level') == 4 ){
+        if ( $this->session->userdata('user_level') >= 5 ){
             //managing the sort option
             $orderBy = $this->input->post('orderBy');
             if($orderBy == null){$orderBy = 'nom_objet';}
@@ -104,7 +104,7 @@ class Modify_objet extends CI_Controller{
     }
     //render the select objet menu to choose which objet you want to link
     public function add_relation(){
-        if ( $this->session->userdata('user_level') == 4 ){
+        if ( $this->session->userdata('user_level') >= 5 ){
             $objet_id = $this->input->post('objet_id');
             $this->select_objet('add_relation', $objet_id);
         }else{
@@ -113,7 +113,7 @@ class Modify_objet extends CI_Controller{
     }
     
     public function add_relation_form(){
-        if ( $this->session->userdata('user_level') == 4 ){
+        if ( $this->session->userdata('user_level') >= 5 ){
             $objet1_id = $this->input->post('objet1_id');
             $objet2_id = $this->input->post('objet2_id');
             if ($this->form_validation->run('ajout_relation') == FALSE){
@@ -153,7 +153,7 @@ class Modify_objet extends CI_Controller{
     }
     
     public function delete_relation($objet_id=null){
-        if ( $this->session->userdata('user_level') == 4 ){
+        if ( $this->session->userdata('user_level') >= 5 ){
             if($objet_id==null){
                 $objet_id = $this->input->post('objet_id');
             }
@@ -168,7 +168,7 @@ class Modify_objet extends CI_Controller{
     }
     
      public function delete_relation_form(){
-         if ( $this->session->userdata('user_level') == 4 ){
+         if ( $this->session->userdata('user_level') >= 5 ){
             $objet_id = $this->input->post('objet_id');
             $relation_id = $this->input->post('relation_id');
             $this->load->model('relation_model');

@@ -4,7 +4,7 @@
         <p>Vous souhaitez ajouter à la base :</p>
         <div class='menu'>
             <ul id='navigation'>
-                <?php if ($this->session->userdata('user_level') == 4 || $this->session->userdata('user_level') == 5) {?>
+                <?php if ( $this->session->userdata('user_level') >= 4 ) {?>
                     <li><?php echo anchor('data_center/ajout_objet', 'Un objet historique'); ?></li>
                     <li><?php echo anchor('data_center/ajout_relation', 'Une relation entre deux objets historiques'); ?></li>
                     <li><?php echo anchor('data_center/import_csv', 'Plusieurs éléments à partir d\'un fichier CSV'); ?></li>

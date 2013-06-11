@@ -8,7 +8,7 @@
             <?php echo img(array('src'=>'assets/utils/db_add.png','width'=>'4%')); ?>
             <?php echo anchor('data_center/data_center', 'Ajout de données'); ?>
         </li>
-        <?php if($this->session->userdata('user_level') == 4) { ?>
+        <?php if($this->session->userdata('user_level') >= 5) { ?>
             <li>
                 <?php echo img(array('src'=>'assets/utils/db_update.png','width'=>'4%')); ?>
                 <?php echo anchor('moderation/moderation_center', 'Modération de données');?>
