@@ -15,6 +15,20 @@ if ( ! function_exists('guess_csv_type'))
              return 'objet';
          }
          
+         if ( array_key_exists('titre', $data) && array_key_exists('reference_ressource', $data) && !(array_key_exists('legende', $data)) && !(array_key_exists('date_production', $data)) )
+         {
+             return 'ressource_textuelle';
+         }
+         
+         if ( array_key_exists('titre', $data) && array_key_exists('reference_ressource', $data) && array_key_exists('legende', $data) && !(array_key_exists('date_production', $data)) )
+         {
+             return 'ressource_graphique';
+         }
+         
+         if ( array_key_exists('titre', $data) && array_key_exists('reference_ressource', $data) && !(array_key_exists('legende', $data)) && array_key_exists('date_production', $data) )
+         {
+             return 'ressource_video';
+         }
      }
     
     

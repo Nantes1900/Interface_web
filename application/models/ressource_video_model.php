@@ -139,6 +139,14 @@ class Ressource_video_model extends CI_Model
         $this->db->where('documentation_video_id',$documentation_id);
         $this->db->delete('documentation_video');
     }
+    
+    public function import_csv($data){
+        foreach ($data as $ressourceCsv){
+            $ressouce = new Ressource_video($ressourceCsv);
+            $ressouce->set_username($this->session->userdata('username'));
+            $this->ajout_ressource($ressouce);
+        }
+    }
 }
 
 

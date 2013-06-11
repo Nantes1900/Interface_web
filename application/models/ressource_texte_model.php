@@ -14,19 +14,27 @@ class Ressource_texte_model extends CI_Model
         public function ajout_texte($textedata)
         {
             //Création de la requête
-            $this->db->set('username', $textedata['username']);
-            $this->db->set('titre', $textedata['titre']);
-            $this->db->set('reference_ressource', $textedata['reference_ressource']);
-            $this->db->set('disponibilite', $textedata['disponibilite']);
-            $this->db->set('description', $textedata['description']);
-            $this->db->set('auteurs', $textedata['auteurs']);
-            $this->db->set('editeur', $textedata['editeur']);
-            $this->db->set('pagination', $textedata['pagination']);
-            $this->db->set('ville_edition', $textedata['ville_edition']);
-            $this->db->set('sous_categorie', $textedata['sous_categorie']);
-            $this->db->set('mots_cles', $textedata['mots_cles']);
-            $this->db->set('date_debut_ressource', $textedata['date']);
-            $this->db->set('date_precision', $textedata['date_precision']);
+            if(is_array($textedata)){
+                $this->db->set('username', $textedata['username']);
+                $this->db->set('titre', $textedata['titre']);
+                $this->db->set('reference_ressource', $textedata['reference_ressource']);
+                $this->db->set('disponibilite', $textedata['disponibilite']);
+                $this->db->set('description', $textedata['description']);
+                $this->db->set('auteurs', $textedata['auteurs']);
+                $this->db->set('editeur', $textedata['editeur']);
+                $this->db->set('pagination', $textedata['pagination']);
+                $this->db->set('ville_edition', $textedata['ville_edition']);
+                $this->db->set('sous_categorie', $textedata['sous_categorie']);
+                $this->db->set('mots_cles', $textedata['mots_cles']);
+                $this->db->set('date_debut_ressource', $textedata['date']);
+                $this->db->set('date_precision', $textedata['date_precision']);
+            }elseif($textedata instanceof Ressource_texte ){
+                $attributeArray = $textedata->get_attributes();
+                foreach ($attributeArray as $attribute => $value){
+                    $dbAttribute = substr($attribute, 1); //we must delete the _ of the _attribute_name
+                    $this->db->set($dbAttribute,$value);
+                }
+            }
             $this->db->insert('ressource_textuelle'); //Exécution            
         }
         
@@ -139,6 +147,14 @@ class Ressource_texte_model extends CI_Model
         public function delete_documentation($documentation_id){
             $this->db->where('documentation_textuelle_id',$documentation_id);
             $this->db->delete('documentation_textuelle');
+        }
+        
+        public function import_csv($data){
+            foreach ($data as $ressourceCsv){
+                $ressouce = new Ressource_texte($ressourceCsv);
+                $ressouce->set_username($this->session->userdata('username'));
+                $this->ajout_texte($ressouce);
+            }
         }
 
 }

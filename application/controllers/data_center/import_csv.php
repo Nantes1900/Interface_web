@@ -66,6 +66,27 @@ class Import_csv extends CI_Controller
                             $this->objet_model->import_csv($data);
                         }
                         
+                        if( $csv_type == 'ressource_textuelle')
+                        {
+                            require_once('application/models/ressource_texte.php');
+                            $this->load->model('ressource_texte_model');                            
+                            $this->ressource_texte_model->import_csv($data);
+                        }
+                        
+                        if( $csv_type == 'ressource_grapĥique')
+                        {
+                            require_once('application/models/ressource_graphique.php');
+                            $this->load->model('ressource_graphique_model');                            
+                            $this->ressource_texte_model->import_csv($data);
+                        }
+                        
+                        if( $csv_type == 'ressource_video')
+                        {
+                            require_once('application/models/ressource_video.php');
+                            $this->load->model('ressource_video_model');                            
+                            $this->ressource_texte_model->import_csv($data);
+                        }
+                        
                         delete_files($csv_file['file_path']);
 			
 			
