@@ -20,9 +20,9 @@ if ( ! function_exists('guess_csv_type'))
              return 'ressource_textuelle';
          }
          
-         if ( array_key_exists('titre', $data) && array_key_exists('reference_ressource', $data) && array_key_exists('legende', $data) && !(array_key_exists('date_production', $data)) )
+         if ( array_key_exists('titre', $data) && array_key_exists('reference_ressource', $data) && (array_key_exists('legende', $data)) && !(array_key_exists('date_production', $data)) )
          {
-             return 'ressource_graphique';
+             return 'ressource_grapĥique';
          }
          
          if ( array_key_exists('titre', $data) && array_key_exists('reference_ressource', $data) && !(array_key_exists('legende', $data)) && array_key_exists('date_production', $data) )

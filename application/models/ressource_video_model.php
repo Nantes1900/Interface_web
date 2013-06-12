@@ -142,9 +142,15 @@ class Ressource_video_model extends CI_Model
     
     public function import_csv($data){
         foreach ($data as $ressourceCsv){
-            $ressouce = new Ressource_video($ressourceCsv);
-            $ressouce->set_username($this->session->userdata('username'));
-            $this->ajout_ressource($ressouce);
+            $ressource = new Ressource_video($ressourceCsv);
+            $ressource->set_username($this->session->userdata('username'));
+            if($ressource->get_date_debut_ressource()==null){ //we want to avoid database error if csv file with not date
+                $ressource->set_date_debut_ressource('01/01/1900');
+            }
+            if($ressource->get_date_production()==null){
+                $ressource->set_date_production($ressource->get_date_debut_ressource());
+            }
+            $this->ajout_ressource($ressource);
         }
     }
 }

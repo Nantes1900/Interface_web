@@ -141,9 +141,15 @@ class Ressource_graphique_model extends CI_Model
     
     public function import_csv($data){
         foreach ($data as $ressourceCsv){
-            $ressouce = new Ressource_graphique($ressourceCsv);
-            $ressouce->set_username($this->session->userdata('username'));
-            $this->ajout_ressource($ressouce);
+            $ressource = new Ressource_graphique($ressourceCsv);
+            $ressource->set_username($this->session->userdata('username'));
+            if($ressource->get_date_debut_ressource()==null){ //we want to avoid database error if csv file with not date
+                $ressource->set_date_debut_ressource('01/01/1900');
+            }
+            if($ressource->get_date_prise_vue()==null){
+                $ressource->set_date_prise_vue($ressource->get_date_debut_ressource());
+            }
+            $this->ajout_ressource($ressource);
         }
     }
         

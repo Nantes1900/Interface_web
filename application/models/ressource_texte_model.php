@@ -151,9 +151,12 @@ class Ressource_texte_model extends CI_Model
         
         public function import_csv($data){
             foreach ($data as $ressourceCsv){
-                $ressouce = new Ressource_texte($ressourceCsv);
-                $ressouce->set_username($this->session->userdata('username'));
-                $this->ajout_texte($ressouce);
+                $ressource = new Ressource_texte($ressourceCsv);
+                $ressource->set_username($this->session->userdata('username'));
+                if($ressource->get_date_debut_ressource()==null){ //we want to avoid database error if csv file with not date
+                    $ressource->set_date_debut_ressource('01/01/1900');
+                }
+                $this->ajout_texte($ressource);
             }
         }
 
