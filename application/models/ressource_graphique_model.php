@@ -149,6 +149,13 @@ class Ressource_graphique_model extends CI_Model
             if($ressource->get_date_prise_vue()==null){
                 $ressource->set_date_prise_vue($ressource->get_date_debut_ressource());
             }
+            if($ressource->get_couleur()!='t' || $ressource->get_couleur()!='f'){
+                if($ressource->get_couleur()=='TRUE'){
+                    $ressource->set_couleur('t');
+                }else{
+                    $ressource->set_couleur('f');
+                }
+            }
             $this->ajout_ressource($ressource);
         }
     }

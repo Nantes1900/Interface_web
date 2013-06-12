@@ -38,6 +38,7 @@
         <table>
             
             <tr>
+                    <td>Début :</td>
                     <td> Jour </td>
                     <td> <input type=text name=jour_debut value="<?php echo set_value('jour_debut'); ?>" size="3" maxlength="2"> </td>
                     <td> Mois </td>
@@ -51,6 +52,7 @@
                     <td class="error_form"><?php echo form_error('annee_debut'); ?></td>
             </tr>
             <tr>
+                    <td>Fin :</td>
                     <td> Jour </td>
                     <td> <input type=text name=jour_fin value="<?php echo set_value('jour_fin'); ?>" size="3" maxlength="2"> </td>
                     <td> Mois </td>

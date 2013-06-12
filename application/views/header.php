@@ -30,11 +30,11 @@
                 <?php echo anchor('data_center/data_center', 'Ajout de données'); ?>
                 <ul>
                     <?php if($this->session->userdata('user_level') >= 4){ ?>
-                            <li><?php echo anchor('data_center/ajout_objet', 'un objet historique'); ?></li>
-                            <li><?php echo anchor('data_center/ajout_relation', 'un relation entre deux objets historiques'); ?></li>
-                            <li><?php echo anchor('data_center/import_csv', 'plusieurs éléments à partir d\'un fichier CSV'); ?></li>
+                            <li><?php echo anchor('data_center/ajout_objet', 'Objet historique'); ?></li>
+                            <li><?php echo anchor('data_center/ajout_relation', 'Relation entre deux objets historiques'); ?></li>
+                            <li><?php echo anchor('data_center/import_csv', 'Import d\'un fichier CSV'); ?></li>
                     <?php } ?>
-                    <li><?php echo anchor('data_center/ajout_ressource', 'une ressource'); ?></li>
+                    <li><?php echo anchor('data_center/ajout_ressource', 'Ressource'); ?></li>
                 </ul>
             </li>
             <?php if($this->session->userdata('user_level') >= 5) { ?>
