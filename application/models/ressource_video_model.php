@@ -131,6 +131,14 @@ class Ressource_video_model extends CI_Model
     //simply delete the ressource_video with $ressource_id in the database
    //beware, it will delete all depending infos (some documentation of documentation table for example)
     public function delete($ressource_id){
+        $ressource = new Ressource_video($ressource_id);
+        if($ressource->get_video()!=null){
+            $this->load->helper('file');
+            $path=  FCPATH.'assets/video/'.$ressource->get_video();
+            if (file_exists($path)){
+                unlink($path);
+            }
+        }
         $this->db->where('ressource_video_id',$ressource_id);
         $this->db->delete('ressource_video'); 
     }

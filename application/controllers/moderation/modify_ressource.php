@@ -135,6 +135,16 @@ class Modify_ressource extends CI_Controller{
                     
                     //modifiying $ressource out of post data
                     $ressource =  $this->mod_img_basic($ressource); //just basic posted data collecting
+                        
+                    //we delete the old image
+                    if($ressource->get_image()!=null){
+                        $this->load->helper('file');
+                        $path=  FCPATH.'assets/images/'.$ressource->get_image();
+                        if (file_exists($path)){
+                            unlink($path);
+                        }
+                    }
+        
                     //as title is unique, we add the title to the name of the image
                     rename($dir . $imageData['file_name'], $dir .$ressource->get_titre().$imageData['file_name']);
                     $ressource->set_image($ressource->get_titre().$imageData['file_name']);
@@ -201,7 +211,16 @@ class Modify_ressource extends CI_Controller{
                     
                     //modifiying $ressource out of post data
                     $ressource =  $this->mod_vid_basic($ressource); //just basic posted data collecting
-                 
+                        
+                    //we delete the old video
+                    if($ressource->get_video()!=null){
+                        $this->load->helper('file');
+                        $path=  FCPATH.'assets/video/'.$ressource->get_video();
+                        if (file_exists($path)){
+                            unlink($path);
+                        }
+                    }
+                         
                     //as title is unique, we add the title to the name of the image
                     rename($dir . $videoData['file_name'], $dir .$ressource->get_titre().$videoData['file_name']);
                     $ressource->set_video($ressource->get_titre().$videoData['file_name']);
