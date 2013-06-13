@@ -72,6 +72,10 @@
                 <?php echo anchor('profile_panel/contact_panel', 'Contacts'); ?>
             </li>
             <li>
+                <?php echo img(array('src'=>'assets/utils/download.png','width'=>'8%')); ?>
+                <?php echo anchor('download/download', 'Téléchargements'); ?>
+            </li>
+            <li>
                 <?php echo img(array('src'=>'assets/utils/system-logout.png','width'=>'8%')); ?>
                 <?php echo anchor('accueil/login/logout', 'D&eacute;connexion'); ?>
             </li>

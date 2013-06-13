@@ -2,7 +2,7 @@
 <head>
 <title>Upload Form</title>
 </head>
-<body>
+    <body>
 
 <h3>Your file was successfully uploaded!</h3>
 

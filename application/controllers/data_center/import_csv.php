@@ -5,10 +5,14 @@ class Import_csv extends CI_Controller
 
 	public function index()
 	{
-            $userLevel = $this->session->userdata('user_level');
-            $data['userLevel'] = $userLevel;
-            $this->load->view('data_center/data_center',$data);
-            $this->formulaire();
+            if ( $this->session->userdata('username') && $this->session->userdata('user_level')>=4 ) {
+                $userLevel = $this->session->userdata('user_level');
+                $data['userLevel'] = $userLevel;
+                $this->load->view('data_center/data_center',$data);
+                $this->formulaire();
+            }else{
+                $this->load->view('accueil/login/formulaire_login',array('titre'=>'Vous n\'êtes pas connecté. Veuillez vous connecter :'));
+            }
 	}
 
 	public function __construct()
@@ -22,7 +26,7 @@ class Import_csv extends CI_Controller
             $this->load->view('header');
 	}
         
-        function formulaire()
+        private function formulaire()
 	{	
 		$this->load->view('data_center/import_csv', array('error' => ' ' ));
 	}
@@ -51,7 +55,7 @@ class Import_csv extends CI_Controller
                         $data = $this->csvreader->parse_file($csv_file['full_path']);
                         
                         $csv_type = guess_csv_type($data['0']);
-                        
+                        $error = FALSE;
                         if( $csv_type == 'relation')
                         {
                             $this->load->model('relation_model');
@@ -62,28 +66,36 @@ class Import_csv extends CI_Controller
                             $this->load->model('objet_model');
                             
                             $this->objet_model->import_csv($data);
+                            $message = array('csvType'=>'objet');
                         }elseif( $csv_type == 'ressource_textuelle')
                         {
                             require_once('application/models/ressource_texte.php');
                             $this->load->model('ressource_texte_model');                            
                             $this->ressource_texte_model->import_csv($data);
+                            $message = array('csvType'=>'ressource textuelle');
                         }elseif( $csv_type == 'ressource_grapĥique')
                         {
                             require_once('application/models/ressource_graphique.php');
                             $this->load->model('ressource_graphique_model');                            
                             $this->ressource_graphique_model->import_csv($data);
+                            $message = array('csvType'=>'ressource graphique');
                         }elseif( $csv_type == 'ressource_video')
                         {
                             require_once('application/models/ressource_video.php');
                             $this->load->model('ressource_video_model');                            
                             $this->ressource_video_model->import_csv($data);
+                            $message = array('csvType'=>'ressource_video');
                         }else{
-                            $this->load->view('data_center/import_csv', array('error' => ' ' ));
+                            $error = TRUE;
                         }
-                        
                         delete_files($csv_file['file_path']);
-			
-			
+                        if(!$error){ //printing success message
+                            $this->load->view('data_center/succes',$message);
+                            $this->index();
+                        }else{
+                            $message = 'Le fichier n\'a pas pu être reconnu, vérifiez le format et les séparateurs de votre fichier csv';
+                            $this->load->view('data_center/import_csv', array('error' => $message));
+                        }
 		}
 	}	
         
