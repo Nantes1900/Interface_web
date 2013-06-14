@@ -53,10 +53,11 @@ class Login extends CI_Controller {
             {
                 $this->form_validation->set_message('check_login_info', 'Utilisateur inexistant');
                 return FALSE;
-            }
-            elseif ( $check['1'] == 'password')
-            {
+            } elseif ( $check['1'] == 'password') {
                 $this->form_validation->set_message('check_login_info', 'Mot de passe invalide');
+                return FALSE;
+            } elseif ( $check['1'] == 'unvalid user') {
+                $this->form_validation->set_message('check_login_info', 'Utilisateur non confirmé');
                 return FALSE;
             }
         }

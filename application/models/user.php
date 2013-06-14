@@ -100,6 +100,9 @@ class User
 
     public function get_userLevelType() {
         switch ($this->_userLevel) {
+            case 0:
+                return 'non validé';
+                break;
             case 1:
                 return 'visiteur';
                 break;
