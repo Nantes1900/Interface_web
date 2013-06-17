@@ -94,7 +94,7 @@ class Modify_objet extends CI_Controller{
     }
     
     public function delete_objet(){
-        if ( $this->session->userdata('user_level') == 4 ){
+        if ( $this->session->userdata('user_level') >= 5 ){
             $objet_id = $this->input->post('objet_id');
             $this->objet_model->delete($objet_id);
             redirect('moderation/modify_objet/index/modify','refresh');

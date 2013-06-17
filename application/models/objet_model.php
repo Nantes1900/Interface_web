@@ -16,11 +16,17 @@ class Objet_model extends CI_Model
             //Création de la requête
             $this->db->set('username', $objetdata['username']);
             $this->db->set('nom_objet', $objetdata['nom_objet']);
-            $this->db->set('resume', $objetdata['resume']);
-            $this->db->set('historique', $objetdata['historique']);
+            if(isset($objetdata['resume'])){
+                $this->db->set('resume', $objetdata['resume']);
+            }if(isset($objetdata['historique'])){
+                $this->db->set('historique', $objetdata['historique']);
+            }if(isset($objetdata['description'])){
             $this->db->set('description', $objetdata['description']);
-            $this->db->set('adresse_postale', $objetdata['adresse_postale']);
-            $this->db->set('mots_cles', $objetdata['mots_cles']);
+            }if(isset($objetdata['adresse_postale'])){
+                $this->db->set('adresse_postale', $objetdata['adresse_postale']);
+            }if(isset($objetdata['mots_cles'])){
+                $this->db->set('mots_cles', $objetdata['mots_cles']);
+            }
             $this->db->insert('objet'); //Exécution
         }
 
@@ -55,14 +61,17 @@ class Objet_model extends CI_Model
             $query = $this->db->get(); //Exécution
 
             $result = $query->result_array(); //Récupération des résultats
-            $objet_id = $result['0']['objet_id']; //On isole le mot de passe'objet_id
-            
+            if(isset($result['0']['objet_id'])){//si l'objet existe
+                $objet_id = $result['0']['objet_id']; //On isole le mot de passe'objet_id
+            }else{
+                $objet_id = null; //sinon on renvoie null
+            }
             return $objet_id;
         }
         
         public function import_csv($data)
         {
-            
+            $failure = array();
             foreach($data as $objetcsv){
                 $objetdata['username'] = $this->session->userdata('username');
                 if(isset($objetcsv['Nom de l\'objet'])){
@@ -84,7 +93,36 @@ class Objet_model extends CI_Model
                     $objetdata['mots_cles'] = $objetcsv['Mots-clefs'];
                 }
                 $this->ajout_objet($objetdata);
+                
+                $objet_id = $this->db->insert_id();
+                if (($this->db->_error_message())!=null) { //if error we continue and store the name of the failed objet
+                    $failure[]=$objetcsv['Nom de l\'objet'];;
+                }elseif($objetcsv['Latitude']!=null && $objetcsv['Longitude']!=null){ //trying to insert the_geom if coordinate does exist.
+                    $geomData['objet_id'] = $objet_id;
+                    $geomData['username'] = $this->session->userdata('username');
+                    $geomData['the_geom'] = 'ST_SetSRID(ST_MakePoint('.$objetcsv['Longitude'].', '.$objetcsv['Latitude'].'), 4326)';
+                    if($objetcsv['Date début']!=null){
+                        $geomData['date_debut_geom'] = $objetcsv['Date début'];
+                    }
+                    if(($objetcsv['Date fin'])!=null){
+                        $geomData['date_fin_geom'] = $objetcsv['Date fin'];
+                    }
+                    if(($objetcsv['Précision'])!=null){
+                        $geomData['date_precision'] = $objetcsv['Précision'];
+                    }
+                    if(($objetcsv['Date de modification'])!=null){
+                        $geomData['datation_indication_debut'] = $objetcsv['Date de modification'];
+                    }
+                    if(($objetcsv['Mots-clefs'])!=null){
+                        $geomData['mots_cles'] = $objetcsv['Mots-clefs'];
+                    }
+                    if(!$this->ajout_geom($geomData)){ //if the insertion did not work, we delete the info
+                        $failure[]=$objetcsv['Nom de l\'objet'];
+                        $this->delete($objet_id);
+                    }
+                }
             }
+            return $failure;
         }
         
         //get first objet from table as an associative array with $attribute set at $value
@@ -95,9 +133,11 @@ class Objet_model extends CI_Model
             $this->db->where($attribute, $value);
             $query = $this->db->get();
             $result = $query->result_array();
-            
-            return $result['0'];
-            
+            if(isset($resulte['0'])){ //vérifier que l'objet existe
+                return $result['0'];
+            }else{
+                return null;
+            }
         }
         
         public function exist($objet_id){
@@ -181,6 +221,50 @@ class Objet_model extends CI_Model
     public function delete($objet_id){
         $this->db->where('objet_id',$objet_id);
         $this->db->delete('objet'); 
+    }
+    
+    //add a geometry in temp_geom table out of an array of info
+    public function ajout_geom($geomData){
+        $success=TRUE;
+        $sql = "INSERT INTO temp_geom (objet_id, username, the_geom";
+        if(isset($geomData['date_debut_geom'])){
+            $sql .= ", date_debut_geom";
+        }
+        if(isset($geomData['date_fin_geom'])){
+            $sql .= ", date_fin_geom";
+        }
+        if(isset($geomData['date_precision'])){
+            $sql .= ", date_precision";
+        }
+        if(isset($geomData['datation_indication_debut'])){
+            $sql .= ", datation_indication_debut";
+        }
+        if(isset($geomData['mots_cles'])){
+            $sql .= ", mots_cles";
+        }
+        $sql .= ") VALUES (".$this->db->escape($geomData['objet_id']).",".
+                $this->db->escape($geomData['username']).",".$geomData['the_geom'];
+        if(isset($geomData['date_debut_geom'])){
+            $sql .= ", ".$this->db->escape($geomData['date_debut_geom']);
+        }
+        if(isset($geomData['date_fin_geom'])){
+            $sql .= ", ".$this->db->escape($geomData['date_fin_geom']);
+        }
+        if(isset($geomData['date_precision'])){
+            $sql .= ", ".$this->db->escape($geomData['date_precision']);
+        }
+        if(isset($geomData['datation_indication_debut'])){
+            $sql .= ", ".$this->db->escape($geomData['datation_indication_debut']);
+        }
+        if(isset($geomData['mots_cles'])){
+            $sql .= ", ".$this->db->escape($geomData['mots_cles']);
+        }
+        $sql .= ")";
+        $this->db->query($sql);
+        if (($this->db->_error_message())!=null) { //if there is an error in the insertion
+            $success = FALSE;                      //we want to continue, check $db['default']['db_debug'] = FALSE; in config/database  
+        }
+        return $success;
     }
         
 }

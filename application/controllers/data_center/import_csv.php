@@ -53,6 +53,7 @@ class Import_csv extends CI_Controller
 			$csv_file = $this->upload->data();
                         
                         $data = $this->csvreader->parse_file($csv_file['full_path']);
+                        delete_files($csv_file['file_path']);
                         
                         $csv_type = guess_csv_type($data['0']);
                         $error = FALSE;
@@ -64,9 +65,8 @@ class Import_csv extends CI_Controller
                         }elseif( $csv_type == 'objet')
                         {
                             $this->load->model('objet_model');
-                            
-                            $this->objet_model->import_csv($data);
-                            $message = array('csvType'=>'objet');
+                            $failure=$this->objet_model->import_csv($data);
+                            $message = array('csvType'=>'objet','failure'=>$failure);
                         }elseif( $csv_type == 'ressource_textuelle')
                         {
                             require_once('application/models/ressource_texte.php');
@@ -88,7 +88,6 @@ class Import_csv extends CI_Controller
                         }else{
                             $error = TRUE;
                         }
-                        delete_files($csv_file['file_path']);
                         if(!$error){ //printing success message
                             $this->load->view('data_center/succes',$message);
                             $this->index();

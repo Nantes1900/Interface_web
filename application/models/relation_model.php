@@ -63,14 +63,15 @@ class Relation_model extends CI_Model
         {
             $this->load->model('objet_model','objet');
             
-            foreach($data as $relationcsv)
-            {
-                $relationdata['objet_id_1'] = $this->objet->get_objet_by_name($relationcsv['source']);
-                $relationdata['objet_id_2'] = $this->objet->get_objet_by_name($relationcsv['target']);
-                $relationdata['type_relation_id'] = $this->get_type_relation_by_name($relationcsv['label']);
-                $relationdata['username'] = $this->session->userdata('username');
+            foreach($data as $relationcsv){
+                if($this->objet->get_objet_by_name($relationcsv['source'])!=null && $this->objet->get_objet_by_name($relationcsv['target'])!=null){
+                    $relationdata['objet_id_1'] = $this->objet->get_objet_by_name($relationcsv['source']);
+                    $relationdata['objet_id_2'] = $this->objet->get_objet_by_name($relationcsv['target']);
+                    $relationdata['type_relation_id'] = $this->get_type_relation_by_name($relationcsv['label']);
+                    $relationdata['username'] = $this->session->userdata('username');
                 
-                $this->ajout_relation($relationdata);
+                    $this->ajout_relation($relationdata);
+                }
             }
         }
         
