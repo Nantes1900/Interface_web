@@ -14,7 +14,7 @@
 class CSVReader {
     
     var $fields;        /** columns names retrieved after parsing */
-    var $separator = ',';    /** separator used to explode each line */
+    var $separator = '@@';    /** separator used to explode each line */
     
     /**
      * Parse a text containing CSV formatted data.

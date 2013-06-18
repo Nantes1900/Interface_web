@@ -149,12 +149,22 @@ class Ressource_texte_model extends CI_Model
             $this->db->delete('documentation_textuelle');
         }
         
-        public function import_csv($data){
+        public function import_csv($data, $transaction){
+            $failure = array();
+            if($transaction){$this->db->trans_start();}
             foreach ($data as $ressourceCsv){
-                $ressouce = new Ressource_texte($ressourceCsv);
-                $ressouce->set_username($this->session->userdata('username'));
-                $this->ajout_texte($ressouce);
+                $ressource = new Ressource_texte($ressourceCsv);
+                $ressource->set_username($this->session->userdata('username'));
+                if($ressource->get_date_debut_ressource()==null){ //we want to avoid database error if csv file with not date
+                    $ressource->set_date_debut_ressource('01/01/1900');
+                }
+                $this->ajout_texte($ressource);
+                if (($this->db->_error_message())!=null) { //if there is an error in the insertion
+                    $failure[] = $ressource->get_titre();  //we want to continue, check $db['default']['db_debug'] = FALSE; in config/database  
+                }
             }
+            if($transaction){$this->db->trans_complete();}
+            return $failure;
         }
 
 }

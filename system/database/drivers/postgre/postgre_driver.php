@@ -327,36 +327,42 @@ class CI_DB_postgre_driver extends CI_DB {
 	 */
 	function insert_id()
 	{
-		$v = $this->_version();
-		$v = $v['server'];
+            $v = pg_version($this->conn_id);
+            $v = isset($v['server']) ? $v['server'] : 0; // 'server' key is only available since PosgreSQL 7.4
 
-		$table	= func_num_args() > 0 ? func_get_arg(0) : NULL;
-		$column	= func_num_args() > 1 ? func_get_arg(1) : NULL;
+            $table  = (func_num_args() > 0) ? func_get_arg(0) : NULL;
+            $column = (func_num_args() > 1) ? func_get_arg(1) : NULL;
 
-		if ($table == NULL && $v >= '8.1')
-		{
-			$sql='SELECT LASTVAL() as ins_id';
-		}
-		elseif ($table != NULL && $column != NULL && $v >= '8.0')
-		{
-			$sql = sprintf("SELECT pg_get_serial_sequence('%s','%s') as seq", $table, $column);
-			$query = $this->query($sql);
-			$row = $query->row();
-			$sql = sprintf("SELECT CURRVAL('%s') as ins_id", $row->seq);
-		}
-		elseif ($table != NULL)
-		{
-			// seq_name passed in table parameter
-			$sql = sprintf("SELECT CURRVAL('%s') as ins_id", $table);
-		}
-		else
-		{
-			return pg_last_oid($this->result_id);
-		}
-		$query = $this->query($sql);
-		$row = $query->row();
-		return $row->ins_id;
-	}
+            if ($table === NULL && $v >= '8.1')
+            {
+                $sql = 'SELECT LASTVAL() AS ins_id';
+            }
+            elseif ($table !== NULL)
+            {
+                if ($column !== NULL && $v >= '8.0')
+                {
+                    $sql = 'SELECT pg_get_serial_sequence(\''.$table."', '".$column."') AS seq";
+                    $query = $this->query($sql);
+                    $query = $query->row();
+                    $seq = $query->seq;
+                }
+                else
+                {
+                    // seq_name passed in table parameter
+                    $seq = $table;
+                }
+
+                $sql = 'SELECT CURRVAL(\''.$seq."') AS ins_id";
+            }
+            else
+            {
+                return pg_last_oid($this->result_id);
+            }
+
+            $query = $this->query($sql);
+            $query = $query->row();
+            return (int) $query->ins_id;
+        }
 
 	// --------------------------------------------------------------------
 

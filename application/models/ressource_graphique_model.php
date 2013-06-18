@@ -19,14 +19,13 @@ class Ressource_graphique_model extends CI_Model
     
     //beware, the arg $ressource should not exist in the database
     public function ajout_ressource (Ressource_graphique $ressource){
-        
         $attributeArray = $ressource->get_attributes();
         foreach ($attributeArray as $attribute => $value){
             $dbAttribute = substr($attribute, 1); //we must delete the _ of the _attribute_name
             $this->db->set($dbAttribute,$value);
         }
         
-        $this->db->insert('ressource_graphique');
+        return $this->db->insert('ressource_graphique');
     }
     
     public function last_insert_id(){
@@ -130,6 +129,14 @@ class Ressource_graphique_model extends CI_Model
    //simply delete the ressource_graphique with $ressource_id in the database
    //beware, it will delete all depending infos (some documentation of documentation table for example)
     public function delete($ressource_id){
+        $ressource = new Ressource_graphique($ressource_id);
+        if($ressource->get_image()!=null){
+            $this->load->helper('file');
+            $path=  FCPATH.'assets/images/'.$ressource->get_image();
+            if (file_exists($path)){
+                unlink($path);
+            }
+        }
         $this->db->where('ressource_graphique_id',$ressource_id);
         $this->db->delete('ressource_graphique'); 
     }
@@ -139,12 +146,33 @@ class Ressource_graphique_model extends CI_Model
         $this->db->delete('documentation_graphique');
     }
     
-    public function import_csv($data){
+    public function import_csv($data, $transaction){
+        $failure = array();
+        if($transaction){$this->db->trans_start();}
         foreach ($data as $ressourceCsv){
-            $ressouce = new Ressource_graphique($ressourceCsv);
-            $ressouce->set_username($this->session->userdata('username'));
-            $this->ajout_ressource($ressouce);
-        }
+            $ressource = new Ressource_graphique($ressourceCsv);
+            $ressource->set_username($this->session->userdata('username'));
+            if($ressource->get_date_debut_ressource()==null){ //we want to avoid database error if csv file with not date
+                $ressource->set_date_debut_ressource('01/01/1900');
+            }
+            if($ressource->get_date_prise_vue()==null){
+                $ressource->set_date_prise_vue($ressource->get_date_debut_ressource());
+            }
+            if($ressource->get_couleur()!='t' || $ressource->get_couleur()!='f'){
+                if($ressource->get_couleur()=='TRUE'){
+                    $ressource->set_couleur('t');
+                }else{
+                    $ressource->set_couleur('f');
+                }
+            }
+            $this->ajout_ressource($ressource);
+            
+            if (($this->db->_error_message())!=null) { //if there is an error in the insertion
+                    $failure[] = $ressource->get_titre();  //we want to continue, check $db['default']['db_debug'] = FALSE; in config/database  
+            }
+       }
+       if($transaction){$this->db->trans_complete();}
+       return $failure;
     }
         
 }

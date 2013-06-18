@@ -48,7 +48,11 @@ class Ressource_graphique extends Ressource {
     }
 
     public function set_couleur($_couleur) {
-        $this->_couleur = $_couleur;
+        if(!isset($_couleur) || $_couleur!=''){
+            $this->_couleur = $_couleur;
+        }else{
+            $this->_couleur = 't';
+        }
     }
 
     public function get_image() {
@@ -80,7 +84,11 @@ class Ressource_graphique extends Ressource {
     }
 
     public function set_pagination($_pagination) {
-        $this->_pagination = $_pagination;
+        if(!isset($_pagination)){
+            $this->_pagination = $_pagination;
+        }else{
+            $this->_pagination = 0;
+        }
     }
 
     public function get_dimension() {

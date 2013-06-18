@@ -66,6 +66,7 @@
                         <?php echo form_open('admin_panel/admin_panel/change_level') ?>
                             <input type="hidden" name="username" value="<?php echo $user->get_userName(); ?>" />
                                 <select name="userLevel">
+                                    <option value="0" <?php if ($user->get_userLevel()==0){echo 'selected';}?>>Non validé</option>
                                     <option value="1" <?php if ($user->get_userLevel()==1){echo 'selected';}?>>Visiteur</option>
                                     <option value="3" <?php if ($user->get_userLevel()==3){echo 'selected';}?>>Informateur</option>
                                     <option value="4" <?php if ($user->get_userLevel()==4){echo 'selected';}?>>Chercheur</option>

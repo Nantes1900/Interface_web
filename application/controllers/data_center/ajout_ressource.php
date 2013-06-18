@@ -127,7 +127,7 @@ class Ajout_ressource extends CI_Controller
             $dir = './assets/images/';
             $config['upload_path'] = $dir;
             $config['allowed_types'] = 'jpg|jpeg|gif|png';
-            $config['max_size']	= '100';
+            $config['max_size']	= '2048';
             $config['max_width']  = '1024';
             $config['max_height']  = '768';
             $this->load->library('upload',$config);

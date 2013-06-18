@@ -29,7 +29,7 @@ class User_model extends CI_Model
                 {
                     //On va maintenant vérifier si le mot de passe correspond à celui stocké dans la BDD
                     //Création de la requête
-                    $this->db->select('username, password');
+                    $this->db->select('username, password, user_level');
                     $this->db->from('users');
                     $this->db->where('username', $username);
                     $query = $this->db->get(); //Exécution
@@ -40,8 +40,9 @@ class User_model extends CI_Model
                     if (do_hash($submitted_password) != $stored_password)
                     {
 			return array(false, 'password'); //Le mot de passe ne correspond pas
-                    }
-                    else
+                    }  elseif($result['0']['user_level']==0) {
+                        return array(false, 'unvalid user'); //L'utilisateur n'est pas validé
+                    }else
                     {   
 			return array(True); //La connexion est légitime
                     }
@@ -57,7 +58,7 @@ class User_model extends CI_Model
             //Création de la requête
             $this->db->set('username', $userdata['username']);
             $this->db->set('password', do_hash($userdata['password']));
-            $this->db->set('user_level', 1); //Par défaut, l'utilisateur possède les droits les plus bas
+            $this->db->set('user_level', 0); //Par défaut, l'utilisateur n'est pas encore validé
             $this->db->set('timestamp', now());
             $this->db->set('nom', $userdata['nom']);
             $this->db->set('prenom', $userdata['prenom']);

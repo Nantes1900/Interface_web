@@ -91,11 +91,17 @@
                 <td> Légende </td>
                 <td> <input type="text" name="legende" value="<?php echo $ressource->get_legende(); ?>" size="30"> </td>
                 <td class="error_form"><?php echo form_error('legende'); ?></td>
+                <?php if($ressource->get_image()!=null){ echo '<td>Aperçu image</td>';} ?>
             </tr>
             <tr>
                 <td> Lieu de la prise de vue </td>
                 <td> <input type="text" name="localisation" value="<?php echo $ressource->get_localisation(); ?>" size="30"> </td>
                 <td class="error_form"><?php echo form_error('localisation'); ?></td>
+                <td rowspan="7">
+                    <?php if($ressource->get_image()!=null){
+                        echo img(array('src'=>'assets/images/'.$ressource->get_image())); 
+                    } ?>
+                </td>
             </tr>
             <tr>
                 <td> Technique utilisée </td>
