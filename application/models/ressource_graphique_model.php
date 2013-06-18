@@ -19,14 +19,13 @@ class Ressource_graphique_model extends CI_Model
     
     //beware, the arg $ressource should not exist in the database
     public function ajout_ressource (Ressource_graphique $ressource){
-        
         $attributeArray = $ressource->get_attributes();
         foreach ($attributeArray as $attribute => $value){
             $dbAttribute = substr($attribute, 1); //we must delete the _ of the _attribute_name
             $this->db->set($dbAttribute,$value);
         }
         
-        $this->db->insert('ressource_graphique');
+        return $this->db->insert('ressource_graphique');
     }
     
     public function last_insert_id(){
@@ -147,7 +146,9 @@ class Ressource_graphique_model extends CI_Model
         $this->db->delete('documentation_graphique');
     }
     
-    public function import_csv($data){
+    public function import_csv($data, $transaction){
+        $failure = array();
+        if($transaction){$this->db->trans_start();}
         foreach ($data as $ressourceCsv){
             $ressource = new Ressource_graphique($ressourceCsv);
             $ressource->set_username($this->session->userdata('username'));
@@ -165,7 +166,13 @@ class Ressource_graphique_model extends CI_Model
                 }
             }
             $this->ajout_ressource($ressource);
-        }
+            
+            if (($this->db->_error_message())!=null) { //if there is an error in the insertion
+                    $failure[] = $ressource->get_titre();  //we want to continue, check $db['default']['db_debug'] = FALSE; in config/database  
+            }
+       }
+       if($transaction){$this->db->trans_complete();}
+       return $failure;
     }
         
 }

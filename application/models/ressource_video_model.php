@@ -148,7 +148,9 @@ class Ressource_video_model extends CI_Model
         $this->db->delete('documentation_video');
     }
     
-    public function import_csv($data){
+    public function import_csv($data, $transaction){
+        $failure = array();
+        if($transaction){$this->db->trans_start();}
         foreach ($data as $ressourceCsv){
             $ressource = new Ressource_video($ressourceCsv);
             $ressource->set_username($this->session->userdata('username'));
@@ -159,7 +161,12 @@ class Ressource_video_model extends CI_Model
                 $ressource->set_date_production($ressource->get_date_debut_ressource());
             }
             $this->ajout_ressource($ressource);
+            if (($this->db->_error_message())!=null) { //if there is an error in the insertion
+                $failure[] = $ressource->get_titre();  //we want to continue, check $db['default']['db_debug'] = FALSE; in config/database  
+            }
         }
+        if($transaction){$this->db->trans_complete();}
+        return $failure;
     }
 }
 

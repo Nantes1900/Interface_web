@@ -59,8 +59,10 @@ class Relation_model extends CI_Model
             return $query->result_array();
         }
         
-        public function import_csv($data)
+        public function import_csv($data, $transaction)
         {
+            $failure = array();
+            if($transaction){$this->db->trans_start();}
             $this->load->model('objet_model','objet');
             
             foreach($data as $relationcsv){
@@ -69,17 +71,29 @@ class Relation_model extends CI_Model
                     $relationdata['objet_id_2'] = $this->objet->get_objet_by_name($relationcsv['target']);
                     $relationdata['type_relation_id'] = $this->get_type_relation_by_name($relationcsv['label']);
                     $relationdata['username'] = $this->session->userdata('username');
-                
-                    $this->ajout_relation($relationdata);
+                    if ($relationdata['objet_id_1']!=null && $relationdata['objet_id_2']!=null){
+                        $this->ajout_relation($relationdata);
+                        //if there is an error in the insertion we want to continue, check $db['default']['db_debug'] = FALSE; in config/database 
+                        if (($this->db->_error_message())!=null) { 
+                            $failure[] = 'la relation entre '.$relationcsv['source'].' et '.$relationcsv['target'].
+                                            ' (objets trouvés mais informations non valides), '; 
+                        }
+                    } 
+                }elseif ($this->objet->get_objet_by_name($relationcsv['source'])==null){
+                    $failure[] = 'la relation entre '.$relationcsv['source'].'et '.$relationcsv['target'].', ('.$relationcsv['source'].' n\'existe pas)'; 
+                } elseif ($this->objet->get_objet_by_name($relationcsv['target'])==null){
+                    $failure[] = 'la relation entre '.$relationcsv['source'].'et '.$relationcsv['target'].', ('.$relationcsv['target'].' n\'existe pas)'; 
                 }
             }
+            if($transaction){$this->db->trans_complete();}
+            return $failure;
         }
         
         public function get_type_relation_by_name($name)
         {
             $this->db->select('type_relation_id');
             $this->db->from('type_relation');
-            $this->db->where('type_relation', ucfirst(strtolower(trim($name))));
+            $this->db->where('type_relation', ucfirst(trim($name)));
             
             $query = $this->db->get(); //Exécution
 

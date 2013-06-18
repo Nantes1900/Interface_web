@@ -41,7 +41,7 @@ class Import_csv extends CI_Controller
 	
 		if ( ! $this->upload->do_upload('csv_file'))
 		{
-			$error = array('error' => $this->upload->display_errors());
+                        $error = array('error' => $this->upload->display_errors());
 			
 			$this->load->view('data_center/import_csv', $error);
 		}	
@@ -56,35 +56,42 @@ class Import_csv extends CI_Controller
                         delete_files($csv_file['file_path']);
                         
                         $csv_type = guess_csv_type($data['0']);
+                        
+                        if($this->input->post('transaction')=='FALSE'){ //seeing if we want transaction or not
+                            $transaction = FALSE;
+                        }else{
+                            $transaction = TRUE;
+                        }
                         $error = FALSE;
                         if( $csv_type == 'relation')
                         {
                             $this->load->model('relation_model');
                             
-                            $this->relation_model->import_csv($data);
+                            $failure = $this->relation_model->import_csv($data, $transaction);
+                            $message = array('csvType'=>'relation entre objets','transaction'=>$transaction, 'failure'=>$failure);
                         }elseif( $csv_type == 'objet')
                         {
                             $this->load->model('objet_model');
-                            $failure=$this->objet_model->import_csv($data);
-                            $message = array('csvType'=>'objet','failure'=>$failure);
+                            $failure = $this->objet_model->import_csv($data, $transaction);
+                            $message = array('csvType'=>'objet','transaction'=>$transaction, 'failure'=>$failure);
                         }elseif( $csv_type == 'ressource_textuelle')
                         {
                             require_once('application/models/ressource_texte.php');
                             $this->load->model('ressource_texte_model');                            
-                            $this->ressource_texte_model->import_csv($data);
-                            $message = array('csvType'=>'ressource textuelle');
+                            $failure = $this->ressource_texte_model->import_csv($data, $transaction);
+                            $message = array('csvType'=>'ressource textuelle','transaction'=>$transaction, 'failure'=>$failure);
                         }elseif( $csv_type == 'ressource_grapĥique')
                         {
                             require_once('application/models/ressource_graphique.php');
                             $this->load->model('ressource_graphique_model');                            
-                            $this->ressource_graphique_model->import_csv($data);
-                            $message = array('csvType'=>'ressource graphique');
+                            $failure = $this->ressource_graphique_model->import_csv($data, $transaction);
+                            $message = array('csvType'=>'ressource graphique','transaction'=>$transaction, 'failure'=>$failure);
                         }elseif( $csv_type == 'ressource_video')
                         {
                             require_once('application/models/ressource_video.php');
                             $this->load->model('ressource_video_model');                            
-                            $this->ressource_video_model->import_csv($data);
-                            $message = array('csvType'=>'ressource_video');
+                            $failure = $this->ressource_video_model->import_csv($data, $transaction);
+                            $message = array('csvType'=>'ressource video','transaction'=>$transaction, 'failure'=>$failure);
                         }else{
                             $error = TRUE;
                         }
@@ -96,7 +103,11 @@ class Import_csv extends CI_Controller
                             $this->load->view('data_center/import_csv', array('error' => $message));
                         }
 		}
-	}	
+	}
+        
+        public function rollback($data){
+            $this->load->view('footer');
+        }
         
 }
 
