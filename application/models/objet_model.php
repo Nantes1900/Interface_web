@@ -239,6 +239,8 @@ class Objet_model extends CI_Model
     }
     
     //add a geometry in temp_geom table out of an array of info
+    //$sql string is a sql query progressively building itself depending
+    //on what is in $geomData
     public function ajout_geom($geomData){
         $sql = "INSERT INTO temp_geom (objet_id, username, the_geom";
         if(isset($geomData['date_debut_geom'])){

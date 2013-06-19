@@ -6,7 +6,7 @@
 <h2>Modèles de tableurs</h2>
 
 <p>
-    Si vous souhaitez utiliser des importations csv, il faut que le nom des colonnes respecte un certain formalise, et certaines
+    Si vous souhaitez utiliser des importations csv, il faut que le nom des colonnes respecte un certain formalisme, et certaines
     cellules ont aussi un format particulier. Pour vous aider, voici en téléchargement les modèles à utiliser.
 </p>
 

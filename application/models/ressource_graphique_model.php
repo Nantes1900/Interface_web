@@ -146,6 +146,8 @@ class Ressource_graphique_model extends CI_Model
         $this->db->delete('documentation_graphique');
     }
     
+    //$data is an associative array
+    //output $failure is an array with titles of failed insertion
     public function import_csv($data, $transaction){
         $failure = array();
         if($transaction){$this->db->trans_start();}
