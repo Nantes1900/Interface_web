@@ -112,7 +112,8 @@ class Ajout_ressource extends CI_Controller
                 $objet_id = $this->input->post('objet');
                 //eventually adding a related documentation
                 if ($objet_id!=null){
-                    $this->ressource_texte_model->add_documentation($objet_id, $ressource_id);
+                    $page = $this->input->post('page');
+                    $this->ressource_texte_model->add_documentation($objet_id, $ressource_id,$page);
                 }
                 redirect('data_center/data_center/','refresh');
                 
@@ -178,7 +179,8 @@ class Ajout_ressource extends CI_Controller
                         $objet_id = $this->input->post('objet');
                         //eventually adding a related documentation
                         if ($objet_id!=null){
-                            $this->ressource_graphique_model->add_documentation($objet_id, $ressource_id);
+                            $page = $this->input->post('page');
+                            $this->ressource_graphique_model->add_documentation($objet_id, $ressource_id, $page);
                         }
                         redirect('data_center/data_center/','refresh');
                     }

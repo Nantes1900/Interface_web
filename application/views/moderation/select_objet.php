@@ -78,6 +78,10 @@
                                 <input type="hidden" name="objet_id" value="<?php echo $objet->get_objet_id(); ?>" />
                                 <input type="submit" value="Modifier cet objet" />
                             </form>
+                            <?php echo form_open('moderation/modify_objet/validate') ?>
+                                <input type="hidden" name="objet_id" value="<?php echo $objet->get_objet_id(); ?>" />
+                                <input type="submit" value="Valider cet objet" />
+                            </form>
                         </td>
                         <td>
                             <?php echo form_open('moderation/modify_objet/delete_objet') ?>
@@ -112,6 +116,9 @@
                     <?php if($goal=='add_doc'){ ?>
                         <td>
                             <?php echo form_open('moderation/modify_ressource/add_doc_form/'.$typeRessource) ?>
+                                <?php if($typeRessource!='ressource_video'){ ?>
+                                    Lier la page :<input type="texte" name="page" value="0" pattern="[0-9]*" size="4">
+                                <?php } ?>
                                 <input type="hidden" name="ressource_id" value="<?php if($typeRessource=='ressource_texte'){
                                                                                         echo $ressource->get_ressource_textuelle_id();
                                                                                     } else {

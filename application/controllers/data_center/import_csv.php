@@ -35,7 +35,7 @@ class Import_csv extends CI_Controller
 	{
 		$config['upload_path'] = './assets/csv/';
 		$config['allowed_types'] = 'csv';               
-                $config['max_size'] = '100';
+                $config['max_size'] = '256';
                 
                 $this->upload->initialize($config);		
 	
@@ -51,7 +51,7 @@ class Import_csv extends CI_Controller
                         $this->load->library('csvreader');
             
 			$csv_file = $this->upload->data();
-                        
+                        //getting the data out of the file thanks to the library
                         $data = $this->csvreader->parse_file($csv_file['full_path']);
                         delete_files($csv_file['file_path']);
                         
@@ -63,6 +63,8 @@ class Import_csv extends CI_Controller
                             $transaction = TRUE;
                         }
                         $error = FALSE;
+                        
+                        //depending on csv_type, we load various model and call their import_csv method
                         if( $csv_type == 'relation')
                         {
                             $this->load->model('relation_model');
@@ -92,7 +94,7 @@ class Import_csv extends CI_Controller
                             $this->load->model('ressource_video_model');                            
                             $failure = $this->ressource_video_model->import_csv($data, $transaction);
                             $message = array('csvType'=>'ressource video','transaction'=>$transaction, 'failure'=>$failure);
-                        }else{
+                        }else{ //no type has been found
                             $error = TRUE;
                         }
                         if(!$error){ //printing success message

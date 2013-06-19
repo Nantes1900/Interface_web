@@ -78,10 +78,6 @@
                 <td class="error_form"><?php echo form_error('mois'); ?></td>
                 <td class="error_form"><?php echo form_error('annee'); ?></td>
             </tr>
-         
-        </table>
-    <table>
-        
             <tr>
                 <td> Date de production </td>
             </tr>

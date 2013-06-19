@@ -258,6 +258,18 @@ class Modify_ressource extends CI_Controller{
         return $ressource;
     }
     
+    public function validate_ressource($typeRessource){
+        if ( $this->session->userdata('user_level') >= 5 ){
+            $ressource_id = $this->input->post('ressource_id');
+            $typeRessourceClass= ucfirst($typeRessource);
+            $ressource = new $typeRessourceClass($ressource_id);
+            $ressource->validate();
+            redirect('moderation/modify_ressource/index/'.$typeRessource,'refresh');
+        }else{
+            redirect('accueil/accueil/','refresh');
+        }
+    }
+    
     public function delete_ressource($typeRessource){
         if ( $this->session->userdata('user_level') >= 5 ){
             $ressource_id = $this->input->post('ressource_id');
@@ -269,7 +281,7 @@ class Modify_ressource extends CI_Controller{
             redirect('accueil/accueil/','refresh');
         }
     }
-    
+        
     public function add_doc($typeRessource){
         if ( $this->session->userdata('user_level') >= 5 ){
             $ressource_id = $this->input->post('ressource_id');
@@ -327,14 +339,23 @@ class Modify_ressource extends CI_Controller{
             $objet_id = $this->input->post('objet_id');
             $typeRessourceModel= ucfirst($typeRessource).'_model';
             $ressourceManager = new $typeRessourceModel();
-            $ressourceManager->add_documentation($objet_id,$ressource_id);
+            if($typeRessource!='ressource_video'){ //if we it's not a video, we may want to refer to a precise page
+                if($this->form_validation->run('add_documentation') == TRUE){
+                    $page = $this->input->post('page');
+                }else{
+                    $page = 0;
+                }
+                $ressourceManager->add_documentation($objet_id,$ressource_id,$page);
+            }else{
+                $ressourceManager->add_documentation($objet_id,$ressource_id);
+            }
             $this->select_ressource($typeRessource, 'documentation');
         }else{
             redirect('accueil/accueil/','refresh');
         }
     }
     
-    public function delete_doc($typeRessource){
+    public function delete_doc($typeRessource){ //load the view to delete documentation related to a ressource
         if ( $this->session->userdata('user_level') >= 5 ){
             $ressource_id = $this->input->post('ressource_id');
             

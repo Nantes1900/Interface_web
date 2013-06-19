@@ -55,17 +55,17 @@ $config = array(
                     array(
                         'field'=>'resume',
                         'label'=>'Resume',
-                        'rules'=>'trim|max_length[200]|xss_clean'
+                        'rules'=>'trim|max_length[1000]|xss_clean'
                     ),
                     array(
                         'field'=>'historique',
                         'label'=>'Historique',
-                        'rules'=>'trim|max_length[500]|xss_clean'
+                        'rules'=>'trim|max_length[10000]|xss_clean'
                     ),
                     array(
                         'field'=>'description',
                         'label'=>'Description',
-                        'rules'=>'trim|max_length[200]|xss_clean'
+                        'rules'=>'trim|max_length[1000]|xss_clean'
                     ),
                     array(
                         'field'=>'adresse_postale',
@@ -75,7 +75,7 @@ $config = array(
                     array(
                         'field'=>'mots_cles',
                         'label'=>'Mots_cles',
-                        'rules'=>'trim|max_length[200]|xss_clean'
+                        'rules'=>'trim|max_length[500]|xss_clean'
                     )
                 ),
     
@@ -98,7 +98,7 @@ $config = array(
                     array(
                         'field'=>'description',
                         'label'=>'Description',
-                        'rules'=>'trim|max_length[255]|xss_clean'
+                        'rules'=>'trim|max_length[1000]|xss_clean'
                     ),
                     array(
                         'field'=>'auteurs',
@@ -129,6 +129,11 @@ $config = array(
                         'field'=>'pagination',
                         'label'=>'Pagination',
                         'rules'=>'trim|is_natural|max_length[20]|xss_clean'
+                    ),
+                    array(
+                        'field'=>'page',
+                        'label'=>'page',
+                        'rules'=>'trim|required|max_length[5]|is_natural|xss_clean'
                     ),
                     array(
                         'field'=>'jour',
@@ -165,7 +170,7 @@ $config = array(
                     array(
                         'field'=>'description',
                         'label'=>'Description',
-                        'rules'=>'trim|max_length[255]|xss_clean'
+                        'rules'=>'trim|max_length[1000]|xss_clean'
                     ),
                     array(
                         'field'=>'auteurs',
@@ -223,6 +228,11 @@ $config = array(
                         'rules'=>'trim|max_length[200]|xss_clean'
                     ),
                     array(
+                        'field'=>'page',
+                        'label'=>'page',
+                        'rules'=>'trim|required|max_length[5]|is_natural|xss_clean'
+                    ),
+                    array(
                         'field'=>'jour',
                         'label'=>'Jour',
                         'rules'=>'trim|is_natural|max_length[2]|xss_clean' 
@@ -272,7 +282,7 @@ $config = array(
                     array(
                         'field'=>'description',
                         'label'=>'Description',
-                        'rules'=>'trim|max_length[255]|xss_clean'
+                        'rules'=>'trim|max_length[1000]|xss_clean'
                     ),
                     array(
                         'field'=>'auteurs',
@@ -461,6 +471,13 @@ $config = array(
                         'field'=>'password',
                         'label'=>'password',
                         'rules'=>'trim|required|xss_clean|callback_check_password'
+                    )
+                ),
+    'add_documentation' => array(
+                    array(
+                        'field'=>'page',
+                        'label'=>'page',
+                        'rules'=>'trim|required|max_length[5]|is_natural|xss_clean'
                     )
                 ),
     'sort_objet' => array(

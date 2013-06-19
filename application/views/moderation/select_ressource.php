@@ -77,6 +77,15 @@
                                                                                     } ?>" />
                                 <input type="submit" value="Modifier cette ressource" />
                             </form>
+                            <?php echo form_open('moderation/modify_ressource/validate_ressource/'.$typeRessource) ?>
+                                <input type="hidden" name="ressource_id" value="<?php if($typeRessource=='ressource_texte'){
+                                                                                        echo $ressource->get_ressource_textuelle_id();
+                                                                                    } else {
+                                                                                        $getMethod='get_'.$typeRessource.'_id';
+                                                                                        echo $ressource->$getMethod(); 
+                                                                                    } ?>" />
+                                <input type="submit" value="Valider cette ressource" />
+                            </form>
                         </td>
                         <td>
                             <?php echo form_open('moderation/modify_ressource/delete_ressource/'.$typeRessource) ?>

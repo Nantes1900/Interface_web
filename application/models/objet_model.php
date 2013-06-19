@@ -27,7 +27,7 @@ class Objet_model extends CI_Model
             }if(isset($objetdata['mots_cles'])){
                 $this->db->set('mots_cles', $objetdata['mots_cles']);
             }
-            $this->db->insert('objet'); //Exécution
+            return $this->db->insert('objet'); //Exécution
         }
 
         public function get_objet_list($orderBy='objet_id', $orderDirection='asc',$speAttribute = null, $speAttributeValue = null, $valid = null)
@@ -93,39 +93,46 @@ class Objet_model extends CI_Model
                 if(isset($objetcsv['Mots-clefs'])){
                     $objetdata['mots_cles'] = $objetcsv['Mots-clefs'];
                 }
-                $this->ajout_objet($objetdata);
                 
-                $objet_id = $this->db->insert_id();
-                $objet_id_array[] = $objet_id;
-                if (($this->db->_error_message())!=null) { //if error we continue and store the name of the failed objet
-                    $failure[]=$objetcsv['Nom de l\'objet'];
-                }elseif($objetcsv['Latitude']!=null && $objetcsv['Longitude']!=null){ //trying to insert the_geom if coordinate does exist.
-                    $geomData['objet_id'] = $objet_id;
-                    $geomData['username'] = $this->session->userdata('username');
-                    $geomData['the_geom'] = 'ST_SetSRID(ST_MakePoint('.$objetcsv['Longitude'].', '.$objetcsv['Latitude'].'), 4326)';
-                    if($objetcsv['Date début']!=null){
-                        $geomData['date_debut_geom'] = $objetcsv['Date début'];
+                if (!$this->ajout_objet($objetdata)) { //if error we continue and store the name of the failed objet
+                    if($this->get_objet_by_name($objetcsv['Nom de l\'objet'])==null){
+                        $failure[]=$objetcsv['Nom de l\'objet'].' (information générales)';
+                    }else{
+                        $failure[]=$objetcsv['Nom de l\'objet'].' (objet déjà existant)';
                     }
-                    if(($objetcsv['Date fin'])!=null){
-                        $geomData['date_fin_geom'] = $objetcsv['Date fin'];
-                    }
-                    if(($objetcsv['Précision'])!=null){
-                        $geomData['date_precision'] = $objetcsv['Précision'];
-                    }
-                    if(($objetcsv['Date de modification'])!=null){
-                        $geomData['datation_indication_debut'] = $objetcsv['Date de modification'];
-                    }
-                    if(($objetcsv['Mots-clefs'])!=null){
-                        $geomData['mots_cles'] = $objetcsv['Mots-clefs'];
-                    }
-                    $this->ajout_geom($geomData);
-                    if($this->db->_error_message()!=null){ //if the insertion did not work, we delete the info
-                        $failure[]=$objetcsv['Nom de l\'objet'].' (géométrie ou dates)';
-                        $this->delete($objet_id);
+                }else{
+                    $objet_id = $this->db->insert_id();
+                    $objet_id_array[] = $objet_id;
+                    
+                    if($objetcsv['Latitude']!=null && $objetcsv['Longitude']!=null){ //trying to insert the_geom if coordinate does exist.
+                    
+                        $geomData['objet_id'] = $objet_id;
+                        $geomData['username'] = $this->session->userdata('username');
+                        $geomData['the_geom'] = 'ST_SetSRID(ST_MakePoint('.$objetcsv['Longitude'].', '.$objetcsv['Latitude'].'), 4326)';
+                        if($objetcsv['Date début']!=null){
+                            $geomData['date_debut_geom'] = $objetcsv['Date début'];
+                        }
+                        if(($objetcsv['Date fin'])!=null){
+                            $geomData['date_fin_geom'] = $objetcsv['Date fin'];
+                        }
+                        if(($objetcsv['Précision'])!=null){
+                            $geomData['date_precision'] = $objetcsv['Précision'];
+                        }
+                        if(($objetcsv['Date de modification'])!=null){
+                            $geomData['datation_indication_debut'] = $objetcsv['Date de modification'];
+                        }
+                        if(($objetcsv['Mots-clefs'])!=null){
+                            $geomData['mots_cles'] = $objetcsv['Mots-clefs'];
+                        }
+                    
+                        if(!$this->ajout_geom($geomData)){ //if the insertion did not work, we delete the info
+                            $failure[]=$objetcsv['Nom de l\'objet'].' (géométrie ou dates)';
+                            $this->delete($objet_id);
+                        }
                     }
                 }
             }
-            if($transaction && isset($failure['0'])){
+            if($transaction && isset($failure['0'])){ //home-made rollback
                 foreach ($objet_id_array as $objet_id){
                     $this->delete($objet_id);
                 }
@@ -209,10 +216,15 @@ class Objet_model extends CI_Model
     //arrays are like documentation_***_id, ressource_***_id, titre, 
     //username, description, reference_ressource, date_debut_ressource
     public function get_linked_ressource($objet_id,$typeRessource){
-        $this->db->select('documentation_'.$typeRessource.'_id, ressource_'.$typeRessource.'.ressource_'.$typeRessource.'_id AS ressource_id, 
+        if($typeRessource!='video'){
+            $this->db->select('documentation_'.$typeRessource.'_id, ressource_'.$typeRessource.'.ressource_'.$typeRessource.'_id AS ressource_id, 
+                            titre, ressource_'.$typeRessource.'.username AS username, description, page_consultee,
+                                reference_ressource, date_debut_ressource AS date');
+        }else{
+            $this->db->select('documentation_'.$typeRessource.'_id, ressource_'.$typeRessource.'.ressource_'.$typeRessource.'_id AS ressource_id, 
                             titre, ressource_'.$typeRessource.'.username AS username, description, 
                                 reference_ressource, date_debut_ressource AS date');
-        
+        }
         $this->db->from('ressource_'.$typeRessource);
         $this->db->join('documentation_'.$typeRessource.' AS d',
                         'ressource_'.$typeRessource.'.ressource_'.$typeRessource.'_id=d.ressource_'.$typeRessource.'_id');
@@ -232,6 +244,8 @@ class Objet_model extends CI_Model
     }
     
     //add a geometry in temp_geom table out of an array of info
+    //$sql string is a sql query progressively building itself depending
+    //on what is in $geomData
     public function ajout_geom($geomData){
         $sql = "INSERT INTO temp_geom (objet_id, username, the_geom";
         if(isset($geomData['date_debut_geom'])){
@@ -267,7 +281,7 @@ class Objet_model extends CI_Model
             $sql .= ", ".$this->db->escape($geomData['mots_cles']);
         }
         $sql .= ")";
-        $this->db->query($sql);
+        return $this->db->query($sql);
     }
         
 }

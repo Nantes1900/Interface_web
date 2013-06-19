@@ -100,9 +100,10 @@ class Ressource_texte_model extends CI_Model
             $this->db->update('ressource_textuelle');
         }
         
-        public function add_documentation($objet_id, $ressource_id){
+        public function add_documentation($objet_id, $ressource_id, $page = 0){
             $this->db->set('objet_id',$objet_id);
             $this->db->set('ressource_textuelle_id', $ressource_id);
+            $this->db->set('page_consultee', $page);
             $this->db->insert('documentation_textuelle');
         }
         
@@ -149,7 +150,9 @@ class Ressource_texte_model extends CI_Model
             $this->db->delete('documentation_textuelle');
         }
         
-        public function import_csv($data, $transaction){
+        //$data is an associative array
+        //output $failure is an array with titles of failed insertion
+        public function import_csv($data, $transaction){ 
             $failure = array();
             if($transaction){$this->db->trans_start();}
             foreach ($data as $ressourceCsv){

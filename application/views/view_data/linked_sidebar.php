@@ -12,9 +12,13 @@
                         <?php echo img(array('src'=>'assets/utils/zoom.png','alt'=>'voir objet','width'=>'50%')); ?>
                     </button>  
                     <span> 
-                        <?php echo $objetArray['resume']; ?> 
+                        <?php echo substr($objetArray['resume'],0,256);
+                            if(strlen($objetArray['resume'])>256){echo '...';}
+                        ?> 
                         <br/>
-                        <?php echo 'du '.to_date_dmy($objetArray['date_debut_relation']).' au '.to_date_dmy($objetArray['date_fin_relation']); ?>
+                        <?php if(($objetArray['date_debut_relation']!=null)&&($objetArray['date_fin_relation']!=null)){
+                                echo 'du '.to_date_dmy($objetArray['date_debut_relation']).' au '.to_date_dmy($objetArray['date_fin_relation']); 
+                        }?>
                     </span>
                 </li>
             </form>
@@ -32,11 +36,17 @@
                         <?php echo img(array('src'=>'assets/utils/zoom.png','alt'=>'voir objet','width'=>'50%')); ?>
                     </button>  
                     <span> 
-                        <?php echo $ressArray['description']; ?> 
+                        <?php echo substr($ressArray['description'],0,256);
+                            if(strlen($ressArray['description'])>256){echo '...';}
+                        ?> 
                         <br/>
                         <?php echo 'Ref : '.$ressArray['reference_ressource']; ?>
                         <br/>
                         <?php echo 'à partir du '.to_date_dmy($ressArray['date']); ?>
+                        <?php if($ressArray['page_consultee']!=0){ ?>
+                            <br>
+                                <?php echo 'voir page '.$ressArray['page_consultee']; ?>
+                        <?php } ?>
                     </span>
                 </li>
             </form>
@@ -51,11 +61,17 @@
                         <?php echo img(array('src'=>'assets/utils/zoom.png','alt'=>'voir objet','width'=>'50%')); ?>
                     </button>
                     <span> 
-                        <?php echo $ressArray['description']; ?> 
+                        <?php echo substr($ressArray['description'],0,256);
+                            if(strlen($ressArray['description'])>256){echo '...';}
+                        ?> 
                         <br/>
                         <?php echo 'Ref : '.$ressArray['reference_ressource']; ?>
                         <br/>
                         <?php echo 'à partir du '.to_date_dmy($ressArray['date']); ?>
+                        <?php if($ressArray['page_consultee']!=0){ ?>
+                            <br>
+                                <?php echo 'voir page '.$ressArray['page_consultee']; ?>
+                        <?php } ?>
                     </span>
                 </li>
             </form>
@@ -70,7 +86,9 @@
                         <?php echo img(array('src'=>'assets/utils/zoom.png','alt'=>'voir objet','width'=>'50%')); ?>
                     </button>
                     <span> 
-                        <?php echo $ressArray['description']; ?> 
+                        <?php echo substr($ressArray['description'],0,256);
+                            if(strlen($ressArray['description'])>256){echo '...';}
+                        ?>  
                         <br/>
                         <?php echo 'Ref : '.$ressArray['reference_ressource']; ?>
                         <br/>
