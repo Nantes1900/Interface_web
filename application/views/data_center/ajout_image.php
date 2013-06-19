@@ -79,10 +79,6 @@
                 <td class="error_form"><?php echo form_error('mois'); ?></td>
                 <td class="error_form"><?php echo form_error('annee'); ?></td>
             </tr>
-         
-        </table>
-    <table>
-        
             <tr>
                 <td> Date de prise de vue </td>
             </tr>
@@ -165,9 +161,13 @@
                             </select>
                         </td>
                     </tr>
+                    <tr>
+                        <td>Lier la page :<input type="texte" name="page" value="0" pattern="[0-9]*" size="4"> de cette ressource<td>
+                    </tr>
             <?php }else{ ?>
                 <tr>
                     <td>
+                        Lier la page :<input type="texte" name="page" value="0" pattern="[0-9]*" size="4"> de cette ressource
                         <input type="hidden" name="objet" value="<?php echo $linkedObjet->get_objet_id(); ?>" />
                     </td>
                 </tr>

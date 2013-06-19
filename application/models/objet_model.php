@@ -216,10 +216,15 @@ class Objet_model extends CI_Model
     //arrays are like documentation_***_id, ressource_***_id, titre, 
     //username, description, reference_ressource, date_debut_ressource
     public function get_linked_ressource($objet_id,$typeRessource){
-        $this->db->select('documentation_'.$typeRessource.'_id, ressource_'.$typeRessource.'.ressource_'.$typeRessource.'_id AS ressource_id, 
+        if($typeRessource!='video'){
+            $this->db->select('documentation_'.$typeRessource.'_id, ressource_'.$typeRessource.'.ressource_'.$typeRessource.'_id AS ressource_id, 
+                            titre, ressource_'.$typeRessource.'.username AS username, description, page_consultee,
+                                reference_ressource, date_debut_ressource AS date');
+        }else{
+            $this->db->select('documentation_'.$typeRessource.'_id, ressource_'.$typeRessource.'.ressource_'.$typeRessource.'_id AS ressource_id, 
                             titre, ressource_'.$typeRessource.'.username AS username, description, 
                                 reference_ressource, date_debut_ressource AS date');
-        
+        }
         $this->db->from('ressource_'.$typeRessource);
         $this->db->join('documentation_'.$typeRessource.' AS d',
                         'ressource_'.$typeRessource.'.ressource_'.$typeRessource.'_id=d.ressource_'.$typeRessource.'_id');

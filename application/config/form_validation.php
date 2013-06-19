@@ -131,6 +131,11 @@ $config = array(
                         'rules'=>'trim|is_natural|max_length[20]|xss_clean'
                     ),
                     array(
+                        'field'=>'page',
+                        'label'=>'page',
+                        'rules'=>'trim|required|max_length[5]|is_natural|xss_clean'
+                    ),
+                    array(
                         'field'=>'jour',
                         'label'=>'Jour',
                         'rules'=>'trim|is_natural|max_length[2]|xss_clean' 
@@ -221,6 +226,11 @@ $config = array(
                         'field'=>'type_support',
                         'label'=>'type de support',
                         'rules'=>'trim|max_length[200]|xss_clean'
+                    ),
+                    array(
+                        'field'=>'page',
+                        'label'=>'page',
+                        'rules'=>'trim|required|max_length[5]|is_natural|xss_clean'
                     ),
                     array(
                         'field'=>'jour',
@@ -461,6 +471,13 @@ $config = array(
                         'field'=>'password',
                         'label'=>'password',
                         'rules'=>'trim|required|xss_clean|callback_check_password'
+                    )
+                ),
+    'add_documentation' => array(
+                    array(
+                        'field'=>'page',
+                        'label'=>'page',
+                        'rules'=>'trim|required|max_length[5]|is_natural|xss_clean'
                     )
                 ),
     'sort_objet' => array(

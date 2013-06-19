@@ -103,9 +103,13 @@
                             </select>
                         </td>
                     </tr>
+                    <tr>
+                        <td>Lier la page :<input type="texte" name="page" value="0" pattern="[0-9]*" size="4"> de cette ressource<td>
+                    </tr>
             <?php }else{ ?>
                 <tr>
                     <td>
+                        Lier la page :<input type="texte" name="page" value="0" pattern="[0-9]*" size="4"> de cette ressource
                         <input type="hidden" name="objet" value="<?php echo $linkedObjet->get_objet_id(); ?>" />
                     </td>
                 </tr>

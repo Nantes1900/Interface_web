@@ -100,9 +100,10 @@ class Ressource_texte_model extends CI_Model
             $this->db->update('ressource_textuelle');
         }
         
-        public function add_documentation($objet_id, $ressource_id){
+        public function add_documentation($objet_id, $ressource_id, $page = 0){
             $this->db->set('objet_id',$objet_id);
             $this->db->set('ressource_textuelle_id', $ressource_id);
+            $this->db->set('page_consultee', $page);
             $this->db->insert('documentation_textuelle');
         }
         

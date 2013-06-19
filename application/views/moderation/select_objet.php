@@ -116,6 +116,9 @@
                     <?php if($goal=='add_doc'){ ?>
                         <td>
                             <?php echo form_open('moderation/modify_ressource/add_doc_form/'.$typeRessource) ?>
+                                <?php if($typeRessource!='ressource_video'){ ?>
+                                    Lier la page :<input type="texte" name="page" value="0" pattern="[0-9]*" size="4">
+                                <?php } ?>
                                 <input type="hidden" name="ressource_id" value="<?php if($typeRessource=='ressource_texte'){
                                                                                         echo $ressource->get_ressource_textuelle_id();
                                                                                     } else {

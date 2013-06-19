@@ -12,7 +12,9 @@
                         <?php echo img(array('src'=>'assets/utils/zoom.png','alt'=>'voir objet','width'=>'50%')); ?>
                     </button>  
                     <span> 
-                        <?php echo $objetArray['resume']; ?> 
+                        <?php echo substr($objetArray['resume'],0,256);
+                            if(strlen($objetArray['resume'])>256){echo '...';}
+                        ?>  
                     </span>
                 </li>
             </form>
