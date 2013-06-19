@@ -346,7 +346,7 @@ class Modify_ressource extends CI_Controller{
         }
     }
     
-    public function delete_doc($typeRessource){
+    public function delete_doc($typeRessource){ //load the view to delete documentation related to a ressource
         if ( $this->session->userdata('user_level') >= 5 ){
             $ressource_id = $this->input->post('ressource_id');
             
