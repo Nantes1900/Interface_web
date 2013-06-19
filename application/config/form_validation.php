@@ -55,17 +55,17 @@ $config = array(
                     array(
                         'field'=>'resume',
                         'label'=>'Resume',
-                        'rules'=>'trim|max_length[200]|xss_clean'
+                        'rules'=>'trim|max_length[1000]|xss_clean'
                     ),
                     array(
                         'field'=>'historique',
                         'label'=>'Historique',
-                        'rules'=>'trim|max_length[500]|xss_clean'
+                        'rules'=>'trim|max_length[10000]|xss_clean'
                     ),
                     array(
                         'field'=>'description',
                         'label'=>'Description',
-                        'rules'=>'trim|max_length[200]|xss_clean'
+                        'rules'=>'trim|max_length[1000]|xss_clean'
                     ),
                     array(
                         'field'=>'adresse_postale',
@@ -75,7 +75,7 @@ $config = array(
                     array(
                         'field'=>'mots_cles',
                         'label'=>'Mots_cles',
-                        'rules'=>'trim|max_length[200]|xss_clean'
+                        'rules'=>'trim|max_length[500]|xss_clean'
                     )
                 ),
     
@@ -98,7 +98,7 @@ $config = array(
                     array(
                         'field'=>'description',
                         'label'=>'Description',
-                        'rules'=>'trim|max_length[255]|xss_clean'
+                        'rules'=>'trim|max_length[1000]|xss_clean'
                     ),
                     array(
                         'field'=>'auteurs',
@@ -165,7 +165,7 @@ $config = array(
                     array(
                         'field'=>'description',
                         'label'=>'Description',
-                        'rules'=>'trim|max_length[255]|xss_clean'
+                        'rules'=>'trim|max_length[1000]|xss_clean'
                     ),
                     array(
                         'field'=>'auteurs',
@@ -272,7 +272,7 @@ $config = array(
                     array(
                         'field'=>'description',
                         'label'=>'Description',
-                        'rules'=>'trim|max_length[255]|xss_clean'
+                        'rules'=>'trim|max_length[1000]|xss_clean'
                     ),
                     array(
                         'field'=>'auteurs',

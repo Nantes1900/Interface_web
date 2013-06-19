@@ -93,6 +93,17 @@ class Modify_objet extends CI_Controller{
         }
     }
     
+    public function validate (){
+        if ( $this->session->userdata('user_level') >= 5 ){
+            $objet_id = $this->input->post('objet_id');
+            $objet = new Objet($objet_id);
+            $objet->validate();
+            redirect('moderation/modify_objet/index/modify','refresh');
+        }else{
+            redirect('accueil/accueil/','refresh');
+        }
+    }
+    
     public function delete_objet(){
         if ( $this->session->userdata('user_level') >= 5 ){
             $objet_id = $this->input->post('objet_id');

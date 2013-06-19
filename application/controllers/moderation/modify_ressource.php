@@ -258,6 +258,18 @@ class Modify_ressource extends CI_Controller{
         return $ressource;
     }
     
+    public function validate_ressource($typeRessource){
+        if ( $this->session->userdata('user_level') >= 5 ){
+            $ressource_id = $this->input->post('ressource_id');
+            $typeRessourceClass= ucfirst($typeRessource);
+            $ressource = new $typeRessourceClass($ressource_id);
+            $ressource->validate();
+            redirect('moderation/modify_ressource/index/'.$typeRessource,'refresh');
+        }else{
+            redirect('accueil/accueil/','refresh');
+        }
+    }
+    
     public function delete_ressource($typeRessource){
         if ( $this->session->userdata('user_level') >= 5 ){
             $ressource_id = $this->input->post('ressource_id');
@@ -269,7 +281,7 @@ class Modify_ressource extends CI_Controller{
             redirect('accueil/accueil/','refresh');
         }
     }
-    
+        
     public function add_doc($typeRessource){
         if ( $this->session->userdata('user_level') >= 5 ){
             $ressource_id = $this->input->post('ressource_id');

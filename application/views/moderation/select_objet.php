@@ -78,6 +78,10 @@
                                 <input type="hidden" name="objet_id" value="<?php echo $objet->get_objet_id(); ?>" />
                                 <input type="submit" value="Modifier cet objet" />
                             </form>
+                            <?php echo form_open('moderation/modify_objet/validate') ?>
+                                <input type="hidden" name="objet_id" value="<?php echo $objet->get_objet_id(); ?>" />
+                                <input type="submit" value="Valider cet objet" />
+                            </form>
                         </td>
                         <td>
                             <?php echo form_open('moderation/modify_objet/delete_objet') ?>
