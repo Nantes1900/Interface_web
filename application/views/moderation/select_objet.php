@@ -12,6 +12,14 @@
           }elseif($goal=='add_relation'){
               $objet_id = $objetSource->get_objet_id();
               echo form_open('moderation/modify_objet/select_objet/'.$goal.'/'.$objet_id);
+          }elseif($goal = 'add_doc'){
+              if($typeRessource=='ressource_texte'){
+                  $ressource_id = $ressource->get_ressource_textuelle_id();
+              } else {
+                  $getMethod='get_'.$typeRessource.'_id';
+                  $ressource_id = $ressource->$getMethod(); 
+              }
+              echo form_open('moderation/modify_ressource/select_objet/add_doc/'.$ressource_id.'/'.$typeRessource);
           }         
     ?>
         <label for="orderBy">Trier par:</label>

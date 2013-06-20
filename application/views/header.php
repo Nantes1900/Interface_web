@@ -35,6 +35,7 @@
                             <li><?php echo anchor('data_center/import_csv', 'Import d\'un fichier CSV'); ?></li>
                     <?php } ?>
                     <li><?php echo anchor('data_center/ajout_ressource', 'Ressource'); ?></li>
+                    <li><?php echo anchor('data_center/ajout_documentation', 'Documentation'); ?></li>
                 </ul>
             </li>
             <?php if($this->session->userdata('user_level') >= 5) { ?>

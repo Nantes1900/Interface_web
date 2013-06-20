@@ -1,5 +1,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" > 
 
+    <p><?php echo anchor('view_data/select_data/index', 'Revenir à la selection de données'); ?></p>
     
     <h1>Selection de données</h1>
     
@@ -49,7 +50,7 @@
                 <?php if($goal=='view'){ ?>
                     <th>Visualiser</th>
                 <?php } ?>
-                <?php if($goal=='documentation'){ ?>
+                <?php if($goal=='add_doc'){ ?>
                     <th>Documenter un objet avec cette ressource</th>
                 <?php } ?>
             </tr>
@@ -76,15 +77,16 @@
                             </form>
                             
                     <?php } ?>
-                    <?php if($goal=='documentation'){ ?>
+                    <?php if($goal=='add_doc'){ ?>
                         <td>
-                            <?php echo form_open('moderation/modify_ressource/add_doc/'.$typeRessource) ?>
+                            <?php echo form_open('view_data/select_data/select_objet/add_doc') ?>
                                 <input type="hidden" name="ressource_id" value="<?php if($typeRessource=='ressource_texte'){
                                                                                         echo $ressource->get_ressource_textuelle_id();
                                                                                     } else {
                                                                                         $getMethod='get_'.$typeRessource.'_id';
                                                                                         echo $ressource->$getMethod(); 
                                                                                     } ?>" />
+                                <input type="hidden" name="typeRessource" value="<?php echo $typeRessource; ?>">
                                 <input type="submit" value="Lier cette ressource" />
                             </form>
                         </td>

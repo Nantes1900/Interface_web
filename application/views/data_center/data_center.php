@@ -17,6 +17,14 @@
                         <li><?php echo anchor('data_center/ajout_ressource/formulaire_texte', 'textuelle (livre, lettre,...)'); ?></li>
                     </ul>
                 </li>
+                <li>
+                    <?php echo anchor('data_center/ajout_documentation', 'Une documentation :'); ?>
+                    <ul>
+                        <li><?php echo anchor('view_data/select_data/index/ressource_texte/add_doc', 'Textuelle'); ?></li>
+                        <li><?php echo anchor('view_data/select_data/index/ressource_graphique/add_doc', 'Graphique'); ?></li>
+                        <li><?php echo anchor('view_data/select_data/index/ressource_video/add_doc', 'Vidéo'); ?></li>
+                    </ul>
+                </li>
             </ul>
         </div>
 </html>
