@@ -191,6 +191,7 @@ class Objet_model extends CI_Model
             $this->db->join('type_relation','relation.type_relation_id=type_relation.type_relation_id');
             $this->db->order_by('nom_objet','asc');
             $this->db->where('objet_id_2', $objet_id);
+            $this->db->where('validation', 't');
             $query = $this->db->get();
             
             $resultArray = $query->result_array();
@@ -203,6 +204,7 @@ class Objet_model extends CI_Model
             $this->db->join('type_relation','relation.type_relation_id=type_relation.type_relation_id');
             $this->db->order_by('nom_objet','asc');
             $this->db->where('objet_id_1', $objet_id);
+            $this->db->where('validation', 't');
             $query = $this->db->get();
             
             foreach ($query->result_array() as $row){
@@ -230,6 +232,7 @@ class Objet_model extends CI_Model
                         'ressource_'.$typeRessource.'.ressource_'.$typeRessource.'_id=d.ressource_'.$typeRessource.'_id');
         $this->db->order_by('titre','asc');
         $this->db->where('objet_id', $objet_id);
+        $this->db->where('validation', 't');
         $query = $this->db->get();
             
         $resultArray = $query->result_array();

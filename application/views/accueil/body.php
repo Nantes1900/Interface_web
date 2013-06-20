@@ -2,6 +2,6 @@
 
 	<h1> Bienvenue sur le site </h1>
 	
-	<p>Le site est actuellement en d&eacute;veloppement</p>
+        <p>Le site est actuellement en <span class="hint">développement<span>this is true</span></span></p>
         
 </html>

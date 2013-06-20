@@ -4,11 +4,12 @@
     
     <h2>Liste des objets</h2>
 <!--    sorting form-->
-    <?php echo form_open('view_data/select_data') ?>
+    <?php echo form_open('view_data/select_data/index/objet/'.$goal) ?>
         <label for="orderBy">Trier par:</label>
         <select name="orderBy" id="orderBy">
             <option value="nom_objet">Nom de l'objet</option>
             <option value="username">Pseudo du créateur</option>
+            <option value="date_creation">Date d'ajout de l'objet</option>
         </select>
         <select name="orderDirection">
             <option value="asc">Croissant</option>
