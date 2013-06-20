@@ -1,8 +1,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" > 
 
+    <p><?php echo anchor('view_data/select_data/index', 'Revenir à la selection de données'); ?></p>
+    
     <h1>Selection de données</h1>
     
-    <h2>Liste des objets</h2>
+    <h2>
+        Liste des objets 
+        <?php if($goal=='add_doc'){ echo ' à relier à la ressource '.$ressource->get_titre(); } ?>
+    </h2>
 <!--    sorting form-->
     <?php echo form_open('view_data/select_data/index/objet/'.$goal) ?>
         <label for="orderBy">Trier par:</label>
@@ -28,6 +33,15 @@
         </select>
         <input type="text" name="speAttributeValue" maxlength="50"/>
         <br/>
+        <?php if($goal=='add_doc'){ ?>
+            <input type="hidden" name="ressource_id" value="<?php if($typeRessource=='ressource_texte'){
+                                                                    echo $ressource->get_ressource_textuelle_id();
+                                                                  } else {
+                                                                    $getMethod='get_'.$typeRessource.'_id';
+                                                                    echo $ressource->$getMethod(); 
+                                                                  } ?>" />
+            <input type="hidden" name="typeRessource" value="<?php echo $typeRessource; ?>">
+        <?php } ?>
         <input type="submit" value="Trier" />
 
 
@@ -39,7 +53,13 @@
     <table>
         <thead>
             <tr>
-                <th>Objet</th><th>Créateur</th><th>Résumé</th><th>Mots-clés</th><th>Visualiser</th>
+                <th>Objet</th><th>Créateur</th><th>Résumé</th><th>Mots-clés</th>
+                <?php if($goal=='view'){ ?>
+                            <th>Visualiser</th>
+                <?php }elseif($goal=='add_doc'){ ?>
+                            <th>Lier cet objet à <?php echo $ressource->get_titre();?></th>
+                <?php } ?>
+                
             </tr>
         </thead>
         <tbody>
@@ -50,11 +70,27 @@
                     <td><?php echo $objet->get_resume(); ?></td>
                     <td><?php echo $objet->get_mots_cles(); ?></td>
                     <td>
-                        <?php echo form_open('view_data/view_data') ?>
-                            <input type="hidden" name="data_id" value="<?php echo $objet->get_objet_id(); ?>" />
-                            <input type="hidden" name="type" value="objet" />
-                            <input type="submit" value="Voir cet objet" />
-                        </form>
+                        <?php if($goal=='view'){ ?>
+                                <?php echo form_open('view_data/view_data') ?>
+                                    <input type="hidden" name="data_id" value="<?php echo $objet->get_objet_id(); ?>" />
+                                    <input type="hidden" name="type" value="objet" />
+                                    <input type="submit" value="Voir cet objet" />
+                                </form>
+                        <?php }  elseif ($goal=='add_doc') { ?>
+                             <?php echo form_open('data_center/ajout_documentation/add/'.$typeRessource) ?>
+                                <?php if($typeRessource!='ressource_video'){ ?>
+                                    Lier la page :<input type="texte" name="page" value="0" pattern="[0-9]*" size="4">
+                                <?php } ?>
+                                <input type="hidden" name="objet_id" value="<?php echo $objet->get_objet_id(); ?>" />
+                                <input type="hidden" name="ressource_id" value="<?php if($typeRessource=='ressource_texte'){
+                                                                                        echo $ressource->get_ressource_textuelle_id();
+                                                                                      } else {
+                                                                                        $getMethod='get_'.$typeRessource.'_id';
+                                                                                        echo $ressource->$getMethod(); 
+                                                                                      } ?>" />
+                                <input type="submit" value="Relier" />
+                            </form>
+                        <?php } ?>
                     </td>
                 </tr>
             <?php }  ?>

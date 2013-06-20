@@ -11,9 +11,9 @@
  */
 class Select_data extends CI_Controller {
    
-    public function index($dataType = 'select', $goal = 'view' ){
+    public function index($dataType = null, $goal = 'view' ){
         if($this->session->userdata('username')){
-            if($dataType == 'select'){
+            if($dataType == null){
                 $this->select_type();
             }elseif($dataType == 'objet'){
                 $this->select_objet($goal);
@@ -42,30 +42,47 @@ class Select_data extends CI_Controller {
         $this->load->view('footer');
     }
     
-    private function select_objet($goal){
-        
-        //managing the sort option
-        $orderBy = $this->input->post('orderBy');
-        if($orderBy == null){$orderBy = 'nom_objet';}
-        $orderDirection = $this->input->post('orderDirection');
-        if($this->form_validation->run('sort_objet')==TRUE){ //we check there is no xss in the field
-            $speAttributeValue = $this->input->post('speAttributeValue');
-            if(!empty($speAttributeValue)){ //if something is specified we set the values
-                $speAttribute = $this->input->post('speAttribute');
-            } else { //if nothing specified as specific value we set to null
+    public function select_objet($goal){
+        if($this->session->userdata('username')){
+            //managing the sort option
+            $orderBy = $this->input->post('orderBy');
+            if($orderBy == null){$orderBy = 'nom_objet';}
+            $orderDirection = $this->input->post('orderDirection');
+            if($this->form_validation->run('sort_objet')==TRUE){ //we check there is no xss in the field
+                $speAttributeValue = $this->input->post('speAttributeValue');
+                if(!empty($speAttributeValue)){ //if something is specified we set the values
+                    $speAttribute = $this->input->post('speAttribute');
+                } else { //if nothing specified as specific value we set to null
+                    $speAttribute = null;
+                    $speAttributeValue = null;
+                }
+            } else { //in case of xss attempt, no sorting on this
                 $speAttribute = null;
                 $speAttributeValue = null;
             }
-        } else { //in case of xss attempt, no sorting on this
-            $speAttribute = null;
-            $speAttributeValue = null;
-        }
+            $valid = 't';
+            if($goal == 'add_doc'){ //we put some info about the related ressource if we are adding a documentation
+                $ressource_id = $this->input->post('ressource_id');
+                $typeRessource = $this->input->post('typeRessource');
+                require_once ('application/models/'.$typeRessource.'.php');
+                $this->load->model($typeRessource.'_model');
+                $typeRessourceMethod = ucfirst($typeRessource);
+                $ressource = new $typeRessourceMethod($ressource_id);
+                $valid = null;
+            }
         
-        //creating the list
-        $data = array('listObjet' => $this->objet_model->get_objet_list($orderBy,$orderDirection,$speAttribute,$speAttributeValue,'t'));
-        $data['goal'] = $goal;
-        $this->load->view('view_data/select_objet', $data);
-        $this->load->view('footer');
+            //creating the list
+            $data = array('listObjet' => $this->objet_model->get_objet_list($orderBy,$orderDirection,$speAttribute,$speAttributeValue,$valid));
+            $data['goal'] = $goal;
+            if($goal == 'add_doc'){ //we put some info about the related ressource if we are adding a documentation
+                $data['ressource'] = $ressource;
+                $data['typeRessource'] = $typeRessource;
+            }
+            $this->load->view('view_data/select_objet', $data);
+            $this->load->view('footer');
+        }else{
+            $this->load->view('accueil/login/formulaire_login',array('titre'=>'Vous n\'êtes pas connecté. Veuillez vous connecter :'));
+        }
     }
     
     private function select_ressource($typeRessource, $goal){
@@ -93,7 +110,12 @@ class Select_data extends CI_Controller {
             
         $typeRessource= ucfirst($typeRessource).'_model';
         $ressourceManager = new $typeRessource();
-        $data['listRessource'] = $ressourceManager->get_ressource_list($orderBy,$orderDirection,$speAttribute,$speAttributeValue,'t');
+        if($goal!='add_doc'){
+            $valid = 't';
+        }else{
+            $valid = null;
+        }
+        $data['listRessource'] = $ressourceManager->get_ressource_list($orderBy,$orderDirection,$speAttribute,$speAttributeValue,$valid);
         
         $this->load->view('view_data/select_ressource', $data);
         $this->load->view('footer');

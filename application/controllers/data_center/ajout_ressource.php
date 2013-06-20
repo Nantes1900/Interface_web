@@ -38,7 +38,7 @@ class Ajout_ressource extends CI_Controller
             
             $this->load->library('form_validation');
             $this->load->model('objet_model');
-            require ('application/models/objet.php');
+            require_once ('application/models/objet.php');
             $this->load->helper(array('form','dates'));
             $this->load->view('header');
 	}
