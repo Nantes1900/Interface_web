@@ -1,6 +1,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" > 
 
-	<h1>Data Center</h1>
+	<h1>Ajout de données</h1>
         <p>Vous souhaitez ajouter à la base :</p>
         <div class='menu'>
             <ul id='navigation'>

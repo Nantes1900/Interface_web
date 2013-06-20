@@ -233,6 +233,41 @@ li.helpbox:hover span{ /*the span will display just on :hover state*/
       cursor:pointer;
   }
   
+  /* generic helpboxes */
+.hint{
+    position:relative; /*this is the key*/
+}
+.hint span{display: none}
+
+.hint:hover span{ /*the span will display just on :hover state*/
+    display:inline;
+    position:absolute;
+    bottom:120%;
+    left:70%;
+    width:260px;
+    border:5px solid #5882FA;
+    background-color:#A9D0F5; color:#000;
+    text-align: center;
+    font-size : small;
+    padding:5px;
+  }
+
+  .hint:hover span:after{ /*the span will display just on :hover state*/
+    content:'';
+    position:absolute;
+    bottom:-11px;
+    width:10px;
+    height:10px;
+    border-bottom:5px solid #5882FA;
+    border-right:5px solid #5882FA;
+    background:#A9D0F5;
+    right:90%;
+    margin-right:-3%;
+    -moz-transform:rotate(45deg);
+    -webkit-transform:rotate(45deg);
+    transform:rotate(45deg);
+  }
+  
 /*table*/
 .classyTable {
 	margin:0px;padding:0px;

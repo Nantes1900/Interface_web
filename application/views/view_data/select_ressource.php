@@ -1,6 +1,5 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" > 
 
-    <p><?php echo anchor('moderation/moderation_center', 'Revenir au centre de modération'); ?></p>
     
     <h1>Selection de données</h1>
     
@@ -10,7 +9,7 @@
                                    if($typeRessource=='ressource_graphique'){echo 'graphiques';}?>
     </h2>
 <!--    sorting form-->
-    <?php echo form_open('moderation/modify_ressource/index/'.$typeRessource.'/'.$goal) ?>
+    <?php echo form_open('view_data/select_data/index/'.$typeRessource.'/'.$goal) ?>
         <label for="orderBy">Trier par:</label>
         <select name="orderBy" id="orderBy">
             <option value="titre">Titre de la ressource</option>
@@ -35,8 +34,6 @@
         </select>
         <input type="text" name="speAttributeValue" maxlength="50"/>
         <br/>
-        <input type="checkbox" name="validation" value="TRUE">Ressources non validés uniquement
-        <br/>
         <input type="submit" value="Trier" />
 
 
@@ -48,12 +45,12 @@
     <table>
         <thead>
             <tr>
-                <th>Ressource</th><th>Créateur</th><th>Auteur(s)</th><th>Référence</th><th>Mots-clés</th><th>Validation</th>
-                <?php if($goal=='modify'){ ?>
-                    <th>Modifier/Valider</th><th>Supprimer</th>
+                <th>Ressource</th><th>Créateur</th><th>Auteur(s)</th><th>Référence</th><th>Mots-clés</th>
+                <?php if($goal=='view'){ ?>
+                    <th>Visualiser</th>
                 <?php } ?>
                 <?php if($goal=='documentation'){ ?>
-                    <th>Documenter un objet avec cette ressource</th><th>Supprimer un lien de documentation</th>
+                    <th>Documenter un objet avec cette ressource</th>
                 <?php } ?>
             </tr>
         </thead>
@@ -65,39 +62,19 @@
                     <td><?php echo $ressource->get_auteurs(); ?></td>
                     <td><?php echo $ressource->get_reference_ressource(); ?></td>
                     <td><?php echo $ressource->get_mots_cles(); ?></td>
-                    <td><?php echo $ressource->get_validation()=='t'?'validé':'non validé'; ?></td>
-                    <?php if($goal=='modify'){ ?>
+                    <?php if($goal=='view'){ ?>
                         <td>
-                            <?php echo form_open('moderation/modify_ressource/index/'.$typeRessource.'/modify') ?>
-                                <input type="hidden" name="ressource_id" value="<?php if($typeRessource=='ressource_texte'){
+                            <?php echo form_open('view_data/view_data') ?>
+                                <input type="hidden" name="data_id" value="<?php if($typeRessource=='ressource_texte'){
                                                                                         echo $ressource->get_ressource_textuelle_id();
                                                                                     } else {
                                                                                         $getMethod='get_'.$typeRessource.'_id';
                                                                                         echo $ressource->$getMethod(); 
                                                                                     } ?>" />
-                                <input type="submit" value="Modifier cette ressource" />
+                                <input type="hidden" name="type" value="<?php echo $typeRessource; ?>">
+                                <input type="submit" value="Voir cette ressource" />
                             </form>
-                            <?php echo form_open('moderation/modify_ressource/validate_ressource/'.$typeRessource) ?>
-                                <input type="hidden" name="ressource_id" value="<?php if($typeRessource=='ressource_texte'){
-                                                                                        echo $ressource->get_ressource_textuelle_id();
-                                                                                    } else {
-                                                                                        $getMethod='get_'.$typeRessource.'_id';
-                                                                                        echo $ressource->$getMethod(); 
-                                                                                    } ?>" />
-                                <input type="submit" value="Valider cette ressource" />
-                            </form>
-                        </td>
-                        <td>
-                            <?php echo form_open('moderation/modify_ressource/delete_ressource/'.$typeRessource) ?>
-                                <input type="hidden" name="ressource_id" value="<?php if($typeRessource=='ressource_texte'){
-                                                                                        echo $ressource->get_ressource_textuelle_id();
-                                                                                    } else {
-                                                                                        $getMethod='get_'.$typeRessource.'_id';
-                                                                                        echo $ressource->$getMethod(); 
-                                                                                    } ?>" />
-                                <input type="submit" value="Supprimer cette ressource" />
-                            </form>
-                        </td>
+                            
                     <?php } ?>
                     <?php if($goal=='documentation'){ ?>
                         <td>
@@ -109,17 +86,6 @@
                                                                                         echo $ressource->$getMethod(); 
                                                                                     } ?>" />
                                 <input type="submit" value="Lier cette ressource" />
-                            </form>
-                        </td>
-                        <td>
-                            <?php echo form_open('moderation/modify_ressource/delete_doc/'.$typeRessource) ?>
-                                <input type="hidden" name="ressource_id" value="<?php if($typeRessource=='ressource_texte'){
-                                                                                        echo $ressource->get_ressource_textuelle_id();
-                                                                                    } else {
-                                                                                        $getMethod='get_'.$typeRessource.'_id';
-                                                                                        echo $ressource->$getMethod(); 
-                                                                                    } ?>" />
-                                <input type="submit" value="Supprimer une documentation" />
                             </form>
                         </td>
                     <?php } ?>

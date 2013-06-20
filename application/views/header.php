@@ -55,7 +55,13 @@
             <?php } ?>
             <li>
                 <?php echo img(array('src'=>'assets/utils/zoom-2.png','width'=>'8%')); ?>
-                <?php echo anchor('view_data/select_data', 'Visualisation de données'); ?>
+                <?php echo anchor('view_data/select_data/index', 'Visualisation de données'); ?>
+                <ul>
+                    <li><?php echo anchor('view_data/select_data/index/objet','Visualiser les objets'); ?></li>
+                    <li><?php echo anchor('view_data/select_data/index/ressource_texte','Visualiser les ressources textuelles'); ?></li>
+                    <li><?php echo anchor('view_data/select_data/index/ressource_graphique','Visualiser les ressources graphiques'); ?></li>
+                    <li><?php echo anchor('view_data/select_data/index/ressource_video','Visualiser les ressources vidéos'); ?></li>
+                </ul>
             </li>
             <li>
                 <?php echo img(array('src'=>'assets/utils/edit-user.png','width'=>'8%')); ?>
