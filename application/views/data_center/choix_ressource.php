@@ -3,7 +3,7 @@
     <h1>Vous souhaitez ajouter :</h1>
     
      <div class='menu'>
-            <ul id='navigation'>
+            <ul class='navigation'>
                 <li><?php echo anchor('data_center/ajout_ressource/formulaire_image', 'Une image ou une photo'); ?></li>
                 <li><?php echo anchor('data_center/ajout_ressource/formulaire_video', 'Une vidéo'); ?></li>
                 <li><?php echo anchor('data_center/ajout_ressource/formulaire_texte', 'Un document écrit (livre, lettre,...)'); ?></li>

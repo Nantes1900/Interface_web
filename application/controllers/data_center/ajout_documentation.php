@@ -38,10 +38,17 @@ class Ajout_documentation extends CI_Controller{
         $this->load->view('header');
     }
     
+    /*
+     * Once this method is executed, links will follow each other to select
+     * an objet and then a ressource, finaly the links will call add controller
+     */
     private function choix_documentation(){
         $this->load->view('data_center/choix_documentation');
     }
     
+    /*
+     * This method is called by the select_ressource method with add_doc goal
+     */
     public function add($typeRessource){
         if ( $this->session->userdata('username') ) {
             $this->load->model($typeRessource.'_model');

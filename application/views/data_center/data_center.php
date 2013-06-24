@@ -3,7 +3,7 @@
 	<h1>Ajout de données</h1>
         <p>Vous souhaitez ajouter à la base :</p>
         <div class='menu'>
-            <ul id='navigation'>
+            <ul class='navigation'>
                 <?php if ( $this->session->userdata('user_level') >= 4 ) {?>
                     <li><?php echo anchor('data_center/ajout_objet', 'Un objet historique'); ?></li>
                     <li><?php echo anchor('data_center/ajout_relation', 'Une relation entre deux objets historiques'); ?></li>

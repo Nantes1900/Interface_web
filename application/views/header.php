@@ -20,7 +20,7 @@
     <div class='leftSidebar'>
 
         <h2>Menu</h2>
-        <ul id='navigation'>
+        <ul class='navigation'>
             <li>
                 <?php echo img(array('src'=>'assets/utils/go-home.png','width'=>'8%')); ?>
                 <?php echo anchor('accueil', 'Accueil'); ?>
@@ -88,6 +88,27 @@
             </li>
         </ul>
     </div>
+    
+    <script src="<?php echo base_url();?>assets/js/jquery.js"></script>
+    <script>
+        //these functions are used to generate a drop down menu 
+        //for navigation class ul elements
+        $(function() {
+            $('ul.navigation li').mouseenter(function() {
+                $('ul.navigation li:hover ul li').finish().slideDown('slow');
+            });
+        });
+        $(function() {
+            $('ul.navigation li ul').mouseleave(function() {
+                $('ul.navigation li:hover ul li').finish().slideUp('slow');
+            });
+        });
+        $(function() {
+            $('ul.navigation').mouseleave(function() {
+                $('ul.navigation li ul li').finish().slideUp('slow');
+            });
+        });
+    </script>
     <?php } ?>
 </html>
 

@@ -75,9 +75,10 @@ div.leftSidebar li:hover{
     background-color:#C69D9D;
 }
 /*this is about having a dropdown menu in the left sidebar*/
-#navigation ul {display: none;}
+/*#navigation ul {display: none;} old code for non jquery script dropdown menu
 #navigation li:hover ul {display: block;}
-#navigation ul li{
+*/
+.navigation ul li{
     margin-left : 10%;
 }
 
