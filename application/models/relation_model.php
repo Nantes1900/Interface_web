@@ -33,7 +33,7 @@ class Relation_model extends CI_Model
                 $this->db->set('date_debut_relation', $relationdata['date_debut_relation']);
             }
             
-            if (array_key_exists('date_debut_relation', $relationdata))
+            if (array_key_exists('date_fin_relation', $relationdata))
             {
                 $this->db->set('date_fin_relation', $relationdata['date_fin_relation']);
             }
@@ -62,30 +62,69 @@ class Relation_model extends CI_Model
         public function import_csv($data, $transaction)
         {
             $failure = array();
-            if($transaction){$this->db->trans_start();}
+            $relation_id_array = array(); //id of successful insert, used for home made rollback
             $this->load->model('objet_model','objet');
+            $this->load->helper('dates');
             
             foreach($data as $relationcsv){
+                $errorBegin = 'la relation entre '.$relationcsv['source'].' et '.$relationcsv['target']; //common beginning of error message
                 if($this->objet->get_objet_by_name($relationcsv['source'])!=null && $this->objet->get_objet_by_name($relationcsv['target'])!=null){
                     $relationdata['objet_id_1'] = $this->objet->get_objet_by_name($relationcsv['source']);
                     $relationdata['objet_id_2'] = $this->objet->get_objet_by_name($relationcsv['target']);
                     $relationdata['type_relation_id'] = $this->get_type_relation_by_name($relationcsv['label']);
-                    $relationdata['username'] = $this->session->userdata('username');
-                    if ($relationdata['objet_id_1']!=null && $relationdata['objet_id_2']!=null){
-                        $this->ajout_relation($relationdata);
-                        //if there is an error in the insertion we want to continue, check $db['default']['db_debug'] = FALSE; in config/database 
-                        if (($this->db->_error_message())!=null) { 
-                            $failure[] = 'la relation entre '.$relationcsv['source'].' et '.$relationcsv['target'].
-                                            ' (objets trouvés mais informations non valides), '; 
+                    if(isset($relationcsv['parent de'])){
+                        if($relationcsv['parent de']=='TRUE'){
+                            $relationdata['parent'] = 't';
+                        }else{
+                            $relationdata['parent'] = 'f';
                         }
-                    } 
+                    }
+                    if($relationcsv['date debut'] != null){
+                        $relationdata['date_debut_relation'] = $relationcsv['date debut'];
+                    }
+                    if($relationcsv['date fin'] != null){
+                        $relationdata['date_fin_relation'] = $relationcsv['date fin'];
+                    }
+                    if($relationcsv['precision date'] != null){
+                        $relationdata['date_precision'] = $relationcsv['precision date'];
+                    }
+                    if($relationcsv['indication debut'] != null){
+                        $relationdata['datation_indication_debut'] = $relationcsv['indication debut'];
+                    }
+                    if($relationcsv['indication fin'] != null){
+                        $relationdata['datation_indication_fin'] = $relationcsv['indication fin'];
+                    }
+                    $relationdata['username'] = $this->session->userdata('username');
+                    
+                    $this->ajout_relation($relationdata);
+                    //if there is an error in the insertion we want to continue, check $db['default']['db_debug'] = FALSE; in config/database 
+                    if (($this->db->_error_message())==null) { 
+                        $relation_id_array[] = $this->db->insert_id();
+                    } else {
+                        if($relationdata['type_relation_id'] != null){
+                            if (!valid_MDY($relationcsv['date debut'])) {
+                                $failure[] = $errorBegin.' (date de début de relation non valide)';
+                            }elseif(!valid_MDY($relationcsv['date fin'])){
+                                $failure[] = $errorBegin.' (date de fin de relation non valide)'; 
+                            }else{
+                                $failure[] = $errorBegin.' (objets trouvés mais informations non valides)'; 
+                            }
+                        }else{
+                            $failure[] = $errorBegin.' (objets trouvés mais type de relation (label) non valide)'; 
+                        }
+                    }
                 }elseif ($this->objet->get_objet_by_name($relationcsv['source'])==null){
-                    $failure[] = 'la relation entre '.$relationcsv['source'].'et '.$relationcsv['target'].', ('.$relationcsv['source'].' n\'existe pas)'; 
+                    $failure[] = $errorBegin.' ('.$relationcsv['source'].' n\'existe pas)'; 
                 } elseif ($this->objet->get_objet_by_name($relationcsv['target'])==null){
-                    $failure[] = 'la relation entre '.$relationcsv['source'].'et '.$relationcsv['target'].', ('.$relationcsv['target'].' n\'existe pas)'; 
+                    $failure[] = $errorBegin.' ('.$relationcsv['target'].' n\'existe pas)'; 
                 }
             }
-            if($transaction){$this->db->trans_complete();}
+            
+            if($transaction && isset($failure['0'])){ //home-made rollback
+                foreach ($relation_id_array as $relation_id){
+                    $this->delete_relation($relation_id);
+                }
+            }
             return $failure;
         }
         
@@ -98,9 +137,12 @@ class Relation_model extends CI_Model
             $query = $this->db->get(); //Exécution
 
             $result = $query->result_array(); //Récupération des résultats
-            $type_relation_id = $result['0']['type_relation_id'];
-            
-            return $type_relation_id;
+            if (isset($result['0'])){
+                $type_relation_id = $result['0']['type_relation_id'];
+                return $type_relation_id;
+            }else{
+                return null;
+            }
         }
         
         public function delete_relation($relation_id){

@@ -44,6 +44,7 @@ class Import_csv extends CI_Controller
                         $error = array('error' => $this->upload->display_errors());
 			
 			$this->load->view('data_center/import_csv', $error);
+                        $this->load->view('footer');
 		}	
 		else
 		{
@@ -94,6 +95,10 @@ class Import_csv extends CI_Controller
                             $this->load->model('ressource_video_model');                            
                             $failure = $this->ressource_video_model->import_csv($data, $transaction);
                             $message = array('csvType'=>'ressource video','transaction'=>$transaction, 'failure'=>$failure);
+                        }elseif( $csv_type == 'documentation' ){
+                            $this->load->model('documentation_model');   
+                            $failure = $this->documentation_model->import_csv($data, $transaction);
+                            $message = array('csvType'=>'documentation','transaction'=>$transaction, 'failure'=>$failure);
                         }else{ //no type has been found
                             $error = TRUE;
                         }
@@ -103,6 +108,7 @@ class Import_csv extends CI_Controller
                         }else{
                             $message = 'Le fichier n\'a pas pu être reconnu, vérifiez le format et les séparateurs de votre fichier csv';
                             $this->load->view('data_center/import_csv', array('error' => $message));
+                            $this->load->view('footer');
                         }
 		}
 	}

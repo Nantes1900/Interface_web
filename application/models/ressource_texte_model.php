@@ -52,6 +52,8 @@ class Ressource_texte_model extends CI_Model
             $result = $query->result_array();
             if (isset($result['0'])){    
                 return $result['0'];
+            } else {
+                return null;
             }
         }
         
@@ -163,7 +165,7 @@ class Ressource_texte_model extends CI_Model
                 }
                 $this->ajout_texte($ressource);
                 if (($this->db->_error_message())!=null) { //if there is an error in the insertion
-                    $failure[] = $ressource->get_titre();  //we want to continue, check $db['default']['db_debug'] = FALSE; in config/database  
+                    $failure[] = $ressource->get_titre();  //we want to continue, check $db['default']['db_debug'] = FALSE; in config/database 
                 }
             }
             if($transaction){$this->db->trans_complete();}

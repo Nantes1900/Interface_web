@@ -167,5 +167,17 @@ if ( ! function_exists('break_date_Ymd')){
     }
 }
 
+if ( ! function_exists('valid_MDY')){
+    //check if a date is in MM/DD/YYYY format and is valid
+    function valid_MDY($date) {
+        if (preg_match("#\d\d/\d\d/\d\d\d\d#", $date)){
+            list($month, $day, $year) = explode('/', $date);
+            return checkdate($month, $day, $year);
+        } else {
+            return FALSE;
+        }
+    }
+}
+
 /* End of file dates_helper.php */
 /* Location : ./application/helpers/dates_helper.php */
