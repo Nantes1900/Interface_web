@@ -14,6 +14,7 @@
             Modèle au format ods :
             <select name="fileName">
                 <option value="template-objet.ods">Objet</option>
+                <option value="template-relation.ods">Relation entre objets</option>
                 <option value="template-ressource-texte.ods">Ressource textuelle</option>
                 <option value="template-ressource-graphique.ods">Ressource graphique</option>
                 <option value="template-ressource-video.ods">Ressource vidéo</option>

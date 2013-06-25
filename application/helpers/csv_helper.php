@@ -29,6 +29,11 @@ if ( ! function_exists('guess_csv_type'))
          {
              return 'ressource_video';
          }
+         
+         if ( array_key_exists('Type de documentation', $data) && array_key_exists('Nom de l\'objet', $data) && array_key_exists('Titre de la ressource', $data) )
+         {
+             return 'documentation';
+         }
      }
     
     
