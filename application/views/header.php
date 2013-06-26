@@ -62,6 +62,7 @@
                     <li><?php echo anchor('view_data/select_data/index/ressource_texte','Visualiser les ressources textuelles'); ?></li>
                     <li><?php echo anchor('view_data/select_data/index/ressource_graphique','Visualiser les ressources graphiques'); ?></li>
                     <li><?php echo anchor('view_data/select_data/index/ressource_video','Visualiser les ressources vidéos'); ?></li>
+                    <li><?php echo anchor('view_data/select_data/index/carte','Afficher la carte'); ?></li>
                 </ul>
             </li>
             <li>

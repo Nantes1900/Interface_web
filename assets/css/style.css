@@ -6,16 +6,6 @@ html{
 }
 
 
-/* Graphe sigmajs */
-.sigma-graph {
-    background: none repeat scroll 0 0 #222222;
-    border-radius: 4px 4px 4px 4px;
-    height: 500px;
-    width: 900px;
-    position: relative;
-}
-
-
 /* Styles globaux*/
 
 body{
@@ -368,4 +358,19 @@ li.helpbox:hover span{ /*the span will display just on :hover state*/
 }
 .classyTable tr:first-child th:last-child{
 	border-width:0px 0px 1px 1px;
+}
+
+/* Graphe sigmajs */
+.sigma-graph {
+    background: none repeat scroll 0 0 #222222;
+    border-radius: 4px 4px 4px 4px;
+    height: 500px;
+    width: 900px;
+    position: relative;
+}
+
+/* Carte leaflet */
+#map {
+    width: 900px;
+    height: 400px;
 }

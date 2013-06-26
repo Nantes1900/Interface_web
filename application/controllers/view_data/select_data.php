@@ -19,6 +19,8 @@ class Select_data extends CI_Controller {
                 $this->select_objet($goal);
             }elseif(($dataType == 'ressource_texte') || ($dataType == 'ressource_graphique') || ($dataType == 'ressource_video')){
                 $this->select_ressource($dataType, $goal);
+            }elseif($dataType == 'carte'){
+                $this->select_geo($goal);
             }
         } else {
             $this->load->view('accueil/login/formulaire_login',array('titre'=>'Vous n\'êtes pas connecté. Veuillez vous connecter :'));
@@ -118,6 +120,10 @@ class Select_data extends CI_Controller {
         $data['listRessource'] = $ressourceManager->get_ressource_list($orderBy,$orderDirection,$speAttribute,$speAttributeValue,$valid);
         
         $this->load->view('view_data/select_ressource', $data);
+        $this->load->view('footer');
+    }
+    private function select_geo($goal){
+        $this->load->view('view_data/select_geo');
         $this->load->view('footer');
     }
     
