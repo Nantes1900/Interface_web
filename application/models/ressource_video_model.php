@@ -43,6 +43,8 @@ class Ressource_video_model extends CI_Model
         $result = $query->result_array();
         if (isset($result['0'])){    
             return $result['0'];
+        } else {
+            return null;
         }
             
     }

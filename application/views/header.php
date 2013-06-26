@@ -58,10 +58,10 @@
                 <?php echo img(array('src'=>'assets/utils/zoom-2.png','width'=>'8%')); ?>
                 <?php echo anchor('view_data/select_data/index', 'Visualisation de données'); ?>
                 <ul>
-                    <li><?php echo anchor('view_data/select_data/index/objet','Visualiser les objets'); ?></li>
-                    <li><?php echo anchor('view_data/select_data/index/ressource_texte','Visualiser les ressources textuelles'); ?></li>
-                    <li><?php echo anchor('view_data/select_data/index/ressource_graphique','Visualiser les ressources graphiques'); ?></li>
-                    <li><?php echo anchor('view_data/select_data/index/ressource_video','Visualiser les ressources vidéos'); ?></li>
+                    <li><?php echo anchor('view_data/select_data/index/objet','Objets'); ?></li>
+                    <li><?php echo anchor('view_data/select_data/index/ressource_texte','Ressources textuelles'); ?></li>
+                    <li><?php echo anchor('view_data/select_data/index/ressource_graphique','Ressources graphiques'); ?></li>
+                    <li><?php echo anchor('view_data/select_data/index/ressource_video','Ressources vidéos'); ?></li>
                 </ul>
             </li>
             <li>
@@ -93,6 +93,10 @@
     <script>
         //these functions are used to generate a drop down menu 
         //for navigation class ul elements
+        $(function() { //initiate the dropdown menu at a hidden position
+                $('ul.navigation li ul li').finish().slideUp('slow').finish();
+        });
+        
         $(function() {
             $('ul.navigation li').mouseenter(function() {
                 $('ul.navigation li:hover ul li').finish().slideDown('slow');
@@ -108,6 +112,7 @@
                 $('ul.navigation li ul li').finish().slideUp('slow');
             });
         });
+        
     </script>
     <?php } ?>
 </html>

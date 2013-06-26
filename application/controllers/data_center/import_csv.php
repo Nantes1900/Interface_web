@@ -54,7 +54,7 @@ class Import_csv extends CI_Controller
 			$csv_file = $this->upload->data();
                         //getting the data out of the file thanks to the library
                         $data = $this->csvreader->parse_file($csv_file['full_path']);
-                        delete_files($csv_file['file_path']);
+                        delete_files($csv_file['file_path']); //deleting the csv file, we won't need it anymore
                         
                         $csv_type = guess_csv_type($data['0']);
                         
