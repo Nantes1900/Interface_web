@@ -10,7 +10,7 @@ if ( ! function_exists('guess_csv_type'))
              return 'relation';
          }
          
-         if ( array_key_exists('Nom de l\'objet', $data) )
+         if ( array_key_exists('Nom de l\'objet', $data) && (!array_key_exists('Type de documentation', $data)))
          {
              return 'objet';
          }

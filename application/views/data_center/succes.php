@@ -9,8 +9,10 @@
     
     
 <?php if(isset($failure['0'])){ ?>
-<p> <b>Malheureusement</b>, certain(e)s <?php echo $csvType; ?> n'ont pas pu être entré(e)s. Il s'agit de : 
-    <?php foreach($failure as $fail){ echo $fail.', ';} ?>
+<p> <b>Malheureusement</b>, le(s) <?php echo $csvType; ?> suivant(es) n'ont pas pu être entré(e)s : </p>
+    <ul>
+    <?php foreach($failure as $fail){ echo '<li>'.$fail.'</li>';} ?>
+    </ul>
 <p>
     Essayez de revoir leur mise en forme et vérifier que votre fichier csv est conforme aux instructions, 
     ou encore de voir s'il n'existe pas déjà des objets de même nom. Si le problème persiste, contactez un modérateur.
