@@ -153,8 +153,10 @@ class Ressource_video_model extends CI_Model
     //$data is an associative array
     //output $failure is an array with titles of failed insertion
     public function import_csv($data, $transaction){
+        $this->load->helper('dates');
         $failure = array();
-        if($transaction){$this->db->trans_start();}
+        $ressource_id_array = array(); //array containing successful id, used for rollback
+        
         foreach ($data as $ressourceCsv){
             $ressource = new Ressource_video($ressourceCsv);
             $ressource->set_username($this->session->userdata('username'));
@@ -164,12 +166,33 @@ class Ressource_video_model extends CI_Model
             if($ressource->get_date_production()==null){
                 $ressource->set_date_production($ressource->get_date_debut_ressource());
             }
-            $this->ajout_ressource($ressource);
-            if (($this->db->_error_message())!=null) { //if there is an error in the insertion
-                $failure[] = $ressource->get_titre();  //we want to continue, check $db['default']['db_debug'] = FALSE; in config/database  
+            
+            if ($this->ajout_ressource($ressource)) { //if there is no error in the insertion
+                $ressource_id_array[] = $this->db->insert_id();
+            } else {
+                $failure[] = $ressource->get_titre().' (';  //we want to continue, check $db['default']['db_debug'] = FALSE; in config/database 
+                if($this->get_ressource('titre', $ressource->get_titre()) != null){
+                    $errorBegin = array_pop($failure);
+                    $failure[] = $errorBegin.' '.$ressource->get_titre().' existe déjà ';
+                }
+                if(!valid_MDY($ressource->get_date_debut_ressource())){
+                    $errorBegin = array_pop($failure);
+                    $failure[] = $errorBegin.' date de début de ressource non valide ';
+                }
+                if(!valid_MDY($ressource->get_date_production())){
+                    $errorBegin = array_pop($failure);
+                    $failure[] = $errorBegin.' date de début de production non valide ';
+                }
+                $errorBegin = array_pop($failure);
+                $failure[] = $errorBegin.')';
             }
         }
-        if($transaction){$this->db->trans_complete();}
+        
+        if($transaction && isset($failure['0'])){ //home-made rollback
+            foreach ($ressource_id_array as $ressource_id){
+                $this->delete($ressource_id);
+            }
+        }
         return $failure;
     }
 }

@@ -35,7 +35,7 @@ class Ressource_texte_model extends CI_Model
                     $this->db->set($dbAttribute,$value);
                 }
             }
-            $this->db->insert('ressource_textuelle'); //Exécution            
+            return $this->db->insert('ressource_textuelle'); //Exécution            
         }
         
         public function last_insert_id(){
@@ -155,20 +155,38 @@ class Ressource_texte_model extends CI_Model
         //$data is an associative array
         //output $failure is an array with titles of failed insertion
         public function import_csv($data, $transaction){ 
+            $this->load->helper('dates');
             $failure = array();
-            if($transaction){$this->db->trans_start();}
+            $ressource_id_array = array(); //array containing successful id, used for rollback
+            
             foreach ($data as $ressourceCsv){
                 $ressource = new Ressource_texte($ressourceCsv);
                 $ressource->set_username($this->session->userdata('username'));
                 if($ressource->get_date_debut_ressource()==null){ //we want to avoid database error if csv file with not date
                     $ressource->set_date_debut_ressource('01/01/1900');
                 }
-                $this->ajout_texte($ressource);
-                if (($this->db->_error_message())!=null) { //if there is an error in the insertion
-                    $failure[] = $ressource->get_titre();  //we want to continue, check $db['default']['db_debug'] = FALSE; in config/database 
+                
+                if ($this->ajout_texte($ressource)) { //if there is no error in the insertion
+                    $ressource_id_array[] = $this->db->insert_id();
+                } else {
+                    $failure[] = $ressource->get_titre().' (';  //we want to continue, check $db['default']['db_debug'] = FALSE; in config/database 
+                    if($this->get_ressource('titre', $ressource->get_titre()) != null){
+                        $errorBegin = array_pop($failure);
+                        $failure[] = $errorBegin.' '.$ressource->get_titre().' existe déjà ';
+                    }
+                    if(!valid_MDY($ressource->get_date_debut_ressource())){
+                        $errorBegin = array_pop($failure);
+                        $failure[] = $errorBegin.' date de début de ressource non valide ';
+                    }
+                    $errorBegin = array_pop($failure);
+                    $failure[] = $errorBegin.')';
                 }
             }
-            if($transaction){$this->db->trans_complete();}
+            if($transaction && isset($failure['0'])){ //home-made rollback
+                foreach ($ressource_id_array as $ressource_id){
+                    $this->delete($ressource_id);
+                }
+            }
             return $failure;
         }
 
