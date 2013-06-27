@@ -51,6 +51,22 @@ class Objet_model extends CI_Model
             return $resultArray;
         }
         
+        public function get_objet_geo_list(){
+            $sql = 'SELECT objet.objet_id, nom_objet, resume, ST_X(temp_geom.the_geom) AS longitude, ST_Y(temp_geom.the_geom) AS latitude '. 
+                    'FROM objet JOIN temp_geom ON objet.objet_id = temp_geom.objet_id '.
+                    'WHERE objet.validation = TRUE ';
+            $query = $this->db->query($sql);
+            $result = $query->result_array();
+            $resultList = array();
+            foreach($result as $objetInfos){ //we shorten the resume
+                if(strlen($objetInfos['resume'])>255){
+                    $objetInfos['resume'] = substr($objetInfos['resume'],0,255).'...';
+                }
+                $resultList[] = $objetInfos;
+            }
+            return $resultList;
+        }
+        
         //return objet_id out of the name
         public function get_objet_by_name($name)
         {

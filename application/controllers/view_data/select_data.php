@@ -123,6 +123,17 @@ class Select_data extends CI_Controller {
         $this->load->view('footer');
     }
     private function select_geo($goal){
+        $listObjet = $this->objet_model->get_objet_geo_list();
+        
+        $jsonList = array();
+        
+        foreach($listObjet as $objetArray){
+            $jsonList[] = json_encode($objetArray);
+        }
+        $list = implode(', ', $jsonList);
+        $fileContent = '['.$list.']';
+        file_put_contents(FCPATH.'/assets/utils/coordonnees.json', $fileContent);
+        
         $this->load->view('view_data/select_geo');
         $this->load->view('footer');
     }

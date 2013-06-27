@@ -15,9 +15,12 @@ L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 $.getJSON(coord_file, function(json) { // this will show the info it in firebug console
 	for (var row in json) {
 		// add a marker in the given location, attach some popup content to it and open the popup
-		if (json[row].Latitude !== '') //Do not handle entries with no geographical information
+		if (json[row].latitude !== '') //Do not handle entries with no geographical information
 		{
-			marker = L.marker([json[row].Latitude, json[row].Longitude]).addTo(map).bindPopup(json[row].Titre+"<br>"+json[row].Resume);
+			marker = L.marker([json[row].latitude, json[row].longitude]).addTo(map).
+                                bindPopup('<b>'+json[row].nom_objet+'</b><br>'+
+                                json[row].resume+
+                                '<br><a href="'+base_url+'view_data/view_data/view_objet/'+json[row].objet_id+'"> Voir l\'objet </a>');
 		}
 	}
 });
