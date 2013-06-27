@@ -20,6 +20,10 @@
                 <?php echo img(array('src'=>'assets/utils/ress-video.png','width'=>'4%', 'alt'=>'icone ressource video')); ?>
                 <?php echo anchor('view_data/select_data/index/ressource_video','Ressources vidéos'); ?>
             </li>
+            <li>
+                <?php echo img(array('src'=>'assets/utils/carte.png','width'=>'4%', 'alt'=>'icone carte')); ?>
+                <?php echo anchor('view_data/select_data/index/carte','Objets par la carte'); ?>
+            </li>
         </ul>
     </div>
     

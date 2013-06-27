@@ -62,6 +62,7 @@
                     <li><?php echo anchor('view_data/select_data/index/ressource_texte','Ressources textuelles'); ?></li>
                     <li><?php echo anchor('view_data/select_data/index/ressource_graphique','Ressources graphiques'); ?></li>
                     <li><?php echo anchor('view_data/select_data/index/ressource_video','Ressources vidéos'); ?></li>
+                    <li><?php echo anchor('view_data/select_data/index/carte','Carte des objets'); ?></li>
                 </ul>
             </li>
             <li>
@@ -90,30 +91,7 @@
     </div>
     
     <script src="<?php echo base_url();?>assets/js/jquery.js"></script>
-    <script>
-        //these functions are used to generate a drop down menu 
-        //for navigation class ul elements
-        $(function() { //initiate the dropdown menu at a hidden position
-                $('ul.navigation li ul li').finish().slideUp('slow').finish();
-        });
-        
-        $(function() {
-            $('ul.navigation li').mouseenter(function() {
-                $('ul.navigation li:hover ul li').finish().slideDown('slow');
-            });
-        });
-        $(function() {
-            $('ul.navigation li ul').mouseleave(function() {
-                $('ul.navigation li:hover ul li').finish().slideUp('slow');
-            });
-        });
-        $(function() {
-            $('ul.navigation').mouseleave(function() {
-                $('ul.navigation li ul li').finish().slideUp('slow');
-            });
-        });
-        
-    </script>
+    <script src="<?php echo base_url();?>assets/js/dropdownmenu.js"></script>
     <?php } ?>
-</html>
+
 
