@@ -20,8 +20,7 @@ class Ajout_relation extends CI_Controller
 	{
             if($this->session->userdata('username')){
                 $userLevel = $this->session->userdata('user_level');
-                $data['userLevel'] = $userLevel;
-                $this->load->view('data_center/data_center',$data);
+                $this->load->view('data_center/data_center');
                 if ($userLevel>=4){
                     $this->formulaire();
                 }
@@ -83,10 +82,14 @@ class Ajout_relation extends CI_Controller
                                 
                     $relationdata['parent'] = $this->input->post('parent')? 'true':'false';
                              
-                    $this->relation_model->ajout_relation($relationdata);            
-                    redirect('data_center/data_center/','refresh');
-                
-                /** @todo Ajouter une page de confirmation du succès d'ajout de l'objet */
+                    if($this->relation_model->ajout_relation($relationdata)){
+                        $data = array('success'=>TRUE , 'message' => 'L\'ajout de relation entre objets s\'est déroulé avec succès');
+                    }else{
+                        $data = array('success'=>FALSE , 'message' => 'Une erreur a eu lieu, les objets n\'ont pas été reliés');
+                    }
+                    
+                    $this->load->view('data_center/success_form', $data);
+                    $this->load->view('data_center/data_center');
                 }
             }else{
                 redirect('accueil/accueil','refresh');

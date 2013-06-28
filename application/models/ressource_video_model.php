@@ -26,7 +26,7 @@ class Ressource_video_model extends CI_Model
             $this->db->set($dbAttribute,$value);
         }
         
-        $this->db->insert('ressource_video');
+        return $this->db->insert('ressource_video');
     }
     
     public function last_insert_id(){
@@ -97,7 +97,8 @@ class Ressource_video_model extends CI_Model
     public function add_documentation($objet_id, $ressource_id){
         $this->db->set('objet_id',$objet_id);
         $this->db->set('ressource_video_id', $ressource_id);
-        $this->db->insert('documentation_video');
+        
+        return $this->db->insert('documentation_video');
     }
     
     //return a list of associative arrays linked by documentation_video table to the $ressource_id argument

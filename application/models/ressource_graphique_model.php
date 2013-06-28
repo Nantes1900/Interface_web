@@ -96,7 +96,8 @@ class Ressource_graphique_model extends CI_Model
         $this->db->set('objet_id',$objet_id);
         $this->db->set('ressource_graphique_id', $ressource_id);
         $this->db->set('page_consultee', $page);
-        $this->db->insert('documentation_graphique');
+        
+        return $this->db->insert('documentation_graphique');
     }
     
     //return a list of associative arrays linked by documentation_graphique table to the $ressource_id argument

@@ -56,16 +56,30 @@ class Ajout_documentation extends CI_Controller{
             $objet_id = $this->input->post('objet_id');
             $typeRessourceModel= ucfirst($typeRessource).'_model';
             $ressourceManager = new $typeRessourceModel();
+            
+            $success = FALSE;
+            
             if($typeRessource!='ressource_video'){ //if we it's not a video, we may want to refer to a precise page
                 if($this->form_validation->run('add_documentation') == TRUE){
                     $page = $this->input->post('page');
                 }else{
                     $page = 0;
                 }
-                $ressourceManager->add_documentation($objet_id,$ressource_id,$page);
+                if($ressourceManager->add_documentation($objet_id,$ressource_id,$page)){
+                    $success = TRUE;
+                }
             }else{
-                $ressourceManager->add_documentation($objet_id,$ressource_id);
+                if($ressourceManager->add_documentation($objet_id,$ressource_id)){
+                    $success = TRUE;
+                }
             }
+            
+            if($success){
+                $data = array('success'=>TRUE , 'message'=>'Le lien de documentation a été ajouté avec succès');
+            } else {
+                $data = array('success'=>FALSE , 'message'=>'Erreur : Le lien de documentation n\'a pas pu être ajouté');
+            }
+            $this->load->view('data_center/success_form', $data);
             $this->index();
         }else{
             $this->load->view('accueil/login/formulaire_login',array('titre'=>'Vous n\'êtes pas connecté. Veuillez vous connecter :'));

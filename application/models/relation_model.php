@@ -49,7 +49,8 @@ class Relation_model extends CI_Model
             } 
                       
             $this->db->set('type_relation_id', $relationdata['type_relation_id']);
-            $this->db->insert('relation'); //Exécution            
+            
+            return $this->db->insert('relation'); //Exécution            
         }
         
         public function get_type_relation_list()

@@ -103,7 +103,7 @@ class Import_csv extends CI_Controller
                             $error = TRUE;
                         }
                         if(!$error){ //printing success message
-                            $this->load->view('data_center/succes',$message);
+                            $this->load->view('data_center/succes_csv',$message);
                             $this->index();
                         }else{
                             $message = 'Le fichier n\'a pas pu être reconnu, vérifiez le format et les séparateurs de votre fichier csv';

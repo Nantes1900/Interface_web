@@ -51,6 +51,7 @@
                     <th>Visualiser</th>
                 <?php } ?>
                 <?php if($goal=='add_doc'){ ?>
+                    <th>Validation</th>
                     <th>Documenter un objet avec cette ressource</th>
                 <?php } ?>
             </tr>
@@ -78,6 +79,7 @@
                             
                     <?php } ?>
                     <?php if($goal=='add_doc'){ ?>
+                        <td><?php echo $ressource->get_validation()=='t'?'validé':'non validé'; ?></td>
                         <td>
                             <?php echo form_open('view_data/select_data/select_objet/add_doc') ?>
                                 <input type="hidden" name="ressource_id" value="<?php if($typeRessource=='ressource_texte'){

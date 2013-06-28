@@ -89,9 +89,19 @@
             </li>
         </ul>
     </div>
-    
+<!--    this button is just a test-->
+    <button onclick="link()"> lien ici!</button>
     <script src="<?php echo base_url();?>assets/js/jquery.js"></script>
     <script src="<?php echo base_url();?>assets/js/dropdownmenu.js"></script>
+    <script>
+        function link(){
+            $(function(){
+                var l = window.location;
+                var base_url = l.protocol + "//" + l.host + "/";
+                $("body").load(base_url+'download/download');
+            })
+        }
+    </script>
     <?php } ?>
 
 

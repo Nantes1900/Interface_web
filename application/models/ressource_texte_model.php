@@ -106,7 +106,8 @@ class Ressource_texte_model extends CI_Model
             $this->db->set('objet_id',$objet_id);
             $this->db->set('ressource_textuelle_id', $ressource_id);
             $this->db->set('page_consultee', $page);
-            $this->db->insert('documentation_textuelle');
+            
+            return $this->db->insert('documentation_textuelle');
         }
         
         //return a list of associative arrays linked by documentation_textuelle table to the $ressource_id argument

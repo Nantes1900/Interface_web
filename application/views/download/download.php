@@ -18,6 +18,7 @@
                 <option value="template-ressource-texte.ods">Ressource textuelle</option>
                 <option value="template-ressource-graphique.ods">Ressource graphique</option>
                 <option value="template-ressource-video.ods">Ressource vidéo</option>
+                <option value="template-documentation.ods">Documentation entre objet et ressource</option>
             </select>
             <input type="submit" value="Télécharger le fichier" />
 </form>

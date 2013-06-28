@@ -69,10 +69,14 @@ class Ajout_objet extends CI_Controller
                 $objetdata['mots_cles'] = $this->input->post('mots_cles');
                 $objetdata['username'] = $this->session->userdata('username');
                 
-                $this->objet_model->ajout_objet($objetdata);            
-                redirect('data_center/data_center/','refresh');
-                
-                /** @todo Ajouter une page de confirmation du succès d'ajout de l'objet */
+                if($this->objet_model->ajout_objet($objetdata)){
+                    $data = array('success'=>TRUE , 'message' => 'L\'ajout de l\'objet '.
+                                $objetdata['nom_objet'].' s\'est déroulé avec succès');
+                } else {
+                    $data = array('success'=>FALSE , 'message' => 'Une erreur a eu lieu, l\'objet '.
+                                $objetdata['nom_objet'].' n\'a pas été ajouté');
+                } 
+                $this->load->view('data_center/success_form', $data);
             }
         }
         

@@ -57,6 +57,7 @@
                 <?php if($goal=='view'){ ?>
                             <th>Visualiser</th>
                 <?php }elseif($goal=='add_doc'){ ?>
+                            <th>Validation</th>
                             <th>Lier cet objet à <?php echo $ressource->get_titre();?></th>
                 <?php } ?>
                 
@@ -69,14 +70,18 @@
                     <td><?php echo $objet->get_username(); ?></td>
                     <td><?php echo $objet->get_resume(); ?></td>
                     <td><?php echo $objet->get_mots_cles(); ?></td>
-                    <td>
-                        <?php if($goal=='view'){ ?>
+                    
+                    <?php if($goal=='view'){ ?>
+                        <td>
                                 <?php echo form_open('view_data/view_data') ?>
                                     <input type="hidden" name="data_id" value="<?php echo $objet->get_objet_id(); ?>" />
                                     <input type="hidden" name="type" value="objet" />
                                     <input type="submit" value="Voir cet objet" />
                                 </form>
-                        <?php }  elseif ($goal=='add_doc') { ?>
+                        </td>
+                   <?php }  elseif ($goal=='add_doc') { ?>
+                        <td><?php echo $objet->get_validation()=='t'?'validé':'non validé'; ?></td>
+                        <td>
                              <?php echo form_open('data_center/ajout_documentation/add/'.$typeRessource) ?>
                                 <?php if($typeRessource!='ressource_video'){ ?>
                                     Lier la page :<input type="texte" name="page" value="0" pattern="[0-9]*" size="4">
@@ -90,8 +95,8 @@
                                                                                       } ?>" />
                                 <input type="submit" value="Relier" />
                             </form>
-                        <?php } ?>
-                    </td>
+                        </td>
+                   <?php } ?>
                 </tr>
             <?php }  ?>
         </tbody>

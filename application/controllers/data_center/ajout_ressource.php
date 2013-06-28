@@ -106,7 +106,13 @@ class Ajout_ressource extends CI_Controller
                 $textedata['date'] = $date_infos['date'];
                 $textedata['date_precision'] = $date_infos['date_precision'];
                 //querying    
-                $this->ressource_texte_model->ajout_texte($textedata);
+                if($this->ressource_texte_model->ajout_texte($textedata)){
+                    $data = array('success'=>TRUE , 'message' => 'L\'ajout de la ressource '.
+                                $textedata['titre'].' s\'est déroulé avec succès');
+                } else {
+                    $data = array('success'=>FALSE , 'message' => 'Une erreur a eu lieu, la ressource '.
+                                $textedata['titre'].' n\'a pas été ajouté');
+                } 
                 
                 $ressource_id = $this->ressource_texte_model->last_insert_id();
                 $objet_id = $this->input->post('objet');
@@ -115,9 +121,7 @@ class Ajout_ressource extends CI_Controller
                     $page = $this->input->post('page');
                     $this->ressource_texte_model->add_documentation($objet_id, $ressource_id,$page);
                 }
-                redirect('data_center/data_center/','refresh');
-                
-                /** @todo Ajouter une page de confirmation du succès d'ajout de l'objet */
+                $this->load->view('data_center/success_form', $data);
             }
         }
         
@@ -173,7 +177,13 @@ class Ajout_ressource extends CI_Controller
                     
                         //we set the manager and add $ressource in the database
                         $ressourceManager = new Ressource_graphique_model();
-                        $ressourceManager->ajout_ressource($ressource);
+                        if($ressourceManager->ajout_ressource($ressource)){
+                            $data = array('success'=>TRUE , 'message' => 'L\'ajout de la ressource '.
+                            $ressource->get_titre().' s\'est déroulé avec succès');
+                        } else {
+                            $data = array('success'=>FALSE , 'message' => 'Une erreur a eu lieu, la ressource '.
+                            $ressource->get_titre().' n\'a pas été ajouté');
+                        } 
                     
                         $ressource_id = $this->ressource_graphique_model->last_insert_id();
                         $objet_id = $this->input->post('objet');
@@ -182,7 +192,7 @@ class Ajout_ressource extends CI_Controller
                             $page = $this->input->post('page');
                             $this->ressource_graphique_model->add_documentation($objet_id, $ressource_id, $page);
                         }
-                        redirect('data_center/data_center/','refresh');
+                        $this->load->view('data_center/success_form', $data);
                     }
                 } else {
                     //creating a Ressource_graphique entity out of post data
@@ -190,7 +200,13 @@ class Ajout_ressource extends CI_Controller
                     
                     //we set the manager and add $ressource in the database
                     $ressourceManager = new Ressource_graphique_model();
-                    $ressourceManager->ajout_ressource($ressource);
+                    if($ressourceManager->ajout_ressource($ressource)){
+                        $data = array('success'=>TRUE , 'message' => 'L\'ajout de la ressource '.
+                        $ressource->get_titre().' s\'est déroulé avec succès');
+                    } else {
+                        $data = array('success'=>FALSE , 'message' => 'Une erreur a eu lieu, la ressource '.
+                        $ressource->get_titre().' n\'a pas été ajouté');
+                    } 
                     
                     $ressource_id = $this->ressource_graphique_model->last_insert_id();
                     $objet_id = $this->input->post('objet');
@@ -198,7 +214,7 @@ class Ajout_ressource extends CI_Controller
                     if ($objet_id!=null){
                         $this->ressource_graphique_model->add_documentation($objet_id, $ressource_id);
                     }
-                    redirect('data_center/data_center/','refresh');
+                    $this->load->view('data_center/success_form', $data);
                 }
             }
         }
@@ -285,7 +301,13 @@ class Ajout_ressource extends CI_Controller
                     
                         //we set the manager and add $ressource in the database
                         $ressourceManager = new Ressource_video_model();
-                        $ressourceManager->ajout_ressource($ressource);
+                        if($ressourceManager->ajout_ressource($ressource)){
+                            $data = array('success'=>TRUE , 'message' => 'L\'ajout de la ressource '.
+                            $ressource->get_titre().' s\'est déroulé avec succès');
+                        } else {
+                            $data = array('success'=>FALSE , 'message' => 'Une erreur a eu lieu, la ressource '.
+                            $ressource->get_titre().' n\'a pas été ajouté');
+                        }
                     
                         $ressource_id = $this->ressource_video_model->last_insert_id();
                         $objet_id = $this->input->post('objet');
@@ -293,14 +315,20 @@ class Ajout_ressource extends CI_Controller
                         if ($objet_id!=null){
                             $this->ressource_video_model->add_documentation($objet_id, $ressource_id);
                         }
-                        redirect('data_center/data_center/','refresh');
+                        $this->load->view('data_center/success_form', $data);
                     }
                 } else {
                     //creating a Ressource_video entity out of post data
                     $ressource = $this->form_vid_basic();
                     //we set the manager and add $ressource in the database
                     $ressourceManager = new Ressource_video_model();
-                    $ressourceManager->ajout_ressource($ressource);
+                    if($ressourceManager->ajout_ressource($ressource)){
+                        $data = array('success'=>TRUE , 'message' => 'L\'ajout de la ressource '.
+                        $ressource->get_titre().' s\'est déroulé avec succès');
+                    } else {
+                        $data = array('success'=>FALSE , 'message' => 'Une erreur a eu lieu, la ressource '.
+                        $ressource->get_titre().' n\'a pas été ajouté');
+                    } 
                     
                     $ressource_id = $this->ressource_video_model->last_insert_id();
                     $objet_id = $this->input->post('objet');
@@ -308,7 +336,7 @@ class Ajout_ressource extends CI_Controller
                     if ($objet_id!=null){
                         $this->ressource_video_model->add_documentation($objet_id, $ressource_id);
                     }
-                    redirect('data_center/data_center/','refresh');
+                    $this->load->view('data_center/success_form', $data);
                 }
             }
         }
@@ -332,7 +360,7 @@ class Ajout_ressource extends CI_Controller
             $ressource->set_duree($this->input->post('duree'));
             $ressource->set_video_link($this->input->post('video_link'));
             $ressource->set_diffusion($this->input->post('diffusion'));
-            $ressource->set_versionvideo($imageData['versionvideo']);
+            $ressource->set_versionvideo($this->input->post('versionvideo'));
             $ressource->set_distribution($this->input->post('distribution'));
             $ressource->set_production($this->input->post('production'));
             $date_infos = conc_date($this->input->post('jourProd'),$this->input->post('moisProd'),$this->input->post('anneeProd'));

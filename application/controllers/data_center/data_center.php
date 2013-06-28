@@ -34,9 +34,11 @@ class Data_center extends CI_Controller
         
         public function data_center()
         {
-            
-            $this->load->view('data_center/data_center');
-            
+            if ( $this->session->userdata('username') ) {
+                $this->load->view('data_center/data_center');
+            }else{
+                $this->load->view('accueil/login/formulaire_login',array('titre'=>'Vous n\'êtes pas connecté. Veuillez vous connecter :'));
+            }    
         }
         
         
