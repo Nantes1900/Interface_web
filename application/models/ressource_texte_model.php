@@ -99,7 +99,7 @@ class Ressource_texte_model extends CI_Model
             }
             $this->db->where('ressource_textuelle_id',$ressource->get_ressource_textuelle_id());
             
-            $this->db->update('ressource_textuelle');
+            return $this->db->update('ressource_textuelle');
         }
         
         public function add_documentation($objet_id, $ressource_id, $page = 0){
@@ -145,12 +145,12 @@ class Ressource_texte_model extends CI_Model
         //beware, it will delete all depending infos (some documentation of documentation table for example)
         public function delete($ressource_id){
             $this->db->where('ressource_textuelle_id',$ressource_id);
-            $this->db->delete('ressource_textuelle'); 
+            return $this->db->delete('ressource_textuelle'); 
         }
         
         public function delete_documentation($documentation_id){
             $this->db->where('documentation_textuelle_id',$documentation_id);
-            $this->db->delete('documentation_textuelle');
+            return $this->db->delete('documentation_textuelle');
         }
         
         //$data is an associative array

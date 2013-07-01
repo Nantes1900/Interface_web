@@ -73,13 +73,15 @@ abstract class Ressource {
             }else{
                 $this->_date_maj='{'.$this->get_last_modified().'}';
             }
-            $ressourceManager->update_ressource($this);
+            return $ressourceManager->update_ressource($this);
+        } else {
+            return FALSE;
         }
     }
     
     public function validate(){
         $this->set_validation('t');
-        $this->save();
+        return $this->save();
     }
     
     //getters and setters

@@ -95,6 +95,7 @@
                                                                                         $getMethod='get_'.$typeRessource.'_id';
                                                                                         echo $ressource->$getMethod(); 
                                                                                     } ?>" />
+                                <input type="hidden" name="titre" value="<?php echo $ressource->get_titre(); ?>">
                                 <input type="submit" value="Supprimer cette ressource" />
                             </form>
                         </td>

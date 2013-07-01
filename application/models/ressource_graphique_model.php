@@ -89,7 +89,7 @@ class Ressource_graphique_model extends CI_Model
         }
         $this->db->where('ressource_graphique_id',$ressource->get_ressource_graphique_id());
             
-        $this->db->update('ressource_graphique');
+        return $this->db->update('ressource_graphique');
     }
     
     public function add_documentation($objet_id, $ressource_id, $page = 0){
@@ -142,12 +142,12 @@ class Ressource_graphique_model extends CI_Model
             }
         }
         $this->db->where('ressource_graphique_id',$ressource_id);
-        $this->db->delete('ressource_graphique'); 
+        return $this->db->delete('ressource_graphique'); 
     }
     
     public function delete_documentation($documentation_id){
         $this->db->where('documentation_graphique_id',$documentation_id);
-        $this->db->delete('documentation_graphique');
+        return $this->db->delete('documentation_graphique');
     }
     
     //$data is an associative array

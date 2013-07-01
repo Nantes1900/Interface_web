@@ -135,6 +135,8 @@
                                                                                         echo $ressource->$getMethod(); 
                                                                                     } ?>" />
                                 <input type="hidden" name="objet_id" value="<?php echo $objet->get_objet_id(); ?>" />
+                                <input type="hidden" name="nom_objet" value="<?php echo $objet->get_nom_objet(); ?>" />
+                                <input type="hidden" name="ressource_titre" value="<?php echo $ressource->get_titre(); ?>" />
                                 <input type="submit" value="Relier" />
                             </form>
                         </td>

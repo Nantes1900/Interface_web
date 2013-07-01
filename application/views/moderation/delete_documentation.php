@@ -29,6 +29,8 @@
                                                                                         echo $ressource->$getMethod(); 
                                                                                     } ?>" />
                             <input type="hidden" name="documentation_id" value="<?php echo $objet['documentation_id']; ?>" />
+                            <input type="hidden" name="nom_objet" value="<?php echo $objet['nom_objet']; ?>" />
+                            <input type="hidden" name="ressource_titre" value="<?php echo $ressource->get_titre(); ?>" />
                             <input type="submit" value="Supprimer la relation" />
                         </form>
                     </td>

@@ -87,14 +87,16 @@ class Modify_objet extends CI_Controller{
             $objet->set_description($this->input->post('description'));
             $objet->set_adresse_postale($this->input->post('adresse_postale'));
             $objet->set_mots_cles($this->input->post('mots_cles'));
-            if ($this->input->post('validation')==TRUE){ //beware, in database, booleans are t (for TRUE) and f (FALSE)
+            if ($this->input->post('validate')==TRUE){ //beware, in database, booleans are t (for TRUE) and f (FALSE)
                 $objet->set_validation('t');
             }else{
                 $objet->set_validation('f');
             }
             $success = $objet->save();
             $lastAction = 'modify';
-            redirect('moderation/modify_objet/index/modify/'.$success.'/'.$lastAction,'refresh');
+            $message = $this->create_success_message($success, $lastAction, $objet->get_nom_objet());
+            $this->load->view('data_center/success_form',array('success'=>$success, 'message'=> $message));
+            $this->select_objet('modify');
         }
     }
     
@@ -103,8 +105,12 @@ class Modify_objet extends CI_Controller{
             $objet_id = $this->input->post('objet_id');
             $objet = new Objet($objet_id);
             $success = $objet->validate();
+            
+            //creation success message
             $lastAction = 'validate';
-            redirect('moderation/modify_objet/index/modify/'.$success.'/'.$lastAction,'refresh');
+            $message = $this->create_success_message($success, $lastAction, $objet->get_nom_objet());
+            $this->load->view('data_center/success_form',array('success'=>$success, 'message'=> $message));
+            $this->select_objet('modify');
         }else{
             redirect('accueil/accueil/','refresh');
         }
@@ -113,9 +119,13 @@ class Modify_objet extends CI_Controller{
     public function delete_objet(){
         if ( $this->session->userdata('user_level') >= 5 ){
             $objet_id = $this->input->post('objet_id');
+            $objet = new Objet($objet_id);
             $success = $this->objet_model->delete($objet_id);
+            
             $lastAction = 'deletion';
-            redirect('moderation/modify_objet/index/modify/'.$success.'/'.$lastAction,'refresh');
+            $message = $this->create_success_message($success, $lastAction, $objet->get_nom_objet());
+            $this->load->view('data_center/success_form',array('success'=>$success, 'message'=> $message));
+            $this->select_objet('modify');
         }else{
             redirect('accueil/accueil/','refresh');
         }
@@ -164,12 +174,15 @@ class Modify_objet extends CI_Controller{
                              
                 $success = $this->relation_model->ajout_relation($relationdata);
                 
+                //creation of the success message
                 $objet1 = new Objet($objet1_id);
                 $objet2 = new Objet($objet2_id);
                 if($success){
-                    $message = 'La relation entre '.$objet1->get_nom_objet().' et '.$objet2->get_nom_objet().' a été ajoutée avec succès';                    
+                    $message = 'La relation entre <b>'.$objet1->get_nom_objet().
+                            '</b> et <b>'.$objet2->get_nom_objet().'</b> a été ajoutée avec succès';                    
                 } else {
-                    $message = 'Erreur : la relation entre '.$objet1->get_nom_objet().' et '.$objet2->get_nom_objet().' n\'a pas pu être ajouté'; 
+                    $message = 'Erreur : la relation entre <b>'.$objet1->get_nom_objet().
+                            '</b> et <b>'.$objet2->get_nom_objet().'</b> n\'a pas pu être ajouté'; 
                 }
                 
                 $this->load->view('data_center/success_form',array('success'=>$success, 'message'=> $message));
@@ -212,24 +225,24 @@ class Modify_objet extends CI_Controller{
         }
      }
     
-     public function create_success_message($success, $lastAction){
+     public function create_success_message($success, $lastAction, $firstEntity = null, $secondEntity = null ){
          if($lastAction == 'modify'){
              if($success){
-                 $message = 'La modification de l\'objet s\'est déroulée avec succès';
+                 $message = 'La modification de l\'objet <b>'.$firstEntity.'</b> s\'est déroulée avec succès';
              }else {
-                 $message = 'Erreur : la modification de l\'objet a échoué ';
+                 $message = 'Erreur : la modification de l\'objet <b>'.$firstEntity.'</b> a échoué ';
              }
          } elseif ($lastAction == 'validate'){
              if($success){
-                 $message = 'La validation de l\'objet s\'est déroulée avec succès';
+                 $message = 'La validation de l\'objet <b>'.$firstEntity.'</b> s\'est déroulée avec succès';
              }else {
-                 $message = 'Erreur : la validation de l\'objet a échoué ';
+                 $message = 'Erreur : la validation de l\'objet <b>'.$firstEntity.'</b> a échoué ';
              }
          } elseif ($lastAction == 'deletion'){
              if($success){
-                 $message = 'La suppression de l\'objet s\'est déroulée avec succès';
+                 $message = 'La suppression de l\'objet <b>'.$firstEntity.'</b> s\'est déroulée avec succès';
              }else {
-                 $message = 'Erreur : la suppression de l\'objet a échoué ';
+                 $message = 'Erreur : la suppression de l\'objet <b>'.$firstEntity.'</b> a échoué ';
              }
          }elseif ($lastAction == 'relationDeletion'){
              if($success){

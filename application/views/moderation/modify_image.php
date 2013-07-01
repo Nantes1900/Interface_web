@@ -138,7 +138,7 @@
                 <td class="error_form"><?php echo form_error('pagination'); ?></td>
             </tr>
             <tr>
-                <td><input type="checkbox" name="validation" value="TRUE" <?php if($ressource->get_validation()=='t'){echo 'checked';} ?>>Valider</td>
+                <td><input type="checkbox" name="validate" value="TRUE" <?php if($ressource->get_validation()=='t'){echo 'checked';} ?>>Valider</td>
             </tr>
             
             <tr><td><input type="submit" value="Enregistrer les modifications" /><tr><td>

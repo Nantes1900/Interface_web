@@ -91,7 +91,7 @@ class Ressource_video_model extends CI_Model
         }
         $this->db->where('ressource_video_id',$ressource->get_ressource_video_id());
             
-        $this->db->update('ressource_video');
+        return $this->db->update('ressource_video');
     }
     
     public function add_documentation($objet_id, $ressource_id){
@@ -143,12 +143,12 @@ class Ressource_video_model extends CI_Model
             }
         }
         $this->db->where('ressource_video_id',$ressource_id);
-        $this->db->delete('ressource_video'); 
+        return $this->db->delete('ressource_video'); 
     }
     
     public function delete_documentation($documentation_id){
         $this->db->where('documentation_video_id',$documentation_id);
-        $this->db->delete('documentation_video');
+        return $this->db->delete('documentation_video');
     }
     
     //$data is an associative array

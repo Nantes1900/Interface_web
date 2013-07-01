@@ -100,13 +100,18 @@ class Modify_ressource extends CI_Controller{
             $date_infos = conc_date($this->input->post('jour'),$this->input->post('mois'),$this->input->post('annee'));
             $ressource->set_date_debut_ressource($date_infos['date']);
             $ressource->set_date_precision($date_infos['date_precision']);
-            if ($this->input->post('validation')==TRUE){ //beware, in database, booleans are t (for TRUE) and f (FALSE)
+            if ($this->input->post('validate')==TRUE){ //beware, in database, booleans are t (for TRUE) and f (FALSE)
                 $ressource->set_validation('t');
             }else{
                 $ressource->set_validation('f');
             }
-            $ressource->save();
-            redirect('moderation/modify_ressource/index/ressource_texte/modify','refresh');
+            $success = $ressource->save();
+            
+            //creation message
+            $lastAction = 'modify_texte';
+            $message = $this->create_success_message($success, $lastAction, $ressource->get_titre());
+            $this->load->view('data_center/success_form',array('success'=>$success, 'message'=> $message));
+            $this->select_ressource('ressource_texte', 'modify');
         }
     }
     
@@ -150,14 +155,24 @@ class Modify_ressource extends CI_Controller{
                     $ressource->set_image($ressource->get_titre().$imageData['file_name']);
                     $ressource->set_dimension($imageData['image_size_str']);
                     
-                    $ressource->save();
-                    redirect('moderation/modify_ressource/index/ressource_graphique/modify','refresh');
+                    $success = $ressource->save();
+            
+                    //creation message
+                    $lastAction = 'modify_image';
+                    $message = $this->create_success_message($success, $lastAction, $ressource->get_titre());
+                    $this->load->view('data_center/success_form',array('success'=>$success, 'message'=> $message));
+                    $this->select_ressource('ressource_graphique', 'modify');
                 }
             }else{
                 //modifiying $ressource out of post data
                 $ressource =  $this->mod_img_basic($ressource); //just basic posted data collecting
-                $ressource->save();
-                redirect('moderation/modify_ressource/index/ressource_graphique/modify','refresh');
+                $success = $ressource->save();
+            
+                //creation message
+                $lastAction = 'modify_image';
+                $message = $this->create_success_message($success, $lastAction, $ressource->get_titre());
+                $this->load->view('data_center/success_form',array('success'=>$success, 'message'=> $message));
+                $this->select_ressource('ressource_graphique', 'modify');
             }
         }
     }
@@ -175,7 +190,7 @@ class Modify_ressource extends CI_Controller{
         $ressource->set_date_precision($date_infos['date_precision']);
         $date_infos = conc_date($this->input->post('jourPrise'),$this->input->post('moisPrise'),$this->input->post('anneePrise'));
         $ressource->set_date_prise_vue($date_infos['date']);
-        if ($this->input->post('validation')==TRUE){ //beware, in database, booleans are t (for TRUE) and f (FALSE)
+        if ($this->input->post('validate')==TRUE){ //beware, in database, booleans are t (for TRUE) and f (FALSE)
             $ressource->set_validation('t');
         }else{
             $ressource->set_validation('f');
@@ -225,14 +240,24 @@ class Modify_ressource extends CI_Controller{
                     rename($dir . $videoData['file_name'], $dir .$ressource->get_titre().$videoData['file_name']);
                     $ressource->set_video($ressource->get_titre().$videoData['file_name']);
                     
-                    $ressource->save();
-                    redirect('moderation/modify_ressource/index/ressource_video','refresh');
+                    $success = $ressource->save();
+            
+                    //creation message
+                    $lastAction = 'modify_video';
+                    $message = $this->create_success_message($success, $lastAction, $ressource->get_titre());
+                    $this->load->view('data_center/success_form',array('success'=>$success, 'message'=> $message));
+                    $this->select_ressource('ressource_video', 'modify');
                 }
             }else{
                 //modifiying $ressource out of post data
                 $ressource =  $this->mod_vid_basic($ressource); //just basic posted data collecting
-                $ressource->save();
-                redirect('moderation/modify_ressource/index/ressource_video','refresh');
+                $success = $ressource->save();
+            
+                //creation message
+                $lastAction = 'modify_video';
+                $message = $this->create_success_message($success, $lastAction, $ressource->get_titre());
+                $this->load->view('data_center/success_form',array('success'=>$success, 'message'=> $message));
+                $this->select_ressource('ressource_video', 'modify');
             }
         }
     }
@@ -250,7 +275,7 @@ class Modify_ressource extends CI_Controller{
         $ressource->set_date_precision($date_infos['date_precision']);
         $date_infos = conc_date($this->input->post('jourProd'),$this->input->post('moisProd'),$this->input->post('anneeProd'));
         $ressource->set_date_production($date_infos['date']);
-        if ($this->input->post('validation')==TRUE){ //beware, in database, booleans are t (for TRUE) and f (FALSE)
+        if ($this->input->post('validate')==TRUE){ //beware, in database, booleans are t (for TRUE) and f (FALSE)
             $ressource->set_validation('t');
         }else{
             $ressource->set_validation('f');
@@ -263,8 +288,14 @@ class Modify_ressource extends CI_Controller{
             $ressource_id = $this->input->post('ressource_id');
             $typeRessourceClass= ucfirst($typeRessource);
             $ressource = new $typeRessourceClass($ressource_id);
-            $ressource->validate();
-            redirect('moderation/modify_ressource/index/'.$typeRessource,'refresh');
+            
+            $success = $ressource->validate();
+            
+            //creation message
+            $lastAction = 'validate-'.$typeRessource;
+            $message = $this->create_success_message($success, $lastAction, $ressource->get_titre());
+            $this->load->view('data_center/success_form',array('success'=>$success, 'message'=> $message));
+            $this->select_ressource($typeRessource, 'modify');
         }else{
             redirect('accueil/accueil/','refresh');
         }
@@ -275,8 +306,14 @@ class Modify_ressource extends CI_Controller{
             $ressource_id = $this->input->post('ressource_id');
             $typeRessourceModel= ucfirst($typeRessource).'_model';
             $ressourceManager = new $typeRessourceModel();
-            $ressourceManager->delete($ressource_id);
-            redirect('moderation/modify_ressource/index/'.$typeRessource,'refresh');
+            
+            $success = $ressourceManager->delete($ressource_id);
+            
+             //creation message
+            $lastAction = 'delete-'.$typeRessource;
+            $message = $this->create_success_message($success, $lastAction, $this->input->post('titre'));
+            $this->load->view('data_center/success_form',array('success'=>$success, 'message'=> $message));
+            $this->select_ressource($typeRessource, 'modify');
         }else{
             redirect('accueil/accueil/','refresh');
         }
@@ -345,10 +382,15 @@ class Modify_ressource extends CI_Controller{
                 }else{
                     $page = 0;
                 }
-                $ressourceManager->add_documentation($objet_id,$ressource_id,$page);
+                $success = $ressourceManager->add_documentation($objet_id,$ressource_id,$page);
             }else{
-                $ressourceManager->add_documentation($objet_id,$ressource_id);
+                $success = $ressourceManager->add_documentation($objet_id,$ressource_id);
             }
+            
+            //creation message
+            $lastAction = 'addDoc-'.$typeRessource;
+            $message = $this->create_success_message($success, $lastAction, $this->input->post('ressource_titre'), $this->input->post('nom_objet'));
+            $this->load->view('data_center/success_form',array('success'=>$success, 'message'=> $message));
             $this->select_ressource($typeRessource, 'documentation');
         }else{
             redirect('accueil/accueil/','refresh');
@@ -382,7 +424,13 @@ class Modify_ressource extends CI_Controller{
             
             $typeRessourceModel= ucfirst($typeRessource).'_model';//adding list of documentation as arg for webpage
             $ressourceManager = new $typeRessourceModel();
-            $ressourceManager->delete_documentation($documentation_id);
+            
+            $success = $ressourceManager->delete_documentation($documentation_id);
+            
+            //creation message
+            $lastAction = 'removeDoc-'.$typeRessource;
+            $message = $this->create_success_message($success, $lastAction, $this->input->post('ressource_titre'), $this->input->post('nom_objet'));
+            $this->load->view('data_center/success_form',array('success'=>$success, 'message'=> $message));
             
             $this->delete_doc($typeRessource);
         }else{
@@ -426,6 +474,67 @@ class Modify_ressource extends CI_Controller{
             return TRUE;
         }
     }
+    
+    public function create_success_message($success, $lastAction, $firstEntity = null, $secondEntity = null ){
+         if($lastAction == 'modify_texte'){
+             if($success){
+                 $message = 'La modification de la ressource textuelle <b>'.$firstEntity.'</b> s\'est déroulée avec succès';
+             }else {
+                 $message = 'Erreur : la modification de la ressource textuelle <b>'.$firstEntity.'</b> a échoué ';
+             }
+         } elseif($lastAction == 'modify_image'){
+             if($success){
+                 $message = 'La modification de la ressource graphique <b>'.$firstEntity.'</b> s\'est déroulée avec succès';
+             }else {
+                 $message = 'Erreur : la modification de la ressource graphique <b>'.$firstEntity.'</b> a échoué ';
+             }
+         } elseif($lastAction == 'modify_video'){
+             if($success){
+                 $message = 'La modification de la ressource video <b>'.$firstEntity.'</b> s\'est déroulée avec succès';
+             }else {
+                 $message = 'Erreur : la modification de la ressource video <b>'.$firstEntity.'</b> a échoué ';
+             }
+         } elseif(preg_match("#^validate#", $lastAction)){
+             $types = explode('_', $lastAction);
+             if($types['1']=='texte'){$types['1']='textuelle';}
+             if($success){
+                 $message = 'La ressource '.$types['1'].' <b>'.$firstEntity.'</b> a bien été validé';
+             }else {
+                 $message = 'Erreur : la ressource '.$types['1'].' <b>'.$firstEntity.'</b> n\'a pas été validé ';
+             }
+         } elseif(preg_match("#^delete#", $lastAction)){
+             $types = explode('_', $lastAction);
+             if($types['1']=='texte'){$types['1']='textuelle';}
+             if($success){
+                 $message = 'La ressource '.$types['1'].' <b>'.$firstEntity.'</b> a bien été supprimé';
+             }else {
+                 $message = 'Erreur : la ressource '.$types['1'].' <b>'.$firstEntity.'</b> n\'a pas été supprimé ';
+             }
+         } elseif(preg_match("#^addDoc#", $lastAction)){
+             $types = explode('_', $lastAction);
+             if($types['1']=='texte'){$types['1']='textuelle';}
+             if($success){
+                 $message = 'La documentation '.$types['1'].' entre <b>'.
+                            $firstEntity.'</b> et <b>'.$secondEntity.'</b> a bien été créé';
+             }else {
+                 $message = 'Erreur : la documentation '.$types['1'].' entre <b>'.
+                            $firstEntity.'</b> et <b>'.$secondEntity.'</b> n\'a pas été créé ';
+             }
+         } elseif(preg_match("#^removeDoc#", $lastAction)){
+             $types = explode('_', $lastAction);
+             if($types['1']=='texte'){$types['1']='textuelle';}
+             if($success){
+                 $message = 'La documentation '.$types['1'].' entre <b>'.
+                            $firstEntity.'</b> et <b>'.$secondEntity.'</b> a bien été supprimé';
+             }else {
+                 $message = 'Erreur : la documentation '.$types['1'].' entre <b>'.
+                            $firstEntity.'</b> et <b>'.$secondEntity.'</b> n\'a pas été supprimé ';
+             }
+         }
+         
+         return $message;
+     }
+    
 }
 
 /* End of file modify_ressource.php */

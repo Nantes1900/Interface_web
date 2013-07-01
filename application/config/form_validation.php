@@ -50,7 +50,7 @@ $config = array(
                     array(
                         'field'=>'nom_objet',
                         'label'=>'Nom_objet',
-                        'rules'=>'trim|required|min_length[5]|max_length[20]|xss_clean|callback_check_nom'
+                        'rules'=>'trim|required|min_length[5]|max_length[55]|xss_clean|callback_check_nom'
                     ),
                     array(
                         'field'=>'resume',
@@ -133,7 +133,7 @@ $config = array(
                     array(
                         'field'=>'page',
                         'label'=>'page',
-                        'rules'=>'trim|required|max_length[5]|is_natural|xss_clean'
+                        'rules'=>'trim|max_length[5]|is_natural|xss_clean'
                     ),
                     array(
                         'field'=>'jour',
@@ -230,7 +230,7 @@ $config = array(
                     array(
                         'field'=>'page',
                         'label'=>'page',
-                        'rules'=>'trim|required|max_length[5]|is_natural|xss_clean'
+                        'rules'=>'trim|max_length[5]|is_natural|xss_clean'
                     ),
                     array(
                         'field'=>'jour',
