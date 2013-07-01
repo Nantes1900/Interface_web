@@ -193,7 +193,7 @@ class Objet_model extends CI_Model
             }
             $this->db->where('objet_id',$objet->get_objet_id());
             
-            $this->db->update('objet');
+            return $this->db->update('objet');
         }
         
         //return a list of associative arrays linked by the relation table to the $objet_id argument
@@ -259,7 +259,7 @@ class Objet_model extends CI_Model
     //beware, it will delete all depending infos (some relation of relation table for example)
     public function delete($objet_id){
         $this->db->where('objet_id',$objet_id);
-        $this->db->delete('objet'); 
+         return $this->db->delete('objet'); 
     }
     
     //add a geometry in temp_geom table out of an array of info

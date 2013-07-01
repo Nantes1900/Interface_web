@@ -8,10 +8,14 @@
 
 class Modify_objet extends CI_Controller{
     
-    public function index($goal){
+    public function index($goal, $success = null, $lastAction = null){
         if($this->session->userdata('username')){
             if ( $this->session->userdata('user_level') >= 5 ){
                 if($this->input->post('objet_id')==null){
+                    if(isset($success) && isset($lastAction)){
+                        $message = $this->create_success_message($success, $lastAction);
+                        $this->load->view('data_center/success_form',array('success'=>$success, 'message'=> $message));
+                    }
                     $this->select_objet($goal);
                 }else{
                     $this->modify($this->input->post('objet_id'));
@@ -88,8 +92,9 @@ class Modify_objet extends CI_Controller{
             }else{
                 $objet->set_validation('f');
             }
-            $objet->save();
-            redirect('moderation/modify_objet/index/modify','refresh');
+            $success = $objet->save();
+            $lastAction = 'modify';
+            redirect('moderation/modify_objet/index/modify/'.$success.'/'.$lastAction,'refresh');
         }
     }
     
@@ -97,8 +102,9 @@ class Modify_objet extends CI_Controller{
         if ( $this->session->userdata('user_level') >= 5 ){
             $objet_id = $this->input->post('objet_id');
             $objet = new Objet($objet_id);
-            $objet->validate();
-            redirect('moderation/modify_objet/index/modify','refresh');
+            $success = $objet->validate();
+            $lastAction = 'validate';
+            redirect('moderation/modify_objet/index/modify/'.$success.'/'.$lastAction,'refresh');
         }else{
             redirect('accueil/accueil/','refresh');
         }
@@ -107,8 +113,9 @@ class Modify_objet extends CI_Controller{
     public function delete_objet(){
         if ( $this->session->userdata('user_level') >= 5 ){
             $objet_id = $this->input->post('objet_id');
-            $this->objet_model->delete($objet_id);
-            redirect('moderation/modify_objet/index/modify','refresh');
+            $success = $this->objet_model->delete($objet_id);
+            $lastAction = 'deletion';
+            redirect('moderation/modify_objet/index/modify/'.$success.'/'.$lastAction,'refresh');
         }else{
             redirect('accueil/accueil/','refresh');
         }
@@ -155,7 +162,17 @@ class Modify_objet extends CI_Controller{
                                 
                 $relationdata['parent'] = $this->input->post('parent')? 'true':'false';
                              
-                $this->relation_model->ajout_relation($relationdata);
+                $success = $this->relation_model->ajout_relation($relationdata);
+                
+                $objet1 = new Objet($objet1_id);
+                $objet2 = new Objet($objet2_id);
+                if($success){
+                    $message = 'La relation entre '.$objet1->get_nom_objet().' et '.$objet2->get_nom_objet().' a été ajoutée avec succès';                    
+                } else {
+                    $message = 'Erreur : la relation entre '.$objet1->get_nom_objet().' et '.$objet2->get_nom_objet().' n\'a pas pu être ajouté'; 
+                }
+                
+                $this->load->view('data_center/success_form',array('success'=>$success, 'message'=> $message));
                 $this->select_objet('add_relation', $objet1_id);
             }
         }else{
@@ -163,6 +180,7 @@ class Modify_objet extends CI_Controller{
         }
     }
     
+    //render the list of objet linked to one objet so that one can delete these relation
     public function delete_relation($objet_id=null){
         if ( $this->session->userdata('user_level') >= 5 ){
             if($objet_id==null){
@@ -183,13 +201,47 @@ class Modify_objet extends CI_Controller{
             $objet_id = $this->input->post('objet_id');
             $relation_id = $this->input->post('relation_id');
             $this->load->model('relation_model');
-            $this->relation_model->delete_relation($relation_id);
+            
+            $success = $this->relation_model->delete_relation($relation_id);
+            $message = $this->create_success_message($success, 'relationDeletion');
+            $this->load->view('data_center/success_form',array('success'=>$success, 'message'=> $message));
+            
             $this->delete_relation($objet_id);
         }else{
             redirect('accueil/accueil/','refresh');
         }
      }
     
+     public function create_success_message($success, $lastAction){
+         if($lastAction == 'modify'){
+             if($success){
+                 $message = 'La modification de l\'objet s\'est déroulée avec succès';
+             }else {
+                 $message = 'Erreur : la modification de l\'objet a échoué ';
+             }
+         } elseif ($lastAction == 'validate'){
+             if($success){
+                 $message = 'La validation de l\'objet s\'est déroulée avec succès';
+             }else {
+                 $message = 'Erreur : la validation de l\'objet a échoué ';
+             }
+         } elseif ($lastAction == 'deletion'){
+             if($success){
+                 $message = 'La suppression de l\'objet s\'est déroulée avec succès';
+             }else {
+                 $message = 'Erreur : la suppression de l\'objet a échoué ';
+             }
+         }elseif ($lastAction == 'relationDeletion'){
+             if($success){
+                 $message = 'La suppression de la relation s\'est déroulée avec succès';
+             }else {
+                 $message = 'Erreur : la suppression de la relation a échoué ';
+             }
+         }
+         return $message;
+     }
+     
+     
     public function check_nom($name){
         $objet = $this->objet_model->get_objet('nom_objet', $name);
         $objet_id = $this->input->post('objet_id');

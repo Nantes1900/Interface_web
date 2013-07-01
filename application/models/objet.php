@@ -65,13 +65,15 @@ class Objet{
             }else{
                 $this->_date_maj='{'.$this->get_last_modified().'}';
             }
-            $objetManager->update_objet($this);
+            return $objetManager->update_objet($this);
+        } else {
+            return FALSE;
         }
     }
     
     public function validate(){
         $this->set_validation('t');
-        $this->save();
+        return $this->save();
     }
     
     //getters and setters

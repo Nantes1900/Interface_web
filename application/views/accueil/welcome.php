@@ -14,12 +14,6 @@
                 <?php echo anchor('moderation/moderation_center', 'Modération de données');?>
             </li>
         <?php } ?>
-            <?php if($this->session->userdata('user_level') == 9) { ?>
-                <li>
-                    <?php echo img(array('src'=>'assets/utils/edit-group.png','width'=>'4%')); ?>
-                    <?php echo anchor('admin_panel/admin_panel', 'Centre d\'administration');?>
-                </li>
-        <?php } ?>
         <li>
             <?php echo img(array('src'=>'assets/utils/zoom-2.png','width'=>'4%')); ?>
             <?php echo anchor('view_data/select_data', 'Visualisation de données'); ?>
@@ -28,6 +22,12 @@
             <?php echo img(array('src'=>'assets/utils/edit-user.png','width'=>'4%')); ?>
             <?php echo anchor('profile_panel/profile_panel', 'Consulter profil personnel'); ?>
         </li>
+        <?php if($this->session->userdata('user_level') == 9) { ?>
+                <li>
+                    <?php echo img(array('src'=>'assets/utils/edit-group.png','width'=>'4%')); ?>
+                    <?php echo anchor('admin_panel/admin_panel', 'Centre d\'administration');?>
+                </li>
+        <?php } ?>
         <li>
             <?php echo img(array('src'=>'assets/utils/contact.png','width'=>'4%')); ?>
             <?php echo anchor('profile_panel/contact_panel', 'Liste des autres membres'); ?>

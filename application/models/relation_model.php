@@ -148,7 +148,8 @@ class Relation_model extends CI_Model
         
         public function delete_relation($relation_id){
             $this->db->where('relation_id',$relation_id);
-            $this->db->delete('relation'); 
+            
+            return $this->db->delete('relation'); 
         }
         
 }
