@@ -33,7 +33,7 @@
 */
 
 $route['default_controller'] = "accueil/accueil";
-
+$route['404_override'] = 'my404'; //Here my404 is my controller class name.
 # for CI 1.7.2 compatibility, scaffolding is deprecated
 $route['scaffolding_trigger'] = sha1(time());
 
