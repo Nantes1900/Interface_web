@@ -279,6 +279,9 @@ class Objet_model extends CI_Model
         if(isset($geomData['datation_indication_debut'])){
             $sql .= ", datation_indication_debut";
         }
+        if(isset($geomData['datation_indication_fin'])){
+            $sql .= ", datation_indication_fin";
+        }
         if(isset($geomData['mots_cles'])){
             $sql .= ", mots_cles";
         }
@@ -295,6 +298,9 @@ class Objet_model extends CI_Model
         }
         if(isset($geomData['datation_indication_debut'])){
             $sql .= ", ".$this->db->escape($geomData['datation_indication_debut']);
+        }
+        if(isset($geomData['datation_indication_fin'])){
+            $sql .= ", ".$this->db->escape($geomData['datation_indication_fin']);
         }
         if(isset($geomData['mots_cles'])){
             $sql .= ", ".$this->db->escape($geomData['mots_cles']);

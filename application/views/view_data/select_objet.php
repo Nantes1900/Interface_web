@@ -9,7 +9,11 @@
         <?php if($goal=='add_doc'){ echo ' à relier à la ressource '.$ressource->get_titre(); } ?>
     </h2>
 <!--    sorting form-->
-    <?php echo form_open('view_data/select_data/index/objet/'.$goal) ?>
+    <?php if($goal!='addgeo'){
+                echo form_open('view_data/select_data/index/objet/'.$goal);
+          }else{
+                echo form_open('data_center/ajout_objet/select_objet_geo/add_geo/'.$latitude.'/'.$longitude);
+          }   ?>
         <label for="orderBy">Trier par:</label>
         <select name="orderBy" id="orderBy">
             <option value="nom_objet">Nom de l'objet</option>
@@ -59,6 +63,8 @@
                 <?php }elseif($goal=='add_doc'){ ?>
                             <th>Validation</th>
                             <th>Lier cet objet à <?php echo $ressource->get_titre();?></th>
+                <?php }elseif($goal=='add_geo'){ ?>
+                            <th>Localiser l'objet</th>
                 <?php } ?>
                 
             </tr>
@@ -94,6 +100,13 @@
                                                                                         echo $ressource->$getMethod(); 
                                                                                       } ?>" />
                                 <input type="submit" value="Relier" />
+                            </form>
+                        </td>
+                   <?php }  elseif ($goal=='add_geo') { ?>
+                        <td>
+                            <?php echo form_open('data_center/ajout_objet/geometry_form/'.$latitude.'/'.$longitude); ?>
+                                 <input type="hidden" name="objet_id" value="<?php echo $objet->get_objet_id(); ?>" />
+                                 <input type="submit" value="Localiser à l'endroit sélectionné" />
                             </form>
                         </td>
                    <?php } ?>
