@@ -26,6 +26,8 @@
                         <?php echo form_open('moderation/modify_objet/delete_relation_form'); ?>
                             <input type="hidden" name="objet_id" value="<?php echo $objet->get_objet_id(); ?>" />
                             <input type="hidden" name="relation_id" value="<?php echo $objetArray['relation_id']; ?>" />
+                            <input type="hidden" name="nom_objet_source" value="<?php echo $objet->get_nom_objet(); ?>" />
+                            <input type="hidden" name="nom_objet_target" value="<?php echo $objetArray['nom_objet']; ?>" />
                             <input type="submit" value="Supprimer la relation" />
                         </form>
                     </td>

@@ -58,8 +58,6 @@ div.leftSidebar li{
     background-color:#B98585;
     border: 1px #9e5555 solid;
     border-radius: 2px;
-    cursor:hand; 
-    cursor:pointer;
 }
 div.leftSidebar li:hover{
     background-color:#C69D9D;
@@ -90,8 +88,6 @@ div.menu li{
     background-color:#B98585;
     border: 1px #9e5555 solid;
     border-radius: 2px;
-    cursor:hand; 
-    cursor:pointer;
 }
 div.menu li ul{width: 100%;}
 div.menu li:hover{

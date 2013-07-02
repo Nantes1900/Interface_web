@@ -173,17 +173,11 @@ class Modify_objet extends CI_Controller{
                 $relationdata['parent'] = $this->input->post('parent')? 'true':'false';
                              
                 $success = $this->relation_model->ajout_relation($relationdata);
-                
+                $lastAction = 'addRelation';
                 //creation of the success message
                 $objet1 = new Objet($objet1_id);
                 $objet2 = new Objet($objet2_id);
-                if($success){
-                    $message = 'La relation entre <b>'.$objet1->get_nom_objet().
-                            '</b> et <b>'.$objet2->get_nom_objet().'</b> a été ajoutée avec succès';                    
-                } else {
-                    $message = 'Erreur : la relation entre <b>'.$objet1->get_nom_objet().
-                            '</b> et <b>'.$objet2->get_nom_objet().'</b> n\'a pas pu être ajouté'; 
-                }
+                $message = $this->create_success_message($success, $lastAction, $objet1->get_nom_objet(), $objet2->get_nom_objet());
                 
                 $this->load->view('data_center/success_form',array('success'=>$success, 'message'=> $message));
                 $this->select_objet('add_relation', $objet1_id);
@@ -216,7 +210,8 @@ class Modify_objet extends CI_Controller{
             $this->load->model('relation_model');
             
             $success = $this->relation_model->delete_relation($relation_id);
-            $message = $this->create_success_message($success, 'relationDeletion');
+            $message = $this->create_success_message($success, 'relationDeletion', 
+                        $this->input->post('nom_objet_source'), $this->input->post('nom_objet_target'));
             $this->load->view('data_center/success_form',array('success'=>$success, 'message'=> $message));
             
             $this->delete_relation($objet_id);
@@ -244,11 +239,21 @@ class Modify_objet extends CI_Controller{
              }else {
                  $message = 'Erreur : la suppression de l\'objet <b>'.$firstEntity.'</b> a échoué ';
              }
+         }elseif($lastAction == 'addRelation'){
+             if($success){
+                    $message = 'La relation entre <b>'.$firstEntity.
+                            '</b> et <b>'.$secondEntity.'</b> a été ajoutée avec succès';                    
+             } else {
+                    $message = 'Erreur : la relation entre <b>'.$firstEntity.
+                            '</b> et <b>'.$secondEntity.'</b> n\'a pas pu être ajouté'; 
+             }
          }elseif ($lastAction == 'relationDeletion'){
              if($success){
-                 $message = 'La suppression de la relation s\'est déroulée avec succès';
+                 $message = 'La suppression de la relation entre <b>'.$firstEntity.
+                            '</b> et <b>'.$secondEntity.'</b> s\'est déroulée avec succès';
              }else {
-                 $message = 'Erreur : la suppression de la relation a échoué ';
+                 $message = 'Erreur : la suppression de la relation entre <b>'.$firstEntity.
+                            '</b> et <b>'.$secondEntity.'</b> a échoué ';
              }
          }
          return $message;
