@@ -73,11 +73,18 @@ class Ajout_documentation extends CI_Controller{
                     $success = TRUE;
                 }
             }
-            
+            $type = explode('_', $typeRessource);
+            if($typeRessource=='ressource_texte'){$type['1']='textuelle';}
             if($success){
-                $data = array('success'=>TRUE , 'message'=>'Le lien de documentation a été ajouté avec succès');
+                $message = 'Le lien de documentation '.$type['1'].' entre <b>'.
+                            $this->input->post('nom_objet').'</b> et <b>'.
+                            $this->input->post('titre_ressource').'</b> a été ajouté avec succès';
+                $data = array('success'=>TRUE , 'message'=>$message);
             } else {
-                $data = array('success'=>FALSE , 'message'=>'Erreur : Le lien de documentation n\'a pas pu être ajouté');
+                $message = 'Erreur : Le lien de documentation '.$type['1'].' entre <b>'.
+                            $this->input->post('nom_objet').'</b> et <b>'.
+                            $this->input->post('titre_ressource').'</b> n\'a pas pu être ajouté';
+                $data = array('success'=>FALSE , 'message'=>$message);
             }
             $this->load->view('data_center/success_form', $data);
             $this->index();

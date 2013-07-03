@@ -99,6 +99,8 @@
                                                                                         $getMethod='get_'.$typeRessource.'_id';
                                                                                         echo $ressource->$getMethod(); 
                                                                                       } ?>" />
+                                <input type="hidden" name="nom_objet" value="<?php echo $objet->get_nom_objet(); ?>" />
+                                <input type="hidden" name="titre_ressource" value="<?php echo $ressource->get_titre(); ?>" />
                                 <input type="submit" value="Relier" />
                             </form>
                         </td>

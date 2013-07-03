@@ -37,6 +37,6 @@ map.on('dblclick', function(e){
                 ' debug : lat '+latitude+', long :'+longitude+'<br>'+
                 '<a href="'+base_url+'data_center/ajout_objet/select_objet_geo/add_geo/'+latitude+'/'+longitude+
                 '"> Cliquez ici pour lier un objet existant à cet emplacement </a> <br>'+
-                '<a href="'+base_url+'data_center/ajout_objet/formulaire_geo/'+latitude+'/'+longitude+
+                '<a href="'+base_url+'data_center/ajout_objet/formulaire_objet_geo/'+latitude+'/'+longitude+
                 '"> Cliquez ici pour créer un nouvel objet à cet emplacement </a>'   ).openPopup();
 });

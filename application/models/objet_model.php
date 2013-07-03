@@ -30,6 +30,10 @@ class Objet_model extends CI_Model
             return $this->db->insert('objet'); //Exécution
         }
 
+        public function last_insert_id(){
+            return $this->db->insert_id();
+        }
+        
         public function get_objet_list($orderBy='objet_id', $orderDirection='asc',$speAttribute = null, $speAttributeValue = null, $valid = null)
         {
             $this->db->select('*');

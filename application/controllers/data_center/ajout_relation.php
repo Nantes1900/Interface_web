@@ -82,10 +82,16 @@ class Ajout_relation extends CI_Controller
                                 
                     $relationdata['parent'] = $this->input->post('parent')? 'true':'false';
                              
+                    $objet1 = new Objet($relationdata['objet_id_1']);
+                    $objet2 = new Objet($relationdata['objet_id_2']);
                     if($this->relation_model->ajout_relation($relationdata)){
-                        $data = array('success'=>TRUE , 'message' => 'L\'ajout de relation entre objets s\'est déroulé avec succès');
+                        $data = array('success'=>TRUE , 'message' => 'L\'ajout de relation entre les objets <b>'.
+                                $objet1->get_nom_objet().'</b> et <b>'.$objet2->get_nom_objet().
+                                '</b> s\'est déroulé avec succès');
                     }else{
-                        $data = array('success'=>FALSE , 'message' => 'Une erreur a eu lieu, les objets n\'ont pas été reliés');
+                        $data = array('success'=>FALSE , 'message' => 'Une erreur a eu lieu, les objets <b>'.
+                                $objet1->get_nom_objet().'</b> et <b>'.$objet2->get_nom_objet().
+                                '</b> n\'ont pas été reliés');
                     }
                     
                     $this->load->view('data_center/success_form', $data);

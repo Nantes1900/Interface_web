@@ -63,11 +63,11 @@ class Ajout_objet extends CI_Controller{
             $objetdata['username'] = $this->session->userdata('username');
                 
             if($this->objet_model->ajout_objet($objetdata)){
-                $data = array('success'=>TRUE , 'message' => 'L\'ajout de l\'objet '.
-                            $objetdata['nom_objet'].' s\'est déroulé avec succès');
+                $data = array('success'=>TRUE , 'message' => 'L\'ajout de l\'objet <b>'.
+                            $objetdata['nom_objet'].'</b> s\'est déroulé avec succès');
             } else {
-                $data = array('success'=>FALSE , 'message' => 'Une erreur a eu lieu, l\'objet '.
-                            $objetdata['nom_objet'].' n\'a pas été ajouté');
+                $data = array('success'=>FALSE , 'message' => 'Une erreur a eu lieu, l\'objet <b>'.
+                            $objetdata['nom_objet'].'</b> n\'a pas été ajouté');
             } 
             $this->load->view('data_center/success_form', $data);
         }
@@ -127,11 +127,11 @@ class Ajout_objet extends CI_Controller{
                 $geomdata['datation_indication_fin'] = $this->input->post('datation_indication_fin');
                 
                 if ($this->objet_model->ajout_geom($geomdata)){
-                    $data = array('success'=>TRUE , 'message' => 'L\'objet '.
-                            $objet->get_nom_objet().' a été localisé avec succès');
+                    $data = array('success'=>TRUE , 'message' => 'L\'objet <b>'.
+                            $objet->get_nom_objet().'</b> a été localisé avec succès');
                 } else {
-                    $data = array('success'=>FALSE , 'message' => 'Une erreur a eu lieu, l\'objet '.
-                            $objet->get_nom_objet().' n\'a pas été localisé');
+                    $data = array('success'=>FALSE , 'message' => 'Une erreur a eu lieu, l\'objet <b>'.
+                            $objet->get_nom_objet().'</b> n\'a pas été localisé');
                 } 
                 $this->load->view('data_center/success_form', $data);
             }
@@ -140,6 +140,57 @@ class Ajout_objet extends CI_Controller{
         }
     }
         
+   public function formulaire_objet_geo($latitude, $longitude){
+        if ( $this->session->userdata('user_level') >= 4 ){
+            if ($this->form_validation->run('ajout_objet_geom') == FALSE) {
+                $this->load->view('data_center/ajout_objet_geom', array('latitude'=>$latitude, 'longitude'=>$longitude));
+                $this->load->view('footer');
+            } else {
+                //getting objet infos
+                $objetdata = array();
+                $objetdata['nom_objet'] = $this->input->post('nom_objet');
+                $objetdata['resume'] = $this->input->post('resume');
+                $objetdata['historique'] = $this->input->post('historique');
+                $objetdata['description'] = $this->input->post('description');
+                $objetdata['adresse_postale'] = $this->input->post('adresse_postale');
+                $objetdata['mots_cles'] = $this->input->post('mots_cles');
+                $objetdata['username'] = $this->session->userdata('username');
+                
+                //inserting the objet and continuing on geometrical data
+                if($this->objet_model->ajout_objet($objetdata)){
+                    //getting geometrical data
+                    $geomdata = array();
+                    $geomdata['objet_id'] = $this->objet_model->last_insert_id();
+                    $geomdata['username'] = $this->session->userdata('username');
+                    $geomdata['the_geom'] = 'ST_SetSRID(ST_MakePoint('.$longitude.', '.$latitude.'), 4326)';
+                    $geomdata['mots_cles'] = $this->input->post('mots_cles');
+                    $dates_infos = conc_2_date($this->input->post('jour_debut'),$this->input->post('mois_debut'),$this->input->post('annee_debut'),$this->input->post('jour_fin'),$this->input->post('mois_fin'),$this->input->post('annee_fin'));
+                                
+                    $geomdata['date_debut_geom'] = $dates_infos['date_debut'];
+                    $geomdata['date_fin_geom'] = $dates_infos['date_fin'];
+                    $geomdata['date_precision'] = $dates_infos['date_precision'];
+                    $geomdata['datation_indication_debut'] = $this->input->post('datation_indication_debut');
+                    $geomdata['datation_indication_fin'] = $this->input->post('datation_indication_fin');
+                    
+                    
+                    if ($this->objet_model->ajout_geom($geomdata)){
+                        $data = array('success'=>TRUE , 'message' => 'L\'objet <b>'.
+                                $objetdata['nom_objet'].'</b> a été créé et localisé avec succès');
+                    } else {
+                        $data = array('success'=>FALSE , 'message' => 'Une erreur a eu lieu, l\'objet <b>'.
+                                $objetdata['nom_objet'].'</b> a été créé mais pas localisé');
+                    } 
+                } else {
+                    $data = array('success'=>FALSE , 'message' => 'Une erreur a eu lieu, l\'objet <b>'.
+                            $objetdata['nom_objet'].'</b> n\'a pas été ajouté');
+                }
+                $this->load->view('data_center/success_form', $data);
+            }
+        }else{
+            redirect('accueil/accueil/','refresh');
+        }
+   } 
+    
     public function check_nom($name){
         $objet = $this->objet_model->get_objet('nom_objet', $name);
         if ($objet!=null){
