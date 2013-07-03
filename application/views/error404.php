@@ -27,7 +27,7 @@
             var elapsedTime = 0;  
             // Dimensions de la fenêtre
             var largeur = ($(window).width()) - 349;
-            var hauteur = ($(window).height());
+            var hauteur = ($(window).height()) - 250;
             
             $("#lolcat").mousemove(function annoyingMove() {
                 var x = Math.floor(Math.random()*largeur);
@@ -35,7 +35,7 @@
                 $('#lolcat').animate({
                     left : x,
                     top : y
-                }, 100);
+                }, 150);
             });
             
             $("#lolcat").click(function(){

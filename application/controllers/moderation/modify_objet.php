@@ -220,6 +220,18 @@ class Modify_objet extends CI_Controller{
         }
      }
     
+     public function delete_geom($geom_id, $objet_id){
+         if ( $this->session->userdata('user_level') >= 5 ){
+            $objet = new Objet($objet_id);
+            
+            $success = $this->objet_model->delete_geometry($geom_id);
+            $message = $this->create_success_message($success, 'geomDeletion', $objet->get_nom_objet());
+            $this->load->view('data_center/success_form',array('success'=>$success, 'message'=> $message));
+        }else{
+            redirect('accueil/accueil/','refresh');
+        }
+     }
+     
      public function create_success_message($success, $lastAction, $firstEntity = null, $secondEntity = null ){
          if($lastAction == 'modify'){
              if($success){
@@ -254,6 +266,15 @@ class Modify_objet extends CI_Controller{
              }else {
                  $message = 'Erreur : la suppression de la relation entre <b>'.$firstEntity.
                             '</b> et <b>'.$secondEntity.'</b> a échoué ';
+             }
+         }elseif ($lastAction == 'geomDeletion'){
+             if($success){
+                 $message = 'La suppression du marqueur géographique de <b>'.$firstEntity.
+                            '</b> s\'est déroulée avec succès. <br>'.
+                            'Attention : l\'objet existe encore, seules se coordonnées ont été supprimées';
+             }else {
+                 $message = 'Erreur : la suppression du marqueur géographique de <b>'.$firstEntity.
+                            '</b> a échoué, l\'objet reste présent sur la carte ';
              }
          }
          return $message;

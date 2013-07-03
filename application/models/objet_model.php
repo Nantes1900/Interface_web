@@ -56,7 +56,7 @@ class Objet_model extends CI_Model
         }
         
         public function get_objet_geo_list(){
-            $sql = 'SELECT objet.objet_id, nom_objet, resume, ST_X(temp_geom.the_geom) AS longitude, ST_Y(temp_geom.the_geom) AS latitude '. 
+            $sql = 'SELECT objet.objet_id, nom_objet, resume, ST_X(temp_geom.the_geom) AS longitude, ST_Y(temp_geom.the_geom) AS latitude, geom_id '. 
                     'FROM objet JOIN temp_geom ON objet.objet_id = temp_geom.objet_id '.
                     'WHERE objet.validation = TRUE ';
             $query = $this->db->query($sql);
@@ -313,6 +313,10 @@ class Objet_model extends CI_Model
         return $this->db->query($sql);
     }
         
+    public function delete_geometry($geom_id){
+        $this->db->where('geom_id',$geom_id);
+         return $this->db->delete('temp_geom'); 
+    }
 }
 
 /* End of file objet_model.php */
