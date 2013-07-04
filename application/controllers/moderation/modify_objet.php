@@ -223,8 +223,11 @@ class Modify_objet extends CI_Controller{
      public function delete_geom($geom_id, $objet_id){
          if ( $this->session->userdata('user_level') >= 5 ){
             $objet = new Objet($objet_id);
-            
-            $success = $this->objet_model->delete_geometry($geom_id);
+            if ($objet->get_nom_objet()!=null){
+                $success = $this->objet_model->delete_geometry($geom_id);
+            }else{
+                $success = FALSE;
+            }
             $message = $this->create_success_message($success, 'geomDeletion', $objet->get_nom_objet());
             $this->load->view('data_center/success_form',array('success'=>$success, 'message'=> $message));
         }else{
@@ -273,8 +276,12 @@ class Modify_objet extends CI_Controller{
                             '</b> s\'est déroulée avec succès. <br>'.
                             'Attention : l\'objet existe encore, seules se coordonnées ont été supprimées';
              }else {
-                 $message = 'Erreur : la suppression du marqueur géographique de <b>'.$firstEntity.
-                            '</b> a échoué, l\'objet reste présent sur la carte ';
+                 if($firstEntity != null){
+                    $message = 'Erreur : la suppression du marqueur géographique de <b>'.$firstEntity.
+                               '</b> a échoué, l\'objet reste présent sur la carte ';
+                 } else {
+                     $message = 'Erreur : l\'objet n\'existait pas, il n\'a pas pu être effacé de la carte';
+                 }
              }
          }
          return $message;

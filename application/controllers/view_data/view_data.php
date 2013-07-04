@@ -46,42 +46,61 @@ class View_data extends CI_Controller {
     }   
     
     public function view_objet($objet_id){
-        $objet = new Objet($objet_id);
-        
-        $linkedObjetArray = $this->objet_model->get_linked_objet($objet_id);
-        $linkedRessTxtArray = $this->objet_model->get_linked_ressource($objet_id, 'textuelle');
-        $linkedRessGraphArray = $this->objet_model->get_linked_ressource($objet_id, 'graphique');
-        $linkedRessVidArray = $this->objet_model->get_linked_ressource($objet_id, 'video');
-        
-        $data = array ('objet'=>$objet);
-        $sidebarData = array ('linkedObjetArray'=>$linkedObjetArray, 'linkedRessTxtArray'=>$linkedRessTxtArray,
-                                'linkedRessGraphArray'=>$linkedRessGraphArray, 'linkedRessVidArray'=>$linkedRessVidArray);
-        
-        
-        $this->load->view('view_data/linked_sidebar', $sidebarData);
-        $this->load->view('view_data/view_objet', $data);
-        
-        $this->load->view('footer');
+        if($this->session->userdata('username')){
+            $objet = new Objet($objet_id);
+
+            if($objet->get_nom_objet() != null){
+                $linkedObjetArray = $this->objet_model->get_linked_objet($objet_id);
+                $linkedRessTxtArray = $this->objet_model->get_linked_ressource($objet_id, 'textuelle');
+                $linkedRessGraphArray = $this->objet_model->get_linked_ressource($objet_id, 'graphique');
+                $linkedRessVidArray = $this->objet_model->get_linked_ressource($objet_id, 'video');
+
+                $data = array ('objet'=>$objet);
+                $sidebarData = array ('linkedObjetArray'=>$linkedObjetArray, 'linkedRessTxtArray'=>$linkedRessTxtArray,
+                                        'linkedRessGraphArray'=>$linkedRessGraphArray, 'linkedRessVidArray'=>$linkedRessVidArray);
+
+
+                $this->load->view('view_data/linked_sidebar', $sidebarData);
+                $this->load->view('view_data/view_objet', $data);
+            } else {
+                $message = 'Erreur : l\'objet selectionné semble inexistant';
+                $this->load->view('data_center/success_form',array('success'=>FALSE, 'message'=> $message));
+            }
+            $this->load->view('footer');
+        } else {
+            $this->load->view('accueil/login/formulaire_login',array('titre'=>'Vous n\'êtes pas connecté. Veuillez vous connecter :'));
+        }
     }
     
     public function view_ressource ($ressource_id, $typeRessource){
-        //getting the kind of ressource
-        $typeRessource = ucfirst($typeRessource);
-        $managerName = $typeRessource.'_model';
-        
-        if (class_exists($typeRessource) && class_exists($managerName)){
-            $ressource = new $typeRessource($ressource_id);
-            $ressourceManager = new $managerName();
-           
-            $linkedObjetArray = $ressourceManager->get_linked_objet($ressource_id);
-            
-            $data = array ('ressource'=>$ressource, 'typeRessource'=>strtolower($typeRessource));
-            $sidebarData = array ('linkedObjetArray'=>$linkedObjetArray);
-           
-            $this->load->view('view_data/linked_sidebar_ress', $sidebarData);
-            $this->load->view('view_data/view_ressource', $data);
-      
-            $this->load->view('footer');
+        if($this->session->userdata('username')){
+            //getting the kind of ressource
+            $typeRessource = ucfirst($typeRessource);
+            $managerName = $typeRessource.'_model';
+
+            if (class_exists($typeRessource) && class_exists($managerName)){
+                $ressource = new $typeRessource($ressource_id);
+                if($ressource->get_titre() != null){
+                    $ressourceManager = new $managerName();
+
+                    $linkedObjetArray = $ressourceManager->get_linked_objet($ressource_id);
+
+                    $data = array ('ressource'=>$ressource, 'typeRessource'=>strtolower($typeRessource));
+                    $sidebarData = array ('linkedObjetArray'=>$linkedObjetArray);
+
+                    $this->load->view('view_data/linked_sidebar_ress', $sidebarData);
+                    $this->load->view('view_data/view_ressource', $data);
+                } else {
+                    $message = 'Erreur : la ressource selectionnée semble inexistante';
+                    $this->load->view('data_center/success_form',array('success'=>FALSE, 'message'=> $message));
+                }
+                $this->load->view('footer');
+            } else {
+                $message = 'Erreur : la ressource selectionnée semble inexistante';
+                $this->load->view('data_center/success_form',array('success'=>FALSE, 'message'=> $message));
+            }
+        } else {
+            $this->load->view('accueil/login/formulaire_login',array('titre'=>'Vous n\'êtes pas connecté. Veuillez vous connecter :'));
         }
     }
     

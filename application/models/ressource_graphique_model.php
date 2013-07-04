@@ -160,7 +160,7 @@ class Ressource_graphique_model extends CI_Model
         foreach ($data as $ressourceCsv){
             $ressource = new Ressource_graphique($ressourceCsv);
             $ressource->set_username($this->session->userdata('username'));
-            if($ressource->get_date_debut_ressource()==null){ //we want to avoid database error if csv file with not date
+            if($ressource->get_date_debut_ressource()==null){ //we want to avoid database error if csv file with no date
                 $ressource->set_date_debut_ressource('01/01/1900');
             }
             if($ressource->get_date_prise_vue()==null){

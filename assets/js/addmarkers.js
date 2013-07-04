@@ -42,7 +42,6 @@ if($('p#chercheur').attr('id')=='chercheur'){
         var latitude = e.latlng.lat;
         var longitude = e.latlng.lng;
         newMarker = L.marker([latitude, longitude]).addTo(map).bindPopup('<b style="color : blue"> Nouvel objet ! </b><br>'+
-                ' debug : lat '+latitude+', long :'+longitude+'<br>'+
                 '<a href="'+base_url+'data_center/ajout_objet/select_objet_geo/add_geo/'+latitude+'/'+longitude+
                 '"> Cliquez ici pour lier un objet existant à cet emplacement </a> <br>'+
                 '<a href="'+base_url+'data_center/ajout_objet/formulaire_objet_geo/'+latitude+'/'+longitude+
