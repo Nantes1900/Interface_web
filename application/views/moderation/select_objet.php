@@ -97,7 +97,7 @@
                                 
                                 <div class="message" style="left:15%; top:40%; display:none">
                                     <p>
-                                        Vous vous apprêtez à supprimer définitivement <?php echo $objet->get_nom_objet(); ?>,
+                                        Vous vous apprêtez à supprimer définitivement <em><?php echo $objet->get_nom_objet(); ?></em>,
                                          les informations seront définitivement perdues, êtes vous certain de ne pas plutôt vouloir l'invalider?
                                     </p>
                                     <input type="submit" value="Supprimer cet objet" />

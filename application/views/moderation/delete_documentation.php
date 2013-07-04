@@ -1,4 +1,4 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" > 
+
 
     <p><?php echo anchor('moderation/moderation_center', 'Revenir au centre de modération'); ?></p>
     
@@ -31,8 +31,18 @@
                             <input type="hidden" name="documentation_id" value="<?php echo $objet['documentation_id']; ?>" />
                             <input type="hidden" name="nom_objet" value="<?php echo $objet['nom_objet']; ?>" />
                             <input type="hidden" name="ressource_titre" value="<?php echo $ressource->get_titre(); ?>" />
-                            <input type="submit" value="Supprimer la relation" />
+                            <div class="message" style="left:15%; top:40%; display:none">
+                                <p>
+                                    Vous vous apprêtez à supprimer définitivement la documentation de <em><?php echo $ressource->get_titre(); ?></em>
+                                     à <em><?php echo $objet['nom_objet']; ?></em> les informations de lien documentaire seront perdues, 
+                                     êtes vous certain de bien vouloir faire cela?
+                                </p>
+                                <input type="submit" value="Supprimer la relation" />
+                                <?php echo img(array('src'=>'assets/utils/close.png','alt'=>'fermer','width'=>'4%', 
+                                                         'class'=>'removePopup')); ?>
+                            </div>
                         </form>
+                        <button class="removePopup"> Supprimer cette documentation</button>
                     </td>
                 </tr>
             <?php } ?>
@@ -40,4 +50,4 @@
     </table>
     </div>
     
-</html>
+<script src="<?php echo base_url();?>assets/js/removepopup.js"></script>

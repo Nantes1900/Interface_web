@@ -1,5 +1,5 @@
 /* 
- * Small JS to toogle the confirmation popup
+ * Small JS to toggle the confirmation popup
  * when user try to remove something (objet, ressource...)
  */
 

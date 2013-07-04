@@ -1,4 +1,4 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" > 
+
 
     <p><?php echo anchor('moderation/moderation_center', 'Revenir au centre de modération'); ?></p>
     
@@ -96,8 +96,17 @@
                                                                                         echo $ressource->$getMethod(); 
                                                                                     } ?>" />
                                 <input type="hidden" name="titre" value="<?php echo $ressource->get_titre(); ?>">
-                                <input type="submit" value="Supprimer cette ressource" />
+                                <div class="message" style="left:15%; top:40%; display:none">
+                                    <p>
+                                        Vous vous apprêtez à supprimer définitivement <em><?php echo $ressource->get_titre(); ?></em>,
+                                         les informations seront définitivement perdues, êtes vous certain de ne pas plutôt vouloir l'invalider?
+                                    </p>
+                                    <input type="submit" value="Supprimer cette ressource" />
+                                    <?php echo img(array('src'=>'assets/utils/close.png','alt'=>'fermer','width'=>'4%', 
+                                                         'class'=>'removePopup')); ?>
+                                </div>
                             </form>
+                            <button class="removePopup"> Supprimer cette ressource </button>
                         </td>
                     <?php } ?>
                     <?php if($goal=='documentation'){ ?>
@@ -130,4 +139,4 @@
     </table>
     </div>
     
-</html>
+<script src="<?php echo base_url();?>assets/js/removepopup.js"></script>
