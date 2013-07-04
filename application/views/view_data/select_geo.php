@@ -19,6 +19,13 @@
     <p id="chercheur"> Pour créer un nouvel objet sur la carte, 
         double cliquez à son emplacement sur la carte puis choisissez l'option qui vous convient</p>
     <?php } ?>
+    
+<!--    this is for auto zoom if it was an argument-->
+    <?php if(isset($latitude) && isset($longitude)){ ?>
+        <div id="latitude" style="display : none;"><?php echo $latitude; ?></div>
+        <div id="longitude" style="display : none;"><?php echo $longitude; ?></div>
+    <?php } ?>
+    
     <div id="map"></div>
     <script src="<?php echo base_url();?>assets/js/leaflet.js"></script>
     <script src="<?php echo base_url();?>assets/js/addmarkers.js"></script>

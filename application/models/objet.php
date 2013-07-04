@@ -76,6 +76,17 @@ class Objet{
         return $this->save();
     }
     
+    //if a geom exist
+    public function get_geom(){
+        $objetManager = new Objet_model();
+        if ($objetManager->exist($this->get_objet_id())){
+            $geom = $objetManager->get_objet_geo($this->get_objet_id());
+            return $geom;
+        } else {
+            return null;
+        }
+    }
+    
     //getters and setters
     public function get_objet_id() {
         return $this->_objet_id;

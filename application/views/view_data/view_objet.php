@@ -20,6 +20,17 @@
         <h3> Informations fournies par </h3>
         <p> <?php echo $objet->get_username(); ?> </p>
         
+        
+        <?php if($objet->get_geom()!=null){ ?>
+            <?php echo form_open('view_data/select_data/index/carte') ?>
+                <?php $latlng = $objet->get_geom(); ?>
+                <input type="hidden" name="longitude" value="<?php echo $latlng['longitude']; ?>" />
+                <input type="hidden" name="latitude" value="<?php echo $latlng['latitude']; ?>" />
+                <input type="submit" value="Voir cet objet sur la carte" />
+            </form>
+        <?php } ?>
+        
+        
         <?php if($this->session->userdata('user_level') >= 5){ ?>
                 <?php echo form_open('moderation/modify_objet/index/modify') ?>
                             <input type="hidden" name="objet_id" value="<?php echo $objet->get_objet_id(); ?>" />

@@ -71,6 +71,19 @@ class Objet_model extends CI_Model
             return $resultList;
         }
         
+        public function get_objet_geo($objet_id){
+            $sql = 'SELECT ST_X(temp_geom.the_geom) AS longitude, ST_Y(temp_geom.the_geom) AS latitude '. 
+                    'FROM objet JOIN temp_geom ON objet.objet_id = temp_geom.objet_id '.
+                    'WHERE objet.validation = TRUE AND objet.objet_id = '.$objet_id;
+            $query = $this->db->query($sql);
+            $result = $query->result_array();
+            if(isset($result['0'])){
+                return $result['0'];
+            } else {
+                return null;
+            }
+        }
+        
         //return objet_id out of the name
         public function get_objet_by_name($name)
         {

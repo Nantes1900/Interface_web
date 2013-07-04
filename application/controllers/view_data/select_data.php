@@ -20,7 +20,7 @@ class Select_data extends CI_Controller {
             }elseif(($dataType == 'ressource_texte') || ($dataType == 'ressource_graphique') || ($dataType == 'ressource_video')){
                 $this->select_ressource($dataType, $goal);
             }elseif($dataType == 'carte'){
-                $this->select_geo($goal);
+                $this->select_geo();
             }
         } else {
             $this->load->view('accueil/login/formulaire_login',array('titre'=>'Vous n\'êtes pas connecté. Veuillez vous connecter :'));
@@ -122,7 +122,7 @@ class Select_data extends CI_Controller {
         $this->load->view('view_data/select_ressource', $data);
         $this->load->view('footer');
     }
-    private function select_geo($goal){
+    private function select_geo(){
         $listObjet = $this->objet_model->get_objet_geo_list();
         
         $jsonList = array();
@@ -134,7 +134,14 @@ class Select_data extends CI_Controller {
         $fileContent = '['.$list.']';
         file_put_contents(FCPATH.'/assets/utils/coordonnees.json', $fileContent);
         
-        $this->load->view('view_data/select_geo');
+        $data = array();
+        //we consider if there is a focus on a particular objet
+        if($this->input->post('latitude')!=null && $this->input->post('longitude')!=null){
+            $data['latitude'] = $this->input->post('latitude');
+            $data['longitude'] = $this->input->post('longitude');
+        }
+        
+        $this->load->view('view_data/select_geo', $data);
         $this->load->view('footer');
     }
     

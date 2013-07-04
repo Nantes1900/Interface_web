@@ -48,3 +48,11 @@ if($('p#chercheur').attr('id')=='chercheur'){
                 '"> Cliquez ici pour créer un nouvel objet à cet emplacement </a>'   ).openPopup();
     });
 }
+//zooming if a focus on a particular objet was in arguments of the page
+if($('div#latitude').attr('id')=='latitude'){ 
+    var lat = $('div#latitude').html();
+    var lng = $('div#longitude').html();
+    
+    map.setView([lat, lng], 18);
+
+}
