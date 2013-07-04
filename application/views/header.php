@@ -97,11 +97,18 @@
     <script>
         function link(){
             $(function(){
-                var l = window.location;
-                var base_url = l.protocol + "//" + l.host + "/";
-                $("body").load(base_url+'download/download');
+                
+                var r=confirm("Press a button");
+                if (r==true) {
+                    var l = window.location;
+                    var base_url = l.protocol + "//" + l.host + "/";
+                    $("body").load(base_url+'download/download');
+                } else {
+                    alert("You pressed Cancel!");
+                } 
             })
         }
+        
     </script>
     <?php } ?>
 

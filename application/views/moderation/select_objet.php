@@ -1,4 +1,3 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" > 
 
     <p><?php echo anchor('moderation/moderation_center', 'Revenir au centre de modération'); ?></p>
     
@@ -95,8 +94,18 @@
                         <td>
                             <?php echo form_open('moderation/modify_objet/delete_objet') ?>
                                 <input type="hidden" name="objet_id" value="<?php echo $objet->get_objet_id(); ?>" />
-                                <input type="submit" value="Supprimer cet objet" />
+                                
+                                <div class="message" style="left:15%; top:40%; display:none">
+                                    <p>
+                                        Vous vous apprêtez à supprimer définitivement <?php echo $objet->get_nom_objet(); ?>,
+                                         les informations seront définitivement perdues, êtes vous certain de ne pas plutôt vouloir l'invalider?
+                                    </p>
+                                    <input type="submit" value="Supprimer cet objet" />
+                                    <?php echo img(array('src'=>'assets/utils/close.png','alt'=>'fermer','width'=>'4%', 
+                                                         'class'=>'removePopup')); ?>
+                                </div>
                             </form>
+                            <button class="removePopup"> Supprimer cet objet </button>
                         </td>
                     <?php } ?>
                     <?php if($goal=='relation'){ ?>
@@ -147,4 +156,5 @@
     </table>
     </div>
     
-</html>
+
+<script src="<?php echo base_url();?>assets/js/removepopup.js"></script>

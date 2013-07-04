@@ -3,6 +3,8 @@
  */
 
 function ok_message(){ //remove a message
-        $("div.message").remove();
+        $("div.message").click(function(){
+            $(this).css("display","none");
+        });
 }
 
