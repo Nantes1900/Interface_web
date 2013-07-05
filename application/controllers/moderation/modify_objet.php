@@ -28,7 +28,7 @@ class Modify_objet extends CI_Controller {
         require_once ('application/models/objet.php');
         $this->load->model('objet_model');
         $this->load->library('form_validation');
-        $this->load->helper(array('form', 'dates'));
+        $this->load->helper(array('form', 'dates', 'geom_helper'));
         $this->load->view('header');
         if (!$this->session->userdata('username')) { //checking that user is connected
             redirect('accueil/accueil/not_connected/', 'refresh');
@@ -94,6 +94,9 @@ class Modify_objet extends CI_Controller {
             $success = $objet->save();
             $lastAction = 'modify';
             $message = $this->create_success_message($success, $lastAction, $objet->get_nom_objet());
+            
+            update_coordonnes(); //we update the coordonnees.json file for the map
+            
             $this->load->view('data_center/success_form', array('success' => $success, 'message' => $message));
             $this->select_objet('modify');
         }
@@ -103,7 +106,7 @@ class Modify_objet extends CI_Controller {
         $objet_id = $this->input->post('objet_id');
         $objet = new Objet($objet_id);
         $success = $objet->validate();
-
+        update_coordonnes(); //we update the coordonnees.json file for the map
         //creation success message
         $lastAction = 'validate';
         $message = $this->create_success_message($success, $lastAction, $objet->get_nom_objet());
@@ -119,6 +122,8 @@ class Modify_objet extends CI_Controller {
         } else {
             $success = FALSE;
         }
+        update_coordonnes(); //we update the coordonnees.json file for the map
+        
         $lastAction = 'deletion';
         $message = $this->create_success_message($success, $lastAction, $objet->get_nom_objet());
         $this->load->view('data_center/success_form', array('success' => $success, 'message' => $message));
@@ -211,6 +216,8 @@ class Modify_objet extends CI_Controller {
         } else {
             $success = FALSE;
         }
+        update_coordonnes(); //we update the coordonnees.json file for the map
+        
         $message = $this->create_success_message($success, 'geomDeletion', $objet->get_nom_objet());
         $this->load->view('data_center/success_form', array('success' => $success, 'message' => $message));
     }

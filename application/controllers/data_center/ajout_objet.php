@@ -34,7 +34,7 @@ class Ajout_objet extends CI_Controller {
         $this->load->model('objet_model');
         require('application/models/objet.php');
         $this->load->library('form_validation');
-        $this->load->helper(array('form', 'dates'));
+        $this->load->helper(array('form', 'dates', 'geom_helper'));
         $this->load->view('header');
         if (!$this->session->userdata('username')) { //checking that user is connected
             redirect('accueil/accueil/not_connected/', 'refresh');
@@ -69,6 +69,7 @@ class Ajout_objet extends CI_Controller {
                 $data = array('success' => FALSE, 'message' => 'Une erreur a eu lieu, l\'objet <b>' .
                     $objetdata['nom_objet'] . '</b> n\'a pas été ajouté');
             }
+            
             $this->load->view('data_center/success_form', $data);
         }
     }
@@ -136,6 +137,7 @@ class Ajout_objet extends CI_Controller {
                     $data = array('success' => FALSE, 'message' => 'Une erreur a eu lieu, l\'objet <b>' .
                         $objet->get_nom_objet() . '</b> n\'a pas été localisé');
                 }
+                update_coordonnes(); //we update the coordonnees.json file for the map
                 $this->load->view('data_center/success_form', $data);
             }
         } else {
@@ -189,6 +191,7 @@ class Ajout_objet extends CI_Controller {
                     $data = array('success' => FALSE, 'message' => 'Une erreur a eu lieu, l\'objet <b>' .
                         $objetdata['nom_objet'] . '</b> n\'a pas été ajouté');
                 }
+                update_coordonnes(); //we update the coordonnees.json file for the map
                 $this->load->view('data_center/success_form', $data);
             }
         } else {
