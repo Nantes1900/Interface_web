@@ -6,38 +6,35 @@
  *
  * @author paulyves
  */
-class Download extends CI_Controller{
+class Download extends CI_Controller {
+
     public function __construct() {
         parent::__construct();
         //Ce code sera executé charque fois que ce contrôleur sera appelé
         $this->load->helper('download');
         $this->load->library('form_validation');
-	$this->load->view('header');
-    }
-    
-    public function index(){
-        if($this->session->userdata('username')){
-            $this->download_page();
-        }else{
-            $this->load->view('accueil/login/formulaire_login',array('titre'=>'Vous n\'êtes pas connecté. Veuillez vous connecter :'));
+        $this->load->view('header');
+        if (!$this->session->userdata('username')) { //checking that user is connected
+            redirect('accueil/accueil/not_connected/', 'refresh');
         }
     }
-    
-    private function download_page(){
+
+    public function index() {
+        $this->download_page();
+    }
+
+    private function download_page() {
         $this->load->view('download/download');
         $this->load->view('footer');
     }
-    
-    public function do_download(){
-        if($this->session->userdata('username')){
-            $fileName = $this->input->post('fileName');
-            $data = file_get_contents(base_url().'assets/utils/'.$fileName); //we prepare the file
-            force_download($fileName, $data); //we download the file
-            $this->download_page();
-        }else{
-            $this->load->view('accueil/login/formulaire_login',array('titre'=>'Vous n\'êtes pas connecté. Veuillez vous connecter :'));
-        }
+
+    public function do_download() {
+        $fileName = $this->input->post('fileName');
+        $data = file_get_contents(base_url() . 'assets/utils/' . $fileName); //we prepare the file
+        force_download($fileName, $data); //we download the file
+        $this->download_page();
     }
+
 }
 
 /* End of file download.php */

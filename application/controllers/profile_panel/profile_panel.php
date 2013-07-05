@@ -11,25 +11,24 @@
  */
 class Profile_panel extends CI_Controller {
     public function index(){
-        if ( $this->session->userdata('username') ) {
-            $this->profile_panel();
-        }else{
-            $this->load->view('accueil/login/formulaire_login',array('titre'=>'Vous n\'êtes pas connecté. Veuillez vous connecter :'));
-        }
+        $this->profile_panel();
     }
     
     public function __construct() {
-	
-            parent::__construct();
 
-            //Ce code sera executé charque fois que ce contrôleur sera appelé
-            $this->load->model('user_model');
-            require ('application/models/user.php');
-            $this->load->library('form_validation');
-            $this->load->view('header');
-            $this->load->helper('security'); //to hash passwords
-    }   
-    
+        parent::__construct();
+
+        //Ce code sera executé charque fois que ce contrôleur sera appelé
+        $this->load->model('user_model');
+        require ('application/models/user.php');
+        $this->load->library('form_validation');
+        $this->load->view('header');
+        $this->load->helper('security'); //to hash passwords
+        if (!$this->session->userdata('username')) {
+            redirect('accueil/accueil/not_connected/', 'refresh');
+        }
+    }
+
     public function profile_panel(){ //render the profile_panel page
         $data = array();
         $userName = $this->session->userdata('username');

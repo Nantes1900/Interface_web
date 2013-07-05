@@ -8,20 +8,14 @@
 
 class Modify_ressource extends CI_Controller{
     public function index($typeRessource,$goal='modify'){
-        if($this->session->userdata('username')){
-            if ( $this->session->userdata('user_level') >= 5 ){
-                if($this->input->post('ressource_id')==null){
-                    $this->select_ressource($typeRessource,$goal);
-                }elseif($typeRessource=='ressource_texte'){
-                    $this->modify_texte($this->input->post('ressource_id'));
-                }elseif ($typeRessource=='ressource_graphique') {
-                    $this->modify_image($this->input->post('ressource_id'));
-                }elseif ($typeRessource=='ressource_video') {
-                    $this->modify_video($this->input->post('ressource_id'));
-                }
-            }
-        } else {
-            $this->load->view('accueil/login/formulaire_login',array('titre'=>'Vous n\'êtes pas connecté. Veuillez vous connecter :'));
+        if($this->input->post('ressource_id') == null) {
+            $this->select_ressource($typeRessource, $goal);
+        } elseif ($typeRessource == 'ressource_texte') {
+            $this->modify_texte($this->input->post('ressource_id'));
+        } elseif ($typeRessource == 'ressource_graphique') {
+            $this->modify_image($this->input->post('ressource_id'));
+        } elseif ($typeRessource == 'ressource_video') {
+            $this->modify_video($this->input->post('ressource_id'));
         }
     }
     
@@ -39,44 +33,47 @@ class Modify_ressource extends CI_Controller{
         $this->load->helper('dates');
         $this->load->library('form_validation');
         $this->load->view('header');
+        if (!$this->session->userdata('username')) { //checking that user is connected
+            redirect('accueil/accueil/not_connected/', 'refresh');
+        } elseif (!$this->session->userdata('user_level') >= 5) {
+            redirect('accueil/accueil/', 'refresh');
+        }
     } 
     
     public function select_ressource($typeRessource,$goal){
-        if ( $this->session->userdata('user_level') >= 5 ){
-            //managing the sort option
-            $orderBy = $this->input->post('orderBy');
-            if($orderBy == null){$orderBy = 'titre';}
-            $orderDirection = $this->input->post('orderDirection');
-            if($this->form_validation->run('sort_objet')==TRUE){ //we check there is no xss in the field
-                $speAttributeValue = $this->input->post('speAttributeValue');
-                if(!empty($speAttributeValue)){ //if something is specified we set the values
-                    $speAttribute = $this->input->post('speAttribute');
-                } else { //if nothing specified as specific value we set to null
-                    $speAttribute = null;
-                    $speAttributeValue = null;
-                }
-            } else { //in case of xss attempt, no sorting on this
+        //managing the sort option
+        $orderBy = $this->input->post('orderBy');
+        if ($orderBy == null) {
+            $orderBy = 'titre';
+        }
+        $orderDirection = $this->input->post('orderDirection');
+        if ($this->form_validation->run('sort_objet') == TRUE) { //we check there is no xss in the field
+            $speAttributeValue = $this->input->post('speAttributeValue');
+            if (!empty($speAttributeValue)) { //if something is specified we set the values
+                $speAttribute = $this->input->post('speAttribute');
+            } else { //if nothing specified as specific value we set to null
                 $speAttribute = null;
                 $speAttributeValue = null;
             }
-            if ($this->input->post('validation')==TRUE){ //we check if we only want non validated objet
-                $valid = 'f';
-            } else {
-                $valid = null;
-            }
-        
-            //creating the list
-            $data = array('typeRessource'=>$typeRessource,'goal'=>$goal);
-            
-            $typeRessource= ucfirst($typeRessource).'_model';
-            $ressourceManager = new $typeRessource();
-            $data['listRessource'] = $ressourceManager->get_ressource_list($orderBy,$orderDirection,$speAttribute,$speAttributeValue,$valid);
-        
-            $this->load->view('moderation/select_ressource', $data);
-            $this->load->view('footer');
-        }else{
-            redirect('accueil/accueil/','refresh');
+        } else { //in case of xss attempt, no sorting on this
+            $speAttribute = null;
+            $speAttributeValue = null;
         }
+        if ($this->input->post('validation') == TRUE) { //we check if we only want non validated objet
+            $valid = 'f';
+        } else {
+            $valid = null;
+        }
+
+        //creating the list
+        $data = array('typeRessource' => $typeRessource, 'goal' => $goal);
+
+        $typeRessource = ucfirst($typeRessource) . '_model';
+        $ressourceManager = new $typeRessource();
+        $data['listRessource'] = $ressourceManager->get_ressource_list($orderBy, $orderDirection, $speAttribute, $speAttributeValue, $valid);
+
+        $this->load->view('moderation/select_ressource', $data);
+        $this->load->view('footer');
     }
     
     private function modify_texte($ressource_id){
@@ -178,7 +175,7 @@ class Modify_ressource extends CI_Controller{
     }
     
     //basic treatment for posted image form
-    function mod_img_basic(Ressource_graphique $ressource){
+    private function mod_img_basic(Ressource_graphique $ressource){
         $attrArray = array('titre','description','reference_ressource','disponibilite','auteurs','editeur','ville_edition',
                             'couleur','mots_cles','legende','image_link','localisation','technique','type_support');
         foreach($attrArray as $attr){
@@ -263,7 +260,7 @@ class Modify_ressource extends CI_Controller{
     }
     
     //basic treatment for posted image form
-    function mod_vid_basic(Ressource_video $ressource){
+    private function mod_vid_basic(Ressource_video $ressource){
         $attrArray = array('titre','description','reference_ressource','disponibilite','auteurs','editeur','ville_edition',
                             'duree','mots_cles','diffusion','versionvideo','distribution','production','video_link');
         foreach($attrArray as $attr){
@@ -283,44 +280,47 @@ class Modify_ressource extends CI_Controller{
         return $ressource;
     }
     
-    public function validate_ressource($typeRessource){
-        if ( $this->session->userdata('user_level') >= 5 ){
-            $ressource_id = $this->input->post('ressource_id');
-            $typeRessourceClass= ucfirst($typeRessource);
+    public function validate_ressource($typeRessource) {
+        $ressource_id = $this->input->post('ressource_id');
+        $typeRessourceClass = ucfirst($typeRessource);
+        if (class_exists($typeRessourceClass)) {
             $ressource = new $typeRessourceClass($ressource_id);
-            
-            $success = $ressource->validate();
-            
+            if ($ressource->get_titre() != null) {
+                $success = $ressource->validate();
+            } else {
+                $success = FALSE;
+            }
             //creation message
-            $lastAction = 'validate-'.$typeRessource;
+            $lastAction = 'validate-' . $typeRessource;
             $message = $this->create_success_message($success, $lastAction, $ressource->get_titre());
-            $this->load->view('data_center/success_form',array('success'=>$success, 'message'=> $message));
+            $this->load->view('data_center/success_form', array('success' => $success, 'message' => $message));
             $this->select_ressource($typeRessource, 'modify');
-        }else{
-            redirect('accueil/accueil/','refresh');
         }
     }
     
-    public function delete_ressource($typeRessource){
-        if ( $this->session->userdata('user_level') >= 5 ){
-            $ressource_id = $this->input->post('ressource_id');
-            $typeRessourceModel= ucfirst($typeRessource).'_model';
+    public function delete_ressource($typeRessource) {
+        $ressource_id = $this->input->post('ressource_id');
+        $typeRessourceModel = ucfirst($typeRessource) . '_model';
+        if (class_exists($typeRessourceModel)) {
             $ressourceManager = new $typeRessourceModel();
-            
-            $success = $ressourceManager->delete($ressource_id);
-            
-             //creation message
-            $lastAction = 'delete-'.$typeRessource;
+            if ($ressource_id != null) {
+                $success = $ressourceManager->delete($ressource_id);
+            } else {
+                $success = FALSE;
+            }
+            //creation message
+            $lastAction = 'delete-' . $typeRessource;
             $message = $this->create_success_message($success, $lastAction, $this->input->post('titre'));
-            $this->load->view('data_center/success_form',array('success'=>$success, 'message'=> $message));
+            $this->load->view('data_center/success_form', array('success' => $success, 'message' => $message));
             $this->select_ressource($typeRessource, 'modify');
-        }else{
-            redirect('accueil/accueil/','refresh');
         }
     }
         
     public function add_doc($typeRessource){
-        if ( $this->session->userdata('user_level') >= 5 ){
+        if ( $typeRessource == 'ressource_texte' || 
+             $typeRessource == 'ressource_graphique' || 
+             $typeRessource == 'ressource_video'){
+            
             $ressource_id = $this->input->post('ressource_id');
             $this->select_objet('add_doc', $ressource_id, $typeRessource);
         }else{
@@ -330,8 +330,10 @@ class Modify_ressource extends CI_Controller{
     
     //powerful method to render a sorted list of objet, with various button to different controllers, depending on input attributes
     //slightly different than in modify_objet because args are not the same
-    public function select_objet($goal,$ressource_id,$typeRessource){
-        if ( $this->session->userdata('user_level') >= 5 ){
+    public function select_objet($goal = 'add_doc',$ressource_id,$typeRessource){
+        if ( $ressource_id != null &&  ($typeRessource == 'ressource_texte' || 
+                                        $typeRessource == 'ressource_graphique' || 
+                                        $typeRessource == 'ressource_video')){
             //managing the sort option
             $orderBy = $this->input->post('orderBy');
             if($orderBy == null){$orderBy = 'nom_objet';}
@@ -371,7 +373,10 @@ class Modify_ressource extends CI_Controller{
     }
     
     public function add_doc_form($typeRessource){
-        if ( $this->session->userdata('user_level') >= 5 ){
+        if ( $typeRessource == 'ressource_texte' || 
+             $typeRessource == 'ressource_graphique' || 
+             $typeRessource == 'ressource_video'){
+            
             $ressource_id = $this->input->post('ressource_id');
             $objet_id = $this->input->post('objet_id');
             $typeRessourceModel= ucfirst($typeRessource).'_model';
@@ -418,23 +423,29 @@ class Modify_ressource extends CI_Controller{
     }
     
     public function delete_documentation($typeRessource){
-        if ( $this->session->userdata('user_level') >= 5 ){
+        if ( $typeRessource == 'ressource_texte' || 
+             $typeRessource == 'ressource_graphique' || 
+             $typeRessource == 'ressource_video'){
+            
             $ressource_id = $this->input->post('ressource_id');
             $documentation_id = $this->input->post('documentation_id');
-            
-            $typeRessourceModel= ucfirst($typeRessource).'_model';//adding list of documentation as arg for webpage
+
+            $typeRessourceModel = ucfirst($typeRessource) . '_model'; //adding list of documentation as arg for webpage
             $ressourceManager = new $typeRessourceModel();
-            
-            $success = $ressourceManager->delete_documentation($documentation_id);
-            
+
+            if ($documentation_id != null) {
+                $success = $ressourceManager->delete_documentation($documentation_id);
+            } else {
+                $success = FALSE;
+            }
             //creation message
-            $lastAction = 'removeDoc-'.$typeRessource;
+            $lastAction = 'removeDoc-' . $typeRessource;
             $message = $this->create_success_message($success, $lastAction, $this->input->post('ressource_titre'), $this->input->post('nom_objet'));
-            $this->load->view('data_center/success_form',array('success'=>$success, 'message'=> $message));
-            
+            $this->load->view('data_center/success_form', array('success' => $success, 'message' => $message));
+
             $this->delete_doc($typeRessource);
-        }else{
-            redirect('accueil/accueil/','refresh');
+        } else {
+            redirect('accueil/accueil/', 'refresh');
         }
     }
     
@@ -475,7 +486,7 @@ class Modify_ressource extends CI_Controller{
         }
     }
     
-    public function create_success_message($success, $lastAction, $firstEntity = null, $secondEntity = null ){
+    private function create_success_message($success, $lastAction, $firstEntity = null, $secondEntity = null ){
          if($lastAction == 'modify_texte'){
              if($success){
                  $message = 'La modification de la ressource textuelle <b>'.$firstEntity.'</b> s\'est déroulée avec succès';

@@ -8,11 +8,7 @@
  */
 class Contact_panel extends CI_Controller{
     public function index(){
-        if ( $this->session->userdata('username') ) {
-            $this->contact_panel();
-        }else{
-            $this->load->view('accueil/login/formulaire_login',array('titre'=>'Vous n\'êtes pas connecté. Veuillez vous connecter :'));
-        }
+        $this->contact_panel();
     }
     
     public function __construct() {
@@ -25,6 +21,9 @@ class Contact_panel extends CI_Controller{
         $this->load->library('form_validation');
         $this->load->helper('dates_helper');
         $this->load->view('header');
+        if(!$this->session->userdata('username')){
+            redirect('accueil/accueil/not_connected/', 'refresh');
+        }
     }   
     
     private function contact_panel(){     //this render the contact_panel page

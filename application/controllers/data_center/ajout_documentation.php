@@ -14,12 +14,8 @@ class Ajout_documentation extends CI_Controller{
     * @access public
     */
     public function index(){
-        if ( $this->session->userdata('username') ) {
-            $this->load->view('data_center/data_center');
-            $this->choix_documentation(); 
-        }else{
-            $this->load->view('accueil/login/formulaire_login',array('titre'=>'Vous n\'êtes pas connecté. Veuillez vous connecter :'));
-        }            
+        $this->load->view('data_center/data_center');
+        $this->choix_documentation();
     }
 
     /**
@@ -36,6 +32,9 @@ class Ajout_documentation extends CI_Controller{
         require_once ('application/models/objet.php');
         $this->load->helper(array('form','dates'));
         $this->load->view('header');
+        if (!$this->session->userdata('username')) {
+            redirect('accueil/accueil/not_connected/', 'refresh');
+        }
     }
     
     /*
@@ -49,49 +48,54 @@ class Ajout_documentation extends CI_Controller{
     /*
      * This method is called by the select_ressource method with add_doc goal
      */
-    public function add($typeRessource){
-        if ( $this->session->userdata('username') ) {
-            $this->load->model($typeRessource.'_model');
+    public function add($typeRessource = null) {
+        if ($typeRessource == 'ressource_video' 
+                || $typeRessource == 'ressource_texte' 
+                || $typeRessource == 'ressource_graphique') {
+            
+            $this->load->model($typeRessource . '_model');
             $ressource_id = $this->input->post('ressource_id');
             $objet_id = $this->input->post('objet_id');
-            $typeRessourceModel= ucfirst($typeRessource).'_model';
+            $typeRessourceModel = ucfirst($typeRessource) . '_model';
             $ressourceManager = new $typeRessourceModel();
-            
+
             $success = FALSE;
-            
-            if($typeRessource!='ressource_video'){ //if we it's not a video, we may want to refer to a precise page
-                if($this->form_validation->run('add_documentation') == TRUE){
+
+            //if we it's not a video, we may want to refer to a precise page
+            if ($typeRessource != 'ressource_video') {
+                if ($this->form_validation->run('add_documentation') == TRUE) {
                     $page = $this->input->post('page');
-                }else{
+                } else {
                     $page = 0;
                 }
-                if($ressourceManager->add_documentation($objet_id,$ressource_id,$page)){
+                if ($ressourceManager->add_documentation($objet_id, $ressource_id, $page)) {
                     $success = TRUE;
                 }
-            }else{
-                if($ressourceManager->add_documentation($objet_id,$ressource_id)){
+            } else {
+                if ($ressourceManager->add_documentation($objet_id, $ressource_id)) {
                     $success = TRUE;
                 }
             }
             $type = explode('_', $typeRessource);
-            if($typeRessource=='ressource_texte'){$type['1']='textuelle';}
-            if($success){
-                $message = 'Le lien de documentation '.$type['1'].' entre <b>'.
-                            $this->input->post('nom_objet').'</b> et <b>'.
-                            $this->input->post('titre_ressource').'</b> a été ajouté avec succès';
-                $data = array('success'=>TRUE , 'message'=>$message);
+            if ($typeRessource == 'ressource_texte') {
+                $type['1'] = 'textuelle';
+            }
+            if ($success) {
+                $message = 'Le lien de documentation ' . $type['1'] . ' entre <b>' .
+                        $this->input->post('nom_objet') . '</b> et <b>' .
+                        $this->input->post('titre_ressource') . '</b> a été ajouté avec succès';
+                $data = array('success' => TRUE, 'message' => $message);
             } else {
-                $message = 'Erreur : Le lien de documentation '.$type['1'].' entre <b>'.
-                            $this->input->post('nom_objet').'</b> et <b>'.
-                            $this->input->post('titre_ressource').'</b> n\'a pas pu être ajouté';
-                $data = array('success'=>FALSE , 'message'=>$message);
+                $message = 'Erreur : Le lien de documentation ' . $type['1'] . ' entre <b>' .
+                        $this->input->post('nom_objet') . '</b> et <b>' .
+                        $this->input->post('titre_ressource') . '</b> n\'a pas pu être ajouté';
+                $data = array('success' => FALSE, 'message' => $message);
             }
             $this->load->view('data_center/success_form', $data);
-            $this->index();
-        }else{
-            $this->load->view('accueil/login/formulaire_login',array('titre'=>'Vous n\'êtes pas connecté. Veuillez vous connecter :'));
-        } 
+        }
+        $this->index();
     }
+    
 }
 
 /* End of file ajout_documentation.php */

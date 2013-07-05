@@ -1,52 +1,43 @@
 <?php
 
-class Accueil extends CI_Controller
-{
+class Accueil extends CI_Controller {
 
-    public function index()
-    {
+    public function index() {
         $this->accueil();
     }
 
-    public function __construct()
-    {
+    public function __construct() {
         parent::__construct();
 
         //Ce code sera executé charque fois que ce contrôleur sera appelé
-        
+        $this->load->library('form_validation');
         $this->load->view('header');
     }
 
-    public function accueil()
-    {
+    public function accueil() {
 
-        $this->load->library('form_validation');
         $this->load->view('accueil/body');
 
-        if ( ! $this->session->userdata('username') ) //Si l'utilisateur n'est pas loggé, on affiche le formulaire de connexion
-        {
-            $this->load->view('accueil/login/formulaire_login',array('titre'=>'Connectez-vous :'));
-        }
-        else //Sinon, on affiche les zones restreintes
-        {
+        if (!$this->session->userdata('username')) { //Si l'utilisateur n'est pas loggé, on affiche le formulaire de connexion
+            $this->load->view('accueil/login/formulaire_login', array('titre' => 'Connectez-vous :'));
+        } else { //Sinon, on affiche les zones restreintes
 
             $data = array('username' => $this->session->userdata('username'));
 
             $this->load->view('accueil/welcome');
-                        
-            $this->load->view('footer');
-	}
 
+            $this->load->view('footer');
+        }
     }
 
-
-    
-
-    public function signin()
-    {
+    public function signin() {
         $this->load->library('form_validation');
         $this->load->view('accueil/signin/formulaire_signin');
         $this->load->view('footer');
+    }
+    
+    public function not_connected(){
+        $this->load->view('accueil/login/formulaire_login',array('titre'=>'Vous n\'êtes pas connecté. Veuillez vous connecter :'));
     }
 }
 

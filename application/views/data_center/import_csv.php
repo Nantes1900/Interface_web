@@ -1,6 +1,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" > 
 
-	<h1>Importer plusieurs élément via un fichier CSV</h1>
+    <h1 class="hint">
+        Importer plusieurs élément via un fichier CSV 
+        <span>
+            Pour plus d'informations, consultez le manuel. <br/> 
+            Pensez à utiliser les modèles fournis dans la section téléchargement.
+        </span>
+    </h1>
         
         <p><?php echo $error;?></p>
         
