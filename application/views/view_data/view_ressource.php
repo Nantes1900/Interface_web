@@ -124,8 +124,8 @@
             ?>
         <?php } ?>
             
-        <?php if ($typeRessource != 'ressource_video' && $ressource->get_pagination()!=null){ ?>
-            <h2> Pagination </h2>
+        <?php if ($typeRessource != 'ressource_video' && $ressource->get_pagination() > 0){ ?>
+            <h2> Nombre de pages </h2>
             <p> <?php echo $ressource->get_pagination(); ?> </p> 
         <?php } ?>    
             

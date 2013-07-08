@@ -78,7 +78,7 @@
                     <td class="error_form"><?php echo form_error('sous_categorie'); ?></td>
             </tr>  
             <tr>
-                    <td> Pagination </td>
+                    <td> Nombre de pages </td>
                     <td> <input type="text" name="pagination" value="<?php echo $ressource->get_pagination(); ?>"> </td>
                     <td class="error_form"><?php echo form_error('pagination'); ?></td>
             </tr>

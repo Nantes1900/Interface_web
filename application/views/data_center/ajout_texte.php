@@ -86,9 +86,11 @@
                     <td class="error_form"><?php echo form_error('sous_categorie'); ?></td>
             </tr>  
             <tr>
-                <td> <span class="hint">Pagination 
-                        <span>Si vous souhaitez que votre ressource concerne une page en particulier, mettez son numéro</span>
-                        
+                <td> <span class="hint">Nombre de pages
+                        <span>
+                            Laissez le champ vide ou mettez à 0 si vous ne disposez 
+                            pas de cette information (ou qu'elle n'est pas pertinente)
+                        </span>
                     </span>
                 </td>
                     <td> <input type="text" name="pagination" value="<?php echo set_value('pagination'); ?>"> </td>
