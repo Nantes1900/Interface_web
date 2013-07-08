@@ -20,7 +20,9 @@ $.getJSON(coord_file, function(json) { // this will show the info it in firebug 
                         var popupText = '<b>'+json[row].nom_objet+'</b><br>'+
                                     json[row].resume+
                                     '<br><a href="'+base_url+'view_data/view_data/view_objet/'+json[row].objet_id+'"> Voir l\'objet </a>'
-                            if($('span#moderateur').attr('id')=='moderateur'){ 
+                        //if the user has a level equal or superior to 5 (moderateur), he will be allowed
+                        //to delete the geometry of an objet which will no longer appear on the map
+                        if($('span#moderateur').attr('id')=='moderateur'){ 
                                 popupText += '<br><a href="'+base_url+'moderation/modify_objet/delete_geom/'+
                                             json[row].geom_id+'/'+json[row].objet_id+'"> Supprimer le marqueur </a>';
                             }
