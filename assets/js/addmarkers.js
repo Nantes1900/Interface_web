@@ -43,11 +43,22 @@ if($('p#chercheur').attr('id')=='chercheur'){
     map.on('dblclick', function(e){
         var latitude = e.latlng.lat;
         var longitude = e.latlng.lng;
-        newMarker = L.marker([latitude, longitude]).addTo(map).bindPopup('<b style="color : blue"> Nouvel objet ! </b><br>'+
+        newMarker = L.marker([latitude, longitude],{draggable:true}).addTo(map).bindPopup('<b style="color : blue"> Nouvel objet ! </b><br>'+
                 '<a href="'+base_url+'data_center/ajout_objet/select_objet_geo/add_geo/'+latitude+'/'+longitude+
                 '"> Cliquez ici pour lier un objet existant à cet emplacement </a> <br>'+
                 '<a href="'+base_url+'data_center/ajout_objet/formulaire_objet_geo/'+latitude+'/'+longitude+
                 '"> Cliquez ici pour créer un nouvel objet à cet emplacement </a>'   ).openPopup();
+        
+        //this create the opportunity to drag and drop the marker, updating the location of the future objet
+        newMarker.on('dragend', function(e){
+            var latlng = this.getLatLng();
+            var content = '<b style="color : blue"> Nouvel objet ! </b><br>'+
+                '<a href="'+base_url+'data_center/ajout_objet/select_objet_geo/add_geo/'+latlng.lat+'/'+latlng.lng+
+                '"> Cliquez ici pour lier un objet existant à cet emplacement </a> <br>'+
+                '<a href="'+base_url+'data_center/ajout_objet/formulaire_objet_geo/'+latlng.lat+'/'+latlng.lng+
+                '"> Cliquez ici pour créer un nouvel objet à cet emplacement </a>';
+            this.unbindPopup().bindPopup(content).openPopup();
+        });
     });
 }
 //zooming if a focus on a particular objet was in arguments of the page
@@ -56,5 +67,4 @@ if($('div#latitude').attr('id')=='latitude'){
     var lng = $('div#longitude').html();
     
     map.setView([lat, lng], 18);
-
 }
