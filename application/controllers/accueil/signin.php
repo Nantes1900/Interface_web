@@ -31,9 +31,20 @@ class Signin extends CI_Controller {
             $userdata['prenom'] = $this->input->post('prenom');
             $userdata['email'] = $this->input->post('email');
 
-            $this->user_model->create_user($userdata); //Transmission des données au modèle user_model
-            //$this->confirm_mail($userdata); //to test during deployment as it doesn't work with localhost
-            redirect('accueil/', 'refresh');
+            $success = $this->user_model->create_user($userdata); //Transmission des données au modèle user_model
+            
+            if($success){
+                //$this->confirm_mail($userdata); //to test during deployment as it doesn't work with localhost
+                $message = 'Le compte utilisateur <em>'.$userdata['username'].'</em> a bien été créé.'.
+                            ' Un email vous a été envoyé, vous pourrez vous connecter quand le compte'.
+                            ' aura été validé à l\'aide de ce mail';
+            } else {
+                $message = 'Erreur : votre compte n\'a pas pu être créé';
+            }
+            
+            $this->load->view('data_center/success_form', array('success'=>$success, 'message'=>$message));
+            $this->load->view('accueil/login/formulaire_login', array('titre' => 'Connectez-vous :'));
+            $this->load->view('footer');
         }
     }
 
@@ -71,7 +82,7 @@ class Signin extends CI_Controller {
     }
 
     //available through link given in mail
-    public function confirmation($username, $hashedPassword) {
+    public function confirmation($username = null, $hashedPassword = null) {
         if ($this->user_model->check_ifuserexists($username) != 0) {
             $user = new User($username);
             if ($user->get_hashedPassword() == $hashedPassword) {

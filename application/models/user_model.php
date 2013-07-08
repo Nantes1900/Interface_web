@@ -63,7 +63,8 @@ class User_model extends CI_Model
             $this->db->set('nom', $userdata['nom']);
             $this->db->set('prenom', $userdata['prenom']);
             $this->db->set('email', $userdata['email']);
-            $this->db->insert('users'); //Exécution
+            
+            return $this->db->insert('users'); //Exécution
 
 	}
 

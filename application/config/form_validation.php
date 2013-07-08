@@ -19,7 +19,7 @@ $config = array(
                     array(
                         'field'=>'email',
                         'label'=>'email',
-                        'rules'=>'trim|required|valid_email|max_length[50]|xss_clean|callback_check_unique_mail'
+                        'rules'=>'trim|required|valid_email|max_length[127]|xss_clean|callback_check_unique_mail'
                     ),
                     array(
                         'field'=>'nom',
