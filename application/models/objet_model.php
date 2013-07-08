@@ -54,7 +54,8 @@ class Objet_model extends CI_Model {
     }
 
     public function get_objet_geo_list() {
-        $sql = 'SELECT objet.objet_id, nom_objet, resume, ST_X(temp_geom.the_geom) AS longitude, ST_Y(temp_geom.the_geom) AS latitude, geom_id ' .
+        $sql = 'SELECT objet.objet_id, nom_objet, resume, ST_X(temp_geom.the_geom) AS longitude, ST_Y(temp_geom.the_geom) AS latitude, geom_id, ' .
+                'date_debut_geom, date_fin_geom, date_precision '.
                 'FROM objet JOIN temp_geom ON objet.objet_id = temp_geom.objet_id ' .
                 'WHERE objet.validation = TRUE ';
         $query = $this->db->query($sql);

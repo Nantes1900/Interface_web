@@ -18,8 +18,13 @@ $.getJSON(coord_file, function(json) { // this will show the info it in firebug 
 		if (json[row].latitude !== '') //Do not handle entries with no geographical information
 		{
                         var popupText = '<b>'+json[row].nom_objet+'</b><br>'+
-                                    json[row].resume+
-                                    '<br><a href="'+base_url+'view_data/view_data/view_objet/'+json[row].objet_id+'"> Voir l\'objet </a>'
+                                    json[row].resume;
+                            
+                        if (json[row].date_debut_geom !== null && json[row].date_fin_geom !== null){
+                            popupText += '<br><br> du '+dateToDMY(json[row].date_debut_geom)+' au '+dateToDMY(json[row].date_fin_geom);
+                            popupText += '<br> précision au '+json[row].date_precision;
+                        }    
+                        popupText += '<br><br><a href="'+base_url+'view_data/view_data/view_objet/'+json[row].objet_id+'"> Voir l\'objet </a>'
                         //if the user has a level equal or superior to 5 (moderateur), he will be allowed
                         //to delete the geometry of an objet which will no longer appear on the map
                         if($('span#moderateur').attr('id')=='moderateur'){ 
@@ -67,4 +72,10 @@ if($('div#latitude').attr('id')=='latitude'){
     var lng = $('div#longitude').html();
     
     map.setView([lat, lng], 18);
+}
+
+//small js function to convert y-m-d to d/m/y
+function dateToDMY(date){
+    var ymdArrayDate = date.split("-");
+    return ymdArrayDate[2]+"/"+ymdArrayDate[1]+"/"+ymdArrayDate[0];
 }

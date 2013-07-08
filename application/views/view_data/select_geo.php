@@ -17,7 +17,9 @@
     </p>
     <?php if($this->session->userdata('user_level') >= 4) { ?>
     <p id="chercheur"> Pour créer un nouvel objet sur la carte, 
-        double cliquez à son emplacement sur la carte puis choisissez l'option qui vous convient</p>
+        double cliquez à son emplacement sur la carte puis choisissez l'option qui vous convient. 
+        Si l'objet est bien validé mais que vous ne voyez pas son marqueur, essayez de nettoyer le cache de votre navigateur.
+    </p>
     <?php } ?>
     
 <!--    this is for auto zoom if it was an argument-->
