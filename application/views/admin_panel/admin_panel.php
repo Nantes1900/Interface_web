@@ -1,4 +1,4 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" > 
+
 
     <h1>Centre d'administration</h1>
     
@@ -56,6 +56,13 @@
             <tr>
                 <th>Pseudo</th><th>Niveau utilisateur</th><th>Date de création</th><th>Nom</th><th>Prénom</th>
                 <th>Adresse</th><th>E-mail</th><th>Numéro de téléphone</th><th>Profession</th>
+                <th class="hint">
+                    Supprimer
+                    <span>
+                        Vous ne pouvez supprimer que les utilisateurs qui n'ont 
+                        jamais effectué de contribution au site 
+                    </span>
+                </th>
             </tr>
         </thead>
         <tbody>
@@ -83,9 +90,28 @@
                     <td><?php echo $user->get_email(); ?></td>
                     <td><?php echo $user->get_phoneNumber(); ?></td>
                     <td><?php echo $user->get_job(); ?></td>
+                    <td>
+                        <?php if ($user->get_contribution()<1){
+                                echo form_open('admin_panel/admin_panel/delete_user/'.$user->get_userName()) ?>   
+                                    <div class="message" style="left:15%; top:40%; display:none">
+                                        <p>
+                                            Vous vous apprêtez à supprimer définitivement <em><?php echo $user->get_userName(); ?></em>,
+                                             êtes vous certain de ne pas plutôt vouloir l'invalider?
+                                        </p>
+                                        <input type="submit" value="Supprimer cet utilisateur" />
+                                        <?php echo img(array('src'=>'assets/utils/close.png','alt'=>'fermer','width'=>'4%', 
+                                                         'class'=>'removePopup')); ?>
+                                    </div>
+                                </form>
+                                <button class="removePopup"> Supprimer </button>
+                        <?php } else {
+                                echo 'Contributeur actif';
+                        } ?>
+                    </td>
                 </tr>
             <?php }  ?>
         </tbody>
     </table>
     </div>
-</html>
+
+<script src="<?php echo base_url();?>assets/js/removepopup.js"></script>

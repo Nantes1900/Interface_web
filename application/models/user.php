@@ -77,6 +77,15 @@ class User
         }
     }
     
+    public function get_contribution(){
+        $userManager=new User_model();
+        if($userManager->check_ifuserexists($this->get_userName())!=0){
+            return $userManager->contributed($this->get_userName());
+        } else {
+            return null;
+        }
+    }
+    
     //getters and setters
     public function get_userName() {
         return $this->_userName;

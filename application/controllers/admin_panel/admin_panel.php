@@ -79,6 +79,27 @@ class Admin_panel extends CI_Controller {
             redirect('admin_panel/admin_panel', 'refresh');
         }
     }
+    
+    public function delete_user($username){
+        if ($this->session->userdata('user_level') == 9) {
+            $user = new User($username);
+            if ($user->get_contribution() < 1) {
+                $success = $this->user_model->delete_user($username);
+                if ($success) {
+                    $message = 'L\'utilisateur <b>' . $username . '</b> a bien été supprimé';
+                } else {
+                    $message = 'Erreur : l\'utilisateur <b>' . $username . '</b> n\'a pas été supprimé';
+                }
+            } else {
+                $success = FALSE;
+                $message = 'Erreur : l\'utilisateur <b>' . $username .
+                            '</b> ne peut être supprimé car c\'est un contributeur actif';
+            }
+
+            $this->load->view('data_center/success_form', array('success' => $success, 'message' => $message));
+            $this->admin_panel();
+        }
+    }
 
 }
 

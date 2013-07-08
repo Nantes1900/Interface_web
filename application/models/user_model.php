@@ -174,6 +174,36 @@ class User_model extends CI_Model
             }           
             return $resultArray;
         }
+        
+        //count the number of contribution of an user (objet, ressources)
+        public function contributed($username){
+            $contribution = 0;
+            
+            $this->db->where('username', $username);
+            $this->db->from('objet');
+            $objetContrib = $this->db->count_all_results();
+            
+            $this->db->where('username', $username);
+            $this->db->from('ressource_textuelle');
+            $txtContrib = $this->db->count_all_results();
+            
+            $this->db->where('username', $username);
+            $this->db->from('ressource_graphique');
+            $imgContrib = $this->db->count_all_results();
+            
+            $this->db->where('username', $username);
+            $this->db->from('ressource_video');
+            $videoContrib = $this->db->count_all_results();
+            
+            $contribution = $objetContrib + $txtContrib + $imgContrib + $videoContrib;
+            
+            return $contribution;
+        }
+        
+        public function delete_user($username){
+            $this->db->where('username', $username);
+            return $this->db->delete('users');
+        }
 }
 
 /* End of file login_model.php */
