@@ -85,6 +85,10 @@
                 <?php echo anchor('download/download', 'Téléchargements'); ?>
             </li>
             <li>
+                <?php echo img(array('src'=>'assets/utils/tuto.png','width'=>'8%')); ?>
+                <?php echo anchor('tutorial/tutorial', 'Tutoriel'); ?>
+            </li>
+            <li>
                 <?php echo img(array('src'=>'assets/utils/system-logout.png','width'=>'8%')); ?>
                 <?php echo anchor('accueil/login/logout', 'D&eacute;connexion'); ?>
             </li>

@@ -55,12 +55,12 @@ div.leftSidebar ul{
 } 
 
 div.leftSidebar li{
-    background-color:#B98585;
-    border: 1px #9e5555 solid;
+    background-color:#81BEF7;
+    border: 1px #0174DF solid;
     border-radius: 2px;
 }
 div.leftSidebar li:hover{
-    background-color:#C69D9D;
+    background-color:#A9D0F5;
 }
 /*this is about having a dropdown menu in the left sidebar*/
 /*#navigation ul {display: none;} old code for non jquery script dropdown menu
@@ -85,17 +85,17 @@ div.menu ul{
 } 
 
 div.menu li{
-    background-color:#B98585;
-    border: 1px #9e5555 solid;
+    background-color:#81BEF7;
+    border: 1px #0174DF solid;
     border-radius: 2px;
 }
 div.menu li ul{width: 100%;}
 div.menu li:hover{
-    background-color:#C69D9D;
+    background-color:#A9D0F5;
 }
 
 h1{
-	color:#9e5555;	
+	color:#ffaa56;	
 	text-align: left;
 }
 
@@ -108,12 +108,12 @@ section2{
 }
 
 h2{
-	color:#9e5555;
+	color:#2E9AFE;
 	text-align: left;
 }
 
 h3{
-	color:#9e5555;
+	color:#2E9AFE;
 	text-align: left;
 	margin-left:10px;
 }
@@ -190,8 +190,8 @@ li.helpbox:hover span{ /*the span will display just on :hover state*/
     top:120%;
     right:88%;
     width:100%;
-    border:5px solid #9e5555;
-    background-color:#B98585; color:#000;
+    border:5px solid #819FF7;
+    background-color:#81BEF7; color:#000;
     text-align: center;
     font-size : small;
     padding:10px;
@@ -203,9 +203,9 @@ li.helpbox:hover span{ /*the span will display just on :hover state*/
     top:-11px;
     width:10px;
     height:10px;
-    border-top:5px solid #9e5555;
-    border-left:5px solid #9e5555;
-    background:#B98585;
+    border-top:5px solid #819FF7;
+    border-left:5px solid #819FF7;
+    background:#81BEF7;
     left:97%;
     margin-left:-3%;
     -moz-transform:rotate(45deg);
@@ -400,4 +400,68 @@ div.message img{
 #map {
     width: 900px;
     height: 400px;
+}
+
+/* tutorial part */
+
+#tuto-nav {
+    
+    margin:0;
+    padding:0;
+    font-size: small;
+    width : 100%;
+}
+
+#tuto-nav span.focus{
+    background-color : #2E9AFE;
+}
+
+#tuto-nav span:hover{
+    background-color : #9F81F7;
+}
+
+#tuto-nav span:first-child {
+    left : 0%;
+    width : auto;
+}
+#tuto-nav span:last-child {
+    right : 0%;
+    width : auto;
+    
+}
+
+#tuto-nav span {
+    left : auto;
+    width : auto;
+    padding : 3px;
+    background-color : #81BEF7;
+    border : 3px solid #819FF7;
+    
+}
+#tuto-nav span a:link,#tuto-nav span a:visited {
+    text-decoration:none;
+    color : black;
+}
+
+div.subSection h3 {
+    padding : 3px;
+    color : black;
+    background-color : #81BEF7;
+    border : 3px solid #819FF7;
+    margin-left : 0px;
+    margin-bottom : 0px;
+    width : 50%;
+    cursor:hand; 
+    cursor:pointer;
+    border-top-left-radius:10px;
+    border-top-right-radius:10px;
+}
+
+div.subText {
+    padding : 3px;
+    background-color : #A9D0F5;
+    border : 3px solid #819FF7;
+    border-bottom-left-radius:10px;
+    border-bottom-right-radius:10px;
+    border-top-right-radius:10px;
 }

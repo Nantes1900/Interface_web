@@ -9,12 +9,12 @@ $config = array(
                     array(
                         'field'=>'password1',
                         'label'=>'Password1',
-                        'rules'=>'required|matches[password2]'
+                        'rules'=>'required|matches[password2]|xss_clean'
                     ),
                     array(
                         'field'=>'password2',
                         'label'=>'Password2',
-                        'rules'=>'required'
+                        'rules'=>'required|xss_clean'
                     ),
                     array(
                         'field'=>'email',
@@ -42,7 +42,7 @@ $config = array(
                     array(
                         'field'=>'password',
                         'label'=>'Password',
-                        'rules'=>'required|callback_check_login_info'
+                        'rules'=>'required|xss_clean|callback_check_login_info'
                     )
                 ),
     
