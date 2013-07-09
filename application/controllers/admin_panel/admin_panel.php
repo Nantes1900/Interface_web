@@ -12,7 +12,7 @@
 class Admin_panel extends CI_Controller {
 
     public function index() {
-        if ($this->session->userdata('user_level') == 9) {
+        if ($this->session->userdata('user_level') >= 9) {
             $this->admin_panel();
         } else {
             redirect('accueil/accueil/', 'refresh');
@@ -68,22 +68,26 @@ class Admin_panel extends CI_Controller {
 
     //change the level of an user (form)
     public function change_level() {
-        if ($this->session->userdata('user_level') == 9) {
+        if ($this->session->userdata('user_level') >= 9) {
             if ($this->form_validation->run('change_level') == TRUE) {
                 $userName = $this->input->post('username');
                 $newLevel = (int) $this->input->post('userLevel');
                 $user = new User($userName);
-                $user->set_userLevel($newLevel);
-                $user->save();
+                if($user->get_userLevel() < 10){
+                    $user->set_userLevel($newLevel);
+                    $user->save();
+                }
             }
             redirect('admin_panel/admin_panel', 'refresh');
+        } else {
+            redirect('accueil/accueil/', 'refresh');
         }
     }
     
     public function delete_user($username){
-        if ($this->session->userdata('user_level') == 9) {
+        if ($this->session->userdata('user_level') >= 9) {
             $user = new User($username);
-            if ($user->get_contribution() < 1) {
+            if ($user->get_contribution() < 1 && $user->get_userLevel() < 10) {
                 $success = $this->user_model->delete_user($username);
                 if ($success) {
                     $message = 'L\'utilisateur <b>' . $username . '</b> a bien été supprimé';
@@ -98,6 +102,8 @@ class Admin_panel extends CI_Controller {
 
             $this->load->view('data_center/success_form', array('success' => $success, 'message' => $message));
             $this->admin_panel();
+        } else {
+            redirect('accueil/accueil/', 'refresh');
         }
     }
 

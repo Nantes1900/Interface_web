@@ -48,6 +48,9 @@ class Login extends CI_Controller {
         } elseif ($check['1'] == 'unvalid user') {
             $this->form_validation->set_message('check_login_info', 'Utilisateur non confirmé');
             return FALSE;
+        } elseif ($check['1'] == 'banned user') {
+            $this->form_validation->set_message('check_login_info', 'Utilisateur banni');
+            return FALSE;
         }
     }
 

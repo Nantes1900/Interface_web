@@ -70,7 +70,7 @@
                 <?php echo img(array('src'=>'assets/utils/edit-user.png','width'=>'8%')); ?>
                 <?php echo anchor('profile_panel/profile_panel', 'Profil personnel'); ?>
             </li>
-            <?php if($this->session->userdata('user_level') == 9) { ?>
+            <?php if($this->session->userdata('user_level') >= 9) { ?>
                     <li>
                         <?php echo img(array('src'=>'assets/utils/edit-group.png','width'=>'8%')); ?>
                         <?php echo anchor('admin_panel/admin_panel', 'Centre d\'administration');?>

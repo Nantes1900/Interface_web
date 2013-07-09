@@ -127,6 +127,9 @@ class User
             case 9:
                 return 'administrateur';
                 break;
+            case 10:
+                return 'super administrateur';
+                break;
         }
     }
     

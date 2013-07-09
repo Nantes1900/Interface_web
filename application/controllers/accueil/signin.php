@@ -85,8 +85,10 @@ class Signin extends CI_Controller {
     public function confirmation($username = null, $hashedPassword = null) {
         if ($this->user_model->check_ifuserexists($username) != 0) {
             $user = new User($username);
+            //checking password
             if ($user->get_hashedPassword() == $hashedPassword) {
-                if ($user->get_userLevel() == 0) {
+                //checking that user is new unconfirmed user
+                if ($user->get_userLevel() == 0 && $user->get_contribution() < 1) {
                     $user->set_userLevel(1);
                     $user->save();
                     $this->load->view('accueil/login/formulaire_login', array('titre' => 'Votre compte a bien été validé ' . $username . ', vous pouvez désormais vous connecter'));

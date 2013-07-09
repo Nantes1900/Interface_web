@@ -70,18 +70,36 @@
                 <tr>
                     <td><?php echo $user->get_userName(); ?></td>
                     <td>
-                        <?php echo form_open('admin_panel/admin_panel/change_level') ?>
-                            <input type="hidden" name="username" value="<?php echo $user->get_userName(); ?>" />
-                                <select name="userLevel">
-                                    <option value="0" <?php if ($user->get_userLevel()==0){echo 'selected';}?>>Non validé</option>
-                                    <option value="1" <?php if ($user->get_userLevel()==1){echo 'selected';}?>>Visiteur</option>
-                                    <option value="3" <?php if ($user->get_userLevel()==3){echo 'selected';}?>>Informateur</option>
-                                    <option value="4" <?php if ($user->get_userLevel()==4){echo 'selected';}?>>Chercheur</option>
-                                    <option value="5" <?php if ($user->get_userLevel()==5){echo 'selected';}?>>Moderateur</option>
-                                    <option value="9" <?php if ($user->get_userLevel()==9){echo 'selected';}?>>Administrateur</option>
-                                </select>    
-                            <input type="submit" value="changer le niveau d'utilisateur" />
-                        </form>
+                        <?php if($this->session->userdata('user_level') == 10){ ?>
+                            <?php echo form_open('admin_panel/admin_panel/change_level') ?>
+                                <input type="hidden" name="username" value="<?php echo $user->get_userName(); ?>" />
+                                    <select name="userLevel">
+                                        <option value="0" <?php if ($user->get_userLevel()==0){echo 'selected';}?>>Non validé</option>
+                                        <option value="1" <?php if ($user->get_userLevel()==1){echo 'selected';}?>>Visiteur</option>
+<!--                                        <option value="3" <?php if ($user->get_userLevel()==3){echo 'selected';}?>>Informateur</option>-->
+                                        <option value="4" <?php if ($user->get_userLevel()==4){echo 'selected';}?>>Chercheur</option>
+                                        <option value="5" <?php if ($user->get_userLevel()==5){echo 'selected';}?>>Moderateur</option>
+                                        <option value="9" <?php if ($user->get_userLevel()==9){echo 'selected';}?>>Administrateur</option>
+                                        <option value="-1" <?php if ($user->get_userLevel()==-1){echo 'selected';}?>>Utilisateur banni</option>
+                                    </select>    
+                                <input type="submit" value="changer le niveau d'utilisateur" />
+                            </form>
+                        <?php }elseif($this->session->userdata('user_level') == 9 && $user->get_userLevel()<9){ ?>
+                            <?php echo form_open('admin_panel/admin_panel/change_level') ?>
+                                <input type="hidden" name="username" value="<?php echo $user->get_userName(); ?>" />
+                                    <select name="userLevel">
+                                        <option value="0" <?php if ($user->get_userLevel()==0){echo 'selected';}?>>Non validé</option>
+                                        <option value="1" <?php if ($user->get_userLevel()==1){echo 'selected';}?>>Visiteur</option>
+<!--                                        <option value="3" <?php if ($user->get_userLevel()==3){echo 'selected';}?>>Informateur</option>-->
+                                        <option value="4" <?php if ($user->get_userLevel()==4){echo 'selected';}?>>Chercheur</option>
+                                        <option value="5" <?php if ($user->get_userLevel()==5){echo 'selected';}?>>Moderateur</option>
+                                        <option value="-1" <?php if ($user->get_userLevel()==-1){echo 'selected';}?>>Utilisateur banni</option>
+                                    </select>    
+                                <input type="submit" value="changer le niveau d'utilisateur" />
+                            </form>
+                        <?php }else{
+                                echo $user->get_userLevelType();
+                        } ?>
                     </td>
                     <td><?php echo date('d/m/Y',$user->get_creationDate()); ?></td>
                     <td><?php echo $user->get_firstName(); ?></td>
@@ -91,7 +109,7 @@
                     <td><?php echo $user->get_phoneNumber(); ?></td>
                     <td><?php echo $user->get_job(); ?></td>
                     <td>
-                        <?php if ($user->get_contribution()<1){
+                        <?php if ($user->get_contribution()<1 && $user->get_userLevel() < 10){
                                 echo form_open('admin_panel/admin_panel/delete_user/'.$user->get_userName()) ?>   
                                     <div class="message" style="left:15%; top:40%; display:none">
                                         <p>
@@ -104,8 +122,10 @@
                                     </div>
                                 </form>
                                 <button class="removePopup"> Supprimer </button>
-                        <?php } else {
+                        <?php } elseif($user->get_contribution()>=1) {
                                 echo 'Contributeur actif';
+                        } elseif($user->get_userLevel() == 10) {
+                                echo 'Super administrateur';
                         } ?>
                     </td>
                 </tr>
