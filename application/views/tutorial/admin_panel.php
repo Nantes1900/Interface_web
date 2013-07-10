@@ -1,5 +1,5 @@
 
-<div style="text-align:center;">
+<div id="tuto-arrow">
     <?php 
         echo anchor('tutorial/tutorial/previous/admin_panel', img(array('src'=>'assets/utils/arrow-left.png', 'alt'=>'Section précédente'))); 
         echo anchor('tutorial/tutorial', img(array('src'=>'assets/utils/arrow-up-double.png', 'alt'=>'Revenir au menu principal du tutorial')));

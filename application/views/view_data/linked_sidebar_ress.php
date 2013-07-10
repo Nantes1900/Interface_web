@@ -1,4 +1,4 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" > 
+
     <div class='rightSidebar'>
         <h2>Objets en relation</h2>
         
@@ -21,4 +21,3 @@
         <?php } ?>
         
     </div>
-</html>

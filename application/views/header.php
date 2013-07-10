@@ -95,7 +95,7 @@
         </ul>
     </div>
 <!--    this button is just a test-->
-    <button onclick="link()"> lien ici!</button>
+<!--    <button onclick="link()"> lien ici!</button>-->
     <script src="<?php echo base_url();?>assets/js/jquery.js"></script>
     <script src="<?php echo base_url();?>assets/js/dropdownmenu.js"></script>
     <script>

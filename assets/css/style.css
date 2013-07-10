@@ -5,7 +5,20 @@ html{
 
 }
 
+/* color panel 
+The color panel has two main colors (1st & 2nd), each with 3 level of brightness
 
+blue :
+1st heavy #0174DF
+1st medium #81BEF7
+1st light #A9D0F5
+
+orange :
+2nd heavy #ff7f00
+2nd medium #ffaa56
+2nd light #ffffff
+
+*/
 /* Styles globaux*/
 
 body{
@@ -95,7 +108,7 @@ div.menu li:hover{
 }
 
 h1{
-	color:#ffaa56;	
+	color:#ff7f00;	
 	text-align: left;
 }
 
@@ -108,12 +121,12 @@ section2{
 }
 
 h2{
-	color:#2E9AFE;
+	color:#0174DF;
 	text-align: left;
 }
 
 h3{
-	color:#2E9AFE;
+	color:#81BEF7;
 	text-align: left;
 	margin-left:10px;
 }
@@ -195,6 +208,7 @@ li.helpbox:hover span{ /*the span will display just on :hover state*/
     text-align: center;
     font-size : small;
     padding:10px;
+    z-index:2;
   }
 
   li.helpbox:hover span:after{ /*the span will display just on :hover state*/
@@ -211,6 +225,7 @@ li.helpbox:hover span{ /*the span will display just on :hover state*/
     -moz-transform:rotate(45deg);
     -webkit-transform:rotate(45deg);
     transform:rotate(45deg);
+    z-index:2;
   }
   /* for invisible buttons */
   button.invisible { 
@@ -412,12 +427,22 @@ div.message img{
     width : 100%;
 }
 
+div#tuto-arrow {
+    left : 46%; 
+    position : fixed; 
+    bottom : 2%; 
+    background-color:#ffaa56;
+    border : solid 3px #ff7f00;
+    border-radius:10px;
+    z-index:2;
+}
+
 #tuto-nav span.focus{
     background-color : #2E9AFE;
 }
 
 #tuto-nav span:hover{
-    background-color : #9F81F7;
+    background-color : #A9D0F5;
 }
 
 #tuto-nav span:first-child {
