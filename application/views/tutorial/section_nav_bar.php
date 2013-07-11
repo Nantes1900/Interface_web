@@ -11,9 +11,9 @@
                 <?php echo anchor('tutorial/tutorial/moderation_center', 'Modération');?>
             </span>
         <?php } ?>
-        <span  <?php if($section=='select_data'){echo 'class="focus"';} ?>>
+        <span  <?php if($section=='view_data'){echo 'class="focus"';} ?>>
             <?php echo img(array('src'=>'assets/utils/zoom-2.png','width'=>'2%')); ?>
-            <?php echo anchor('tutorial/tutorial/select_data', 'Visualisation'); ?>
+            <?php echo anchor('tutorial/tutorial/view_data', 'Visualisation'); ?>
         </span>
         <span  <?php if($section=='profile_panel'){echo 'class="focus"';} ?>>
             <?php echo img(array('src'=>'assets/utils/edit-user.png','width'=>'2%')); ?>

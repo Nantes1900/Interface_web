@@ -34,7 +34,7 @@ class Tutorial extends CI_Controller {
         if($this->session->userdata('user_level') >= 5){
             $list[] = 'moderation_center'; 
         }
-        $list[] = 'select_data'; 
+        $list[] = 'view_data'; 
         $list[] = 'profile_panel'; 
         if($this->session->userdata('user_level') >= 9){
             $list[] = 'admin_panel'; 
@@ -82,10 +82,10 @@ class Tutorial extends CI_Controller {
         $this->load->view('footer');
     }
     
-    public function select_data(){
+    public function view_data(){
         $this->load->view('tutorial/tuto_h1');
-        $this->load->view('tutorial/section_nav_bar', array('section'=>'select_data'));
-        $this->load->view('tutorial/select_data');
+        $this->load->view('tutorial/section_nav_bar', array('section'=>'view_data'));
+        $this->load->view('tutorial/view_data');
         $this->load->view('footer');
     }
     
