@@ -11,4 +11,8 @@ $(function(){
         $("img.removePopup").click(function(){
             $(this).parent().css("display","none");
         });
+        
+        $("button.closePopup").click(function(){
+            $(this).parent().css("display","none");
+        });
 });

@@ -35,6 +35,7 @@
                                      les informations de la relation seront perdues, êtes vous certain de votre décision?
                                 </p>
                                 <input type="submit" value="Supprimer la relation" />
+                                <button type="reset" class="closePopup">Annuler</button>
                                 <?php echo img(array('src'=>'assets/utils/close.png','alt'=>'fermer','width'=>'4%', 
                                                          'class'=>'removePopup')); ?>
                            </div>

@@ -101,6 +101,7 @@
                                          les informations seront définitivement perdues, êtes vous certain de ne pas plutôt vouloir l'invalider?
                                     </p>
                                     <input type="submit" value="Supprimer cet objet" />
+                                    <button type="reset" class="closePopup">Annuler</button>
                                     <?php echo img(array('src'=>'assets/utils/close.png','alt'=>'fermer','width'=>'4%', 
                                                          'class'=>'removePopup')); ?>
                                 </div>
