@@ -28,7 +28,7 @@ class Modify_objet extends CI_Controller {
         require_once ('application/models/objet.php');
         $this->load->model('objet_model');
         $this->load->library('form_validation');
-        $this->load->helper(array('form', 'dates', 'geom_helper'));
+        $this->load->helper(array('form', 'dates', 'geom'));
         $this->load->view('header');
         if (!$this->session->userdata('username')) { //checking that user is connected
             redirect('accueil/accueil/not_connected/', 'refresh');

@@ -72,7 +72,7 @@ class Select_data extends CI_Controller {
             $ressource = new $typeRessourceMethod($ressource_id);
             $valid = null;
         }
-
+    
         //creating the list
         $data = array('listObjet' => $this->objet_model->get_objet_list($orderBy, $orderDirection, $speAttribute, $speAttributeValue, $valid));
         $data['goal'] = $goal;

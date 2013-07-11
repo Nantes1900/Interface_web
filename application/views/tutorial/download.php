@@ -18,3 +18,5 @@
     fichier csv. Pour plus d'informations à ce sujet, allez voir la section 
     <b>Ajout</b>, sous-section <b>import d'un fichier csv</b>.
 </p>
+
+<script src="<?php echo base_url();?>assets/js/tuto_sub_section.js"></script>
