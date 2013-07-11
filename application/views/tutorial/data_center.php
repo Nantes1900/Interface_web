@@ -1,9 +1,9 @@
 
 
 <div id="tuto-arrow">
-    <?php echo img(array('src'=>'assets/utils/arrow-left.png', 'alt'=>'Section précédente', 'style'=>'visibility:hidden')); ?>
-    <?php echo img(array('src'=>'assets/utils/arrow-up-double.png', 'alt'=>'Revenir au menu principal du tutorial', 'id'=>'arrow-up')); ?>
     <?php 
+        echo img(array('src'=>'assets/utils/arrow-left.png', 'alt'=>'Section précédente', 'style'=>'visibility:hidden')); 
+        echo img(array('src'=>'assets/utils/arrow-up-double.png', 'alt'=>'Revenir au menu principal du tutorial', 'id'=>'arrow-up')); 
         echo anchor('tutorial/tutorial/next/data_center', img(array('src'=>'assets/utils/arrow-right.png', 'alt'=>'Section suivante'))); 
     ?>
 </div>

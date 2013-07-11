@@ -19,3 +19,8 @@
 <p>
     Pour en apprendre plus sur les différentes sections du site, cliquez simplement sur celles qui vous intéressent
 </p>
+
+<p>
+    Notez qu'avec l'évolution du site, il est possible que les illustrations ne correspondent pas exactement à la réalité
+    du fonctionnement du site. Ces différences resteront toutefois minimes.
+</p>

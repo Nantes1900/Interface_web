@@ -8,3 +8,9 @@
 </div>
 
 <h2>Profil personnel</h2>
+
+<p>
+    Ce menu vous permet de gérer les informations que verront les autres utilisateurs. 
+    Pour valider les modifications, vous devez entrer votre mot de passe. Si aucun message d'erreur 
+    ne s'affiche quand vous validez, votre modification a été prise en compte.
+</p>

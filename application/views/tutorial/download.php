@@ -8,3 +8,13 @@
 </div>
 
 <h2>Téléchargements</h2>
+
+<p>
+    Cette section contient différents outils à télécharger pour faciliter votre 
+    utilisation de la plateforme Nantes1900. 
+</p>
+<p>
+    En particulier, vous pourrez trouver les modèles de tableur pour l'export en 
+    fichier csv. Pour plus d'informations à ce sujet, allez voir la section 
+    <b>Ajout</b>, sous-section <b>import d'un fichier csv</b>.
+</p>
