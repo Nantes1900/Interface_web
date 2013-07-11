@@ -1,5 +1,5 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" > 
-    <body>
+
+
         <h1> Détails de l'objet : <?php echo $objet->get_nom_objet(); ?> </h1>
         
         <h2> Résumé </h2>
@@ -50,5 +50,3 @@
             </p>
         </form>
         
-    </body>
-</html>

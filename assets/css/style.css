@@ -437,6 +437,11 @@ div#tuto-arrow {
     z-index:2;
 }
 
+div#tuto-arrow img{
+    cursor:hand; 
+    cursor:pointer;
+}
+
 #tuto-nav span.focus{
     background-color : #2E9AFE;
 }

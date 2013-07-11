@@ -1,5 +1,4 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" > 
-    <body>
+
         <h1> Détails de la ressource : <?php echo $ressource->get_titre(); ?> </h1>
         
         <h2> Description </h2>
@@ -147,5 +146,4 @@
                 </form>
         <?php } ?>
         
-    </body>
-</html>
+

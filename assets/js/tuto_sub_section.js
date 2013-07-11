@@ -12,3 +12,10 @@ $(function() {
         $(this).parent().children('div.subText').finish().slideToggle('slow');
     });
 });
+
+// arrow up scoll to top
+$(function() {
+    $('img#arrow-up').click(function() {
+        $('body').scrollTop(0);
+    });
+});
