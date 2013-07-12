@@ -10,7 +10,7 @@
     </h2>
 <!--    sorting form-->
     <?php if($goal!='addgeo'){
-                echo form_open('view_data/select_data/index/objet/'.$goal);
+                echo form_open('view_data/select_data/sort_sel_obj/'.$goal);
           }else{
                 echo form_open('data_center/ajout_objet/select_objet_geo/add_geo/'.$latitude.'/'.$longitude);
           }   ?>
@@ -51,6 +51,42 @@
 
     </form>
 
+<!--    page navigation-->
+<div style="text-align: right;">
+    Page : 
+    <?php
+    if ($goal != 'add_doc') {
+        for ($i = 1; $i <= $numPage; $i++) {
+            if($i != $currentPage){
+                echo anchor('view_data/select_data/select_objet/' . $goal . '/' . $i, $i, array('class'=>'otherPage'));
+                echo '&nbsp;';
+            }else{
+                echo anchor('view_data/select_data/select_objet/' . $goal . '/' . $i, $i, array('class'=>'currentPage'));
+                echo '&nbsp;';
+            }
+        }
+    } else {
+        if ($typeRessource == 'ressource_texte') {
+            $ressource_id = $ressource->get_ressource_textuelle_id();
+        } else {
+            $getMethod = 'get_' . $typeRessource . '_id';
+            $ressource_id = $ressource->$getMethod();
+        }
+        for ($i = 1; $i <= $numPage; $i++) {
+            if($i != $currentPage){
+                echo anchor('view_data/select_data/select_objet/' . $goal . '/' . 
+                            $i . '/' . $typeRessource . '/' . $ressource_id, $i, array('class'=>'otherPage'));
+                echo '&nbsp;';
+            }else{
+                echo anchor('view_data/select_data/select_objet/' . $goal . '/' . $i . '/' . 
+                            $typeRessource . '/' . $ressource_id, $i, array('class'=>'currentPage'));
+                echo '&nbsp;';
+            }
+        }
+    }
+    ?>
+</div>
+<br>
 <!--    list of objets-->
 
     <div class="classyTable">

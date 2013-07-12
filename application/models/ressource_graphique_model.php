@@ -47,25 +47,41 @@ class Ressource_graphique_model extends CI_Model
         }
     }
     
-    public function get_ressource_list($orderBy='objet_id', $orderDirection='asc',$speAttribute = null, $speAttributeValue = null, $valid = null){
-            $this->db->select('*');
-            $this->db->from('ressource_graphique');
-            $this->db->order_by($orderBy,$orderDirection);
-            if ($speAttribute!=null && $speAttributeValue!=null){
-                $this->db->like($speAttribute,$speAttributeValue);
-            }
-            if ($valid!=null){$this->db->where('validation', $valid);}
-            
-            $query = $this->db->get();
-            
-            //converting to an array of Objet entities
-            $tempArray = $query->result_array();
-            $resultArray = array();         
-            foreach ($tempArray as $objetArray){
-                $resultArray[] = new Ressource_graphique($objetArray);
-            }           
-            return $resultArray;
+    public function get_ressource_list($orderBy = 'objet_id', $orderDirection = 'asc', $speAttribute = null, $speAttributeValue = null, $valid = null, $page = 1) {
+        $this->db->select('*');
+        $this->db->from('ressource_graphique');
+        $this->db->order_by($orderBy, $orderDirection);
+        if ($speAttribute != null && $speAttributeValue != null) {
+            $this->db->like($speAttribute, $speAttributeValue);
         }
+        if ($valid != null) {
+            $this->db->where('validation', $valid);
+        }
+        $this->db->limit(10,($page-1)*10); //10 ressource per page
+        $query = $this->db->get();
+
+        //converting to an array of Objet entities
+        $tempArray = $query->result_array();
+        $resultArray = array();
+        foreach ($tempArray as $objetArray) {
+            $resultArray[] = new Ressource_graphique($objetArray);
+        }
+        return $resultArray;
+    }
+    
+    public function count_page_ress($speAttribute = null, $speAttributeValue = null, $valid = null){
+        $this->db->from('ressource_graphique');
+        if ($speAttribute != null && $speAttributeValue != null) {
+            $this->db->like($speAttribute, $speAttributeValue);
+        }
+        if ($valid != null) {
+            $this->db->where('validation', $valid);
+        }
+        $entries = $this->db->count_all_results();
+        $pages = floor($entries/10)+1;
+        
+        return $pages;
+    }
         
     public function exist($ressource_graph_id){
             

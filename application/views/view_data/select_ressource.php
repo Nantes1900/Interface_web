@@ -10,7 +10,7 @@
                                    if($typeRessource=='ressource_graphique'){echo 'graphiques';}?>
     </h2>
 <!--    sorting form-->
-    <?php echo form_open('view_data/select_data/index/'.$typeRessource.'/'.$goal) ?>
+    <?php echo form_open('view_data/select_data/sort_sel_ress/'.$typeRessource.'/'.$goal) ?>
         <label for="orderBy">Trier par:</label>
         <select name="orderBy" id="orderBy">
             <option value="titre">Titre de la ressource</option>
@@ -40,6 +40,23 @@
 
     </form>
 
+<!--    page navigation-->
+<div style="text-align: right;">
+    Page : 
+    <?php
+        for ($i = 1; $i <= $numPage; $i++) {
+            if($i != $currentPage){
+                echo anchor('view_data/select_data/select_ressource/' . $typeRessource . '/' .$goal . '/' . $i, $i, array('class'=>'otherPage'));
+                echo '&nbsp;';
+            }else{
+                echo anchor('view_data/select_data/select_ressource/' . $typeRessource . '/' . $goal . '/' . $i, $i, array('class'=>'currentPage'));
+                echo '&nbsp;';
+            }
+        }
+    ?>
+</div>
+<br>    
+    
 <!--    list of ressources-->
 
     <div class="classyTable">

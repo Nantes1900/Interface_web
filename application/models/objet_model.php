@@ -31,7 +31,7 @@ class Objet_model extends CI_Model {
         return $this->db->insert_id();
     }
 
-    public function get_objet_list($orderBy = 'objet_id', $orderDirection = 'asc', $speAttribute = null, $speAttributeValue = null, $valid = null) {
+    public function get_objet_list($orderBy = 'objet_id', $orderDirection = 'asc', $speAttribute = null, $speAttributeValue = null, $valid = null, $page = 1) {
         $this->db->select('*');
         $this->db->from('objet');
         $this->db->order_by($orderBy, $orderDirection);
@@ -41,7 +41,7 @@ class Objet_model extends CI_Model {
         if ($valid != null) {
             $this->db->where('validation', $valid);
         }
-
+        $this->db->limit(10,($page-1)*10); //10 objet per page
         $query = $this->db->get();
 
         //converting to an array of Objet entities
@@ -52,7 +52,23 @@ class Objet_model extends CI_Model {
         }
         return $resultArray;
     }
-
+    
+    //return the number of page depending on the sort option
+    public function count_page_obj($speAttribute = null, $speAttributeValue = null, $valid = null) {
+        
+        $this->db->from('objet');
+        if ($speAttribute != null && $speAttributeValue != null) {
+            $this->db->like($speAttribute, $speAttributeValue);
+        }
+        if ($valid != null) {
+            $this->db->where('validation', $valid);
+        }
+        $entries = $this->db->count_all_results();
+        $pages = floor($entries/10)+1;
+        
+        return $pages;
+    }
+    
     public function get_objet_geo_list() {
         $sql = 'SELECT objet.objet_id, nom_objet, resume, ST_X(temp_geom.the_geom) AS longitude, ST_Y(temp_geom.the_geom) AS latitude, geom_id, ' .
                 'date_debut_geom, date_fin_geom, date_precision '.
