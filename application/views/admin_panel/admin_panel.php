@@ -122,11 +122,11 @@
                                            } ?>>
                 Nom d'utilisateur
             </option>
-            <option value="timestamp" <?php if($this->session->userdata('sel_admin_speAttribute') == 'timestamp'){ 
+<!--            <option value="timestamp" <?php if($this->session->userdata('sel_admin_speAttribute') == 'timestamp'){ 
                                                 echo 'selected'; 
                                             } ?>>
                 Date de création
-            </option> 
+            </option>  problem because of timestamp precision, do not use until repaired-->
             <option value="nom" <?php if($this->session->userdata('sel_admin_speAttribute') == 'nom'){ 
                                             echo 'selected'; 
                                       } ?>>

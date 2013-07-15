@@ -103,11 +103,20 @@ if (!function_exists('conc_2_date')) {
 }
 
 if ( ! function_exists('dateFR_to_timestamp')){
-    //convertit date jj/mm/AAAA en timestamp
+    //convertdate jj/mm/AAAA into timestamp if valid
+    //return FALSE if not
     function dateFR_to_timestamp($date) {
-        list($day, $month, $year) = explode('/', $date);
-        $timestamp = mktime(0, 0, 0, $month, $day, $year);
-        return $timestamp;
+        if (preg_match("#^\d\d/\d\d/\d\d\d\d$#", $date)){
+            list($day, $month, $year) = explode('/', $date);
+            if(checkdate($month, $day, $year)){
+                $timestamp = mktime(0, 0, 0, $month, $day, $year);
+                return $timestamp;
+            }else{
+                return FALSE;
+            }
+        }else{
+            return FALSE;
+        }
     }
 }
 
