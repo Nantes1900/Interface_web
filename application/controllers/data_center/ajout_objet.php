@@ -73,32 +73,87 @@ class Ajout_objet extends CI_Controller {
             $this->load->view('data_center/success_form', $data);
         }
     }
-
-    //powerful method to render a sorted list of objet, with various button 
-    //to different controllers, depending on input attributes
-    public function select_objet_geo($goal, $latitude = null, $longitude = null) {
-        if ($this->session->userdata('user_level') >= 4) {
-            //managing the sort option
-            $orderBy = $this->input->post('orderBy');
-            if ($orderBy == null) {
-                $orderBy = 'nom_objet';
-            }
-            $orderDirection = $this->input->post('orderDirection');
-            if ($this->form_validation->run('sort_objet') == TRUE) { //we check there is no xss in the field
-                $speAttributeValue = $this->input->post('speAttributeValue');
-                if (!empty($speAttributeValue)) { //if something is specified we set the values
-                    $speAttribute = $this->input->post('speAttribute');
-                } else { //if nothing specified as specific value we set to null
-                    $speAttribute = null;
-                    $speAttributeValue = null;
-                }
-            } else { //in case of xss attempt, no sorting on this
+    
+    //setting the sort option of the objet list
+    public function sort_sel_obj($goal, $latitude = null, $longitude = null){
+        //managing the sort option
+        $orderBy = $this->input->post('orderBy');
+        if ($orderBy == null) {
+            $orderBy = 'nom_objet';
+        }
+        $this->session->set_userdata('sel_obj_orderBy', $orderBy);
+        
+        $orderDirection = $this->input->post('orderDirection');
+        $this->session->set_userdata('sel_obj_orderDirection', $orderDirection);
+        
+        if ($this->form_validation->run('sort_objet') == TRUE) { //we check there is no xss in the field
+            $speAttributeValue = $this->input->post('speAttributeValue');
+            if (!empty($speAttributeValue)) { //if something is specified we set the values
+                $speAttribute = $this->input->post('speAttribute');
+            } else { //if nothing specified as specific value we set to null
                 $speAttribute = null;
                 $speAttributeValue = null;
             }
+        } else { //in case of xss attempt, no sorting on this
+            $speAttribute = null;
+            $speAttributeValue = null;
+        }
+        $this->session->set_userdata('sel_obj_speAttribute', $speAttribute);
+        $this->session->set_userdata('sel_obj_speAttributeValue', $speAttributeValue);
+        $valid = 't';
+        if ($goal == 'add_doc') { //we put some info about the related ressource if we are adding a documentation
+            $ressource_id = $this->input->post('ressource_id');
+            $typeRessource = $this->input->post('typeRessource');
+            require_once ('application/models/' . $typeRessource . '.php');
+            $this->load->model($typeRessource . '_model');
+            $typeRessourceMethod = ucfirst($typeRessource);
+            $ressource = new $typeRessourceMethod($ressource_id);
+            $valid = null;
+        }
+        $this->session->set_userdata('sel_obj_valid', $valid);
+        $this->select_objet_geo($goal, $latitude, $longitude);
+    }
+    
+    
+    //powerful method to render a sorted list of objet, with various button 
+    //to different controllers, depending on input attributes
+    public function select_objet_geo($goal, $latitude = null, $longitude = null, $page = 1) {
+            if ($this->session->userdata('user_level') >= 4) {
+                //getting the sort option
+                if($this->session->userdata('sel_obj_orderBy')!=null){
+                    $orderBy = $this->session->userdata('sel_obj_orderBy');
+                } else {
+                    $orderBy = 'nom_objet';
+                }
+                if($this->session->userdata('sel_obj_orderDirection')!=null){
+                    $orderDirection = $this->session->userdata('sel_obj_orderDirection');
+                } else {
+                    $orderDirection = 'asc';
+                }
+                if($this->session->userdata('sel_obj_speAttribute')!=null){
+                    $speAttribute = $this->session->userdata('sel_obj_speAttribute');
+                } else {
+                    $speAttribute = null;
+                }
+                if($this->session->userdata('sel_obj_speAttributeValue')!=null){
+                    $speAttributeValue = $this->session->userdata('sel_obj_speAttributeValue');
+                } else {
+                    $speAttributeValue = null;
+                }
+                if($this->session->userdata('sel_obj_valid')!=null && $goal != 'view'){
+                    $valid = $this->session->userdata('sel_obj_valid');
+                } else {
+                    if ($goal != 'add_doc' && $goal != 'add_geo'){
+                        $valid = 't';
+                    }else{
+                        $valid = null;
+                    }
+                }
 
             //creating the list
-            $data = array('listObjet' => $this->objet_model->get_objet_list($orderBy, $orderDirection, $speAttribute, $speAttributeValue));
+            $data = array('listObjet' => $this->objet_model->get_objet_list($orderBy, $orderDirection, $speAttribute, $speAttributeValue, $valid, $page));
+            $data['numPage'] = $this->objet_model->count_page_obj($speAttribute, $speAttributeValue, $valid);
+            $data['currentPage'] = $page;
             $data['goal'] = $goal;
             $data['latitude'] = $latitude;
             $data['longitude'] = $longitude;

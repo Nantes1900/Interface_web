@@ -1,4 +1,4 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" > 
+
 
     <p><?php echo anchor('view_data/select_data/index', 'Revenir à la selection de données'); ?></p>
     
@@ -7,12 +7,13 @@
     <h2>
         Liste des objets 
         <?php if($goal=='add_doc'){ echo ' à relier à la ressource '.$ressource->get_titre(); } ?>
+        <?php if($goal=='add_geo'){ echo ' à relier à la coordonnée sélectionnée '; } ?>
     </h2>
 <!--    sorting form-->
-    <?php if($goal!='addgeo'){
+    <?php if($goal!='add_geo'){
                 echo form_open('view_data/select_data/sort_sel_obj/'.$goal);
           }else{
-                echo form_open('data_center/ajout_objet/select_objet_geo/add_geo/'.$latitude.'/'.$longitude);
+                echo form_open('data_center/ajout_objet/sort_sel_obj/add_geo/'.$latitude.'/'.$longitude);
           }   ?>
         <label for="orderBy">Trier par:</label>
         <select name="orderBy" id="orderBy">
@@ -55,7 +56,7 @@
 <div style="text-align: right;">
     Page : 
     <?php
-    if ($goal != 'add_doc') {
+    if ($goal != 'add_doc' && $goal != 'add_geo') {
         for ($i = 1; $i <= $numPage; $i++) {
             if($i != $currentPage){
                 echo anchor('view_data/select_data/select_objet/' . $goal . '/' . $i, $i, array('class'=>'otherPage'));
@@ -65,7 +66,7 @@
                 echo '&nbsp;';
             }
         }
-    } else {
+    } elseif($goal == 'add_doc') {
         if ($typeRessource == 'ressource_texte') {
             $ressource_id = $ressource->get_ressource_textuelle_id();
         } else {
@@ -80,6 +81,16 @@
             }else{
                 echo anchor('view_data/select_data/select_objet/' . $goal . '/' . $i . '/' . 
                             $typeRessource . '/' . $ressource_id, $i, array('class'=>'currentPage'));
+                echo '&nbsp;';
+            }
+        }
+    } elseif($goal == 'add_geo'){
+        for ($i = 1; $i <= $numPage; $i++) {
+            if($i != $currentPage){
+                echo anchor('data_center/ajout_objet/select_objet_geo/' . $goal . '/' . $latitude . '/' . $longitude . '/' . $i, $i, array('class'=>'otherPage'));
+                echo '&nbsp;';
+            }else{
+                echo anchor('data_center/ajout_objet/select_objet_geo/' . $goal . '/' . $latitude . '/' . $longitude . '/' . $i, $i, array('class'=>'currentPage'));
                 echo '&nbsp;';
             }
         }
@@ -154,4 +165,4 @@
     </table>
     </div>
     
-</html>
+

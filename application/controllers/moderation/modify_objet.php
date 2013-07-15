@@ -36,16 +36,19 @@ class Modify_objet extends CI_Controller {
             redirect('accueil/accueil/', 'refresh');
         }
     }
-
-    //powerful method to render a sorted list of objet, with 
-    //various button to different controllers, depending on input attributes
-    public function select_objet($goal = 'modify', $objet1_id = null) {
+    
+    //setting the sort option of the objet list
+    public function sort_sel_obj($goal, $objet1_id = null){
         //managing the sort option
         $orderBy = $this->input->post('orderBy');
         if ($orderBy == null) {
             $orderBy = 'nom_objet';
         }
+        $this->session->set_userdata('sel_obj_orderBy', $orderBy);
+        
         $orderDirection = $this->input->post('orderDirection');
+        $this->session->set_userdata('sel_obj_orderDirection', $orderDirection);
+        
         if ($this->form_validation->run('sort_objet') == TRUE) { //we check there is no xss in the field
             $speAttributeValue = $this->input->post('speAttributeValue');
             if (!empty($speAttributeValue)) { //if something is specified we set the values
@@ -58,14 +61,51 @@ class Modify_objet extends CI_Controller {
             $speAttribute = null;
             $speAttributeValue = null;
         }
+        $this->session->set_userdata('sel_obj_speAttribute', $speAttribute);
+        $this->session->set_userdata('sel_obj_speAttributeValue', $speAttributeValue);
         if ($this->input->post('validation') == TRUE) { //we check if we only want non validated objet
             $valid = 'f';
         } else {
             $valid = null;
         }
+        $this->session->set_userdata('sel_obj_valid', $valid);
+        $this->select_objet($goal, 1, $objet1_id);
+    }
+    
+    //powerful method to render a sorted list of objet, with 
+    //various button to different controllers, depending on input attributes
+    public function select_objet($goal = 'modify', $page = 1, $objet1_id = null) {
+        //getting the sort option
+        if($this->session->userdata('sel_obj_orderBy')!=null){
+            $orderBy = $this->session->userdata('sel_obj_orderBy');
+        } else {
+            $orderBy = 'nom_objet';
+        }
+        if($this->session->userdata('sel_obj_orderDirection')!=null){
+            $orderDirection = $this->session->userdata('sel_obj_orderDirection');
+        } else {
+            $orderDirection = 'asc';
+        }
+        if($this->session->userdata('sel_obj_speAttribute')!=null){
+            $speAttribute = $this->session->userdata('sel_obj_speAttribute');
+        } else {
+            $speAttribute = null;
+        }
+        if($this->session->userdata('sel_obj_speAttributeValue')!=null){
+            $speAttributeValue = $this->session->userdata('sel_obj_speAttributeValue');
+        } else {
+            $speAttributeValue = null;
+        }
+        if($this->session->userdata('sel_obj_valid')!=null){
+            $valid = $this->session->userdata('sel_obj_valid');
+        }else{
+            $valid = null;
+        }
 
         //creating the list
-        $data = array('listObjet' => $this->objet_model->get_objet_list($orderBy, $orderDirection, $speAttribute, $speAttributeValue, $valid));
+        $data = array('listObjet' => $this->objet_model->get_objet_list($orderBy, $orderDirection, $speAttribute, $speAttributeValue, $valid, $page));
+        $data['numPage'] = $this->objet_model->count_page_obj($speAttribute, $speAttributeValue, $valid);
+        $data['currentPage'] = $page;
         $data['goal'] = $goal;
         if ($objet1_id != null) {
             $data['objetSource'] = new Objet($objet1_id);
@@ -133,7 +173,7 @@ class Modify_objet extends CI_Controller {
     //render the select objet menu to choose which objet you want to link
     public function add_relation() {
         $objet_id = $this->input->post('objet_id');
-        $this->select_objet('add_relation', $objet_id);
+        $this->select_objet('add_relation', 1,$objet_id);
     }
 
     public function add_relation_form() {
@@ -177,7 +217,7 @@ class Modify_objet extends CI_Controller {
             $message = $this->create_success_message($success, $lastAction, $objet1->get_nom_objet(), $objet2->get_nom_objet());
 
             $this->load->view('data_center/success_form', array('success' => $success, 'message' => $message));
-            $this->select_objet('add_relation', $objet1_id);
+            $this->select_objet('add_relation', 1, $objet1_id);
         }
     }
 

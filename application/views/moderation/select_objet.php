@@ -7,10 +7,10 @@
                                 if($goal=='add_doc'){ echo 'à lier à la ressource '.$ressource->get_titre(); } ?></h2>
 <!--    sorting form-->
     <?php if($goal=='modify' || $goal=='relation'){
-              echo form_open('moderation/modify_objet/index/'.$goal);
+              echo form_open('moderation/modify_objet/sort_sel_obj/'.$goal);
           }elseif($goal=='add_relation'){
               $objet_id = $objetSource->get_objet_id();
-              echo form_open('moderation/modify_objet/select_objet/'.$goal.'/'.$objet_id);
+              echo form_open('moderation/modify_objet/sort_sel_obj/'.$goal.'/'.$objet_id);
           }elseif($goal = 'add_doc'){
               if($typeRessource=='ressource_texte'){
                   $ressource_id = $ressource->get_ressource_textuelle_id();
@@ -18,7 +18,7 @@
                   $getMethod='get_'.$typeRessource.'_id';
                   $ressource_id = $ressource->$getMethod(); 
               }
-              echo form_open('moderation/modify_ressource/select_objet/add_doc/'.$ressource_id.'/'.$typeRessource);
+              echo form_open('moderation/modify_ressource/sort_sel_obj/add_doc/'.$ressource_id.'/'.$typeRessource);
           }         
     ?>
         <label for="orderBy">Trier par:</label>
@@ -51,6 +51,53 @@
 
     </form>
 
+    
+<!--    page navigation-->
+<div style="text-align: right;">
+    Page : 
+    <?php
+    if ($goal=='modify' || $goal=='relation') {
+        for ($i = 1; $i <= $numPage; $i++) {
+            if($i != $currentPage){
+                echo anchor('moderation/modify_objet/select_objet/' . $goal . '/' . $i, $i, array('class'=>'otherPage'));
+                echo '&nbsp;';
+            }else{
+                echo anchor('moderation/modify_objet/select_objet/' . $goal . '/' . $i, $i, array('class'=>'currentPage'));
+                echo '&nbsp;';
+            }
+        }
+    } elseif($goal=='add_relation') {
+        $objet_id = $objetSource->get_objet_id();
+        for ($i = 1; $i <= $numPage; $i++) {
+            if($i != $currentPage){
+                echo anchor('moderation/modify_objet/select_objet/' . $goal . '/' . $i. '/' . $objet_id, $i, array('class'=>'otherPage'));
+                echo '&nbsp;';
+            }else{
+                echo anchor('moderation/modify_objet/select_objet/' . $goal . '/' . $i. '/' . $objet_id, $i, array('class'=>'currentPage'));
+                echo '&nbsp;';
+            }
+        }
+    } elseif($goal = 'add_doc') {
+          if($typeRessource=='ressource_texte'){
+              $ressource_id = $ressource->get_ressource_textuelle_id();
+          } else {
+              $getMethod='get_'.$typeRessource.'_id';
+              $ressource_id = $ressource->$getMethod(); 
+          }
+          for ($i = 1; $i <= $numPage; $i++) {
+              if($i != $currentPage){
+                  echo anchor('moderation/modify_ressource/select_objet/add_doc/' . $ressource_id.'/'.$typeRessource . '/' . $i, $i, array('class'=>'otherPage'));
+                  echo '&nbsp;';
+              }else{
+                  echo anchor('moderation/modify_ressource/select_objet/add_doc/' . $ressource_id.'/'.$typeRessource . '/' . $i, $i, array('class'=>'currentPage'));
+                  echo '&nbsp;';
+              }
+          }
+    }
+    ?>
+</div>
+<br>    
+    
 <!--    list of objets-->
 
     <div class="classyTable">

@@ -105,10 +105,10 @@ class Select_data extends CI_Controller {
         } else {
             $speAttributeValue = null;
         }
-        if($this->session->userdata('sel_obj_valid')!=null){
+        if($this->session->userdata('sel_obj_valid')!=null && $goal != 'view'){
             $valid = $this->session->userdata('sel_obj_valid');
         } else {
-            if ($goal != 'add_doc'){
+            if ($goal != 'add_doc' && $goal != 'add_geo'){
                 $valid = 't';
             }else{
                 $valid = null;
@@ -239,6 +239,7 @@ class Select_data extends CI_Controller {
         $this->load->view('view_data/select_ressource', $data);
         $this->load->view('footer');
     }
+    
     private function select_geo(){
         $data = array();
         //we consider if there is a focus on a particular objet

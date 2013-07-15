@@ -30,7 +30,7 @@ class Modify_ressource extends CI_Controller{
         $this->load->model('ressource_texte_model');
         $this->load->model('ressource_graphique_model');
         $this->load->model('ressource_video_model');
-        $this->load->helper('dates');
+        $this->load->helper(array('dates','ressource'));
         $this->load->library('form_validation');
         $this->load->view('header');
         if (!$this->session->userdata('username')) { //checking that user is connected
@@ -40,13 +40,22 @@ class Modify_ressource extends CI_Controller{
         }
     } 
     
-    public function select_ressource($typeRessource,$goal){
+    //setting the sort option of the ressource list
+    public function sort_sel_ress($typeRessource, $goal){
+        //security
+        if (!check_typeRessource($typeRessource)) {
+            redirect('accueil/accueil');
+        }
         //managing the sort option
         $orderBy = $this->input->post('orderBy');
         if ($orderBy == null) {
             $orderBy = 'titre';
         }
+        $this->session->set_userdata('sel_ress_orderBy', $orderBy);
+        
         $orderDirection = $this->input->post('orderDirection');
+        $this->session->set_userdata('sel_ress_orderDirection', $orderDirection);
+        
         if ($this->form_validation->run('sort_objet') == TRUE) { //we check there is no xss in the field
             $speAttributeValue = $this->input->post('speAttributeValue');
             if (!empty($speAttributeValue)) { //if something is specified we set the values
@@ -59,19 +68,62 @@ class Modify_ressource extends CI_Controller{
             $speAttribute = null;
             $speAttributeValue = null;
         }
+        $this->session->set_userdata('sel_ress_speAttribute', $speAttribute);
+        $this->session->set_userdata('sel_ress_speAttributeValue', $speAttributeValue);
+        
         if ($this->input->post('validation') == TRUE) { //we check if we only want non validated objet
             $valid = 'f';
         } else {
             $valid = null;
         }
+        $this->session->set_userdata('sel_obj_valid', $valid);
+        $this->select_ressource($typeRessource, $goal);
+    }
+    
+    public function select_ressource($typeRessource,$goal, $page = 1){
+        //security
+        if (!check_typeRessource($typeRessource)) {
+            redirect('accueil/accueil');
+        }
+        
+        //managing the sort option
+        
+        if($this->session->userdata('sel_ress_orderBy')!=null){
+            $orderBy = $this->session->userdata('sel_ress_orderBy');
+        } else {
+            $orderBy = 'titre';
+        }
+        if($this->session->userdata('sel_ress_orderDirection')!=null){
+            $orderDirection = $this->session->userdata('sel_ress_orderDirection');
+        } else {
+            $orderDirection = 'asc';
+        }
+        if($this->session->userdata('sel_ress_speAttribute')!=null){
+            $speAttribute = $this->session->userdata('sel_ress_speAttribute');
+        } else {
+            $speAttribute = null;
+        }
+        if($this->session->userdata('sel_ress_speAttributeValue')!=null){
+            $speAttributeValue = $this->session->userdata('sel_ress_speAttributeValue');
+        } else {
+            $speAttributeValue = null;
+        }
+        if($this->session->userdata('sel_ress_valid')!=null){
+            $valid = $this->session->userdata('sel_ress_valid');
+        } else {
+            $valid = null;
+        }
+        
 
         //creating the list
         $data = array('typeRessource' => $typeRessource, 'goal' => $goal);
 
         $typeRessource = ucfirst($typeRessource) . '_model';
         $ressourceManager = new $typeRessource();
-        $data['listRessource'] = $ressourceManager->get_ressource_list($orderBy, $orderDirection, $speAttribute, $speAttributeValue, $valid);
-
+        $data['listRessource'] = $ressourceManager->get_ressource_list($orderBy, $orderDirection, $speAttribute, $speAttributeValue, $valid, $page);
+        $data['numPage'] = $ressourceManager->count_page_ress($speAttribute, $speAttributeValue, $valid);
+        $data['currentPage'] = $page;
+        
         $this->load->view('moderation/select_ressource', $data);
         $this->load->view('footer');
     }
@@ -328,48 +380,95 @@ class Modify_ressource extends CI_Controller{
         }
     }
     
-    //powerful method to render a sorted list of objet, with various button to different controllers, depending on input attributes
-    //slightly different than in modify_objet because args are not the same
-    public function select_objet($goal = 'add_doc',$ressource_id,$typeRessource){
-        if ( $ressource_id != null &&  ($typeRessource == 'ressource_texte' || 
-                                        $typeRessource == 'ressource_graphique' || 
-                                        $typeRessource == 'ressource_video')){
-            //managing the sort option
-            $orderBy = $this->input->post('orderBy');
-            if($orderBy == null){$orderBy = 'nom_objet';}
-            $orderDirection = $this->input->post('orderDirection');
-            if($this->form_validation->run('sort_objet')==TRUE){ //we check there is no xss in the field
-                $speAttributeValue = $this->input->post('speAttributeValue');
-                if(!empty($speAttributeValue)){ //if something is specified we set the values
-                    $speAttribute = $this->input->post('speAttribute');
-                } else { //if nothing specified as specific value we set to null
-                    $speAttribute = null;
-                    $speAttributeValue = null;
-                }
-            } else { //in case of xss attempt, no sorting on this
+    //setting the sort option of the objet list
+    public function sort_sel_obj($goal = 'add_doc', $ressource_id, $typeRessource){
+        
+        if (!check_ressource($typeRessource, $ressource_id)) {
+            redirect('accueil/accueil');
+        }
+        
+        //managing the sort option
+        $orderBy = $this->input->post('orderBy');
+        if ($orderBy == null) {
+            $orderBy = 'nom_objet';
+        }
+        $this->session->set_userdata('sel_obj_orderBy', $orderBy);
+        
+        $orderDirection = $this->input->post('orderDirection');
+        $this->session->set_userdata('sel_obj_orderDirection', $orderDirection);
+        
+        if ($this->form_validation->run('sort_objet') == TRUE) { //we check there is no xss in the field
+            $speAttributeValue = $this->input->post('speAttributeValue');
+            if (!empty($speAttributeValue)) { //if something is specified we set the values
+                $speAttribute = $this->input->post('speAttribute');
+            } else { //if nothing specified as specific value we set to null
                 $speAttribute = null;
                 $speAttributeValue = null;
             }
-            if ($this->input->post('validation')==TRUE){ //we check if we only want non validated objet
-                $valid = 'f';
-            } else {
-                $valid = null;
-            }
-        
-            //creating the list
-            require_once ('application/models/objet.php');
-            $this->load->model('objet_model');
-            
-            $data = array('listObjet' => $this->objet_model->get_objet_list($orderBy,$orderDirection,$speAttribute,$speAttributeValue,$valid));
-            $data['goal']=$goal;
-            $ressourceMethod = ucfirst($typeRessource);
-            $data['ressource'] = new $ressourceMethod($ressource_id);
-            $data['typeRessource'] = $typeRessource;
-            $this->load->view('moderation/select_objet', $data);
-            $this->load->view('footer');
-        }else{
-            redirect('accueil/accueil/','refresh');
+        } else { //in case of xss attempt, no sorting on this
+            $speAttribute = null;
+            $speAttributeValue = null;
         }
+        $this->session->set_userdata('sel_obj_speAttribute', $speAttribute);
+        $this->session->set_userdata('sel_obj_speAttributeValue', $speAttributeValue);
+        if ($this->input->post('validation') == TRUE) { //we check if we only want non validated objet
+            $valid = 'f';
+        } else {
+            $valid = null;
+        }
+        $this->session->set_userdata('sel_obj_valid', $valid);
+        $this->select_objet($goal, $ressource_id, $typeRessource, 1);
+    }
+    
+    //powerful method to render a sorted list of objet, with various button to different controllers, depending on input attributes
+    //slightly different than in modify_objet because args are not the same
+    public function select_objet($goal = 'add_doc', $ressource_id, $typeRessource, $page = 1){
+        if (!check_ressource($typeRessource, $ressource_id)) {
+            redirect('accueil/accueil');
+        }
+        
+        //getting the sort option
+        if($this->session->userdata('sel_obj_orderBy')!=null){
+            $orderBy = $this->session->userdata('sel_obj_orderBy');
+        } else {
+            $orderBy = 'nom_objet';
+        }
+        if($this->session->userdata('sel_obj_orderDirection')!=null){
+            $orderDirection = $this->session->userdata('sel_obj_orderDirection');
+        } else {
+            $orderDirection = 'asc';
+        }
+        if($this->session->userdata('sel_obj_speAttribute')!=null){
+            $speAttribute = $this->session->userdata('sel_obj_speAttribute');
+        } else {
+            $speAttribute = null;
+        }
+        if($this->session->userdata('sel_obj_speAttributeValue')!=null){
+            $speAttributeValue = $this->session->userdata('sel_obj_speAttributeValue');
+        } else {
+            $speAttributeValue = null;
+        }
+        if($this->session->userdata('sel_obj_valid')!=null){
+            $valid = $this->session->userdata('sel_obj_valid');
+        }else{
+            $valid = null;
+        }
+
+        //creating the list
+        require_once ('application/models/objet.php');
+        $this->load->model('objet_model');
+
+        $data = array('listObjet' => $this->objet_model->get_objet_list($orderBy, $orderDirection, $speAttribute, $speAttributeValue, $valid, $page));
+        $data['numPage'] = $this->objet_model->count_page_obj($speAttribute, $speAttributeValue, $valid);
+        $data['currentPage'] = $page;
+        $data['goal'] = $goal;
+        
+        $ressourceMethod = ucfirst($typeRessource);
+        $data['ressource'] = new $ressourceMethod($ressource_id);
+        $data['typeRessource'] = $typeRessource;
+        
+        $this->load->view('moderation/select_objet', $data);
+        $this->load->view('footer');
     }
     
     public function add_doc_form($typeRessource){
