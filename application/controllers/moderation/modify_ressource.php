@@ -41,6 +41,10 @@ class Modify_ressource extends CI_Controller{
     } 
     
     //setting the sort option of the ressource list
+    //
+    //$goal can be :
+    // - modify, to modify, validate or delete the selected ressource
+    // - documentation, to create a new documentation or delete existing documentations about selected ressource
     public function sort_sel_ress($typeRessource, $goal){
         //security
         if (!check_typeRessource($typeRessource)) {
@@ -80,6 +84,11 @@ class Modify_ressource extends CI_Controller{
         $this->select_ressource($typeRessource, $goal);
     }
     
+    // method to display a list of ressources depending on arguments and sort/filter option
+    //
+    //$goal can be :
+    // - modify, to modify, validate or delete the selected ressource
+    // - documentation, to create a new documentation or delete existing documentations about selected ressource
     public function select_ressource($typeRessource,$goal, $page = 1){
         //security
         if (!check_typeRessource($typeRessource)) {
@@ -381,6 +390,9 @@ class Modify_ressource extends CI_Controller{
     }
     
     //setting the sort option of the objet list
+    //
+    //$goal can be :
+    // - add_doc, to link a ressource as arg ($ressource_id) to the selected objet
     public function sort_sel_obj($goal = 'add_doc', $ressource_id, $typeRessource){
         
         if (!check_ressource($typeRessource, $ressource_id)) {
@@ -422,6 +434,9 @@ class Modify_ressource extends CI_Controller{
     
     //powerful method to render a sorted list of objet, with various button to different controllers, depending on input attributes
     //slightly different than in modify_objet because args are not the same
+    //
+    //$goal can be :
+    // - add_doc, to link a ressource as arg ($ressource_id) to the selected objet
     public function select_objet($goal = 'add_doc', $ressource_id, $typeRessource, $page = 1){
         if (!check_ressource($typeRessource, $ressource_id)) {
             redirect('accueil/accueil');

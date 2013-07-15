@@ -44,6 +44,10 @@ class Select_data extends CI_Controller {
     }
 
     //setting the sort option of the objet list
+    //
+    //$goal can be :
+    // - view, to display a detailed view with numerous information about the ressource
+    // - add_doc, to link this objet to a particular ressource (as posted argument) and create a documentation link
     public function sort_sel_obj($goal) {
         //managing the sort option
         $orderBy = $this->input->post('orderBy');
@@ -77,7 +81,12 @@ class Select_data extends CI_Controller {
         $this->session->set_userdata('sel_obj_valid', $valid);
         $this->select_objet($goal);
     }
-
+    
+    // method to display a list of objet depending on arguments and sort/filter option
+    //
+    //$goal can be :
+    // - view, to display a detailed view with numerous information about the ressource
+    // - add_doc, to link this objet to a particular ressource (as posted argument) and create a documentation link
     public function select_objet($goal, $page = 1, $typeRessource = null, $ressource_id = null) {
         //getting the sort option
         if ($this->session->userdata('sel_obj_orderBy') != null) {
@@ -139,6 +148,10 @@ class Select_data extends CI_Controller {
     }
 
     //setting the sort option of the ressource list
+    //
+    //$goal can be :
+    // - view, to display a detailed view with numerous information about the ressource
+    // - add_doc, to link this ressource to a particular objet (through another list) and create a documentation link
     public function sort_sel_ress($typeRessource, $goal) {
         //security
         if (!check_typeRessource($typeRessource)) {
@@ -178,6 +191,11 @@ class Select_data extends CI_Controller {
         $this->select_ressource($typeRessource, $goal);
     }
 
+    // method to display a list of ressources depending on arguments and sort/filter option
+    //
+    //$goal can be :
+    // - view, to display a detailed view with numerous information about the ressource
+    // - add_doc, to link this ressource to a particular objet (through another list) and create a documentation link
     public function select_ressource($typeRessource, $goal, $page = 1) {
         //security
         if (!check_typeRessource($typeRessource)) {

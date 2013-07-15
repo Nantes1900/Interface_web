@@ -38,6 +38,11 @@ class Modify_objet extends CI_Controller {
     }
     
     //setting the sort option of the objet list
+    //
+    //$goal can be :
+    // - modify, to list objets an have access to modify, validate and delete buttons
+    // - relation, to have access to create a add relation and delete relation buttons
+    // - add_relation, to link an objet as arg ($objet1_id) to the selected objet
     public function sort_sel_obj($goal, $objet1_id = null){
         //managing the sort option
         $orderBy = $this->input->post('orderBy');
@@ -74,6 +79,11 @@ class Modify_objet extends CI_Controller {
     
     //powerful method to render a sorted list of objet, with 
     //various button to different controllers, depending on input attributes
+    //
+    //$goal can be :
+    // - modify, to list objets an have access to modify, validate and delete buttons
+    // - relation, to have access to create a add relation and delete relation buttons
+    // - add_relation, to link an objet as arg ($objet1_id) to the selected objet
     public function select_objet($goal = 'modify', $page = 1, $objet1_id = null) {
         //getting the sort option
         if($this->session->userdata('sel_obj_orderBy')!=null){

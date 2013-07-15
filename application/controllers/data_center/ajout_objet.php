@@ -75,6 +75,9 @@ class Ajout_objet extends CI_Controller {
     }
     
     //setting the sort option of the objet list
+    //
+    // $goal is always add_geo and this correspond to adding a geometry in arg
+    // to an existing objet so that it would be visible on this particular location of the map
     public function sort_sel_obj($goal, $latitude = null, $longitude = null){
         //managing the sort option
         $orderBy = $this->input->post('orderBy');
@@ -117,6 +120,9 @@ class Ajout_objet extends CI_Controller {
     
     //powerful method to render a sorted list of objet for geometrical selection, 
     //with various button to different controllers, depending on input attributes
+    //
+    // $goal is always add_geo and this correspond to adding a geometry in arg
+    // to an existing objet so that it would be visible on this particular location of the map
     public function select_objet_geo($goal, $latitude = null, $longitude = null, $page = 1) {
         if ($this->session->userdata('user_level') >= 4) {
             //getting the sort option
@@ -192,6 +198,8 @@ class Ajout_objet extends CI_Controller {
         }
     }
 
+    //this method render or collect information about a form corresponding to 
+    //a new objet directly linked to a particular location through geometrical information
     public function formulaire_objet_geo($latitude, $longitude) {
         if ($this->session->userdata('user_level') >= 4) {
             if ($this->form_validation->run('ajout_objet_geom') == FALSE) {
