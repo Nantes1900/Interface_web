@@ -135,11 +135,12 @@ class User_model extends CI_Model {
         return $result['0'];
     }
         
-        //get a list of user entities, with some parameter restriction
+    //get a list of user entities, with some parameter restriction
     //$speUserLevel allow specifiying a particular user level
     //user entity $notUser allow not querying this particular user (often self)
     public function get_user_list($speUserLevel = null, $orderBy = 'username', $orderDirection = 'asc', 
-                                    $speAttribute = null, $speAttributeValue = null, $notUser = null) {
+                                    $speAttribute = null, $speAttributeValue = null, $notUser = null,
+                                    $page = 1, $userPerPage = 20) {
         //db query
         $this->db->select('username, user_level, timestamp, nom, prenom, adresse_postale, email, telephone, profession');
         $this->db->from('users');
@@ -153,6 +154,7 @@ class User_model extends CI_Model {
         if ($speAttribute != null && $speAttributeValue != null) {
             $this->db->like($speAttribute, $speAttributeValue);
         }
+        $this->db->limit($userPerPage,($page-1)*$userPerPage);
         $query = $this->db->get();
 
         //converting to an array of user entities
@@ -162,6 +164,26 @@ class User_model extends CI_Model {
             $resultArray[] = new User($userArray);
         }
         return $resultArray;
+    }
+    
+    //return the number of page depending on the sort option
+    public function count_page_users($speUserLevel = null, $speAttribute = null, $speAttributeValue = null, 
+                                        $notUser = null, $userPerPage = 20){
+        $this->db->from('users');
+        if ($speUserLevel != null) {
+            $this->db->where('user_level', $speUserLevel);
+        }
+        if ($notUser != null) {
+            $this->db->where('username !=', $notUser);
+        }
+        if ($speAttribute != null && $speAttributeValue != null) {
+            $this->db->like($speAttribute, $speAttributeValue);
+        }
+        $entries = $this->db->count_all_results();
+        
+        $pages = ceil($entries/$userPerPage);
+        
+        return $pages;
     }
         
         //count the number of contribution of an user (objet, ressources)

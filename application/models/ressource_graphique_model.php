@@ -80,7 +80,7 @@ class Ressource_graphique_model extends CI_Model
             $this->db->where('validation', $valid);
         }
         $entries = $this->db->count_all_results();
-        $pages = floor($entries/10)+1;
+        $pages = ceil($entries/10);
         
         return $pages;
     }

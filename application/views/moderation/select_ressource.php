@@ -214,4 +214,21 @@
     </table>
     </div>
     
+<!--    page navigation-->
+<br>
+<div style="text-align: right;">
+    Page : 
+    <?php
+        for ($i = 1; $i <= $numPage; $i++) {
+            if($i != $currentPage){
+                echo anchor('moderation/modify_ressource/select_ressource/' . $typeRessource . '/' .$goal . '/' . $i, $i, array('class'=>'otherPage'));
+                echo '&nbsp;';
+            }else{
+                echo anchor('moderation/modify_ressource/select_ressource/' . $typeRessource . '/' . $goal . '/' . $i, $i, array('class'=>'currentPage'));
+                echo '&nbsp;';
+            }
+        }
+    ?>
+</div>
+
 <script src="<?php echo base_url();?>assets/js/removepopup.js"></script>

@@ -215,5 +215,52 @@
         </tbody>
     </table>
     </div>
+
+<!--    page navigation-->
+<br>
+<div style="text-align: right;">
+    Page : 
+    <?php
+    if ($goal != 'add_doc' && $goal != 'add_geo') {
+        for ($i = 1; $i <= $numPage; $i++) {
+            if($i != $currentPage){
+                echo anchor('view_data/select_data/select_objet/' . $goal . '/' . $i, $i, array('class'=>'otherPage'));
+                echo '&nbsp;';
+            }else{
+                echo anchor('view_data/select_data/select_objet/' . $goal . '/' . $i, $i, array('class'=>'currentPage'));
+                echo '&nbsp;';
+            }
+        }
+    } elseif($goal == 'add_doc') {
+        if ($typeRessource == 'ressource_texte') {
+            $ressource_id = $ressource->get_ressource_textuelle_id();
+        } else {
+            $getMethod = 'get_' . $typeRessource . '_id';
+            $ressource_id = $ressource->$getMethod();
+        }
+        for ($i = 1; $i <= $numPage; $i++) {
+            if($i != $currentPage){
+                echo anchor('view_data/select_data/select_objet/' . $goal . '/' . 
+                            $i . '/' . $typeRessource . '/' . $ressource_id, $i, array('class'=>'otherPage'));
+                echo '&nbsp;';
+            }else{
+                echo anchor('view_data/select_data/select_objet/' . $goal . '/' . $i . '/' . 
+                            $typeRessource . '/' . $ressource_id, $i, array('class'=>'currentPage'));
+                echo '&nbsp;';
+            }
+        }
+    } elseif($goal == 'add_geo'){
+        for ($i = 1; $i <= $numPage; $i++) {
+            if($i != $currentPage){
+                echo anchor('data_center/ajout_objet/select_objet_geo/' . $goal . '/' . $latitude . '/' . $longitude . '/' . $i, $i, array('class'=>'otherPage'));
+                echo '&nbsp;';
+            }else{
+                echo anchor('data_center/ajout_objet/select_objet_geo/' . $goal . '/' . $latitude . '/' . $longitude . '/' . $i, $i, array('class'=>'currentPage'));
+                echo '&nbsp;';
+            }
+        }
+    }
+    ?>
+</div>
     
 

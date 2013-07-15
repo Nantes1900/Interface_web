@@ -258,4 +258,50 @@
     </div>
     
 
+<!--    page navigation-->
+<br>
+<div style="text-align: right;">
+    Page : 
+    <?php
+    if ($goal=='modify' || $goal=='relation') {
+        for ($i = 1; $i <= $numPage; $i++) {
+            if($i != $currentPage){
+                echo anchor('moderation/modify_objet/select_objet/' . $goal . '/' . $i, $i, array('class'=>'otherPage'));
+                echo '&nbsp;';
+            }else{
+                echo anchor('moderation/modify_objet/select_objet/' . $goal . '/' . $i, $i, array('class'=>'currentPage'));
+                echo '&nbsp;';
+            }
+        }
+    } elseif($goal=='add_relation') {
+        $objet_id = $objetSource->get_objet_id();
+        for ($i = 1; $i <= $numPage; $i++) {
+            if($i != $currentPage){
+                echo anchor('moderation/modify_objet/select_objet/' . $goal . '/' . $i. '/' . $objet_id, $i, array('class'=>'otherPage'));
+                echo '&nbsp;';
+            }else{
+                echo anchor('moderation/modify_objet/select_objet/' . $goal . '/' . $i. '/' . $objet_id, $i, array('class'=>'currentPage'));
+                echo '&nbsp;';
+            }
+        }
+    } elseif($goal = 'add_doc') {
+          if($typeRessource=='ressource_texte'){
+              $ressource_id = $ressource->get_ressource_textuelle_id();
+          } else {
+              $getMethod='get_'.$typeRessource.'_id';
+              $ressource_id = $ressource->$getMethod(); 
+          }
+          for ($i = 1; $i <= $numPage; $i++) {
+              if($i != $currentPage){
+                  echo anchor('moderation/modify_ressource/select_objet/add_doc/' . $ressource_id.'/'.$typeRessource . '/' . $i, $i, array('class'=>'otherPage'));
+                  echo '&nbsp;';
+              }else{
+                  echo anchor('moderation/modify_ressource/select_objet/add_doc/' . $ressource_id.'/'.$typeRessource . '/' . $i, $i, array('class'=>'currentPage'));
+                  echo '&nbsp;';
+              }
+          }
+    }
+    ?>
+</div>
+
 <script src="<?php echo base_url();?>assets/js/removepopup.js"></script>

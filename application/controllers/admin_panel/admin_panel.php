@@ -11,9 +11,9 @@
  */
 class Admin_panel extends CI_Controller {
 
-    public function index() {
+    public function index($page = 1) {
         if ($this->session->userdata('user_level') >= 9) {
-            $this->admin_panel();
+            $this->admin_panel($page);
         } else {
             redirect('accueil/accueil/', 'refresh');
         }
@@ -34,34 +34,87 @@ class Admin_panel extends CI_Controller {
         }
     }
 
-    private function admin_panel() {     //this render the admin_panel page
-        $userManager = new User_model();
-        $data = array();
-        //managing the sort option
-        $speUserLevel = $this->input->post('speUserLevel');
-        if ($speUserLevel == 'null') {
-            $speUserLevel = null;
-        }
-        $orderBy = $this->input->post('orderBy');
-        if ($orderBy == null) {
-            $orderBy = 'username';
-        }
-        $orderDirection = $this->input->post('orderDirection');
-        if ($this->form_validation->run('sort_user') == TRUE) { //we check there is no xss in the field
-            $speAttributeValue = $this->input->post('speAttributeValue');
-            if (!empty($speAttributeValue)) { //if something is specified we set the values
-                $speAttribute = $this->input->post('speAttribute');
-            } else { //if nothing specified as specific value we set to null
+    public function sort_admin_panel(){
+        if ($this->session->userdata('user_level') >= 9) {
+            //managing the sort option
+            $speUserLevel = $this->input->post('speUserLevel');
+            $this->session->set_userdata('sel_admin_speUserLevel', $speUserLevel);
+
+            $orderBy = $this->input->post('orderBy');
+            if ($orderBy == null) {
+                $orderBy = 'username';
+            }
+            $this->session->set_userdata('sel_admin_orderBy', $orderBy);
+
+            $orderDirection = $this->input->post('orderDirection');
+            $this->session->set_userdata('sel_admin_orderDirection', $orderDirection);
+
+            if ($this->form_validation->run('sort_user') == TRUE) { //we check there is no xss in the field
+                $speAttributeValue = $this->input->post('speAttributeValue');
+                if (!empty($speAttributeValue)) { //if something is specified we set the values
+                    $speAttribute = $this->input->post('speAttribute');
+                } else { //if nothing specified as specific value we set to null
+                    $speAttribute = null;
+                    $speAttributeValue = null;
+                }
+            } else { //in case of xss attempt, no sorting on this
                 $speAttribute = null;
                 $speAttributeValue = null;
             }
-        } else { //in case of xss attempt, no sorting on this
+            $this->session->set_userdata('sel_admin_speAttribute', $speAttribute);
+            $this->session->set_userdata('sel_admin_speAttributeValue', $speAttributeValue);
+            
+            $userPerPage = $this->input->post('userPerPage');
+            $this->session->set_userdata('sel_admin_userPerPage', $userPerPage);
+            
+            return $this->admin_panel();
+        } else {
+            redirect('accueil/accueil/', 'refresh');
+        }
+    }
+    
+    //this render the admin_panel page, with 20 users per page as default value
+    private function admin_panel($page = 1) {     
+        $userManager = new User_model();
+        $data = array();
+        //getting the sort option
+        $speUserLevel = $this->session->userdata('sel_admin_speUserLevel');
+        if ($speUserLevel == 'null') {
+                $speUserLevel = null;
+        }
+        if ($this->session->userdata('sel_admin_orderBy') != null) {
+            $orderBy = $this->session->userdata('sel_admin_orderBy');
+        } else {
+            $orderBy = 'username';
+        }
+        if ($this->session->userdata('sel_admin_orderDirection') != null) {
+            $orderDirection = $this->session->userdata('sel_admin_orderDirection');
+        } else {
+            $orderDirection = 'asc';
+        }
+        if ($this->session->userdata('sel_admin_speAttribute') != null) {
+            $speAttribute = $this->session->userdata('sel_admin_speAttribute');
+        } else {
             $speAttribute = null;
+        }
+        if ($this->session->userdata('sel_admin_speAttributeValue') != null) {
+            $speAttributeValue = $this->session->userdata('sel_admin_speAttributeValue');
+        } else {
             $speAttributeValue = null;
         }
+        if ($this->session->userdata('sel_admin_userPerPage') != null) {
+            $userPerPage = $this->session->userdata('sel_admin_userPerPage');
+        } else {
+            $userPerPage = 20;
+        }
+        
         //creating the list
         $data['listUser'] = $userManager->get_user_list($speUserLevel, $orderBy, $orderDirection, 
-                            $speAttribute, $speAttributeValue, $this->session->userdata('username'));
+                            $speAttribute, $speAttributeValue, $this->session->userdata('username'),
+                            $page, $userPerPage);
+        $data['numPage'] = $userManager->count_page_users($speUserLevel, $speAttribute, $speAttributeValue, 
+                                                            $this->session->userdata('username'), $userPerPage);
+        $data['currentPage'] = $page;
         $this->load->view('admin_panel/admin_panel', $data);
         $this->load->view('footer');
     }
