@@ -23,28 +23,81 @@
     ?>
         <label for="orderBy">Trier par:</label>
         <select name="orderBy" id="orderBy">
-            <option value="nom_objet">Nom de l'objet</option>
-            <option value="username">Pseudo du créateur</option>
-            <option value="date_creation">Date d'ajout de l'objet</option>
+            <option value="nom_objet" <?php if($this->session->userdata('sel_obj_orderBy') == 'nom_objet'){ 
+                                                echo 'selected'; 
+                                            } ?>>
+                Nom de l'objet
+            </option>
+            <option value="username" <?php if($this->session->userdata('sel_obj_orderBy') == 'username'){ 
+                                                echo 'selected'; 
+                                            } ?>>
+                Pseudo du créateur
+            </option>
+            <option value="date_creation" <?php if($this->session->userdata('sel_obj_orderBy') == 'date_creation'){ 
+                                                echo 'selected'; 
+                                            } ?>>
+                Date d'ajout de l'objet
+            </option>
         </select>
         <select name="orderDirection">
-            <option value="asc">Croissant</option>
-            <option value="desc">Décroissant</option>
+            <option value="asc" <?php if($this->session->userdata('sel_obj_orderDirection') == 'asc'){ 
+                                          echo 'selected'; 
+                                      } ?>>
+                Croissant
+            </option>
+            <option value="desc" <?php if($this->session->userdata('sel_obj_orderDirection') == 'desc'){ 
+                                          echo 'selected'; 
+                                       } ?>>
+                Décroissant
+            </option>
         </select>
         <br/>
         <label for="speAttribute">Rechercher un(e):</label>
         <select name="speAttribute" id="speAttribute">
-            <option value="nom_objet">Nom de l'objet</option>
-            <option value="username">Pseudo du créateur</option>
-            <option value="mots_cles">Mot-clé</option>
-            <option value="resume">Résumé</option>
-            <option value="historique">Historique</option>
-            <option value="description">Description</option>
-            <option value="adresse_postale">Adresse</option>
+            <option value="nom_objet" <?php if($this->session->userdata('sel_obj_speAttribute') == 'nom_objet'){ 
+                                          echo 'selected'; 
+                                       } ?>>
+                Nom de l'objet
+            </option>
+            <option value="username" <?php if($this->session->userdata('sel_obj_speAttribute') == 'username'){ 
+                                          echo 'selected'; 
+                                       } ?>>
+                Pseudo du créateur
+            </option>
+            <option value="mots_cles" <?php if($this->session->userdata('sel_obj_speAttribute') == 'mots_cles'){ 
+                                          echo 'selected'; 
+                                       } ?>>
+                Mot-clé
+            </option>
+            <option value="resume" <?php if($this->session->userdata('sel_obj_speAttribute') == 'resume'){ 
+                                          echo 'selected'; 
+                                       } ?>>
+                Résumé
+            </option>
+            <option value="historique" <?php if($this->session->userdata('sel_obj_speAttribute') == 'historique'){ 
+                                          echo 'selected'; 
+                                       } ?>>
+                Historique
+            </option>
+            <option value="description" <?php if($this->session->userdata('sel_obj_speAttribute') == 'description'){ 
+                                          echo 'selected'; 
+                                       } ?>>
+                Description
+            </option>
+            <option value="adresse_postale" <?php if($this->session->userdata('sel_obj_speAttribute') == 'adresse_postale'){ 
+                                          echo 'selected'; 
+                                       } ?>>
+                Adresse
+            </option>
         </select>
-        <input type="text" name="speAttributeValue" maxlength="50"/>
+        <input type="text" name="speAttributeValue" maxlength="50" 
+               value="<?php if($this->session->userdata('sel_obj_speAttributeValue') != null){ 
+                                echo $this->session->userdata('sel_obj_speAttributeValue'); 
+                      } ?>" />
         <br/>
-        <input type="checkbox" name="validation" value="TRUE">Objets non validés uniquement
+        <input type="checkbox" name="validation" value="TRUE" <?php if($this->session->userdata('sel_obj_valid') != null){ 
+                                          echo 'checked'; 
+                                       } ?>>Objets non validés uniquement
         <br/>
         <input type="submit" value="Trier" />
 

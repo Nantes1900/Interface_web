@@ -10,9 +10,9 @@
  * 
  */
 class Select_data extends CI_Controller {
-   
-    public function index($dataType = null, $goal = 'view' ){
-        if($dataType == null) {
+
+    public function index($dataType = null, $goal = 'view') {
+        if ($dataType == null) {
             $this->select_type();
         } elseif ($dataType == 'objet') {
             $this->select_objet($goal);
@@ -22,39 +22,39 @@ class Select_data extends CI_Controller {
             $this->select_geo();
         }
     }
-    
+
     public function __construct() {
-	
+
         parent::__construct();
 
         //Ce code sera executé charque fois que ce contrôleur sera appelé
         require_once ('application/models/objet.php');
         $this->load->model('objet_model');
         $this->load->library('form_validation');
-        $this->load->helper(array('dates','ressource'));
+        $this->load->helper(array('dates', 'ressource'));
         $this->load->view('header');
-        if(!$this->session->userdata('username')){
+        if (!$this->session->userdata('username')) {
             redirect('accueil/accueil/not_connected/', 'refresh');
         }
-    }   
-    
-    private function select_type(){
+    }
+
+    private function select_type() {
         $this->load->view('view_data/select_type');
         $this->load->view('footer');
     }
-    
+
     //setting the sort option of the objet list
-    public function sort_sel_obj($goal){
+    public function sort_sel_obj($goal) {
         //managing the sort option
         $orderBy = $this->input->post('orderBy');
         if ($orderBy == null) {
             $orderBy = 'nom_objet';
         }
         $this->session->set_userdata('sel_obj_orderBy', $orderBy);
-        
+
         $orderDirection = $this->input->post('orderDirection');
         $this->session->set_userdata('sel_obj_orderDirection', $orderDirection);
-        
+
         if ($this->form_validation->run('sort_objet') == TRUE) { //we check there is no xss in the field
             $speAttributeValue = $this->input->post('speAttributeValue');
             if (!empty($speAttributeValue)) { //if something is specified we set the values
@@ -82,46 +82,45 @@ class Select_data extends CI_Controller {
         $this->session->set_userdata('sel_obj_valid', $valid);
         $this->select_objet($goal);
     }
-    
-    public function select_objet($goal, $page = 1, $typeRessource = null, $ressource_id = null){
+
+    public function select_objet($goal, $page = 1, $typeRessource = null, $ressource_id = null) {
         //getting the sort option
-        if($this->session->userdata('sel_obj_orderBy')!=null){
+        if ($this->session->userdata('sel_obj_orderBy') != null) {
             $orderBy = $this->session->userdata('sel_obj_orderBy');
         } else {
             $orderBy = 'nom_objet';
         }
-        if($this->session->userdata('sel_obj_orderDirection')!=null){
+        if ($this->session->userdata('sel_obj_orderDirection') != null) {
             $orderDirection = $this->session->userdata('sel_obj_orderDirection');
         } else {
             $orderDirection = 'asc';
         }
-        if($this->session->userdata('sel_obj_speAttribute')!=null){
+        if ($this->session->userdata('sel_obj_speAttribute') != null) {
             $speAttribute = $this->session->userdata('sel_obj_speAttribute');
         } else {
             $speAttribute = null;
         }
-        if($this->session->userdata('sel_obj_speAttributeValue')!=null){
+        if ($this->session->userdata('sel_obj_speAttributeValue') != null) {
             $speAttributeValue = $this->session->userdata('sel_obj_speAttributeValue');
         } else {
             $speAttributeValue = null;
         }
-        if($this->session->userdata('sel_obj_valid')!=null && $goal != 'view'){
+        if ($this->session->userdata('sel_obj_valid') != null && $goal != 'view') {
             $valid = $this->session->userdata('sel_obj_valid');
         } else {
-            if ($goal != 'add_doc' && $goal != 'add_geo'){
+            if ($goal != 'add_doc' && $goal != 'add_geo') {
                 $valid = 't';
-            }else{
+            } else {
                 $valid = null;
             }
         }
-        
+
         if ($goal == 'add_doc') { //we put some info about the related ressource if we are adding a documentation
-            
-            if($ressource_id == null && $typeRessource == null){
+            if ($ressource_id == null && $typeRessource == null) {
                 $ressource_id = $this->input->post('ressource_id');
                 $typeRessource = $this->input->post('typeRessource');
             }
-            if(!check_ressource($typeRessource, $ressource_id)) {
+            if (!check_ressource($typeRessource, $ressource_id)) {
                 redirect('accueil/accueil');
             }
             require_once ('application/models/' . $typeRessource . '.php');
@@ -130,7 +129,7 @@ class Select_data extends CI_Controller {
             $ressource = new $typeRessourceMethod($ressource_id);
             $valid = null;
         }
-        
+
         //creating the list
         $data = array('listObjet' => $this->objet_model->get_objet_list($orderBy, $orderDirection, $speAttribute, $speAttributeValue, $valid, $page));
         $data['numPage'] = $this->objet_model->count_page_obj($speAttribute, $speAttributeValue, $valid);
@@ -143,9 +142,9 @@ class Select_data extends CI_Controller {
         $this->load->view('view_data/select_objet', $data);
         $this->load->view('footer');
     }
-    
+
     //setting the sort option of the ressource list
-    public function sort_sel_ress($typeRessource, $goal){
+    public function sort_sel_ress($typeRessource, $goal) {
         //security
         if (!check_typeRessource($typeRessource)) {
             redirect('accueil/accueil');
@@ -156,10 +155,10 @@ class Select_data extends CI_Controller {
             $orderBy = 'nom_objet';
         }
         $this->session->set_userdata('sel_ress_orderBy', $orderBy);
-        
+
         $orderDirection = $this->input->post('orderDirection');
         $this->session->set_userdata('sel_ress_orderDirection', $orderDirection);
-        
+
         if ($this->form_validation->run('sort_objet') == TRUE) { //we check there is no xss in the field
             $speAttributeValue = $this->input->post('speAttributeValue');
             if (!empty($speAttributeValue)) { //if something is specified we set the values
@@ -174,84 +173,79 @@ class Select_data extends CI_Controller {
         }
         $this->session->set_userdata('sel_ress_speAttribute', $speAttribute);
         $this->session->set_userdata('sel_ress_speAttributeValue', $speAttributeValue);
-        if($goal!='add_doc'){
+        if ($goal != 'add_doc') {
             $valid = 't';
-        }else{
+        } else {
             $valid = null;
         }
         $this->session->set_userdata('sel_obj_valid', $valid);
-        
+
         $this->select_ressource($typeRessource, $goal);
-        
     }
-    
-    public function select_ressource($typeRessource, $goal, $page = 1){
+
+    public function select_ressource($typeRessource, $goal, $page = 1) {
         //security
         if (!check_typeRessource($typeRessource)) {
             redirect('accueil/accueil');
         }
         //loading the models and class
-        require_once ('application/models/'.$typeRessource.'.php');
-        $this->load->model($typeRessource.'_model');
-        
+        require_once ('application/models/' . $typeRessource . '.php');
+        $this->load->model($typeRessource . '_model');
+
         //managing the sort option
-        
-        if($this->session->userdata('sel_ress_orderBy')!=null){
+
+        if ($this->session->userdata('sel_ress_orderBy') != null) {
             $orderBy = $this->session->userdata('sel_ress_orderBy');
         } else {
             $orderBy = 'titre';
         }
-        if($this->session->userdata('sel_ress_orderDirection')!=null){
+        if ($this->session->userdata('sel_ress_orderDirection') != null) {
             $orderDirection = $this->session->userdata('sel_ress_orderDirection');
         } else {
             $orderDirection = 'asc';
         }
-        if($this->session->userdata('sel_ress_speAttribute')!=null){
+        if ($this->session->userdata('sel_ress_speAttribute') != null) {
             $speAttribute = $this->session->userdata('sel_ress_speAttribute');
         } else {
             $speAttribute = null;
         }
-        if($this->session->userdata('sel_ress_speAttributeValue')!=null){
+        if ($this->session->userdata('sel_ress_speAttributeValue') != null) {
             $speAttributeValue = $this->session->userdata('sel_ress_speAttributeValue');
         } else {
             $speAttributeValue = null;
         }
-        if($this->session->userdata('sel_ress_valid')!=null){
-            $valid = $this->session->userdata('sel_ress_valid');
+        if ($goal != 'add_doc') {
+            $valid = 't';
         } else {
-            if ($goal != 'add_doc'){
-                $valid = 't';
-            }else{
-                $valid = null;
-            }
+            $valid = null;
         }
-        
+
         //creating the list
-        $data = array('typeRessource'=>$typeRessource,'goal'=>$goal);
-            
-        $typeRessource= ucfirst($typeRessource).'_model';
+        $data = array('typeRessource' => $typeRessource, 'goal' => $goal);
+
+        $typeRessource = ucfirst($typeRessource) . '_model';
         $ressourceManager = new $typeRessource();
-        
-        $data['listRessource'] = $ressourceManager->get_ressource_list($orderBy,$orderDirection,$speAttribute,$speAttributeValue,$valid, $page);
+
+        $data['listRessource'] = $ressourceManager->get_ressource_list($orderBy, $orderDirection, $speAttribute, $speAttributeValue, $valid, $page);
         $data['numPage'] = $ressourceManager->count_page_ress($speAttribute, $speAttributeValue, $valid);
         $data['currentPage'] = $page;
         //add info pages
         $this->load->view('view_data/select_ressource', $data);
         $this->load->view('footer');
     }
-    
-    private function select_geo(){
+
+    private function select_geo() {
         $data = array();
         //we consider if there is a focus on a particular objet
-        if($this->input->post('latitude')!=null && $this->input->post('longitude')!=null){
+        if ($this->input->post('latitude') != null && $this->input->post('longitude') != null) {
             $data['latitude'] = $this->input->post('latitude');
             $data['longitude'] = $this->input->post('longitude');
         }
-        
+
         $this->load->view('view_data/select_geo', $data);
         $this->load->view('footer');
     }
-    
+
 }
 
 /* End of file select_data.php */

@@ -76,7 +76,7 @@ class Modify_ressource extends CI_Controller{
         } else {
             $valid = null;
         }
-        $this->session->set_userdata('sel_obj_valid', $valid);
+        $this->session->set_userdata('sel_ress_valid', $valid);
         $this->select_ressource($typeRessource, $goal);
     }
     

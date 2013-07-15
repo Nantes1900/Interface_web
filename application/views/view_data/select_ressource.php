@@ -1,55 +1,117 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" > 
 
-    <p><?php echo anchor('view_data/select_data/index', 'Revenir à la selection de données'); ?></p>
-    
-    <h1>Selection de données</h1>
-    
-    <h2>
-        Liste des ressources <?php if($typeRessource=='ressource_texte'){echo 'textuelles';} 
-                                   if($typeRessource=='ressource_video'){echo 'vidéos';}
-                                   if($typeRessource=='ressource_graphique'){echo 'graphiques';}?>
-    </h2>
+<p><?php echo anchor('view_data/select_data/index', 'Revenir à la selection de données'); ?></p>
+
+<h1>Selection de données</h1>
+
+<h2>
+    Liste des ressources <?php
+    if ($typeRessource == 'ressource_texte') {
+        echo 'textuelles';
+    }
+    if ($typeRessource == 'ressource_video') {
+        echo 'vidéos';
+    }
+    if ($typeRessource == 'ressource_graphique') {
+        echo 'graphiques';
+    }
+    ?>
+</h2>
 <!--    sorting form-->
-    <?php echo form_open('view_data/select_data/sort_sel_ress/'.$typeRessource.'/'.$goal) ?>
-        <label for="orderBy">Trier par:</label>
-        <select name="orderBy" id="orderBy">
-            <option value="titre">Titre de la ressource</option>
-            <option value="username">Pseudo du créateur</option>
-            <option value="date_debut_ressource">Date de la ressource</option>
-            <option value="date_creation">Date d'ajout de la ressource</option>
-        </select>
-        <select name="orderDirection">
-            <option value="asc">Croissant</option>
-            <option value="desc">Décroissant</option>
-        </select>
-        <br/>
-        <label for="speAttribute">Rechercher un(e):</label>
-        <select name="speAttribute" id="speAttribute">
-            <option value="titre">Titre de la ressource</option>
-            <option value="username">Pseudo du créateur</option>
-            <option value="reference">Référence de la ressource</option>
-            <option value="mots_cles">Mot-clé</option>
-            <option value="description">Description</option>
-            <option value="auteur">Auteur</option>
-            <option value="editeur">Editeur</option>
-        </select>
-        <input type="text" name="speAttributeValue" maxlength="50"/>
-        <br/>
-        <input type="submit" value="Trier" />
+<?php echo form_open('view_data/select_data/sort_sel_ress/' . $typeRessource . '/' . $goal) ?>
+<label for="orderBy">Trier par:</label>
+<select name="orderBy" id="orderBy">
+    <option value="titre" <?php if($this->session->userdata('sel_ress_orderBy') == 'titre'){ 
+                                    echo 'selected'; 
+                          } ?>>
+        Titre de la ressource
+    </option>
+    <option value="username" <?php if($this->session->userdata('sel_ress_orderBy') == 'username'){ 
+                                    echo 'selected'; 
+                          } ?>>
+        Pseudo du créateur
+    </option>
+    <option value="date_debut_ressource" <?php if($this->session->userdata('sel_ress_orderBy') == 'date_debut_ressource'){ 
+                                                echo 'selected'; 
+                                         } ?>>
+        Date de la ressource
+    </option>
+    <option value="date_creation" <?php if($this->session->userdata('sel_ress_orderBy') == 'date_creation'){ 
+                                        echo 'selected'; 
+                                  } ?>>
+        Date d'ajout de la ressource
+    </option>
+</select>
+<select name="orderDirection">
+    <option value="asc" <?php if($this->session->userdata('sel_ress_orderDirection') == 'asc'){ 
+                                echo 'selected'; 
+                         } ?>>
+        Croissant
+    </option>
+    <option value="desc" <?php if($this->session->userdata('sel_ress_orderDirection') == 'desc'){ 
+                                echo 'selected'; 
+                         } ?>>
+        Décroissant
+    </option>
+</select>
+<br/>
+<label for="speAttribute">Rechercher un(e):</label>
+<select name="speAttribute" id="speAttribute">
+    <option value="titre" <?php if($this->session->userdata('sel_ress_speAttribute') == 'titre'){ 
+                                    echo 'selected'; 
+                                } ?>>
+        Titre de la ressource
+    </option>
+    <option value="username" <?php if($this->session->userdata('sel_ress_speAttribute') == 'username'){ 
+                                        echo 'selected'; 
+                                   } ?>>
+        Pseudo du créateur
+    </option>
+    <option value="reference" <?php if($this->session->userdata('sel_ress_speAttribute') == 'reference'){ 
+                                        echo 'selected'; 
+                                    } ?>>
+        Référence de la ressource
+    </option>
+    <option value="mots_cles" <?php if($this->session->userdata('sel_ress_speAttribute') == 'mots_cles'){ 
+                                        echo 'selected'; 
+                                    } ?>>
+        Mot-clé
+    </option>
+    <option value="description" <?php if($this->session->userdata('sel_ress_speAttribute') == 'description'){ 
+                                            echo 'selected'; 
+                                      } ?>>
+        Description
+    </option>
+    <option value="auteur" <?php if($this->session->userdata('sel_ress_speAttribute') == 'auteur'){ 
+                                        echo 'selected'; 
+                                 } ?>>
+        Auteur
+    </option>
+    <option value="editeur" <?php if($this->session->userdata('sel_ress_speAttribute') == 'editeur'){ 
+                                        echo 'selected'; 
+                                  } ?>>
+        Editeur
+    </option>
+</select>
+<input type="text" name="speAttributeValue" maxlength="50" 
+       value="<?php if($this->session->userdata('sel_ress_speAttributeValue') != null){ 
+                        echo $this->session->userdata('sel_ress_speAttributeValue'); 
+                    } ?>" />
+<br/>
+<input type="submit" value="Trier" />
 
 
-    </form>
+</form>
 
 <!--    page navigation-->
 <div style="text-align: right;">
     Page : 
     <?php
         for ($i = 1; $i <= $numPage; $i++) {
-            if($i != $currentPage){
-                echo anchor('view_data/select_data/select_ressource/' . $typeRessource . '/' .$goal . '/' . $i, $i, array('class'=>'otherPage'));
+            if ($i != $currentPage) {
+                echo anchor('view_data/select_data/select_ressource/' . $typeRessource . '/' . $goal . '/' . $i, $i, array('class' => 'otherPage'));
                 echo '&nbsp;';
-            }else{
-                echo anchor('view_data/select_data/select_ressource/' . $typeRessource . '/' . $goal . '/' . $i, $i, array('class'=>'currentPage'));
+            } else {
+                echo anchor('view_data/select_data/select_ressource/' . $typeRessource . '/' . $goal . '/' . $i, $i, array('class' => 'currentPage'));
                 echo '&nbsp;';
             }
         }
@@ -59,7 +121,7 @@
     
 <!--    list of ressources-->
 
-    <div class="classyTable">
+<div class="classyTable">
     <table>
         <thead>
             <tr>
@@ -114,6 +176,4 @@
             <?php }  ?>
         </tbody>
     </table>
-    </div>
-    
-</html>
+</div>

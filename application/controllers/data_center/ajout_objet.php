@@ -115,40 +115,32 @@ class Ajout_objet extends CI_Controller {
     }
     
     
-    //powerful method to render a sorted list of objet, with various button 
-    //to different controllers, depending on input attributes
+    //powerful method to render a sorted list of objet for geometrical selection, 
+    //with various button to different controllers, depending on input attributes
     public function select_objet_geo($goal, $latitude = null, $longitude = null, $page = 1) {
-            if ($this->session->userdata('user_level') >= 4) {
-                //getting the sort option
-                if($this->session->userdata('sel_obj_orderBy')!=null){
-                    $orderBy = $this->session->userdata('sel_obj_orderBy');
-                } else {
-                    $orderBy = 'nom_objet';
-                }
-                if($this->session->userdata('sel_obj_orderDirection')!=null){
-                    $orderDirection = $this->session->userdata('sel_obj_orderDirection');
-                } else {
-                    $orderDirection = 'asc';
-                }
-                if($this->session->userdata('sel_obj_speAttribute')!=null){
-                    $speAttribute = $this->session->userdata('sel_obj_speAttribute');
-                } else {
-                    $speAttribute = null;
-                }
-                if($this->session->userdata('sel_obj_speAttributeValue')!=null){
-                    $speAttributeValue = $this->session->userdata('sel_obj_speAttributeValue');
-                } else {
-                    $speAttributeValue = null;
-                }
-                if($this->session->userdata('sel_obj_valid')!=null && $goal != 'view'){
-                    $valid = $this->session->userdata('sel_obj_valid');
-                } else {
-                    if ($goal != 'add_doc' && $goal != 'add_geo'){
-                        $valid = 't';
-                    }else{
-                        $valid = null;
-                    }
-                }
+        if ($this->session->userdata('user_level') >= 4) {
+            //getting the sort option
+            if ($this->session->userdata('sel_obj_orderBy') != null) {
+                $orderBy = $this->session->userdata('sel_obj_orderBy');
+            } else {
+                $orderBy = 'nom_objet';
+            }
+            if ($this->session->userdata('sel_obj_orderDirection') != null) {
+                $orderDirection = $this->session->userdata('sel_obj_orderDirection');
+            } else {
+                $orderDirection = 'asc';
+            }
+            if ($this->session->userdata('sel_obj_speAttribute') != null) {
+                $speAttribute = $this->session->userdata('sel_obj_speAttribute');
+            } else {
+                $speAttribute = null;
+            }
+            if ($this->session->userdata('sel_obj_speAttributeValue') != null) {
+                $speAttributeValue = $this->session->userdata('sel_obj_speAttributeValue');
+            } else {
+                $speAttributeValue = null;
+            }
+            $valid = null;
 
             //creating the list
             $data = array('listObjet' => $this->objet_model->get_objet_list($orderBy, $orderDirection, $speAttribute, $speAttributeValue, $valid, $page));
