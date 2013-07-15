@@ -69,6 +69,8 @@ class Ressource_video_model extends CI_Model
             return $resultArray;
     }
     
+    //return the number of pages that we could get with the previous method 
+    //depending on the sort option
     public function count_page_ress($speAttribute = null, $speAttributeValue = null, $valid = null) {
         $this->db->from('ressource_textuelle');
         if ($speAttribute != null && $speAttributeValue != null) {
