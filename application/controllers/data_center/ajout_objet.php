@@ -140,7 +140,7 @@ class Ajout_objet extends CI_Controller {
             } else {
                 $speAttributeValue = null;
             }
-            $valid = null;
+            $valid = null; //we select objet to add a geometry, so valid and non-valid objet should be selectable
 
             //creating the list
             $data = array('listObjet' => $this->objet_model->get_objet_list($orderBy, $orderDirection, $speAttribute, $speAttributeValue, $valid, $page));

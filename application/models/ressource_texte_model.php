@@ -134,6 +134,7 @@ class Ressource_texte_model extends CI_Model
             $this->db->join('documentation_textuelle AS d', 'objet.objet_id=d.objet_id');
             $this->db->order_by('nom_objet','asc');
             $this->db->where('ressource_textuelle_id', $ressource_id);
+            $this->db->where('validation', 't');
             $query = $this->db->get();
             
             $resultArray = $query->result_array();
@@ -151,6 +152,7 @@ class Ressource_texte_model extends CI_Model
             $this->db->join('documentation_textuelle AS d','ressource_textuelle.ressource_textuelle_id=d.ressource_textuelle_id');
             $this->db->order_by('titre','asc');
             $this->db->where('objet_id', $objet_id);
+            $this->db->where('validation', 't');
             $query = $this->db->get();
             
             $resultArray = $query->result_array();

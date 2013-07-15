@@ -125,6 +125,7 @@ class Ressource_video_model extends CI_Model
         $this->db->join('documentation_video AS d', 'objet.objet_id=d.objet_id');
         $this->db->order_by('nom_objet','asc');
         $this->db->where('ressource_video_id', $ressource_id);
+        $this->db->where('validation', 't');
         $query = $this->db->get();
             
         $resultArray = $query->result_array();
@@ -141,6 +142,7 @@ class Ressource_video_model extends CI_Model
         $this->db->join('documentation_video AS d','ressource_video.ressource_video_id=d.ressource_video_id');
         $this->db->order_by('titre','asc');
         $this->db->where('objet_id', $objet_id);
+        $this->db->where('validation', 't');
         $query = $this->db->get();
             
         $resultArray = $query->result_array();

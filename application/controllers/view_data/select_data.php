@@ -71,12 +71,7 @@ class Select_data extends CI_Controller {
         $this->session->set_userdata('sel_obj_speAttributeValue', $speAttributeValue);
         $valid = 't';
         if ($goal == 'add_doc') { //we put some info about the related ressource if we are adding a documentation
-            $ressource_id = $this->input->post('ressource_id');
-            $typeRessource = $this->input->post('typeRessource');
-            require_once ('application/models/' . $typeRessource . '.php');
-            $this->load->model($typeRessource . '_model');
-            $typeRessourceMethod = ucfirst($typeRessource);
-            $ressource = new $typeRessourceMethod($ressource_id);
+            
             $valid = null;
         }
         $this->session->set_userdata('sel_obj_valid', $valid);
