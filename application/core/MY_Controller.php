@@ -4,13 +4,9 @@
  *
  * This class object is the super class that every library in
  * CodeIgniter will be assigned to and replaces the standard
- * CI Controller Class, which doesn't support sub-controllers (HMVC)
+ * CI Controller Class, this will allow language selection
  *
- * @package		CodeIgniter
- * @subpackage	Libraries
- * @category	Libraries
- * @author		WanWizard
- * @link		http://www.exitecms.org
+ * @author		Paul-Yves
  */
 if ( class_exists('CI_Controller') )
 {
@@ -23,41 +19,27 @@ if ( class_exists('CI_Controller') )
 	}
 }
 
-class MY_Controller extends Controller
-{
-	function __construct()
-	{
-		// get the CI superobject
-		$CI =& get_instance();
+class MY_Controller extends Controller {
 
-		// call the parent constructor
-		parent::__construct();
+    public $language = "french";
 
-		// do we have a superobject?
-		if ( $CI )
-		{
-			// yes, so this is an HMVC sub-controller.
+    function __construct() {
 
-			// check how we reference the module itself
-			$config = $CI->config->item('module');
-			$self = isset($config['self']) ? $config['self'] : false;
+        // call the parent constructor
+        parent::__construct();
 
-			// copy all objects from the parent controller to the sub-controller
-			foreach (array_keys(get_object_vars($CI)) as $attribute)
-			{
-				if ($attribute != $self && is_object($CI->$attribute))
-				{
-					$this->$attribute =& $CI->$attribute;
-				}
-			}
+        // a new language?
+        if ($this->session->userdata('language') != null) {
+            $this->language = $this->session->userdata('language');
+        } else {
+            $this->session->set_userdata('language',$this->language);
+        }
+        
+        //loading language
+        $this->lang->load('common', $this->language);
+        $this->lang->load('form_validation', $this->language);
+    }
 
-			// inform the loader we're now in HVMC mode
-			if ( is_null($this->load->_ci_root) )
-			{
-				$this->load->_ci_root =& $CI;
-			}
-		}
-	}
 }
 // END MY_Controller class
 

@@ -1,6 +1,6 @@
 <?php
 
-class Signin extends CI_Controller {
+class Signin extends MY_Controller {
 
     public function index() {
         $this->check_signin();
@@ -10,7 +10,7 @@ class Signin extends CI_Controller {
         parent::__construct();
 
         //Ce code sera executé charque fois que ce contrôleur sera appelé
-
+        $this->lang->load('login_signin', $this->language);
         $this->load->model('user_model');
         require_once ('application/models/user.php');
         $this->load->library('form_validation');

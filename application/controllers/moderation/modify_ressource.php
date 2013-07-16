@@ -6,7 +6,7 @@
  * @author paulyves
  */
 
-class Modify_ressource extends CI_Controller{
+class Modify_ressource extends MY_Controller{
     public function index($typeRessource,$goal='modify'){
         if($this->input->post('ressource_id') == null) {
             $this->select_ressource($typeRessource, $goal);

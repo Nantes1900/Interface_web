@@ -11,7 +11,7 @@
  * 
  */
 
-class Data_center extends CI_Controller {
+class Data_center extends MY_Controller {
 
     public function index() {
         $this->data_center();

@@ -8,7 +8,7 @@
  * @author LUCAS Paul-Yves
  * 
  */
-class View_data extends CI_Controller {
+class View_data extends MY_Controller {
 
     //check what ressource is targeted and if it exist, then call the proper function
     public function index() {

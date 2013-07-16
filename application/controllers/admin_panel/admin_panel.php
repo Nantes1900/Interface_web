@@ -9,7 +9,7 @@
  * @author LUCAS Paul-Yves
  * 
  */
-class Admin_panel extends CI_Controller {
+class Admin_panel extends MY_Controller {
 
     public function index($page = 1) {
         if ($this->session->userdata('user_level') >= 9) {

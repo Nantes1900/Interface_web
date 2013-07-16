@@ -1,6 +1,6 @@
 <?php
 
-class Login extends CI_Controller {
+class Login extends MY_Controller {
 
     public function index() {
         $this->check_login();
@@ -10,7 +10,7 @@ class Login extends CI_Controller {
         parent::__construct();
             
         //Ce code sera executé charque fois que ce contrôleur sera appelé
-
+        $this->lang->load('login_signin', $this->language);
         $this->load->library('form_validation');
         $this->load->helper(array('form'));
         $this->load->view('header');
@@ -20,7 +20,7 @@ class Login extends CI_Controller {
 
         if ($this->form_validation->run('login') == FALSE) {
             $this->load->view('accueil/body');
-            $this->load->view('accueil/login/formulaire_login', array('titre' => 'Connectez-vous :'));
+            $this->load->view('accueil/login/formulaire_login', array('titre' => $this->lang->line('common_need_login')));
             $this->load->view('footer');
         } else {
             //La connexion ayant été jugée légitime, on va maintenant la créer
@@ -40,16 +40,16 @@ class Login extends CI_Controller {
         if ($check['0']) {
             return $check['0'];
         } elseif ($check['1'] == 'username') {
-            $this->form_validation->set_message('check_login_info', 'Utilisateur inexistant');
+            $this->form_validation->set_message('check_login_info', $this->lang->line('login_unknown_user'));
             return FALSE;
         } elseif ($check['1'] == 'password') {
-            $this->form_validation->set_message('check_login_info', 'Mot de passe invalide');
+            $this->form_validation->set_message('check_login_info', $this->lang->line('login_invalid_password'));
             return FALSE;
         } elseif ($check['1'] == 'unvalid user') {
-            $this->form_validation->set_message('check_login_info', 'Utilisateur non confirmé');
+            $this->form_validation->set_message('check_login_info', $this->lang->line('login_unconfirmed_user'));
             return FALSE;
         } elseif ($check['1'] == 'banned user') {
-            $this->form_validation->set_message('check_login_info', 'Utilisateur banni');
+            $this->form_validation->set_message('check_login_info', $this->lang->line('login_banned_user'));
             return FALSE;
         }
     }

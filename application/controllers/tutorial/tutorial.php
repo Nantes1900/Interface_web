@@ -6,7 +6,7 @@
  *
  * @author paulyves
  */
-class Tutorial extends CI_Controller {
+class Tutorial extends MY_Controller {
     
     public function __construct() {
 	

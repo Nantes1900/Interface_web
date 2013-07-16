@@ -9,7 +9,7 @@
  * @author LUCAS Paul-Yves
  * 
  */
-class Profile_panel extends CI_Controller {
+class Profile_panel extends MY_Controller {
     public function index(){
         $this->profile_panel();
     }
@@ -19,6 +19,7 @@ class Profile_panel extends CI_Controller {
         parent::__construct();
 
         //Ce code sera executé charque fois que ce contrôleur sera appelé
+        $this->lang->load('user', $this->language);
         $this->load->model('user_model');
         require ('application/models/user.php');
         $this->load->library('form_validation');
@@ -61,6 +62,15 @@ class Profile_panel extends CI_Controller {
                             
             $this->profile_panel();
             
+    }
+    
+    public function change_lang(){
+        $language = $this->input->post('language');
+        $languages = ['french','english'];
+        if(in_array($language, $languages)){
+            $this->session->set_userdata('language',$language);
+        }
+        redirect('profile_panel/profile_panel');
     }
     
     public function check_password(){ //callback function of form_validation that checks password

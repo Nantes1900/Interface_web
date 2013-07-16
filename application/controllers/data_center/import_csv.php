@@ -1,6 +1,6 @@
 <?php
 
-class Import_csv extends CI_Controller {
+class Import_csv extends MY_Controller {
 
     public function index() {
         if ($this->session->userdata('username') && $this->session->userdata('user_level') >= 4) {

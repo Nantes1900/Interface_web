@@ -9,7 +9,7 @@
  * 
  */
 
-class Ajout_relation extends CI_Controller {
+class Ajout_relation extends MY_Controller {
 
     /**
      * Redirige automatiquement vers la génération de formulaire

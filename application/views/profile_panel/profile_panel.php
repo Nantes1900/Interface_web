@@ -1,4 +1,4 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" > 
+
 
     <h1>Profil personnel</h1>
     
@@ -87,4 +87,23 @@
         </table>
     </form>
     
-</html>
+    <h2>Gestion de la langue</h2>
+    <p style="font-size : 11px;" >
+        <?php echo $this->lang->line('user_lang_warning'); ?>
+    </p>
+        
+<?php echo form_open('profile_panel/profile_panel/change_lang'); ?>
+<select name="language" id="language">
+    <option value="french" <?php if ($this->session->userdata('language') == 'french') {
+    echo 'selected';
+} ?>>
+        Français
+    </option>
+    <option value="english" <?php if ($this->session->userdata('language') == 'english') {
+    echo 'selected';
+} ?>>
+        English
+    </option>
+</select>
+<button type="submit"> <?php echo $this->lang->line('common_change_lang'); ?> </button>
+</form>

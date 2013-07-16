@@ -6,7 +6,7 @@
  * @author paulyves
  */
 
-class Moderation_center extends CI_Controller {
+class Moderation_center extends MY_Controller {
 
     public function index() {
         if ($this->session->userdata('user_level') >= 5) {

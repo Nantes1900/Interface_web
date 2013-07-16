@@ -9,7 +9,7 @@
  * 
  */
 
-class Ajout_objet extends CI_Controller {
+class Ajout_objet extends MY_Controller {
 
     /**
      * Redirige automatiquement vers la génération de formulaire

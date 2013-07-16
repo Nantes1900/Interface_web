@@ -9,7 +9,7 @@
  * 
  */
 
-class Ajout_ressource extends CI_Controller {
+class Ajout_ressource extends MY_Controller {
 
     /**
      * Redirige automatiquement vers le choix du type de ressource

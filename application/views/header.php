@@ -11,7 +11,7 @@
         <link rel="shortcut icon" href="<?php echo base_url().'assets/utils/ACL.jpg' ?>">
 	<link rel="stylesheet" type="text/css" media="screen" href="<?php echo css_url('style'); ?>" />
 	<div class=banniere></div>
-	<p><?php echo anchor('accueil', 'Revenir à la page d&rsquo;accueil'); ?></p>
+	<p><?php echo anchor('accueil', $this->lang->line('common_welcome_page_link')); ?></p>
 
 
 </head>

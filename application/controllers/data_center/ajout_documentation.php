@@ -8,7 +8,7 @@
  * 
  * @author paulyves
  */
-class Ajout_documentation extends CI_Controller{
+class Ajout_documentation extends MY_Controller{
     /**
     * Redirige automatiquement vers le choix du type de documentation
     * @access public

@@ -9,7 +9,7 @@
  * @author LUCAS Paul-Yves
  * 
  */
-class Select_data extends CI_Controller {
+class Select_data extends MY_Controller {
 
     public function index($dataType = null, $goal = 'view') {
         if ($dataType == null) {

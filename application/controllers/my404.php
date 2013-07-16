@@ -7,7 +7,7 @@
  * @author paulyves
  */
 
-class my404 extends CI_Controller {
+class my404 extends MY_Controller {
     public function __construct(){
         parent::__construct();
     }

@@ -6,7 +6,7 @@
  *
  * @author paulyves
  */
-class Download extends CI_Controller {
+class Download extends MY_Controller {
 
     public function __construct() {
         parent::__construct();

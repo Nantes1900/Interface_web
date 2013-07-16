@@ -6,7 +6,7 @@
  * @author paulyves
  */
 
-class Modify_objet extends CI_Controller {
+class Modify_objet extends MY_Controller {
 
     public function index($goal, $success = null, $lastAction = null) {
         if ($this->input->post('objet_id') == null) {

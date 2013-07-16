@@ -6,7 +6,7 @@
  *
  * @author paulyves
  */
-class Contact_panel extends CI_Controller{
+class Contact_panel extends MY_Controller{
     public function index(){
         $this->contact_panel();
     }

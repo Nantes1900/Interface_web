@@ -1,6 +1,6 @@
 <?php
 
-class Accueil extends CI_Controller {
+class Accueil extends MY_Controller {
 
     public function index() {
         $this->accueil();
@@ -19,7 +19,7 @@ class Accueil extends CI_Controller {
         $this->load->view('accueil/body');
 
         if (!$this->session->userdata('username')) { //Si l'utilisateur n'est pas loggé, on affiche le formulaire de connexion
-            $this->load->view('accueil/login/formulaire_login', array('titre' => 'Connectez-vous :'));
+            $this->load->view('accueil/login/formulaire_login', array('titre' => $this->lang->line('common_need_login')));
         } else { //Sinon, on affiche les zones restreintes
 
             $data = array('username' => $this->session->userdata('username'));
@@ -31,13 +31,24 @@ class Accueil extends CI_Controller {
     }
 
     public function signin() {
+        $this->lang->load('login_signin', $this->language);
         $this->load->library('form_validation');
+        
         $this->load->view('accueil/signin/formulaire_signin');
         $this->load->view('footer');
     }
     
     public function not_connected(){
-        $this->load->view('accueil/login/formulaire_login',array('titre'=>'Vous n\'êtes pas connecté. Veuillez vous connecter :'));
+        $this->load->view('accueil/login/formulaire_login',array('titre'=>$this->lang->line('common_do_need_login')));
+    }
+    
+    public function change_lang(){
+        $language = $this->input->post('language');
+        $languages = ['french','english'];
+        if(in_array($language, $languages)){
+            $this->session->set_userdata('language',$language);
+        }
+        redirect('accueil/accueil');
     }
 }
 
