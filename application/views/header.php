@@ -28,7 +28,7 @@
             </li>
             <li>
                 <?php echo img(array('src'=>'assets/utils/db_add.png','width'=>'8%')); ?>
-                <?php echo anchor('data_center/data_center', 'Ajout de données'); ?>
+                <span class="cursorPointer"><?php echo 'Ajout de données'; ?></span>
                 <ul>
                     <?php if($this->session->userdata('user_level') >= 4){ ?>
                             <li><?php echo anchor('data_center/ajout_objet', 'Objet historique'); ?></li>
@@ -42,7 +42,7 @@
             <?php if($this->session->userdata('user_level') >= 5) { ?>
                     <li>
                         <?php echo img(array('src'=>'assets/utils/db_update.png','width'=>'8%')); ?>
-                        <?php echo anchor('moderation/moderation_center', 'Modération de données');?>
+                        <span class="cursorPointer"><?php echo 'Modération de données';?></span>
                         <ul>
                             <li><?php echo anchor('moderation/modify_objet/index/modify', 'Modifier un objet historique'); ?></li>
                             <li><?php echo anchor('moderation/modify_objet/index/relation', 'Relier des objets'); ?></li>
@@ -57,7 +57,7 @@
             <?php } ?>
             <li>
                 <?php echo img(array('src'=>'assets/utils/zoom-2.png','width'=>'8%')); ?>
-                <?php echo anchor('view_data/select_data/index', 'Visualisation de données'); ?>
+                <span class="cursorPointer"><?php echo 'Visualisation de données'; ?></span>
                 <ul>
                     <li><?php echo anchor('view_data/select_data/index/objet','Objets'); ?></li>
                     <li><?php echo anchor('view_data/select_data/index/ressource_texte','Ressources textuelles'); ?></li>
@@ -99,6 +99,7 @@
     <script src="<?php echo base_url();?>assets/js/jquery.js"></script>
     <script src="<?php echo base_url();?>assets/js/dropdownmenu.js"></script>
     <script>
+        //this is an ajax query test/demo
         function link(){
             $(function(){
                 

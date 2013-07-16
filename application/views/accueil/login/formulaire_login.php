@@ -2,6 +2,11 @@
 
     <table>
         
+        <p>
+            Une grande partie des fonctionnalités de ce site repose sur l'utilisation des cookies. 
+            Vous devez accepter les cookies pour pouvoir l'utiliser.
+        </p>
+        
         <h1><?php echo $titre; ?></h1>
         
 	<?php echo form_open('accueil/login'); ?>

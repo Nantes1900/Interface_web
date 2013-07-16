@@ -66,6 +66,10 @@ div.leftSidebar ul{
     margin:0;
     padding:0;
 } 
+span.cursorPointer{
+    cursor:hand; 
+    cursor:pointer;
+} 
 
 div.leftSidebar li{
     background-color:#81BEF7;
