@@ -26,6 +26,7 @@
 </table>
 <p><?php echo anchor('accueil/accueil/signin', $this->lang->line('common_signin_link')); ?></p>
 
+<h2><?php echo $this->lang->line('common_lang_title'); ?></h2>
 <?php echo form_open('accueil/accueil/change_lang'); ?>
 <select name="language" id="language">
     <option value="french" <?php if ($this->session->userdata('language') == 'french') {

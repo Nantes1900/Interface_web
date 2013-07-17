@@ -2,16 +2,16 @@
     
 <head>
 
-   	<title>Projet Nantes 1900 - Rework</title>
-   	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    	<meta name="robots" content="index,follow"/>
-        <meta name="keywords" content="château_des_ducs_de_bretagne, nantes, 1900, projet, maquette, port, chateau, numerisation, exposition, graphisme, conferences, publicitaire, " />
-	<meta name="description" content="Site officiel. A travers la maquette du port de Nantes découvrez le projet Nantes 1900" />
-	
-        <link rel="shortcut icon" href="<?php echo base_url().'assets/utils/ACL.jpg' ?>">
-	<link rel="stylesheet" type="text/css" media="screen" href="<?php echo css_url('style'); ?>" />
-	<div class=banniere></div>
-	<p><?php echo anchor('accueil', $this->lang->line('common_welcome_page_link')); ?></p>
+    <title>Projet Nantes 1900 - Rework</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="robots" content="index,follow"/>
+    <meta name="keywords" content="château_des_ducs_de_bretagne, nantes, 1900, projet, maquette, port, chateau, numerisation, exposition, graphisme, conferences, publicitaire, " />
+    <meta name="description" content="Site officiel. A travers la maquette du port de Nantes découvrez le projet Nantes 1900" />
+
+    <link rel="shortcut icon" href="<?php echo base_url() . 'assets/utils/ACL.jpg' ?>">
+    <link rel="stylesheet" type="text/css" media="screen" href="<?php echo css_url('style'); ?>" />
+    <div class=banniere></div>
+    <p><?php echo anchor('accueil', $this->lang->line('common_welcome_page_link')); ?></p>
 
 
 </head>
@@ -24,73 +24,73 @@
         <ul class='navigation'>
             <li>
                 <?php echo img(array('src'=>'assets/utils/go-home.png','width'=>'8%')); ?>
-                <?php echo anchor('accueil', 'Accueil'); ?>
+                <?php echo anchor('accueil', $this->lang->line('common_lsidebar_welcome')); ?>
             </li>
             <li>
                 <?php echo img(array('src'=>'assets/utils/db_add.png','width'=>'8%')); ?>
-                <span class="cursorPointer"><?php echo 'Ajout de données'; ?></span>
+                <span class="cursorPointer"><?php echo $this->lang->line('common_lsidebar_addData'); ?></span>
                 <ul>
                     <?php if($this->session->userdata('user_level') >= 4){ ?>
-                            <li><?php echo anchor('data_center/ajout_objet', 'Objet historique'); ?></li>
-                            <li><?php echo anchor('data_center/ajout_relation', 'Relation entre deux objets historiques'); ?></li>
-                            <li><?php echo anchor('data_center/import_csv', 'Import d\'un fichier CSV'); ?></li>
+                            <li><?php echo anchor('data_center/ajout_objet', $this->lang->line('common_lsidebar_objet')); ?></li>
+                            <li><?php echo anchor('data_center/ajout_relation', $this->lang->line('common_lsidebar_relation')); ?></li>
+                            <li><?php echo anchor('data_center/import_csv', $this->lang->line('common_lsidebar_csvImport')); ?></li>
                     <?php } ?>
-                    <li><?php echo anchor('data_center/ajout_ressource', 'Ressource'); ?></li>
-                    <li><?php echo anchor('data_center/ajout_documentation', 'Documentation'); ?></li>
+                    <li><?php echo anchor('data_center/ajout_ressource', $this->lang->line('common_ressource')); ?></li>
+                    <li><?php echo anchor('data_center/ajout_documentation', $this->lang->line('common_documentation')); ?></li>
                 </ul>
             </li>
             <?php if($this->session->userdata('user_level') >= 5) { ?>
                     <li>
                         <?php echo img(array('src'=>'assets/utils/db_update.png','width'=>'8%')); ?>
-                        <span class="cursorPointer"><?php echo 'Modération de données';?></span>
+                        <span class="cursorPointer"><?php echo $this->lang->line('common_lsidebar_moderation');?></span>
                         <ul>
-                            <li><?php echo anchor('moderation/modify_objet/index/modify', 'Modifier un objet historique'); ?></li>
-                            <li><?php echo anchor('moderation/modify_objet/index/relation', 'Relier des objets'); ?></li>
-                            <li><?php echo anchor('moderation/modify_ressource/index/ressource_texte/modify', 'Modifier une ressource textuelle'); ?></li>
-                            <li><?php echo anchor('moderation/modify_ressource/index/ressource_texte/documentation', 'Documenter (texte) un objet'); ?></li>
-                            <li><?php echo anchor('moderation/modify_ressource/index/ressource_graphique/modify', 'Modifier une ressource graphique'); ?></li>
-                            <li><?php echo anchor('moderation/modify_ressource/index/ressource_graphique/documentation', 'Documenter (image) un objet'); ?></li>
-                            <li><?php echo anchor('moderation/modify_ressource/index/ressource_video/modify', 'Modifier une ressource video'); ?></li>
-                            <li><?php echo anchor('moderation/modify_ressource/index/ressource_video/documentation', 'Documenter (video) un objet'); ?></li>
+                            <li><?php echo anchor('moderation/modify_objet/index/modify', $this->lang->line('common_lsidebar_mod_objet')); ?></li>
+                            <li><?php echo anchor('moderation/modify_objet/index/relation', $this->lang->line('common_lsidebar_mod_relation')); ?></li>
+                            <li><?php echo anchor('moderation/modify_ressource/index/ressource_texte/modify', $this->lang->line('common_lsidebar_mod_ressTxt')); ?></li>
+                            <li><?php echo anchor('moderation/modify_ressource/index/ressource_texte/documentation', $this->lang->line('common_lsidebar_mod_docTxt')); ?></li>
+                            <li><?php echo anchor('moderation/modify_ressource/index/ressource_graphique/modify', $this->lang->line('common_lsidebar_mod_ressImg')); ?></li>
+                            <li><?php echo anchor('moderation/modify_ressource/index/ressource_graphique/documentation', $this->lang->line('common_lsidebar_mod_docImg')); ?></li>
+                            <li><?php echo anchor('moderation/modify_ressource/index/ressource_video/modify', $this->lang->line('common_lsidebar_mod_ressVid')); ?></li>
+                            <li><?php echo anchor('moderation/modify_ressource/index/ressource_video/documentation', $this->lang->line('common_lsidebar_mod_docVid')); ?></li>
                         </ul>
                     </li>
             <?php } ?>
             <li>
                 <?php echo img(array('src'=>'assets/utils/zoom-2.png','width'=>'8%')); ?>
-                <span class="cursorPointer"><?php echo 'Visualisation de données'; ?></span>
+                <span class="cursorPointer"><?php echo $this->lang->line('common_lsidebar_view_data'); ?></span>
                 <ul>
-                    <li><?php echo anchor('view_data/select_data/index/objet','Objets'); ?></li>
-                    <li><?php echo anchor('view_data/select_data/index/ressource_texte','Ressources textuelles'); ?></li>
-                    <li><?php echo anchor('view_data/select_data/index/ressource_graphique','Ressources graphiques'); ?></li>
-                    <li><?php echo anchor('view_data/select_data/index/ressource_video','Ressources vidéos'); ?></li>
-                    <li><?php echo anchor('view_data/select_data/index/carte','Carte des objets'); ?></li>
+                    <li><?php echo anchor('view_data/select_data/index/objet', $this->lang->line('common_objets')); ?></li>
+                    <li><?php echo anchor('view_data/select_data/index/ressource_texte', $this->lang->line('common_ressources_txt')); ?></li>
+                    <li><?php echo anchor('view_data/select_data/index/ressource_graphique', $this->lang->line('common_ressources_img')); ?></li>
+                    <li><?php echo anchor('view_data/select_data/index/ressource_video', $this->lang->line('common_ressources_vid')); ?></li>
+                    <li><?php echo anchor('view_data/select_data/index/carte', $this->lang->line('common_lsidebar_view_map')); ?></li>
                 </ul>
             </li>
             <li>
                 <?php echo img(array('src'=>'assets/utils/edit-user.png','width'=>'8%')); ?>
-                <?php echo anchor('profile_panel/profile_panel', 'Profil personnel'); ?>
+                <?php echo anchor('profile_panel/profile_panel', $this->lang->line('common_lsidebar_profile_panel')); ?>
             </li>
             <?php if($this->session->userdata('user_level') >= 9) { ?>
                     <li>
                         <?php echo img(array('src'=>'assets/utils/edit-group.png','width'=>'8%')); ?>
-                        <?php echo anchor('admin_panel/admin_panel', 'Centre d\'administration');?>
+                        <?php echo anchor('admin_panel/admin_panel', $this->lang->line('common_lsidebar_admin_panel'));?>
                     </li>
             <?php } ?>
             <li>
                 <?php echo img(array('src'=>'assets/utils/contact.png','width'=>'8%')); ?>
-                <?php echo anchor('profile_panel/contact_panel', 'Contacts'); ?>
+                <?php echo anchor('profile_panel/contact_panel', $this->lang->line('common_lsidebar_contact_panel')); ?>
             </li>
             <li>
                 <?php echo img(array('src'=>'assets/utils/download.png','width'=>'8%')); ?>
-                <?php echo anchor('download/download', 'Téléchargements'); ?>
+                <?php echo anchor('download/download', $this->lang->line('common_lsidebar_downloads')); ?>
             </li>
             <li>
                 <?php echo img(array('src'=>'assets/utils/tuto.png','width'=>'8%')); ?>
-                <?php echo anchor('tutorial/tutorial', 'Tutoriel'); ?>
+                <?php echo anchor('tutorial/tutorial', $this->lang->line('common_lsidebar_tutorial')); ?>
             </li>
             <li>
                 <?php echo img(array('src'=>'assets/utils/system-logout.png','width'=>'8%')); ?>
-                <?php echo anchor('accueil/login/logout', 'D&eacute;connexion'); ?>
+                <?php echo anchor('accueil/login/logout', $this->lang->line('common_lsidebar_logout')); ?>
             </li>
         </ul>
     </div>

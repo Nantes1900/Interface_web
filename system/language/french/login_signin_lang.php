@@ -13,5 +13,9 @@ $lang['signin_lastname']          = "Nom :";
 $lang['signin_email_adress']      = "Adresse email :";
 $lang['signin_validate']          = "Créer un compte";
 
+$lang['signin_validation']        = "Le compte utilisateur <em> %s </em> a bien été créé. Un email 
+                                     vous a été envoyé, vous pourrez vous connecter quand le compte
+                                     aura été validé à l'aide de ce mail";
+
 /* End of file common.php */
 /* Location : ./system/language/french/login_signin_lang.php */

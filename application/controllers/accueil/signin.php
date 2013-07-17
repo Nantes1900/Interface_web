@@ -35,9 +35,7 @@ class Signin extends MY_Controller {
             
             if($success){
                 //$this->confirm_mail($userdata); //to test during deployment as it doesn't work with localhost
-                $message = 'Le compte utilisateur <em>'.$userdata['username'].'</em> a bien été créé.'.
-                            ' Un email vous a été envoyé, vous pourrez vous connecter quand le compte'.
-                            ' aura été validé à l\'aide de ce mail';
+                $message = sprintf($this->lang->line('signin_validation'),$userdata['username']);
             } else {
                 $message = 'Erreur : votre compte n\'a pas pu être créé';
             }
