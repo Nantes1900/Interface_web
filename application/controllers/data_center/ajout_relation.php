@@ -52,7 +52,7 @@ class Ajout_relation extends MY_Controller {
         $userLevel = $this->session->userdata('user_level');
         if ($userLevel >= 4) {
             //On va récupérer une liste des objets existants dans la base, afin de les proposer
-            $objet_list = $this->objet_model->get_objet_list();
+            $objet_list = $this->objet_model->get_all_objet();
 
             //On va récupérer une liste des types de relation existants dans la base, afin de les proposer
             $type_relation_list = $this->relation_model->get_type_relation_list();
@@ -84,13 +84,13 @@ class Ajout_relation extends MY_Controller {
                 $objet1 = new Objet($relationdata['objet_id_1']);
                 $objet2 = new Objet($relationdata['objet_id_2']);
                 if ($this->relation_model->ajout_relation($relationdata)) {
-                    $data = array('success' => TRUE, 'message' => 'L\'ajout de relation entre les objets <b>' .
-                        $objet1->get_nom_objet() . '</b> et <b>' . $objet2->get_nom_objet() .
-                        '</b> s\'est déroulé avec succès');
+                    $data = array('success' => TRUE, 
+                                  'message' => sprintf($this->lang->line('common_add_rel_form_success'),
+                                                        $objet1->get_nom_objet(),$objet2->get_nom_objet()));
                 } else {
-                    $data = array('success' => FALSE, 'message' => 'Une erreur a eu lieu, les objets <b>' .
-                        $objet1->get_nom_objet() . '</b> et <b>' . $objet2->get_nom_objet() .
-                        '</b> n\'ont pas été reliés');
+                    $data = array('success' => FALSE, 
+                                   'message' => sprintf($this->lang->line('common_add_rel_form_failure'),
+                                                        $objet1->get_nom_objet(),$objet2->get_nom_objet()));
                 }
 
                 $this->load->view('data_center/success_form', $data);
@@ -107,7 +107,7 @@ class Ajout_relation extends MY_Controller {
         $year = (int) $this->input->post('annee_' . $boundary);
         $valid = checkdate($month, $day, $year);
         if (!$valid) {
-            $this->form_validation->set_message('check_date', 'Date invalide');
+            $this->form_validation->set_message('check_date', $this->lang->line('common_add_obj_check_date'));
         }
         return $valid;
     }

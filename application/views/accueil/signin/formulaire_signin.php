@@ -35,7 +35,7 @@
             <td class="error_form"><?php echo form_error('email'); ?></td>
         </tr>
 	
-        <tr><td><input type="submit" value="<?php echo ($this->lang->line('signin_validate')); ?>" /><tr><td>
+        <tr><td><input type="submit" value="<?php echo ($this->lang->line('signin_validate_form')); ?>" /><tr><td>
 
 	</form>
     </table>

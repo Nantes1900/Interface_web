@@ -30,7 +30,22 @@ class Objet_model extends CI_Model {
     public function last_insert_id() {
         return $this->db->insert_id();
     }
+    public function get_all_objet(){
+        $this->db->select('*');
+        $this->db->from('objet');
+        $this->db->order_by('nom_objet', 'asc');
+        $query = $this->db->get();
 
+        //converting to an array of Objet entities
+        $tempArray = $query->result_array();
+        $resultArray = array();
+        foreach ($tempArray as $objetArray) {
+            $resultArray[] = new Objet($objetArray);
+        }
+        return $resultArray;
+    }
+    
+    
     public function get_objet_list($orderBy = 'objet_id', $orderDirection = 'asc', $speAttribute = null, $speAttributeValue = null, $valid = null, $page = 1) {
         $this->db->select('*');
         $this->db->from('objet');

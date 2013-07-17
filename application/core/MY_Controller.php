@@ -37,6 +37,7 @@ class MY_Controller extends Controller {
         
         //loading language
         $this->lang->load('common', $this->language);
+        $this->lang->load('date', $this->language);
         $this->lang->load('form_validation', $this->language);
     }
 

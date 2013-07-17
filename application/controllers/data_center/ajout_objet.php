@@ -63,11 +63,11 @@ class Ajout_objet extends MY_Controller {
             $objetdata['username'] = $this->session->userdata('username');
 
             if ($this->objet_model->ajout_objet($objetdata)) {
-                $data = array('success' => TRUE, 'message' => 'L\'ajout de l\'objet <b>' .
-                    $objetdata['nom_objet'] . '</b> s\'est déroulé avec succès');
+                $data = array('success' => TRUE, 'message' => sprintf($this->lang->line('common_add_obj_form_success'),
+                                                                        $objetdata['nom_objet']));
             } else {
-                $data = array('success' => FALSE, 'message' => 'Une erreur a eu lieu, l\'objet <b>' .
-                    $objetdata['nom_objet'] . '</b> n\'a pas été ajouté');
+                $data = array('success' => FALSE, 'message' => sprintf($this->lang->line('common_add_obj_form_failure'),
+                                                                        $objetdata['nom_objet']));
             }
             
             $this->load->view('data_center/success_form', $data);
@@ -184,11 +184,11 @@ class Ajout_objet extends MY_Controller {
                 $geomdata['datation_indication_fin'] = $this->input->post('datation_indication_fin');
 
                 if ($this->objet_model->ajout_geom($geomdata)) {
-                    $data = array('success' => TRUE, 'message' => 'L\'objet <b>' .
-                        $objet->get_nom_objet() . '</b> a été localisé avec succès');
+                    $data = array('success' => TRUE, 'message' => sprintf($this->lang->line('common_add_geo_form_success'),
+                                                                            $objet->get_nom_objet()));
                 } else {
-                    $data = array('success' => FALSE, 'message' => 'Une erreur a eu lieu, l\'objet <b>' .
-                        $objet->get_nom_objet() . '</b> n\'a pas été localisé');
+                    $data = array('success' => FALSE, 'message' => sprintf($this->lang->line('common_add_geo_form_failure'),
+                                                                            $objet->get_nom_objet()));
                 }
                 update_coordonnes(); //we update the coordonnees.json file for the map
                 $this->load->view('data_center/success_form', $data);
@@ -236,15 +236,18 @@ class Ajout_objet extends MY_Controller {
 
 
                     if ($this->objet_model->ajout_geom($geomdata)) {
-                        $data = array('success' => TRUE, 'message' => 'L\'objet <b>' .
-                            $objetdata['nom_objet'] . '</b> a été créé et localisé avec succès');
+                        $data = array('success' => TRUE, 
+                                      'message' => sprintf($this->lang->line('common_add_obj_geo_form_success'),
+                                                           $objetdata['nom_objet']));
                     } else {
-                        $data = array('success' => FALSE, 'message' => 'Une erreur a eu lieu, l\'objet <b>' .
-                            $objetdata['nom_objet'] . '</b> a été créé mais pas localisé');
+                        $data = array('success' => FALSE, 
+                                      'message' => sprintf($this->lang->line('common_add_obj_geo_form_failure'),
+                                                           $objetdata['nom_objet']));
                     }
                 } else {
-                    $data = array('success' => FALSE, 'message' => 'Une erreur a eu lieu, l\'objet <b>' .
-                        $objetdata['nom_objet'] . '</b> n\'a pas été ajouté');
+                    $data = array('success' => FALSE, 
+                                  'message' => sprintf($this->lang->line('common_add_obj_form_failure'),
+                                                           $objetdata['nom_objet']));
                 }
                 update_coordonnes(); //we update the coordonnees.json file for the map
                 $this->load->view('data_center/success_form', $data);
@@ -257,7 +260,8 @@ class Ajout_objet extends MY_Controller {
     public function check_nom($name) {
         $objet = $this->objet_model->get_objet('nom_objet', $name);
         if ($objet != null) {
-            $this->form_validation->set_message('check_nom', 'Cet objet existe déjà');
+            $this->form_validation->set_message('check_nom', sprintf($this->lang->line('common_add_obj_check_nom'),
+                                                                     $name));
             return FALSE;
         } else {
             return TRUE;
@@ -270,7 +274,7 @@ class Ajout_objet extends MY_Controller {
         $year = (int) $this->input->post('annee_' . $extension);
         $valid = checkdate($month, $day, $year);
         if (!$valid) {
-            $this->form_validation->set_message('check_date', 'Date invalide');
+            $this->form_validation->set_message('check_date', $this->lang->line('common_add_obj_check_date'));
         }
         return $valid;
     }

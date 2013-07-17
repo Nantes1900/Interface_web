@@ -26,11 +26,17 @@ $lang['common_ressource']           = "Ressource";
 $lang['common_ressources']          = "Ressources";
 $lang['common_ressource_txt']       = "Ressource textuelle";
 $lang['common_ressources_txt']      = "Ressources textuelles";
+$lang['common_ress_txt_detail']     = "Ressource textuelle (livre, lettre,...)";
 $lang['common_ressource_img']       = "Ressource graphique";
 $lang['common_ressources_img']      = "Ressources graphiques";
+$lang['common_ress_img_detail']     = "Ressource graphique (photo, image...)";
 $lang['common_ressource_vid']       = "Ressource vidéo";
 $lang['common_ressources_vid']      = "Ressources vidéos";
+$lang['common_ress_vid_detail']     = "Ressource vidéo (film, clip...)";
 $lang['common_documentation']       = "Documentation";
+$lang['common_doc_txt']             = "Documentation textuelle";
+$lang['common_doc_img']             = "Documentation graphique";
+$lang['common_doc_vid']             = "Documentation video";
 
 //left sidebar and main menu
 $lang['common_lsidebar_welcome']        = "Accueil";
@@ -57,6 +63,39 @@ $lang['common_lsidebar_tutorial']       = "Tutoriel";
 $lang['common_lsidebar_logout']         = "Déconnexion";
 $lang['common_menu_profile_panel']      = "Consulter le profil personnel";
 $lang['common_menu_contact_panel']      = "Listes des autres membres";
+
+//about data center
+$lang['common_add_data_instruction']      = "Sélectionnez ce que vous souhaitez ajouter à la base :";
+$lang['common_add_data_min_instruction']  = "Vous souhaitez ajouter :";
+$lang['common_add_data_csv_import']       = "Ajouter plusieurs éléments à partir d'un fichier CSV";
+
+$lang['common_add_obj_form']              = "Formulaire d'ajout d'un ".strtolower($lang['common_objet'])." historique";
+$lang['common_add_obj_form_submit']       = "Ajouter cet ".strtolower($lang['common_objet']);
+$lang['common_add_obj_form_success']      = "L'ajout de l'objet <b>%s</b> s'est déroulé avec succès";
+$lang['common_add_obj_form_failure']      = "Une erreur a eu lieu, l'objet <b>%s</b> n'a pas été ajouté";
+$lang['common_add_geo_form_success']      = "L'objet <b>%s</b> a été localisé avec succès";
+$lang['common_add_geo_form_failure']      = "Une erreur a eu lieu, l'objet <b>%s</b> n'a pas été localisé";
+$lang['common_add_obj_geo_form_success']  = "L'objet <b>%s</b> a été créé et localisé avec succès";
+$lang['common_add_obj_geo_form_failure']  = "Une erreur a eu lieu, l'objet <b>%s</b> a été créé mais pas localisé";
+$lang['common_add_obj_check_nom']         = "Le nom <b>%s</b> est déjà pris";
+$lang['common_add_obj_check_date']        = "Date invalide";
+
+$lang['common_add_rel_form']              = "Formulaire d'ajout d'une relation entre deux ".strtolower($lang['common_objets']);
+$lang['common_add_rel_obj1']              = " Selectionner le premier ".strtolower($lang['common_objet'])." :";
+$lang['common_add_rel_obj2']              = " Selectionner le second ".strtolower($lang['common_objet'])." :";
+$lang['common_add_rel_sel_rel']           = " Selectionner le type de relation :";
+$lang['common_add_rel_parent_rel']        = "Relation Parent-Enfant";
+$lang['common_add_rel_form_submit']       = "Ajouter cette relation";
+$lang['common_add_rel_form_success']      = "L'ajout de relation entre les objets <b>%s</b> et <b>%s</b> s'est déroulé avec succès";
+$lang['common_add_rel_form_failure']      = "Une erreur a eu lieu, les objets <b>%s</b> et <b>%s</b> n'ont pas été reliés";
+
+//about objet
+$lang['common_obj_nom_objet']             = "Nom";
+$lang['common_obj_resume']                = "Résumé";
+$lang['common_obj_historique']            = "Historique";
+$lang['common_obj_description']           = "Description";
+$lang['common_obj_adresse_postale']       = "Adresse Postale";
+$lang['common_obj_mots_cles']             = "Mots-clés";
 
 
 /* End of file common.php */

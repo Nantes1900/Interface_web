@@ -37,11 +37,11 @@ class Signin extends MY_Controller {
                 //$this->confirm_mail($userdata); //to test during deployment as it doesn't work with localhost
                 $message = sprintf($this->lang->line('signin_validation'),$userdata['username']);
             } else {
-                $message = 'Erreur : votre compte n\'a pas pu être créé';
+                $message = $this->lang->line('signin_failure');
             }
             
             $this->load->view('data_center/success_form', array('success'=>$success, 'message'=>$message));
-            $this->load->view('accueil/login/formulaire_login', array('titre' => 'Connectez-vous :'));
+            $this->load->view('accueil/login/formulaire_login', array('titre' => $this->lang->line('common_need_login')));
             $this->load->view('footer');
         }
     }
@@ -89,15 +89,20 @@ class Signin extends MY_Controller {
                 if ($user->get_userLevel() == 0 && $user->get_contribution() < 1) {
                     $user->set_userLevel(1);
                     $user->save();
-                    $this->load->view('accueil/login/formulaire_login', array('titre' => 'Votre compte a bien été validé ' . $username . ', vous pouvez désormais vous connecter'));
+                    $this->load->view('accueil/login/formulaire_login', 
+                                        array('titre' => sprintf($this->lang->line('signin_validation_success'),
+                                                                    $username)));
                 } else {
-                    $this->load->view('accueil/login/formulaire_login', array('titre' => 'Utilisateur déjà validé'));
+                    $this->load->view('accueil/login/formulaire_login', 
+                                    array('titre' => $this->lang->line('signin_validation_fail_already')));
                 }
             } else {
-                $this->load->view('accueil/login/formulaire_login', array('titre' => 'Information incorrecte dans le lien'));
+                $this->load->view('accueil/login/formulaire_login', 
+                                    array('titre' => $this->lang->line('signin_validation_fail_link')));
             }
         } else {
-            $this->load->view('accueil/login/formulaire_login', array('titre' => 'Utilisateur spécifié non existant'));
+            $this->load->view('accueil/login/formulaire_login', 
+                                array('titre' => $this->lang->line('signin_validation_fail_unknown')));
         }
     }
 
@@ -106,7 +111,8 @@ class Signin extends MY_Controller {
         if ($this->user_model->check_ifuserexists($userName) == 0) {
             return TRUE;
         } else {
-            $this->form_validation->set_message('check_existence', 'Le nom d\'utilisateur est déjà pris');
+            $this->form_validation->set_message('check_existence', 
+                                    sprintf($this->lang->line('signin_check_existence'), $userName));
             return FALSE;
         }
     }
@@ -114,7 +120,7 @@ class Signin extends MY_Controller {
     public function check_nospace() {
         $userName = $this->input->post('username');
         if (count(explode(' ', $userName)) > 1) {
-            $this->form_validation->set_message('check_nospace', 'Le nom d\'utilisateur ne doit pas comporter d\'espace');
+            $this->form_validation->set_message('check_nospace', $this->lang->line('signin_check_nospace'));
             return FALSE;
         } else {
             return TRUE;
@@ -126,7 +132,7 @@ class Signin extends MY_Controller {
         if (!isset($userList['0'])) {
             return TRUE;
         } else {
-            $this->form_validation->set_message('check_unique_mail', 'Cette adresse mail est déjà prise');
+            $this->form_validation->set_message('check_unique_mail', $this->lang->line('signin_check_unique_mail'));
             return FALSE;
         }
     }

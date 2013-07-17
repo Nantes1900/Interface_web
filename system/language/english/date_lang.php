@@ -15,6 +15,12 @@ $lang['date_minutes'] = "Minutes";
 $lang['date_second'] = "Second";
 $lang['date_seconds'] = "Seconds";
 
+$lang['date_begin'] = "Starting date";
+$lang['date_end'] = "Ending date";
+$lang['date_secondary_begin'] = "Starting date details";
+$lang['date_secondar_end'] = "Ending date details";
+
+
 $lang['UM12']	= '(UTC -12:00) Baker/Howland Island';
 $lang['UM11']	= '(UTC -11:00) Samoa Time Zone, Niue';
 $lang['UM10']	= '(UTC -10:00) Hawaii-Aleutian Standard Time, Cook Islands, Tahiti';
