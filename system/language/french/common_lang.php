@@ -37,6 +37,7 @@ $lang['common_documentation']       = "Documentation";
 $lang['common_doc_txt']             = "Documentation textuelle";
 $lang['common_doc_img']             = "Documentation graphique";
 $lang['common_doc_vid']             = "Documentation video";
+$lang['common_obj_link']            = "Relation entre ".strtolower($lang['common_objets']);
 
 //left sidebar and main menu
 $lang['common_lsidebar_welcome']        = "Accueil";

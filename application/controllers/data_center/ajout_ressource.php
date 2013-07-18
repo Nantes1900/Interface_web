@@ -61,7 +61,7 @@ class Ajout_ressource extends MY_Controller {
         $this->load->model('ressource_texte_model');
 
         if ($this->form_validation->run('ajout_texte') == FALSE) {
-            $objet_list = $this->objet_model->get_objet_list();
+            $objet_list = $this->objet_model->get_all_objet();
             if (isset($linkedObjet_id)) { //we check if we are adding a ressource to an objet 'on the fly'
                 $linkedObjet = new Objet($linkedObjet_id);
             } else {
@@ -128,7 +128,7 @@ class Ajout_ressource extends MY_Controller {
         $this->load->library('upload', $config);
 
         if ($this->form_validation->run('ajout_image') == FALSE) {
-            $objet_list = $this->objet_model->get_objet_list();
+            $objet_list = $this->objet_model->get_all_objet();
             if (isset($linkedObjet_id)) { //we check if we are adding a ressource to an objet 'on the fly'
                 $linkedObjet = new Objet($linkedObjet_id);
             } else {
@@ -230,7 +230,7 @@ class Ajout_ressource extends MY_Controller {
         if (!$this->input->post('pagination')) {
             $ressource->set_pagination('0');
         } else {
-            $textedata['pagination'] = $this->input->post('pagination');
+            $ressource->set_pagination($this->input->post('pagination'));
         }
         $date_infos = conc_date($this->input->post('jourPrise'), $this->input->post('moisPrise'), $this->input->post('anneePrise'));
         $ressource->set_date_prise_vue($date_infos['date']);
@@ -252,7 +252,7 @@ class Ajout_ressource extends MY_Controller {
         set_time_limit(120); //change the max execution time of php to 120 sec for this method
         if ($this->form_validation->run('ajout_video') == FALSE) {
 
-            $objet_list = $this->objet_model->get_objet_list();
+            $objet_list = $this->objet_model->get_all_objet();
             if (isset($linkedObjet_id)) { //we check if we are adding a ressource to an objet 'on the fly'
                 $linkedObjet = new Objet($linkedObjet_id);
             } else {

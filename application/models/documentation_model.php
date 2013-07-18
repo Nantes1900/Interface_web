@@ -27,7 +27,10 @@ class Documentation_model extends CI_Model{
         $documentation_video_id_array = array();
         
         foreach ($csvData as $documentationCsv){
-            $errorBegin = 'la documentation entre '.$documentationCsv['Nom de l\'objet'].' et '.$documentationCsv['Titre de la ressource']; //common beginning of error message
+            //common beginning of error message
+            $errorBegin = sprintf($this->lang->line('csv_doc_error_begin'), $documentationCsv['Nom de l\'objet'],
+                                    $documentationCsv['Titre de la ressource']); 
+            
             $typeDoc = $documentationCsv['Type de documentation'];
             $objet_id = $this->objet_model->get_objet_by_name($documentationCsv['Nom de l\'objet']);
             $ressource_id = 'noType'; //alert value for error tracking
@@ -44,7 +47,7 @@ class Documentation_model extends CI_Model{
                 $ressource_id = $ressource['ressource_video_id'];
                 $pagination = null;
             }else{
-                $failure[] = $errorBegin.' (le type de documentation ne correspond pas à "textuelle", "graphique" ou "video")';
+                $failure[] = $errorBegin.$this->lang->line('csv_doc_no_type');
             }
             if($ressource_id!='noType'){
                 if($this->add_documentation($typeDoc, $objet_id, $ressource_id,$pagination)){ 
@@ -62,14 +65,16 @@ class Documentation_model extends CI_Model{
                     $failure[] = $errorBegin.' (';
                     if($objet_id == null){
                         $errorBegin = array_pop($failure);
-                        $failure[] = $errorBegin.' '.$documentationCsv['Nom de l\'objet'].' n\'existe pas';
+                        $failure[] = $errorBegin.$documentationCsv['Nom de l\'objet'].
+                                     $this->lang->line('csv_doc_do_not_exist');
                     }
                     if($ressource_id == null){
                         $errorBegin = array_pop($failure);
-                        $failure[] = $errorBegin.' '.$documentationCsv['Titre de la ressource'].' n\'existe pas';
+                        $failure[] = $errorBegin.$documentationCsv['Titre de la ressource'].
+                                     $this->lang->line('csv_doc_do_not_exist');
                     }
                     $errorBegin = array_pop($failure);
-                    $failure[] = $errorBegin.')';
+                    $failure[] = substr($errorBegin,0,-2).')';
                 }
             }
         }

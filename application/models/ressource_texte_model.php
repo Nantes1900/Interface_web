@@ -191,14 +191,18 @@ class Ressource_texte_model extends CI_Model
                     $failure[] = $ressource->get_titre().' (';  //we want to continue, check $db['default']['db_debug'] = FALSE; in config/database 
                     if($this->get_ressource('titre', $ressource->get_titre()) != null){
                         $errorBegin = array_pop($failure);
-                        $failure[] = $errorBegin.' '.$ressource->get_titre().' existe déjà ';
+                        $failure[] = $errorBegin.$ressource->get_titre().$this->lang->line('csv_ress_already_exist');
                     }
                     if(!valid_MDY($ressource->get_date_debut_ressource())){
                         $errorBegin = array_pop($failure);
-                        $failure[] = $errorBegin.' date de début de ressource non valide ';
+                        $failure[] = $errorBegin.$this->lang->line('csv_ress_date_begin');
+                    }
+                    if(!(is_numeric($ressource->get_pagination())||$ressource->get_pagination()==null)){
+                        $errorBegin = array_pop($failure);
+                        $failure[] = $errorBegin.$this->lang->line('csv_ress_pagination');
                     }
                     $errorBegin = array_pop($failure);
-                    $failure[] = $errorBegin.')';
+                    $failure[] = substr($errorBegin,0,-2).')';
                 }
             }
             if($transaction && isset($failure['0'])){ //home-made rollback

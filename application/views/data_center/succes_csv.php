@@ -1,21 +1,19 @@
 <?php if(!$transaction || ($transaction && !isset($failure['0']))){ ?>
-    <h3>Votre fichier csv de type <?php echo $csvType; ?> a bien été importé</h3>
+<h3 style="color:green"><?php echo sprintf($this->lang->line('csv_total_success'),$csvType); ?></h3>
 <?php } ?>
     
 <?php if($transaction && isset($failure['0'])){ ?>
-    <h3><b>Echec</b> : votre fichier csv de type <?php echo $csvType; ?> contenait 
-        <?php echo count($failure);?> erreur(s) et n'a pas été importé</h3>
+    <h3 style="color:red"><?php echo sprintf($this->lang->line('csv_total_failure'),$csvType, count($failure)); ?></h3>
 <?php } ?>    
     
     
 <?php if(isset($failure['0'])){ ?>
-<p> <b>Malheureusement</b>, le(s) <?php echo $csvType; ?> suivant(es) n'ont pas pu être entré(e)s : </p>
+<p><?php echo sprintf($this->lang->line('csv_partial_success'),$csvType); ?></p>
     <ul>
     <?php foreach($failure as $fail){ echo '<li>'.$fail.'</li>';} ?>
     </ul>
 <p>
-    Essayez de revoir leur mise en forme et vérifier que votre fichier csv est conforme aux instructions, 
-    ou encore de voir s'il n'existe pas déjà des objets de même nom. Si le problème persiste, contactez un modérateur.
+    <?php echo $this->lang->line('csv_advice'); ?>
 </p>
 <?php } ?>
-<p>Vous pouvez continuer à en charger d'autres</p>
+<p><?php echo $this->lang->line('csv_continue'); ?></p>

@@ -192,15 +192,15 @@ class Ressource_video_model extends CI_Model
                 $failure[] = $ressource->get_titre().' (';  //we want to continue, check $db['default']['db_debug'] = FALSE; in config/database 
                 if($this->get_ressource('titre', $ressource->get_titre()) != null){
                     $errorBegin = array_pop($failure);
-                    $failure[] = $errorBegin.' '.$ressource->get_titre().' existe déjà ';
+                    $failure[] = $errorBegin.' '.$ressource->get_titre().$this->lang->line('csv_ress_already_exist');
                 }
                 if(!valid_MDY($ressource->get_date_debut_ressource())){
                     $errorBegin = array_pop($failure);
-                    $failure[] = $errorBegin.' date de début de ressource non valide ';
+                    $failure[] = $errorBegin.$this->lang->line('csv_ress_date_begin');
                 }
                 if(!valid_MDY($ressource->get_date_production())){
                     $errorBegin = array_pop($failure);
-                    $failure[] = $errorBegin.' date de début de production non valide ';
+                    $failure[] = $errorBegin.$this->lang->line('csv_ress_vid_date_begin');
                 }
                 $errorBegin = array_pop($failure);
                 $failure[] = $errorBegin.')';

@@ -4,7 +4,6 @@ class Objet_model extends CI_Model {
 
     public function __construct() {
         parent::__construct();
-
         //Connexion à la base de données
         $this->load->database();
     }
@@ -157,9 +156,9 @@ class Objet_model extends CI_Model {
 
             if (!$this->ajout_objet($objetdata)) { //if error we continue and store the name of the failed objet
                 if ($this->get_objet_by_name($objetcsv['Nom de l\'objet']) == null) {
-                    $failure[] = $objetcsv['Nom de l\'objet'] . ' (information générales)';
+                    $failure[] = $objetcsv['Nom de l\'objet'].$this->lang->line('csv_obj_general');
                 } else {
-                    $failure[] = $objetcsv['Nom de l\'objet'] . ' (objet déjà existant)';
+                    $failure[] = $objetcsv['Nom de l\'objet'].$this->lang->line('csv_obj_already_exist');
                 }
             } else {
                 $objet_id = $this->db->insert_id();
@@ -186,7 +185,7 @@ class Objet_model extends CI_Model {
                     }
 
                     if (!$this->ajout_geom($geomData)) { //if the insertion did not work, we delete the info
-                        $failure[] = $objetcsv['Nom de l\'objet'] . ' (géométrie ou dates)';
+                        $failure[] = $objetcsv['Nom de l\'objet'].$this->lang->line('csv_obj_geom_or_date');
                         $this->delete($objet_id);
                     }
                 }

@@ -18,7 +18,7 @@ $lang['date_seconds'] = "Secondes";
 $lang['date_begin'] = "Date début";
 $lang['date_end'] = "Date fin";
 $lang['date_secondary_begin'] = "Indication date début";
-$lang['date_secondar_end'] = "Indication date fin";
+$lang['date_secondary_end'] = "Indication date fin";
 
 
 $lang['UM12']	= '(UTC -12:00) Baker/Howland Island';

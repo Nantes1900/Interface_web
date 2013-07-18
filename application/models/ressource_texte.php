@@ -39,7 +39,7 @@ class Ressource_texte extends Ressource {
     }
 
     public function set_pagination($_pagination) {
-        if(!isset($_pagination)){
+        if(isset($_pagination)){
             $this->_pagination = $_pagination;
         }else{
             $this->_pagination = 0;
