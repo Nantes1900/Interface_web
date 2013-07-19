@@ -23,6 +23,11 @@
                     <td class="error_form"><?php echo form_error('reference_ressource'); ?></td>
             </tr>
             <tr>
+                    <td> Thème </td>
+                    <td> <input type="text" name=theme_ressource value="<?php echo $ressource->get_theme_ressource(); ?>" size="30"></textarea> </td>
+                    <td class="error_form"><?php echo form_error('theme_ressource'); ?></td>
+            </tr>
+            <tr>
                     <td> Disponibilité </td>
                     <td> <input type="text" name=disponibilite value="<?php echo $ressource->get_disponibilite(); ?>" size="30"></textarea> </td>
                     <td class="error_form"><?php echo form_error('disponibilite'); ?></td>

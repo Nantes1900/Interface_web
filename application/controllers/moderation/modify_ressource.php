@@ -146,6 +146,7 @@ class Modify_ressource extends MY_Controller{
             $ressource->set_titre($this->input->post('titre'));
             $ressource->set_description($this->input->post('description'));
             $ressource->set_reference_ressource($this->input->post('reference_ressource'));
+            $ressource->set_theme_ressource($this->input->post('theme_ressource'));
             $ressource->set_disponibilite($this->input->post('disponibilite'));
             $ressource->set_auteurs($this->input->post('auteurs'));
             $ressource->set_editeur($this->input->post('editeur'));
@@ -237,8 +238,8 @@ class Modify_ressource extends MY_Controller{
     
     //basic treatment for posted image form
     private function mod_img_basic(Ressource_graphique $ressource){
-        $attrArray = array('titre','description','reference_ressource','disponibilite','auteurs','editeur','ville_edition',
-                            'couleur','mots_cles','legende','image_link','localisation','technique','type_support');
+        $attrArray = array('titre','description','reference_ressource','theme_ressource','disponibilite','auteurs','editeur',
+                           'ville_edition','couleur','mots_cles','legende','image_link','localisation','technique','type_support');
         foreach($attrArray as $attr){
             $setMethod = 'set_'.$attr;
             $ressource->$setMethod($this->input->post($attr));
@@ -322,8 +323,8 @@ class Modify_ressource extends MY_Controller{
     
     //basic treatment for posted image form
     private function mod_vid_basic(Ressource_video $ressource){
-        $attrArray = array('titre','description','reference_ressource','disponibilite','auteurs','editeur','ville_edition',
-                            'duree','mots_cles','diffusion','versionvideo','distribution','production','video_link');
+        $attrArray = array('titre','description','reference_ressource','theme_ressource','disponibilite','auteurs','editeur',
+                    'ville_edition','duree','mots_cles','diffusion','versionvideo','distribution','production','video_link');
         foreach($attrArray as $attr){
             $setMethod = 'set_'.$attr;
             $ressource->$setMethod($this->input->post($attr));

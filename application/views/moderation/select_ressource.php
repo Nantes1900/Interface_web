@@ -23,6 +23,11 @@
                                             } ?>>
                 Pseudo du créateur
             </option>
+            <option value="theme_ressource" <?php if($this->session->userdata('sel_ress_orderBy') == 'theme_ressource'){ 
+                                                echo 'selected'; 
+                                            } ?>>
+                Thème de la ressource
+            </option>
             <option value="date_debut_ressource" <?php if($this->session->userdata('sel_ress_orderBy') == 'date_debut_ressource'){ 
                                                 echo 'selected'; 
                                             } ?>>
@@ -58,6 +63,11 @@
                                           echo 'selected'; 
                                        } ?>>
                 Pseudo du créateur
+            </option>
+            <option value="theme_ressource" <?php if($this->session->userdata('sel_ress_speAttribute') == 'theme_ressource'){ 
+                                                echo 'selected'; 
+                                            } ?>>
+                Thème de la ressource
             </option>
             <option value="reference" <?php if($this->session->userdata('sel_ress_speAttribute') == 'reference'){ 
                                           echo 'selected'; 
@@ -122,7 +132,7 @@
     <table>
         <thead>
             <tr>
-                <th>Ressource</th><th>Créateur</th><th>Auteur(s)</th><th>Référence</th><th>Mots-clés</th><th>Validation</th>
+                <th>Ressource</th><th>Auteur(s)</th><th>Thème</th><th>Référence</th><th>Mots-clés</th><th>Validation</th>
                 <?php if($goal=='modify'){ ?>
                     <th>Modifier/Valider</th><th>Supprimer</th>
                 <?php } ?>
@@ -135,8 +145,8 @@
             <?php foreach ($listRessource as $ressource) {        ?>
                 <tr>
                     <td><?php echo $ressource->get_titre(); ?></td>
-                    <td><?php echo $ressource->get_username(); ?></td>
                     <td><?php echo $ressource->get_auteurs(); ?></td>
+                    <td><?php echo $ressource->get_theme_ressource(); ?></td>
                     <td><?php echo $ressource->get_reference_ressource(); ?></td>
                     <td><?php echo $ressource->get_mots_cles(); ?></td>
                     <td><?php echo $ressource->get_validation()=='t'?'validé':'non validé'; ?></td>
