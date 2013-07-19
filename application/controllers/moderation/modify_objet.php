@@ -25,6 +25,7 @@ class Modify_objet extends MY_Controller {
         parent::__construct();
 
         //Ce code sera executé charque fois que ce contrôleur sera appelé
+        $this->lang->load('moderation', $this->language);
         require_once ('application/models/objet.php');
         $this->load->model('objet_model');
         $this->load->library('form_validation');
@@ -275,49 +276,42 @@ class Modify_objet extends MY_Controller {
     private function create_success_message($success, $lastAction, $firstEntity = null, $secondEntity = null) {
         if ($lastAction == 'modify') {
             if ($success) {
-                $message = 'La modification de l\'objet <b>' . $firstEntity . '</b> s\'est déroulée avec succès';
+                $message = sprintf($this->lang->line('moderation_obj_modify_success'),$firstEntity);
             } else {
-                $message = 'Erreur : la modification de l\'objet <b>' . $firstEntity . '</b> a échoué ';
+                $message = sprintf($this->lang->line('moderation_obj_modify_failure'),$firstEntity);
             }
         } elseif ($lastAction == 'validate') {
             if ($success) {
-                $message = 'La validation de l\'objet <b>' . $firstEntity . '</b> s\'est déroulée avec succès';
+                $message = sprintf($this->lang->line('moderation_obj_validate_success'),$firstEntity);
             } else {
-                $message = 'Erreur : la validation de l\'objet <b>' . $firstEntity . '</b> a échoué ';
+                $message = sprintf($this->lang->line('moderation_obj_validate_failure'),$firstEntity);
             }
         } elseif ($lastAction == 'deletion') {
             if ($success) {
-                $message = 'La suppression de l\'objet <b>' . $firstEntity . '</b> s\'est déroulée avec succès';
+                $message = sprintf($this->lang->line('moderation_obj_deletion_success'),$firstEntity);
             } else {
-                $message = 'Erreur : la suppression de l\'objet <b>' . $firstEntity . '</b> a échoué ';
+                $message = sprintf($this->lang->line('moderation_obj_deletion_failure'),$firstEntity);
             }
         } elseif ($lastAction == 'addRelation') {
             if ($success) {
-                $message = 'La relation entre <b>' . $firstEntity .
-                        '</b> et <b>' . $secondEntity . '</b> a été ajoutée avec succès';
+                $message = sprintf($this->lang->line('moderation_obj_addRel_success'),$firstEntity,$secondEntity);
             } else {
-                $message = 'Erreur : la relation entre <b>' . $firstEntity .
-                        '</b> et <b>' . $secondEntity . '</b> n\'a pas pu être ajouté';
+                $message = sprintf($this->lang->line('moderation_obj_addRel_failure'),$firstEntity,$secondEntity);
             }
         } elseif ($lastAction == 'relationDeletion') {
             if ($success) {
-                $message = 'La suppression de la relation entre <b>' . $firstEntity .
-                        '</b> et <b>' . $secondEntity . '</b> s\'est déroulée avec succès';
+                $message = sprintf($this->lang->line('moderation_obj_delRel_success'),$firstEntity,$secondEntity);
             } else {
-                $message = 'Erreur : la suppression de la relation entre <b>' . $firstEntity .
-                        '</b> et <b>' . $secondEntity . '</b> a échoué ';
+                $message = sprintf($this->lang->line('moderation_obj_delRel_failure'),$firstEntity,$secondEntity);
             }
         } elseif ($lastAction == 'geomDeletion') {
             if ($success) {
-                $message = 'La suppression du marqueur géographique de <b>' . $firstEntity .
-                        '</b> s\'est déroulée avec succès. <br>' .
-                        'Attention : l\'objet existe encore, seules se coordonnées ont été supprimées';
+                $message = sprintf($this->lang->line('moderation_obj_geomDel_success'),$firstEntity);
             } else {
                 if ($firstEntity != null) {
-                    $message = 'Erreur : la suppression du marqueur géographique de <b>' . $firstEntity .
-                            '</b> a échoué, l\'objet reste présent sur la carte ';
+                    $message = sprintf($this->lang->line('moderation_obj_geomDel_failure'),$firstEntity);
                 } else {
-                    $message = 'Erreur : l\'objet n\'existait pas, il n\'a pas pu être effacé de la carte';
+                    $message = $this->lang->line('moderation_obj_geomDel_unknown');
                 }
             }
         }

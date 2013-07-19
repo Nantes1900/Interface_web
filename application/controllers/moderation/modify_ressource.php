@@ -24,6 +24,7 @@ class Modify_ressource extends MY_Controller{
         parent::__construct();
 
         //Ce code sera executé charque fois que ce contrôleur sera appelé
+        $this->lang->load('moderation', $this->language);
         require_once ('application/models/ressource_texte.php');
         require_once ('application/models/ressource_graphique.php');
         require_once ('application/models/ressource_video.php');

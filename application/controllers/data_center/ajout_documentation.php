@@ -76,19 +76,22 @@ class Ajout_documentation extends MY_Controller{
                     $success = TRUE;
                 }
             }
-            $type = explode('_', $typeRessource);
             if ($typeRessource == 'ressource_texte') {
-                $type['1'] = 'textuelle';
+                $type = strtolower($this->lang->line('common_doc_txt'));
+            }elseif($typeRessource == 'ressource_graphique') {
+                $type = strtolower($this->lang->line('common_doc_img'));
+            }elseif($typeRessource == 'ressource_video') {
+                $type = strtolower($this->lang->line('common_doc_vid'));
             }
             if ($success) {
-                $message = 'Le lien de documentation ' . $type['1'] . ' entre <b>' .
-                        $this->input->post('nom_objet') . '</b> et <b>' .
-                        $this->input->post('titre_ressource') . '</b> a été ajouté avec succès';
+                $message = sprintf($this->lang->line('common_add_doc_success'),$type,
+                            $this->input->post('nom_objet'),$this->input->post('titre_ressource'));
+                        
                 $data = array('success' => TRUE, 'message' => $message);
             } else {
-                $message = 'Erreur : Le lien de documentation ' . $type['1'] . ' entre <b>' .
-                        $this->input->post('nom_objet') . '</b> et <b>' .
-                        $this->input->post('titre_ressource') . '</b> n\'a pas pu être ajouté';
+                $message = sprintf($this->lang->line('common_add_doc_failure'),$type,
+                            $this->input->post('nom_objet'),$this->input->post('titre_ressource'));
+                
                 $data = array('success' => FALSE, 'message' => $message);
             }
             $this->load->view('data_center/success_form', $data);

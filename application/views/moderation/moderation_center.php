@@ -1,25 +1,36 @@
 
 
-	<h1>Modération de données</h1>
+	<h1><?php echo $this->lang->line('moderation_main_title'); ?></h1>
         
-        <p>Vous souhaitez :</p>
+        
         <div class='menu'>
             <ul id='navigation' style="width:65%;">
-                <li><?php echo anchor('moderation/modify_objet/index/modify', 'Editer un objet historique'); ?></li>
+                <li><?php echo anchor('moderation/modify_objet/index/modify', 
+                            $this->lang->line('moderation_mod_edit_m').strtolower($this->lang->line('common_histo_objet'))); ?></li>
             
-                <li><?php echo anchor('moderation/modify_objet/index/relation', 'Gérer les relations entre objet historique'); ?></li>
+                <li><?php echo anchor('moderation/modify_objet/index/relation', 
+                            $this->lang->line('moderation_mod_manage_p').strtolower($this->lang->line('common_obj_links'))); ?></li>
             
-                <li><?php echo anchor('moderation/modify_ressource/index/ressource_texte/modify', 'Editer une ressource textuelle'); ?></tli>
+                <li><?php echo anchor('moderation/modify_ressource/index/ressource_texte/modify',
+                            $this->lang->line('moderation_mod_edit_f').strtolower($this->lang->line('common_ressource_txt'))); ?></li>
             
-                <li><?php echo anchor('moderation/modify_ressource/index/ressource_texte/documentation', 'Gérer la documentation textuelle vers un objet historique'); ?></li>
+                <li><?php echo anchor('moderation/modify_ressource/index/ressource_texte/documentation', 
+                            $this->lang->line('moderation_mod_manage_s').strtolower($this->lang->line('common_doc_txt')).
+                            $this->lang->line('moderation_mod_concerning').strtolower($this->lang->line('common_histo_objet'))); ?></li>
             
-                <li><?php echo anchor('moderation/modify_ressource/index/ressource_graphique/modify', 'Editer une ressource graphique'); ?></li>
+                <li><?php echo anchor('moderation/modify_ressource/index/ressource_graphique/modify', 
+                            $this->lang->line('moderation_mod_edit_f').strtolower($this->lang->line('common_ressource_img'))); ?></li>
             
-                <li><?php echo anchor('moderation/modify_ressource/index/ressource_graphique/documentation', 'Gérer la documentation graphique vers un objet historique'); ?></li>
+                <li><?php echo anchor('moderation/modify_ressource/index/ressource_graphique/documentation', 
+                            $this->lang->line('moderation_mod_manage_s').strtolower($this->lang->line('common_doc_img')).
+                            $this->lang->line('moderation_mod_concerning').strtolower($this->lang->line('common_histo_objet'))); ?></li>
             
-                <li><?php echo anchor('moderation/modify_ressource/index/ressource_video/modify', 'Editer une ressource video'); ?></li>
+                <li><?php echo anchor('moderation/modify_ressource/index/ressource_video/modify', 
+                            $this->lang->line('moderation_mod_edit_f').strtolower($this->lang->line('common_ressource_vid'))); ?></li>
             
-                <li><?php echo anchor('moderation/modify_ressource/index/ressource_video/documentation', 'Gérer la documentation video vers un objet historique'); ?></li>
+                <li><?php echo anchor('moderation/modify_ressource/index/ressource_video/documentation', 
+                            $this->lang->line('moderation_mod_manage_s').strtolower($this->lang->line('common_doc_vid')).
+                            $this->lang->line('moderation_mod_concerning').strtolower($this->lang->line('common_histo_objet'))); ?></li>
             </ul>
         </div>
 

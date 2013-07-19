@@ -18,7 +18,7 @@ class Moderation_center extends MY_Controller {
         parent::__construct();
 
         //Ce code sera executé charque fois que ce contrôleur sera appelé
-
+        $this->lang->load('moderation', $this->language);
         $this->load->library('form_validation');
         $this->load->view('header');
         if (!$this->session->userdata('username')) { //checking that user is connected

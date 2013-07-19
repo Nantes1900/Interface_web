@@ -22,6 +22,7 @@ $lang['common_signin_link']         = "Nouveau sur le site? Cliquez-ici pour vou
 //generic terms of the application
 $lang['common_objet']               = "Objet";
 $lang['common_objets']              = "Objets";
+$lang['common_histo_objet']         = "Objet historique";
 $lang['common_ressource']           = "Ressource";
 $lang['common_ressources']          = "Ressources";
 $lang['common_ressource_txt']       = "Ressource textuelle";
@@ -38,6 +39,7 @@ $lang['common_doc_txt']             = "Documentation textuelle";
 $lang['common_doc_img']             = "Documentation graphique";
 $lang['common_doc_vid']             = "Documentation video";
 $lang['common_obj_link']            = "Relation entre ".strtolower($lang['common_objets']);
+$lang['common_obj_links']           = "Relations entre ".strtolower($lang['common_objets']);
 
 //left sidebar and main menu
 $lang['common_lsidebar_welcome']        = "Accueil";
@@ -103,8 +105,12 @@ $lang['common_add_ress_form_success']     = "L'ajout de la ".strtolower($lang['c
 $lang['common_add_ress_form_failure']     = "Une erreur a eu lieu, la ".strtolower($lang['common_ressource'])." <b>%s</b> n\'a pas été ajouté";
 $lang['common_add_ress_check_title']      = "Le titre <b>%s</b> est déjà pris";
 
+$lang['common_add_doc_success']           = "Le lien de %s entre <b>%s</b> et <b>%s</b> a été ajouté avec succès";
+$lang['common_add_doc_failure']           = "Erreur : Le lien de %s entre <b>%s</b> et <b>%s</b> n'a pas pu être ajouté";
+
 //about objet
 $lang['common_obj_nom_objet']             = "Nom";
+$lang['common_obj_creator']               = "Créateur";
 $lang['common_obj_resume']                = "Résumé";
 $lang['common_obj_historique']            = "Historique";
 $lang['common_obj_description']           = "Description";
@@ -139,6 +145,10 @@ $lang['common_ress_broadcast']            = "Diffusion";
 $lang['common_ress_version']              = "Version de la vidéo";
 $lang['common_ress_distrib']              = "Distribution";
 $lang['common_ress_prod']                 = "Producteur";
+
+//about moderation center
+$lang['common_mod_obj']                     = "Modification de l'".strtolower($lang['common_objet'])." : ";
+
 
 /* End of file common.php */
 /* Location : ./system/language/french/common_lang.php */

@@ -22,6 +22,7 @@ $lang['common_signin_link']         = "New on the site? Click here to signin";
 //generic terms of the application
 $lang['common_objet']               = "Object";
 $lang['common_objets']              = "Objects";
+$lang['common_histo_objet']         = "Historical object";
 $lang['common_ressource']           = "Ressource";
 $lang['common_ressources']          = "Ressources";
 $lang['common_ressource_txt']       = "Written ressource";
@@ -38,6 +39,7 @@ $lang['common_doc_txt']             = "Textual documentation";
 $lang['common_doc_img']             = "Graphical documentation";
 $lang['common_doc_vid']             = "Video documentation";
 $lang['common_obj_link']            = "Link between ".strtolower($lang['common_objets']);
+$lang['common_obj_links']           = "Links between ".strtolower($lang['common_objets']);
 
 //left sidebar and main menu
 $lang['common_lsidebar_welcome']        = "Welcome page";
@@ -103,8 +105,12 @@ $lang['common_add_ress_form_success']     = "The ".strtolower($lang['common_ress
 $lang['common_add_ress_form_failure']     = "An error occured, <b>%s</b> could not be added";
 $lang['common_add_ress_check_title']      = "The title <b>%s</b> already exist";
 
+$lang['common_add_doc_success']           = "The %s link between <b>%s</b> and <b>%s</b> was successfuly added";
+$lang['common_add_doc_failure']           = "Error : the %s link between <b>%s</b> and <b>%s</b> have not been added";
+
 //about objet
 $lang['common_obj_nom_objet']             = "Name";
+$lang['common_obj_creator']               = "Creator";
 $lang['common_obj_resume']                = "Summary";
 $lang['common_obj_historique']            = "History";
 $lang['common_obj_description']           = "Description";
@@ -139,6 +145,9 @@ $lang['common_ress_broadcast']            = "Broadcasted in :";
 $lang['common_ress_version']              = "Version";
 $lang['common_ress_distrib']              = "Distributed by";
 $lang['common_ress_prod']                 = "Producted by";
+
+//about moderation center
+$lang['common_mod_obj']                     = "Modifying the ".strtolower($lang['common_objet'])." : ";
 
 /* End of file common.php */
 /* Location : ./system/language/english/common_lang.php */
