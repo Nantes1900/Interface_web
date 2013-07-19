@@ -17,6 +17,9 @@ $lang['date_seconds'] = "Seconds";
 
 $lang['date_begin'] = "Starting date";
 $lang['date_end'] = "Ending date";
+$lang['date_edit'] = "Edition date";
+$lang['date_prod'] = "Production date";
+$lang['date_shot'] = "Picture's date";
 $lang['date_secondary_begin'] = "Starting date details";
 $lang['date_secondary_end'] = "Ending date details";
 

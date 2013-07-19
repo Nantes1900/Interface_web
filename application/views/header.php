@@ -2,7 +2,7 @@
     
 <head>
 
-    <title>Projet Nantes 1900 - Rework</title>
+    <title>Projet Nantes 1900</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="robots" content="index,follow"/>
     <meta name="keywords" content="château_des_ducs_de_bretagne, nantes, 1900, projet, maquette, port, chateau, numerisation, exposition, graphisme, conferences, publicitaire, " />

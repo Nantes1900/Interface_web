@@ -17,6 +17,9 @@ $lang['date_seconds'] = "Secondes";
 
 $lang['date_begin'] = "Date début";
 $lang['date_end'] = "Date fin";
+$lang['date_edit'] = "Date d'édition";
+$lang['date_prod'] = "Date de production";
+$lang['date_shot'] = "Date de prise de vue";
 $lang['date_secondary_begin'] = "Indication date début";
 $lang['date_secondary_end'] = "Indication date fin";
 

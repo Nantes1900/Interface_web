@@ -20,6 +20,7 @@ class Ressource_texte_model extends CI_Model
                 $this->db->set('reference_ressource', $textedata['reference_ressource']);
                 $this->db->set('disponibilite', $textedata['disponibilite']);
                 $this->db->set('description', $textedata['description']);
+                $this->db->set('theme_ressource', $textedata['theme_ressource']);
                 $this->db->set('auteurs', $textedata['auteurs']);
                 $this->db->set('editeur', $textedata['editeur']);
                 $this->db->set('pagination', $textedata['pagination']);

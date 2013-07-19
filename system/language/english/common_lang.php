@@ -90,6 +90,19 @@ $lang['common_add_rel_form_submit']       = "Add this relation";
 $lang['common_add_rel_form_success']      = "The relation between <b>%s</b> and <b>%s</b> was successfuly created";
 $lang['common_add_rel_form_failure']      = "An error occured, <b>%s</b> and <b>%s</b> have not been linked";
 
+$lang['common_add_ress_txt_form']         = "Adding a ".strtolower($lang['common_ress_txt_detail'])." form";
+$lang['common_add_ress_img_form']         = "Adding a ".strtolower($lang['common_ress_img_detail'])." form";
+$lang['common_add_ress_vid_form']         = "Adding a ".strtolower($lang['common_ress_vid_detail'])." form";
+$lang['common_add_ress_linked']           = "linked to ";
+$lang['common_add_ress_create_doc']       = "Create a documentation link with an ".strtolower($lang['common_objet']);
+$lang['common_add_ress_create_doc_none']  = "None";
+$lang['common_add_ress_link_doc']         = "Link the page :";
+$lang['common_add_ress_link_doc_end']     = " of this ".strtolower($lang['common_ressource']);
+$lang['common_add_ress_form_submit']      = "Add this ".strtolower($lang['common_ressource']);
+$lang['common_add_ress_form_success']     = "The ".strtolower($lang['common_ressource'])." <b>%s</b> was successfuly added";
+$lang['common_add_ress_form_failure']     = "An error occured, <b>%s</b> could not be added";
+$lang['common_add_ress_check_title']      = "The title <b>%s</b> already exist";
+
 //about objet
 $lang['common_obj_nom_objet']             = "Name";
 $lang['common_obj_resume']                = "Summary";
@@ -97,6 +110,35 @@ $lang['common_obj_historique']            = "History";
 $lang['common_obj_description']           = "Description";
 $lang['common_obj_adresse_postale']       = "Address";
 $lang['common_obj_mots_cles']             = "Keywords";
+
+//about ressources
+$lang['common_ress_title']                = "Title";
+$lang['common_ress_description']          = "Description";
+$lang['common_ress_reference']            = "Reference";
+$lang['common_ress_disponibilite']        = "Disponibility";
+$lang['common_ress_theme_ressource']      = $lang['common_ressource']."'s theme";
+$lang['common_ress_author']               = "Author(s)";
+$lang['common_ress_editor']               = "Editor";
+$lang['common_ress_edit_town']            = "Town of edition";
+$lang['common_ress_keywords']             = "Keywords";
+$lang['common_ress_subcategory']          = "Sub category";
+$lang['common_ress_pagination']           = "Number of pages";
+$lang['common_ress_page_hint']            = "Do not fill this field or put it to 0 if you don't 
+                                             have this information (or if it is irrelevant)";
+$lang['common_ress_legend']               = "Legend";
+$lang['common_ress_shot_place']           = "Place of the shot";
+$lang['common_ress_tec_used']             = "Technical specification";
+$lang['common_ress_media']                = "Medium used";
+$lang['common_ress_color']                = "Color";
+$lang['common_ress_img_upload']           = "Upload image";
+$lang['common_ress_img_url']              = "image URL";
+$lang['common_ress_vid_upload']           = "Upload video";
+$lang['common_ress_vid_url']              = "Link to the page hosting the video";
+$lang['common_ress_length']               = "Length (minutes)";
+$lang['common_ress_broadcast']            = "Broadcasted in :";
+$lang['common_ress_version']              = "Version";
+$lang['common_ress_distrib']              = "Distributed by";
+$lang['common_ress_prod']                 = "Producted by";
 
 /* End of file common.php */
 /* Location : ./system/language/english/common_lang.php */

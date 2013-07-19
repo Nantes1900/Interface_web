@@ -101,6 +101,11 @@ $config = array(
                         'rules'=>'trim|max_length[1000]|xss_clean'
                     ),
                     array(
+                        'field'=>'theme_ressource',
+                        'label'=>'Theme ressource',
+                        'rules'=>'trim|max_length[1000]|xss_clean'
+                    ),
+                    array(
                         'field'=>'auteurs',
                         'label'=>'Auteurs',
                         'rules'=>'trim|max_length[40]|xss_clean'
@@ -170,6 +175,11 @@ $config = array(
                     array(
                         'field'=>'description',
                         'label'=>'Description',
+                        'rules'=>'trim|max_length[1000]|xss_clean'
+                    ),
+                    array(
+                        'field'=>'theme_ressource',
+                        'label'=>'Theme ressource',
                         'rules'=>'trim|max_length[1000]|xss_clean'
                     ),
                     array(
@@ -282,6 +292,11 @@ $config = array(
                     array(
                         'field'=>'description',
                         'label'=>'Description',
+                        'rules'=>'trim|max_length[1000]|xss_clean'
+                    ),
+                    array(
+                        'field'=>'theme_ressource',
+                        'label'=>'Theme ressource',
                         'rules'=>'trim|max_length[1000]|xss_clean'
                     ),
                     array(

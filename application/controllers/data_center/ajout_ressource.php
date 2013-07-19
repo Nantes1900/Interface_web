@@ -76,6 +76,7 @@ class Ajout_ressource extends MY_Controller {
             $textedata['reference_ressource'] = $this->input->post('reference_ressource');
             $textedata['disponibilite'] = $this->input->post('disponibilite');
             $textedata['description'] = $this->input->post('description');
+            $textedata['theme_ressource'] = $this->input->post('theme_ressource');
             $textedata['auteurs'] = $this->input->post('auteurs');
             $textedata['editeur'] = $this->input->post('editeur');
             $textedata['ville_edition'] = $this->input->post('ville_edition');
@@ -97,11 +98,11 @@ class Ajout_ressource extends MY_Controller {
             $textedata['date_precision'] = $date_infos['date_precision'];
             //querying    
             if ($this->ressource_texte_model->ajout_texte($textedata)) {
-                $data = array('success' => TRUE, 'message' => 'L\'ajout de la ressource <b>' .
-                    $textedata['titre'] . '</b> s\'est déroulé avec succès');
+                $data = array('success' => TRUE, 
+                              'message' => sprintf($this->lang->line('common_add_rel_form_success'),$textedata['titre']));
             } else {
-                $data = array('success' => FALSE, 'message' => 'Une erreur a eu lieu, la ressource <b>' .
-                    $textedata['titre'] . '</b> n\'a pas été ajouté');
+                $data = array('success' => FALSE, 
+                              'message' => sprintf($this->lang->line('common_add_rel_form_failure'),$textedata['titre']));
             }
 
             $ressource_id = $this->ressource_texte_model->last_insert_id();
@@ -165,11 +166,12 @@ class Ajout_ressource extends MY_Controller {
                     //we set the manager and add $ressource in the database
                     $ressourceManager = new Ressource_graphique_model();
                     if ($ressourceManager->ajout_ressource($ressource)) {
-                        $data = array('success' => TRUE, 'message' => 'L\'ajout de la ressource <b>' .
-                            $ressource->get_titre() . '</b> s\'est déroulé avec succès');
+                        $data = array('success' => TRUE, 'message' => 
+                                      sprintf($this->lang->line('common_add_rel_form_success'),$ressource->get_titre()));
+                            
                     } else {
-                        $data = array('success' => FALSE, 'message' => 'Une erreur a eu lieu, la ressource <b>' .
-                            $ressource->get_titre() . '</b> n\'a pas été ajouté');
+                        $data = array('success' => FALSE, 'message' => 
+                                      sprintf($this->lang->line('common_add_rel_form_failure'),$ressource->get_titre()));
                     }
 
                     $ressource_id = $this->ressource_graphique_model->last_insert_id();
@@ -188,11 +190,11 @@ class Ajout_ressource extends MY_Controller {
                 //we set the manager and add $ressource in the database
                 $ressourceManager = new Ressource_graphique_model();
                 if ($ressourceManager->ajout_ressource($ressource)) {
-                    $data = array('success' => TRUE, 'message' => 'L\'ajout de la ressource <b>' .
-                        $ressource->get_titre() . '</b> s\'est déroulé avec succès');
+                    $data = array('success' => TRUE, 'message' => 
+                                  sprintf($this->lang->line('common_add_rel_form_success'),$ressource->get_titre()));
                 } else {
-                    $data = array('success' => FALSE, 'message' => 'Une erreur a eu lieu, la ressource <b>' .
-                        $ressource->get_titre() . '</b> n\'a pas été ajouté');
+                    $data = array('success' => FALSE, 'message' => 
+                                  sprintf($this->lang->line('common_add_rel_form_failure'),$ressource->get_titre()));
                 }
 
                 $ressource_id = $this->ressource_graphique_model->last_insert_id();
@@ -287,11 +289,11 @@ class Ajout_ressource extends MY_Controller {
                     //we set the manager and add $ressource in the database
                     $ressourceManager = new Ressource_video_model();
                     if ($ressourceManager->ajout_ressource($ressource)) {
-                        $data = array('success' => TRUE, 'message' => 'L\'ajout de la ressource <b>' .
-                            $ressource->get_titre() . '</b> s\'est déroulé avec succès');
+                        $data = array('success' => TRUE, 'message' => 
+                                      sprintf($this->lang->line('common_add_rel_form_success'),$ressource->get_titre()));
                     } else {
-                        $data = array('success' => FALSE, 'message' => 'Une erreur a eu lieu, la ressource <b>' .
-                            $ressource->get_titre() . '</b> n\'a pas été ajouté');
+                        $data = array('success' => FALSE, 'message' => 
+                                      sprintf($this->lang->line('common_add_rel_form_failure'),$ressource->get_titre()));
                     }
 
                     $ressource_id = $this->ressource_video_model->last_insert_id();
@@ -308,11 +310,11 @@ class Ajout_ressource extends MY_Controller {
                 //we set the manager and add $ressource in the database
                 $ressourceManager = new Ressource_video_model();
                 if ($ressourceManager->ajout_ressource($ressource)) {
-                    $data = array('success' => TRUE, 'message' => 'L\'ajout de la ressource <b>' .
-                        $ressource->get_titre() . '</b> s\'est déroulé avec succès');
+                    $data = array('success' => TRUE, 'message' => 
+                                  sprintf($this->lang->line('common_add_rel_form_success'),$ressource->get_titre()));
                 } else {
-                    $data = array('success' => FALSE, 'message' => 'Une erreur a eu lieu, la ressource <b>' .
-                        $ressource->get_titre() . '</b> n\'a pas été ajouté');
+                    $data = array('success' => FALSE, 'message' => 
+                                  sprintf($this->lang->line('common_add_rel_form_failure'),$ressource->get_titre()));
                 }
 
                 $ressource_id = $this->ressource_video_model->last_insert_id();
@@ -366,7 +368,7 @@ class Ajout_ressource extends MY_Controller {
         $year = (int) $this->input->post('annee' . $extension);
         $valid = checkdate($month, $day, $year);
         if (!$valid) {
-            $this->form_validation->set_message('check_date', 'Date invalide');
+            $this->form_validation->set_message('check_date', $this->lang->line('common_add_obj_check_date'));
         }
         return $valid;
     }
@@ -383,7 +385,8 @@ class Ajout_ressource extends MY_Controller {
         }
         $existingRessource = $ressourceManager->get_ressource('titre', $title);
         if (isset($existingRessource)) {
-            $this->form_validation->set_message('check_titre', 'Titre déjà existant');
+            $this->form_validation->set_message('check_titre', 
+                                                sprintf($this->lang->line('common_add_ress_check_title'),$title));
             return FALSE;
         } else {
             return TRUE;
