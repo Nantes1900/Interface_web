@@ -242,7 +242,7 @@ class Objet_model extends CI_Model {
     //return a list of associative arrays linked by the relation table to the $objet_id argument
     //the type of relation is given by a third join on type_relation
     //arrays are like relation_id, objet_id, nom_objet, username, resume, type relation, date_debut_relation, date_fin_relation, parent
-    public function get_linked_objet($objet_id) {
+    public function get_linked_objet($objet_id, $valid = 't') {
         $this->db->select('relation_id, objet_id,nom_objet, objet.username AS username, resume, type_relation, date_debut_relation, 
                                 date_fin_relation, parent');
         $this->db->from('objet');
@@ -250,7 +250,9 @@ class Objet_model extends CI_Model {
         $this->db->join('type_relation', 'relation.type_relation_id=type_relation.type_relation_id');
         $this->db->order_by('nom_objet', 'asc');
         $this->db->where('objet_id_2', $objet_id);
-        $this->db->where('validation', 't');
+        if ($valid != null) {
+            $this->db->where('validation', $valid);
+        }
         $query = $this->db->get();
 
         $resultArray = $query->result_array();
@@ -263,7 +265,9 @@ class Objet_model extends CI_Model {
         $this->db->join('type_relation', 'relation.type_relation_id=type_relation.type_relation_id');
         $this->db->order_by('nom_objet', 'asc');
         $this->db->where('objet_id_1', $objet_id);
-        $this->db->where('validation', 't');
+        if ($valid != null) {
+            $this->db->where('validation', $valid);
+        }
         $query = $this->db->get();
 
         foreach ($query->result_array() as $row) {
@@ -276,7 +280,7 @@ class Objet_model extends CI_Model {
     //return a list of associative arrays linked by the documentation_*** table to the $objet_id argument
     //arrays are like documentation_***_id, ressource_***_id, titre, 
     //username, description, reference_ressource, date_debut_ressource
-    public function get_linked_ressource($objet_id, $typeRessource) {
+    public function get_linked_ressource($objet_id, $typeRessource, $valid = 't') {
         if ($typeRessource != 'video') {
             $this->db->select('documentation_' . $typeRessource . '_id, ressource_' . $typeRessource .
                             '.ressource_' . $typeRessource . '_id AS ressource_id, 
@@ -293,7 +297,9 @@ class Objet_model extends CI_Model {
                         $typeRessource . '.ressource_' . $typeRessource . '_id=d.ressource_' . $typeRessource . '_id');
         $this->db->order_by('titre', 'asc');
         $this->db->where('objet_id', $objet_id);
-        $this->db->where('validation', 't');
+        if ($valid != null) {
+            $this->db->where('validation', $valid);
+        }
         $query = $this->db->get();
 
         $resultArray = $query->result_array();

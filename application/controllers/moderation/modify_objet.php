@@ -238,7 +238,7 @@ class Modify_objet extends MY_Controller {
             $objet_id = $this->input->post('objet_id');
         }
         $objet = new Objet($objet_id);
-        $linkedObjetArray = $this->objet_model->get_linked_objet($objet_id);
+        $linkedObjetArray = $this->objet_model->get_linked_objet($objet_id, null);
         $data = array('objet' => $objet, 'linkedObjetArray' => $linkedObjetArray);
         $this->load->view('moderation/delete_relation', $data);
         $this->load->view('footer');

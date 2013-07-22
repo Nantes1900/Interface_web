@@ -129,13 +129,15 @@ class Ressource_texte_model extends CI_Model
         
         //return a list of associative arrays linked by documentation_textuelle table to the $ressource_id argument
         //arrays are like documentation_textuelle_id, objet_id, nom_objet, username, resume, 
-        public function get_linked_objet($ressource_id){
+        public function get_linked_objet($ressource_id, $valid = 't'){
             $this->db->select('documentation_textuelle_id AS documentation_id, objet.objet_id AS objet_id, nom_objet, username, resume');
             $this->db->from('objet');
             $this->db->join('documentation_textuelle AS d', 'objet.objet_id=d.objet_id');
             $this->db->order_by('nom_objet','asc');
             $this->db->where('ressource_textuelle_id', $ressource_id);
-            $this->db->where('validation', 't');
+            if ($valid != null){
+                $this->db->where('validation', $valid);
+            }
             $query = $this->db->get();
             
             $resultArray = $query->result_array();
@@ -146,14 +148,16 @@ class Ressource_texte_model extends CI_Model
         //return a list of associative arrays linked by the documentation_textuelle table to the $objet_id argument
         //arrays are like documentation_textuelle_id, ressource_textuelle_id, titre, 
         //username, description, reference_ressource, date_debut_ressource
-        public function get_linked_ressource($objet_id){
+        public function get_linked_ressource($objet_id, $valid = 't'){
             $this->db->select('documentation_textuelle_id, ressource_textuelle.ressource_textuelle_id AS ressource_id, titre,
                 ressource_textuelle.username AS username, description, reference_ressource, date_debut_ressource AS date');
             $this->db->from('ressource_textuelle');
             $this->db->join('documentation_textuelle AS d','ressource_textuelle.ressource_textuelle_id=d.ressource_textuelle_id');
             $this->db->order_by('titre','asc');
             $this->db->where('objet_id', $objet_id);
-            $this->db->where('validation', 't');
+            if ($valid != null){
+                $this->db->where('validation', $valid);
+            }
             $query = $this->db->get();
             
             $resultArray = $query->result_array();

@@ -524,7 +524,7 @@ class Modify_ressource extends MY_Controller{
             
             $typeRessourceModel= ucfirst($typeRessource).'_model';//adding list of documentation as arg for webpage
             $ressourceManager = new $typeRessourceModel();
-            $data = array('documentationArray'=>$ressourceManager->get_linked_objet($ressource_id));
+            $data = array('documentationArray'=>$ressourceManager->get_linked_objet($ressource_id, null));
             $data['typeRessource']=$typeRessource;
             
             $typeRessource = ucfirst($typeRessource); //adding the ressource as argument for webpage

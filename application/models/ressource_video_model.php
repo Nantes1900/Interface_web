@@ -119,13 +119,15 @@ class Ressource_video_model extends CI_Model
     
     //return a list of associative arrays linked by documentation_video table to the $ressource_id argument
     //arrays are like documentation_video_id, objet_id, nom_objet, username, resume, 
-    public function get_linked_objet($ressource_id){
+    public function get_linked_objet($ressource_id, $valid = 't'){
         $this->db->select('documentation_video_id AS documentation_id, objet.objet_id, nom_objet, username, resume');
         $this->db->from('objet');
         $this->db->join('documentation_video AS d', 'objet.objet_id=d.objet_id');
         $this->db->order_by('nom_objet','asc');
         $this->db->where('ressource_video_id', $ressource_id);
-        $this->db->where('validation', 't');
+        if ($valid != null) {
+            $this->db->where('validation', $valid);
+        }
         $query = $this->db->get();
             
         $resultArray = $query->result_array();
@@ -135,14 +137,16 @@ class Ressource_video_model extends CI_Model
     //return a list of associative arrays linked by the documentation_video table to the $objet_id argument
     //arrays are like documentation_video_id, ressource_video_id, titre, 
     //username, description, reference_ressource, date_debut_ressource
-    public function get_linked_ressource($objet_id){
+    public function get_linked_ressource($objet_id, $valid = 't'){
         $this->db->select('documentation_video_id, ressource_video.ressource_video_id AS ressource_id, titre, 
                             ressource_video.username AS username, description, reference_ressource, date_debut_ressource AS date');
         $this->db->from('ressource_video');
         $this->db->join('documentation_video AS d','ressource_video.ressource_video_id=d.ressource_video_id');
         $this->db->order_by('titre','asc');
         $this->db->where('objet_id', $objet_id);
-        $this->db->where('validation', 't');
+        if ($valid != null) {
+            $this->db->where('validation', $valid);
+        }
         $query = $this->db->get();
             
         $resultArray = $query->result_array();
