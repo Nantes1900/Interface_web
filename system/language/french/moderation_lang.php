@@ -24,7 +24,33 @@ $lang['moderation_obj_delRel_failure']      = "Erreur : la suppression de la rel
 $lang['moderation_obj_geomDel_success']     = "La suppression du marqueur géographique de <b>%s</b> s'est déroulée avec succès. <br>
                                                Attention : l'objet existe encore, seules se coordonnées ont été supprimées";
 $lang['moderation_obj_geomDel_failure']     = "Erreur : la suppression du marqueur géographique de <b>%s</b> a échoué, l'objet reste présent sur la carte";
-$lang['moderation_obj_geomDel_unknown']     = "Erreur : l'objet n'existait pas, il n\'a pas pu être effacé de la carte";
+$lang['moderation_obj_geomDel_unknown']     = "Erreur : l'objet n'existait pas, il n'a pas pu être effacé de la carte";
+
+//ressource success/failure message
+$lang['moderation_ress_modify_success']      = "La %s <b>%s</b> a bien été modifiée";
+$lang['moderation_ress_modify_failure']      = "Erreur : la %s <b>%s</b> n'a pas pu être modifié";
+$lang['moderation_ress_validate_success']    = "La validation de la ressource <b>%s</b> s'est déroulée avec succès";
+$lang['moderation_ress_validate_failure']    = "Erreur : la validation de la ressource <b>%s</b> a échoué";
+$lang['moderation_ress_deletion_success']    = "La suppression de la ressource <b>%s</b> s'est déroulée avec succès";
+$lang['moderation_ress_deletion_failure']    = "Erreur : la suppression de la ressource <b>%s</b> a échoué ";
+$lang['moderation_ress_addDoc_success']      = "La documentation entre <b>%s</b> et <b>%s</b> a été ajoutée avec succès";
+$lang['moderation_ress_addDoc_failure']      = "Erreur : la documentation entre <b>%s</b> et <b>%s</b> n'a pas pu être ajouté";
+$lang['moderation_ress_delDoc_success']      = "La suppression de la documentation entre <b>%s</b> et <b>%s</b> s'est déroulée avec succès";
+$lang['moderation_ress_delDoc_failure']      = "Erreur : la suppression de la documentation entre <b>%s</b> et <b>%s</b> a échoué";
+
+
+//about documentation
+$lang['moderation_delDoc_title']             = "Suppression d'un lien de documentation";
+$lang['moderation_delDoc_list']              = "Liste des objets liés à : ";
+$lang['moderation_delDoc_obj_name']          = "Nom de l'objet lié";
+$lang['moderation_delDoc_remove']            = "Supprimer la documentation";
+$lang['moderation_delDoc_remove_this']       = "Supprimer cette documentation";
+$lang['moderation_delDoc_warning_msg']       = "Vous vous apprêtez à supprimer définitivement la documentation de <em>%s</em>
+                                                 à <em>%s</em>. Les informations de lien documentaire seront perdues, 
+                                                 êtes vous certain de bien vouloir faire cela?";
+
+//about relation
+$lang['moderation_delRel_title']             = "Suppression de relation";
 
 /* End of file common.php */
 /* Location : ./system/language/french/moderation_lang.php */

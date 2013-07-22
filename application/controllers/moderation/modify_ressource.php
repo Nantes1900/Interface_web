@@ -571,7 +571,7 @@ class Modify_ressource extends MY_Controller{
         $year = (int) $this->input->post('annee'.$extension);
         $valid = checkdate($month,$day,$year);
         if (!$valid){
-            $this->form_validation->set_message('check_date', 'Date invalide');
+            $this->form_validation->set_message('check_date', $this->lang->line('common_add_obj_check_date'));
         }
         return $valid;
     }
@@ -595,7 +595,7 @@ class Modify_ressource extends MY_Controller{
         
         $ressource_id = $this->input->post('ressource_id');
         if (isset($existingRessource) && $existing_id!=$ressource_id){
-            $this->form_validation->set_message('check_titre', 'Titre déjà existant');
+            $this->form_validation->set_message('check_titre', sprintf($this->lang->line('common_add_ress_check_title'),$title));
             return FALSE;
         } else {
             return TRUE;
@@ -605,57 +605,53 @@ class Modify_ressource extends MY_Controller{
     private function create_success_message($success, $lastAction, $firstEntity = null, $secondEntity = null ){
          if($lastAction == 'modify_texte'){
              if($success){
-                 $message = 'La modification de la ressource textuelle <b>'.$firstEntity.'</b> s\'est déroulée avec succès';
+                 $message = sprintf($this->lang->line('moderation_ress_modify_success'),
+                                strtolower($this->lang->line('common_ressource_txt')),$firstEntity);
              }else {
-                 $message = 'Erreur : la modification de la ressource textuelle <b>'.$firstEntity.'</b> a échoué ';
+                 $message = sprintf($this->lang->line('moderation_ress_modify_failure'),
+                                strtolower($this->lang->line('common_ressource_txt')),$firstEntity);
              }
          } elseif($lastAction == 'modify_image'){
              if($success){
-                 $message = 'La modification de la ressource graphique <b>'.$firstEntity.'</b> s\'est déroulée avec succès';
+                 $message = sprintf($this->lang->line('moderation_ress_modify_success'),
+                                strtolower($this->lang->line('common_ressource_img')),$firstEntity);
              }else {
-                 $message = 'Erreur : la modification de la ressource graphique <b>'.$firstEntity.'</b> a échoué ';
+                 $message = sprintf($this->lang->line('moderation_ress_modify_failure'),
+                                strtolower($this->lang->line('common_ressource_img')),$firstEntity);
              }
          } elseif($lastAction == 'modify_video'){
              if($success){
-                 $message = 'La modification de la ressource video <b>'.$firstEntity.'</b> s\'est déroulée avec succès';
+                 $message = sprintf($this->lang->line('moderation_ress_modify_success'),
+                                strtolower($this->lang->line('common_ressource_vid')),$firstEntity);
              }else {
-                 $message = 'Erreur : la modification de la ressource video <b>'.$firstEntity.'</b> a échoué ';
+                 $message = sprintf($this->lang->line('moderation_ress_modify_failure'),
+                                strtolower($this->lang->line('common_ressource_vid')),$firstEntity);
              }
          } elseif(preg_match("#^validate#", $lastAction)){
              $types = explode('_', $lastAction);
              if($types['1']=='texte'){$types['1']='textuelle';}
              if($success){
-                 $message = 'La ressource '.$types['1'].' <b>'.$firstEntity.'</b> a bien été validé';
+                 $message = sprintf($this->lang->line('moderation_ress_validate_success'),$firstEntity);
              }else {
-                 $message = 'Erreur : la ressource '.$types['1'].' <b>'.$firstEntity.'</b> n\'a pas été validé ';
+                 $message = sprintf($this->lang->line('moderation_ress_validate_failure'),$firstEntity);
              }
          } elseif(preg_match("#^delete#", $lastAction)){
-             $types = explode('_', $lastAction);
-             if($types['1']=='texte'){$types['1']='textuelle';}
              if($success){
-                 $message = 'La ressource '.$types['1'].' <b>'.$firstEntity.'</b> a bien été supprimé';
+                 $message = sprintf($this->lang->line('moderation_ress_deletion_success'),$firstEntity);
              }else {
-                 $message = 'Erreur : la ressource '.$types['1'].' <b>'.$firstEntity.'</b> n\'a pas été supprimé ';
+                 $message = sprintf($this->lang->line('moderation_ress_deletion_failure'),$firstEntity);
              }
          } elseif(preg_match("#^addDoc#", $lastAction)){
-             $types = explode('_', $lastAction);
-             if($types['1']=='texte'){$types['1']='textuelle';}
              if($success){
-                 $message = 'La documentation '.$types['1'].' entre <b>'.
-                            $firstEntity.'</b> et <b>'.$secondEntity.'</b> a bien été créé';
+                 $message = sprintf($this->lang->line('moderation_ress_addDoc_success'),$firstEntity,$secondEntity);
              }else {
-                 $message = 'Erreur : la documentation '.$types['1'].' entre <b>'.
-                            $firstEntity.'</b> et <b>'.$secondEntity.'</b> n\'a pas été créé ';
+                 $message = sprintf($this->lang->line('moderation_ress_addDoc_failure'),$firstEntity,$secondEntity);
              }
          } elseif(preg_match("#^removeDoc#", $lastAction)){
-             $types = explode('_', $lastAction);
-             if($types['1']=='texte'){$types['1']='textuelle';}
              if($success){
-                 $message = 'La documentation '.$types['1'].' entre <b>'.
-                            $firstEntity.'</b> et <b>'.$secondEntity.'</b> a bien été supprimé';
+                 $message = sprintf($this->lang->line('moderation_ress_delDoc_success'),$firstEntity,$secondEntity);
              }else {
-                 $message = 'Erreur : la documentation '.$types['1'].' entre <b>'.
-                            $firstEntity.'</b> et <b>'.$secondEntity.'</b> n\'a pas été supprimé ';
+                 $message = sprintf($this->lang->line('moderation_ress_delDoc_failure'),$firstEntity,$secondEntity);
              }
          }
          

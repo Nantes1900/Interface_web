@@ -148,7 +148,7 @@ $lang['common_ress_prod']                 = "Producteur";
 
 //about moderation center
 $lang['common_mod_obj']                     = "Modification de l'".strtolower($lang['common_objet'])." : ";
-
+$lang['common_cancel']                      = "Annuler";
 
 /* End of file common.php */
 /* Location : ./system/language/french/common_lang.php */

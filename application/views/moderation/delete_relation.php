@@ -2,9 +2,9 @@
 
     <p><?php echo anchor('moderation/moderation_center', 'Revenir au centre de modération'); ?></p>
     
-    <h1>Suppression de relation</h1>
+    <h1><?php echo $this->lang->line('moderation_delRel_title'); ?></h1>
     
-    <h2>Liste des objets liés à <?php echo $objet->get_nom_objet(); ?></h2>
+    <h2><?php echo $this->lang->line('moderation_delDoc_list').$objet->get_nom_objet(); ?></h2>
     
     <div class="classyTable">
     <table>

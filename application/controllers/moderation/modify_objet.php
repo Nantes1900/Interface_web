@@ -322,7 +322,7 @@ class Modify_objet extends MY_Controller {
         $objet = $this->objet_model->get_objet('nom_objet', $name);
         $objet_id = $this->input->post('objet_id');
         if ($objet != null && ($objet['objet_id'] != $objet_id)) {
-            $this->form_validation->set_message('check_nom', 'Un autre objet porte déjà ce nom');
+            $this->form_validation->set_message('check_nom', sprintf($this->lang->line('common_add_obj_check_nom'),$name));
             return FALSE;
         } else {
             return TRUE;
@@ -335,7 +335,7 @@ class Modify_objet extends MY_Controller {
         $year = (int) $this->input->post('annee_' . $boundary);
         $valid = checkdate($month, $day, $year);
         if (!$valid) {
-            $this->form_validation->set_message('check_date', 'Date invalide');
+            $this->form_validation->set_message('check_date', $this->lang->line('common_add_obj_check_date'));
         }
         return $valid;
     }

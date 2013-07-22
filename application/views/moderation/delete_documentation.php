@@ -2,16 +2,18 @@
 
     <p><?php echo anchor('moderation/moderation_center', 'Revenir au centre de modération'); ?></p>
     
-    <h1>Suppression d'un lien de documentation</h1>
+    <h1><?php echo $this->lang->line('moderation_delDoc_title'); ?></h1>
     
-    <h2>Liste des objets liés à <?php echo $ressource->get_titre(); ?></h2>
+    <h2><?php echo $this->lang->line('moderation_delDoc_list').$ressource->get_titre(); ?></h2>
     
     <div class="classyTable">
     <table>
         <thead>
             <tr>
-                <th>Nom de l'objet lié</th><th>créateur de l'objet</th><th>Resumé de l'objet</th>
-                <th>Supprimer relation</th>
+                <th><?php echo $this->lang->line('moderation_delDoc_obj_name'); ?></th>
+                <th><?php echo $this->lang->line('common_obj_creator'); ?></th>
+                <th><?php echo $this->lang->line('common_obj_resume'); ?></th>
+                <th><?php echo $this->lang->line('moderation_delDoc_remove'); ?></th>
             </tr>
         </thead>
         <tbody>
@@ -33,17 +35,16 @@
                             <input type="hidden" name="ressource_titre" value="<?php echo $ressource->get_titre(); ?>" />
                             <div class="message" style="left:15%; top:40%; display:none">
                                 <p>
-                                    Vous vous apprêtez à supprimer définitivement la documentation de <em><?php echo $ressource->get_titre(); ?></em>
-                                     à <em><?php echo $objet['nom_objet']; ?></em> les informations de lien documentaire seront perdues, 
-                                     êtes vous certain de bien vouloir faire cela?
+                                    <?php echo sprintf($this->lang->line('moderation_delDoc_warning_msg'), 
+                                            $ressource->get_titre(), $objet['nom_objet']); ?>
                                 </p>
-                                <input type="submit" value="Supprimer la relation" />
-                                <button type="reset" class="closePopup">Annuler</button>
+                                <input type="submit" value="<?php echo $this->lang->line('moderation_delDoc_remove_this'); ?>" />
+                                <button type="reset" class="closePopup"><?php echo $this->lang->line('common_cancel'); ?></button>
                                 <?php echo img(array('src'=>'assets/utils/close.png','alt'=>'fermer','width'=>'4%', 
                                                          'class'=>'removePopup')); ?>
                             </div>
                         </form>
-                        <button class="removePopup"> Supprimer cette documentation</button>
+                        <button class="removePopup"><?php echo $this->lang->line('moderation_delDoc_remove_this'); ?></button>
                     </td>
                 </tr>
             <?php } ?>
