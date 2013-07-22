@@ -47,9 +47,19 @@ $lang['moderation_delDoc_remove_this']       = "Delete this documentation";
 $lang['moderation_delDoc_warning_msg']       = "You are about to definitely delete the documentation between <em>%s</em>
                                                  and <em>%s</em>. Informations about this link will be lost, 
                                                  are you sure about your decision?";
-//about relation
-$lang['moderation_delRel_title']             = "Deleting a documentation link";
 
+//about relation
+$lang['moderation_relation_creator']         = "Relation's creator";
+$lang['moderation_relation_type']            = "Relation type";
+$lang['moderation_delRel_title']             = "Deleting a documentation link";
+$lang['moderation_delRel_remove']            = "Delete the relation";
+$lang['moderation_delRel_remove_this']       = "Delete this relation";
+$lang['moderation_delDoc_warning_msg']       = "You are about to definitely delete the relation between <em>%s</em>
+                                                 and <em>%s</em>. Informations about this link will be lost, 
+                                                 are you sure about your decision?";
+
+//about ressource
+$lang['moderation_ress_re_upload']           = "Upload a new image";
 
 /* End of file common.php */
 /* Location : ./system/language/english/moderation_lang.php */

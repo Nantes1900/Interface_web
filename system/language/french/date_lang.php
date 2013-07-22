@@ -22,6 +22,7 @@ $lang['date_prod'] = "Date de production";
 $lang['date_shot'] = "Date de prise de vue";
 $lang['date_secondary_begin'] = "Indication date début";
 $lang['date_secondary_end'] = "Indication date fin";
+$lang['date_dates'] = "Dates";
 
 
 $lang['UM12']	= '(UTC -12:00) Baker/Howland Island';

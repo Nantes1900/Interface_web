@@ -10,8 +10,12 @@
     <table>
         <thead>
             <tr>
-                <th>Nom de l'objet lié</th><th>créateur de la relation</th><th>Type de relation</th><th>Dates</th><th>Résumé de l'objet</th>
-                <th>Supprimer relation</th>
+                <th><?php echo $this->lang->line('moderation_delDoc_obj_name'); ?></th>
+                <th><?php echo $this->lang->line('moderation_relation_creator'); ?></th>
+                <th><?php echo $this->lang->line('moderation_relation_type'); ?></th>
+                <th><?php echo $this->lang->line('date_dates'); ?></th>
+                <th><?php echo $this->lang->line('common_obj_resume'); ?></th>
+                <th><?php echo $this->lang->line('moderation_delRel_remove'); ?></th>
             </tr>
         </thead>
         <tbody>
@@ -30,17 +34,16 @@
                             <input type="hidden" name="nom_objet_target" value="<?php echo $objetArray['nom_objet']; ?>" />
                             <div class="message" style="left:15%; top:40%; display:none">
                                 <p>
-                                    Vous vous apprêtez à supprimer définitivement la relatio entre <em><?php echo $objet->get_nom_objet(); ?></em>
-                                     et <em><?php echo $objetArray['nom_objet']; ?></em>, 
-                                     les informations de la relation seront perdues, êtes vous certain de votre décision?
+                                    <?php echo sprintf($this->lang->line('moderation_delDoc_warning_msg'), 
+                                            $objet->get_nom_objet(), $objetArray['nom_objet']); ?>
                                 </p>
-                                <input type="submit" value="Supprimer la relation" />
-                                <button type="reset" class="closePopup">Annuler</button>
+                                <input type="submit" value="<?php echo $this->lang->line('moderation_delRel_remove_this'); ?>" />
+                                <button type="reset" class="closePopup"><?php echo $this->lang->line('common_cancel'); ?></button>
                                 <?php echo img(array('src'=>'assets/utils/close.png','alt'=>'fermer','width'=>'4%', 
                                                          'class'=>'removePopup')); ?>
                            </div>
                         </form>
-                        <button class="removePopup"> Supprimer cette relation </button>
+                        <button class="removePopup"> <?php echo $this->lang->line('moderation_delRel_remove_this'); ?> </button>
                     </td>
                 </tr>
             <?php } ?>

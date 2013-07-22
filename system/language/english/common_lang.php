@@ -136,18 +136,22 @@ $lang['common_ress_shot_place']           = "Place of the shot";
 $lang['common_ress_tec_used']             = "Technical specification";
 $lang['common_ress_media']                = "Medium used";
 $lang['common_ress_color']                = "Color";
+$lang['common_ress_color_BW']             = "Black and white";
 $lang['common_ress_img_upload']           = "Upload image";
-$lang['common_ress_img_url']              = "image URL";
+$lang['common_ress_img_url']              = "Image URL";
 $lang['common_ress_vid_upload']           = "Upload video";
 $lang['common_ress_vid_url']              = "Link to the page hosting the video";
 $lang['common_ress_length']               = "Length (minutes)";
-$lang['common_ress_broadcast']            = "Broadcasted in :";
+$lang['common_ress_broadcast']            = "Broadcasted in:";
 $lang['common_ress_version']              = "Version";
 $lang['common_ress_distrib']              = "Distributed by";
-$lang['common_ress_prod']                 = "Producted by";
+$lang['common_ress_prod']                 = "Produced by";
 
 //about moderation center
-$lang['common_mod_obj']                     = "Modifying the ".strtolower($lang['common_objet'])." : ";
+$lang['common_mod_obj']                     = "Modifying the ".strtolower($lang['common_objet']).": ";
+$lang['common_mod_ress_txt']                = "Modifying the ".strtolower($lang['common_ressource_txt']).": ";
+$lang['common_mod_ress_img']                = "Modifying the ".strtolower($lang['common_ressource_img']).": ";
+$lang['common_mod_ress_vid']                = "Modifying the ".strtolower($lang['common_ressource_vid']).": ";
 $lang['common_cancel']                      = "Cancel";
 
 /* End of file common.php */

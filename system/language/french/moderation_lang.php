@@ -38,7 +38,6 @@ $lang['moderation_ress_addDoc_failure']      = "Erreur : la documentation entre 
 $lang['moderation_ress_delDoc_success']      = "La suppression de la documentation entre <b>%s</b> et <b>%s</b> s'est déroulée avec succès";
 $lang['moderation_ress_delDoc_failure']      = "Erreur : la suppression de la documentation entre <b>%s</b> et <b>%s</b> a échoué";
 
-
 //about documentation
 $lang['moderation_delDoc_title']             = "Suppression d'un lien de documentation";
 $lang['moderation_delDoc_list']              = "Liste des objets liés à : ";
@@ -50,7 +49,17 @@ $lang['moderation_delDoc_warning_msg']       = "Vous vous apprêtez à supprimer
                                                  êtes vous certain de bien vouloir faire cela?";
 
 //about relation
+$lang['moderation_relation_creator']         = "Créateur de la relation";
+$lang['moderation_relation_type']            = "Type de relation";
 $lang['moderation_delRel_title']             = "Suppression de relation";
+$lang['moderation_delRel_remove']            = "Supprimer la relation";
+$lang['moderation_delRel_remove_this']       = "Supprimer cette relation";
+$lang['moderation_delRel_warning_msg']       = "Vous vous apprêtez à supprimer définitivement la relation entre <em>%s</em>
+                                                 et <em>%s</em>. Les informations de relation seront perdues, 
+                                                 êtes vous certain de bien vouloir faire cela?";
+
+//about ressource
+$lang['moderation_ress_re_upload']           = "Télécharger une nouvelle image";
 
 /* End of file common.php */
 /* Location : ./system/language/french/moderation_lang.php */

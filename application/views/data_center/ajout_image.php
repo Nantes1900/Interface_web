@@ -127,8 +127,10 @@
             <tr>
                 <td> <?php echo $this->lang->line('common_ress_color'); ?> </td>
                 <td> 
-                    <input type="radio" name="couleur" value="TRUE" <?php echo set_select('couleur', 'TRUE'); ?> >Couleur <br/>
-                    <input type="radio" name="couleur" value="FALSE" <?php echo set_select('couleur', 'FALSE'); ?> >Noir et blanc
+                    <input type="radio" name="couleur" value="TRUE" <?php echo set_select('couleur', 'TRUE'); ?> >
+                        <?php echo $this->lang->line('common_ress_color'); ?> <br/>
+                    <input type="radio" name="couleur" value="FALSE" <?php echo set_select('couleur', 'FALSE'); ?> >
+                        <?php echo $this->lang->line('common_ress_color_BW'); ?>
                 </td>
                 <td class="error_form"><?php echo form_error('couleur'); ?></td>
             </tr>

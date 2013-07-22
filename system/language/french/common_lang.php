@@ -136,6 +136,7 @@ $lang['common_ress_shot_place']           = "Lieu de la prise de vue";
 $lang['common_ress_tec_used']             = "Technique utilisée";
 $lang['common_ress_media']                = "Support de la ressource";
 $lang['common_ress_color']                = "Couleur";
+$lang['common_ress_color_BW']             = "Noir et blanc";
 $lang['common_ress_img_upload']           = "Télécharger image";
 $lang['common_ress_img_url']              = "URL image";
 $lang['common_ress_vid_upload']           = "Télécharger vidéo";
@@ -148,6 +149,9 @@ $lang['common_ress_prod']                 = "Producteur";
 
 //about moderation center
 $lang['common_mod_obj']                     = "Modification de l'".strtolower($lang['common_objet'])." : ";
+$lang['common_mod_ress_txt']                = "Modification de la ".strtolower($lang['common_ressource_txt'])." : ";
+$lang['common_mod_ress_img']                = "Modification de la ".strtolower($lang['common_ressource_img'])." : ";
+$lang['common_mod_ress_vid']                = "Modification de la ".strtolower($lang['common_ressource_vid'])." : ";
 $lang['common_cancel']                      = "Annuler";
 
 /* End of file common.php */

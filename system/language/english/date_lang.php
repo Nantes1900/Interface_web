@@ -22,7 +22,7 @@ $lang['date_prod'] = "Production date";
 $lang['date_shot'] = "Picture's date";
 $lang['date_secondary_begin'] = "Starting date details";
 $lang['date_secondary_end'] = "Ending date details";
-
+$lang['date_dates'] = "Dates";
 
 $lang['UM12']	= '(UTC -12:00) Baker/Howland Island';
 $lang['UM11']	= '(UTC -11:00) Samoa Time Zone, Niue';
