@@ -4,7 +4,7 @@ $lang['test']                       = "Salut, c'est un test";
 
 //about accueil folder controllers
 $lang['common_welcome_page_link']   = "Revenir à la page d'accueil";
-$lang['common_welcome_site']        = "Bienvenue sur le site";
+$lang['common_welcome_site']        = "Bienvenue sur le projet Nantes1900";
 $lang['common_lang_title']          = "Paramètres de langue";
 $lang['common_change_lang']         = "Changer la langue";
 $lang['common_welcome_info']        = "Le site est actuellement en <span class=\"hint\">développement
@@ -153,6 +153,26 @@ $lang['common_mod_ress_txt']                = "Modification de la ".strtolower($
 $lang['common_mod_ress_img']                = "Modification de la ".strtolower($lang['common_ressource_img'])." : ";
 $lang['common_mod_ress_vid']                = "Modification de la ".strtolower($lang['common_ressource_vid'])." : ";
 $lang['common_cancel']                      = "Annuler";
+
+//about lists
+$lang['common_select_data']                 = "Selection de données";
+$lang['common_list_object']                 = "Liste des ".strtolower($lang['common_objets']);
+$lang['common_list_link_rel']               = " à lier à ";
+$lang['common_list_link_doc']               = " à lier à la ".strtolower($lang['common_ressource'])." ";
+$lang['common_list_sort_by']                = "Trier par :";
+$lang['common_list_nom_objet']              = "Nom de l'".strtolower($lang['common_objet']);
+$lang['common_list_creator_obj']            = "Pseudo du ".strtolower($lang['common_obj_creator']);
+$lang['common_list_date_add_obj']           = "Date d'ajout de l'".strtolower($lang['common_objet']);
+$lang['common_list_sort_dir_asc']           = "Croissant";
+$lang['common_list_sort_dir_desc']          = "Décroissant";
+$lang['common_list_select']                 = "Rechercher un(e) :";
+$lang['common_list_filter_unvalid']         = $lang['common_objets']." non validés uniquement";
+$lang['common_list_sort_button']            = "Trier";
+$lang['common_list_is_valid']               = "Validation";
+$lang['common_list_valid']                  = "Valide";
+$lang['common_list_unvalid']                = "Non valide";
+$lang['common_list_link_obj_to']            = "Lier à cet ".strtolower($lang['common_objet'])." à ";
+$lang['common_list_do_link']                = "Relier";
 
 /* End of file common.php */
 /* Location : ./system/language/french/common_lang.php */

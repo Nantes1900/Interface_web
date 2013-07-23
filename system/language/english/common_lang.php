@@ -4,10 +4,10 @@ $lang['test']			= "Hello, this is test";
 
 //about accueil folder controllers
 $lang['common_welcome_page_link']   = "Go back to welcome page";
-$lang['common_welcome_site']        = "Welcome on this website";
+$lang['common_welcome_site']        = "Welcome on Nantes1900 project";
 $lang['common_lang_title']          = "Language settings";
 $lang['common_change_lang']         = "Change language";
-$lang['common_welcome_info']        = "This site is still under <span class=\"hint\">development
+$lang['common_welcome_info']        = "This website is still under <span class=\"hint\">development
                                       <span>If you notice a bug, report it to the administrators</span></span>";
 $lang['common_welcome_warning']     = "This website relies on cookies. Be sure to activate cookies
                                        before browsing further.";
@@ -153,6 +153,26 @@ $lang['common_mod_ress_txt']                = "Modifying the ".strtolower($lang[
 $lang['common_mod_ress_img']                = "Modifying the ".strtolower($lang['common_ressource_img']).": ";
 $lang['common_mod_ress_vid']                = "Modifying the ".strtolower($lang['common_ressource_vid']).": ";
 $lang['common_cancel']                      = "Cancel";
+
+//about lists
+$lang['common_select_data']                 = "Selecting data";
+$lang['common_list_object']                 = $lang['common_objets']." list";
+$lang['common_list_link_rel']               = " to link to ";
+$lang['common_list_link_doc']               = " to link to the ".strtolower($lang['common_ressource'])." ";
+$lang['common_list_sort_by']                = "Sort by:";
+$lang['common_list_nom_objet']              = $lang['common_objets']."' name";
+$lang['common_list_creator_obj']            = $lang['common_obj_creator']."'s pseudo";
+$lang['common_list_date_add_obj']           = "Date when the ".strtolower($lang['common_objet'])." was added";
+$lang['common_list_sort_dir_asc']           = "Ascending";
+$lang['common_list_sort_dir_desc']          = "Descending";
+$lang['common_list_select']                 = "Search a specific:";
+$lang['common_list_filter_unvalid']         = "Unvalid ".strtolower($lang['common_objets'])." only";
+$lang['common_list_sort_button']            = "Sort";
+$lang['common_list_is_valid']               = "Validation";
+$lang['common_list_valid']                  = "Valid";
+$lang['common_list_unvalid']                = "Unvalid";
+$lang['common_list_link_obj_to']            = "Link this ".strtolower($lang['common_objet'])." to ";
+$lang['common_list_do_link']                = "Link";
 
 /* End of file common.php */
 /* Location : ./system/language/english/common_lang.php */

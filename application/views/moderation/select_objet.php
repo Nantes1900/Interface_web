@@ -1,10 +1,14 @@
 
-    <p><?php echo anchor('moderation/moderation_center', 'Revenir au centre de modération'); ?></p>
+    <p><?php echo anchor('moderation/moderation_center', $this->lang->line('moderation_go_back_link')); ?></p>
     
-    <h1>Selection de données</h1>
+    <h1><?php echo $this->lang->line('common_select_data'); ?></h1>
     
-    <h2>Liste des objets <?php if($goal=='add_relation'){ echo 'à lier à '.$objetSource->get_nom_objet();}
-                                if($goal=='add_doc'){ echo 'à lier à la ressource '.$ressource->get_titre(); } ?></h2>
+    <h2>
+        <?php echo $this->lang->line('common_list_object'); ?>
+        <?php if($goal=='add_relation'){ echo $this->lang->line('common_list_link_rel').$objetSource->get_nom_objet();}
+              if($goal=='add_doc'){ echo $this->lang->line('common_list_link_doc').$ressource->get_titre(); } ?>
+    </h2>
+    
 <!--    sorting form-->
     <?php if($goal=='modify' || $goal=='relation'){
               echo form_open('moderation/modify_objet/sort_sel_obj/'.$goal);
@@ -21,73 +25,73 @@
               echo form_open('moderation/modify_ressource/sort_sel_obj/add_doc/'.$ressource_id.'/'.$typeRessource);
           }         
     ?>
-        <label for="orderBy">Trier par:</label>
+        <label for="orderBy"><?php echo $this->lang->line('common_list_sort_by'); ?></label>
         <select name="orderBy" id="orderBy">
             <option value="nom_objet" <?php if($this->session->userdata('sel_obj_orderBy') == 'nom_objet'){ 
                                                 echo 'selected'; 
                                             } ?>>
-                Nom de l'objet
+                <?php echo $this->lang->line('common_list_nom_objet'); ?>
             </option>
             <option value="username" <?php if($this->session->userdata('sel_obj_orderBy') == 'username'){ 
                                                 echo 'selected'; 
                                             } ?>>
-                Pseudo du créateur
+                <?php echo $this->lang->line('common_list_creator_obj'); ?>
             </option>
             <option value="date_creation" <?php if($this->session->userdata('sel_obj_orderBy') == 'date_creation'){ 
                                                 echo 'selected'; 
                                             } ?>>
-                Date d'ajout de l'objet
+                <?php echo $this->lang->line('common_list_date_add_obj'); ?>
             </option>
         </select>
         <select name="orderDirection">
             <option value="asc" <?php if($this->session->userdata('sel_obj_orderDirection') == 'asc'){ 
                                           echo 'selected'; 
                                       } ?>>
-                Croissant
+                <?php echo $this->lang->line('common_list_sort_dir_asc'); ?>
             </option>
             <option value="desc" <?php if($this->session->userdata('sel_obj_orderDirection') == 'desc'){ 
                                           echo 'selected'; 
                                        } ?>>
-                Décroissant
+                <?php echo $this->lang->line('common_list_sort_dir_desc'); ?>
             </option>
         </select>
         <br/>
-        <label for="speAttribute">Rechercher un(e):</label>
+        <label for="speAttribute"><?php echo $this->lang->line('common_list_select'); ?></label>
         <select name="speAttribute" id="speAttribute">
             <option value="nom_objet" <?php if($this->session->userdata('sel_obj_speAttribute') == 'nom_objet'){ 
                                           echo 'selected'; 
                                        } ?>>
-                Nom de l'objet
+                <?php echo $this->lang->line('common_list_nom_objet'); ?>
             </option>
             <option value="username" <?php if($this->session->userdata('sel_obj_speAttribute') == 'username'){ 
                                           echo 'selected'; 
                                        } ?>>
-                Pseudo du créateur
+                <?php echo $this->lang->line('common_list_creator_obj'); ?>
             </option>
             <option value="mots_cles" <?php if($this->session->userdata('sel_obj_speAttribute') == 'mots_cles'){ 
                                           echo 'selected'; 
                                        } ?>>
-                Mot-clé
+                <?php echo $this->lang->line('common_obj_mots_cles'); ?>
             </option>
             <option value="resume" <?php if($this->session->userdata('sel_obj_speAttribute') == 'resume'){ 
                                           echo 'selected'; 
                                        } ?>>
-                Résumé
+                <?php echo $this->lang->line('common_obj_resume'); ?>
             </option>
             <option value="historique" <?php if($this->session->userdata('sel_obj_speAttribute') == 'historique'){ 
                                           echo 'selected'; 
                                        } ?>>
-                Historique
+                <?php echo $this->lang->line('common_obj_historique'); ?>
             </option>
             <option value="description" <?php if($this->session->userdata('sel_obj_speAttribute') == 'description'){ 
                                           echo 'selected'; 
                                        } ?>>
-                Description
+                <?php echo $this->lang->line('common_obj_description'); ?>
             </option>
             <option value="adresse_postale" <?php if($this->session->userdata('sel_obj_speAttribute') == 'adresse_postale'){ 
                                           echo 'selected'; 
                                        } ?>>
-                Adresse
+                <?php echo $this->lang->line('common_obj_adresse_postale'); ?>
             </option>
         </select>
         <input type="text" name="speAttributeValue" maxlength="50" 
@@ -97,9 +101,9 @@
         <br/>
         <input type="checkbox" name="validation" value="TRUE" <?php if($this->session->userdata('sel_obj_valid') != null){ 
                                           echo 'checked'; 
-                                       } ?>>Objets non validés uniquement
+                                       } ?>><?php echo $this->lang->line('common_list_filter_unvalid'); ?>
         <br/>
-        <input type="submit" value="Trier" />
+        <input type="submit" value="<?php echo $this->lang->line('common_list_sort_button'); ?>" />
 
 
     </form>
@@ -157,18 +161,24 @@
     <table>
         <thead>
             <tr>
-                <th>Objet</th><th>Créateur</th><th>Résumé</th><th>Mots-clés</th><th>Validation</th>
+                <th><?php echo $this->lang->line('common_objet'); ?></th>
+                <th><?php echo $this->lang->line('common_obj_creator'); ?></th>
+                <th><?php echo $this->lang->line('common_obj_resume'); ?></th>
+                <th><?php echo $this->lang->line('common_obj_mots_cles'); ?></th>
+                <th><?php echo $this->lang->line('common_list_is_valid'); ?></th>
                 <?php if($goal=='modify'){ ?>
-                    <th>Modifier/Valider</th><th>Supprimer</th>
+                        <th><?php echo $this->lang->line('moderation_list_modif_valid'); ?></th>
+                        <th><?php echo $this->lang->line('moderation_list_delete'); ?></th>
                 <?php } ?>
                 <?php if($goal=='relation'){ ?>
-                    <th>Créer une relation avec un objet</th><th>Supprimer une relation</th>
+                        <th><?php echo $this->lang->line('moderation_list_create_rel'); ?></th>
+                        <th><?php echo $this->lang->line('moderation_list_delete_rel'); ?></th>
                 <?php } ?>
                 <?php if($goal=='add_relation'){ ?>
-                    <th>Lier à cet objet à <?php echo $objetSource->get_nom_objet();?></th>
+                        <th><?php echo $this->lang->line('common_list_link_obj_to').$objetSource->get_nom_objet();?></th>
                 <?php } ?>
                 <?php if($goal=='add_doc'){ ?>
-                    <th>Lier à cet objet à <?php echo $ressource->get_titre();?></th>
+                        <th><?php echo $this->lang->line('common_list_link_obj_to').$ressource->get_titre();?></th>
                 <?php } ?>
             </tr>
         </thead>
@@ -179,16 +189,21 @@
                     <td><?php echo $objet->get_username(); ?></td>
                     <td><?php echo $objet->get_resume(); ?></td>
                     <td><?php echo $objet->get_mots_cles(); ?></td>
-                    <td><?php echo $objet->get_validation()=='t'?'validé':'non validé'; ?></td>
+                    <td><?php if($objet->get_validation()=='t'){
+                                echo $this->lang->line('common_list_valid');
+                              }else{
+                                echo $this->lang->line('common_list_unvalid'); }
+                        ?>
+                    </td>
                     <?php if($goal=='modify'){ ?>
                         <td>
                             <?php echo form_open('moderation/modify_objet/index/'.$goal) ?>
                                 <input type="hidden" name="objet_id" value="<?php echo $objet->get_objet_id(); ?>" />
-                                <input type="submit" value="Modifier cet objet" />
+                                <input type="submit" value="<?php echo $this->lang->line('moderation_list_modify_obj'); ?>" />
                             </form>
                             <?php echo form_open('moderation/modify_objet/validate') ?>
                                 <input type="hidden" name="objet_id" value="<?php echo $objet->get_objet_id(); ?>" />
-                                <input type="submit" value="Valider cet objet" />
+                                <input type="submit" value="<?php echo $this->lang->line('moderation_list_validate_obj'); ?>" />
                             </form>
                         </td>
                         <td>
@@ -197,29 +212,28 @@
                                 
                                 <div class="message" style="left:15%; top:40%; display:none">
                                     <p>
-                                        Vous vous apprêtez à supprimer définitivement <em><?php echo $objet->get_nom_objet(); ?></em>,
-                                         les informations seront définitivement perdues, êtes vous certain de ne pas plutôt vouloir l'invalider?
+                                        <?php echo sprintf($this->lang->line('moderation_del_obj_warning'),$objet->get_nom_objet()); ?>
                                     </p>
-                                    <input type="submit" value="Supprimer cet objet" />
-                                    <button type="reset" class="closePopup">Annuler</button>
+                                    <input type="submit" value="<?php echo $this->lang->line('moderation_list_delete_obj'); ?>" />
+                                    <button type="reset" class="closePopup"><?php echo $this->lang->line('common_cancel'); ?></button>
                                     <?php echo img(array('src'=>'assets/utils/close.png','alt'=>'fermer','width'=>'4%', 
                                                          'class'=>'removePopup')); ?>
                                 </div>
                             </form>
-                            <button class="removePopup"> Supprimer cet objet </button>
+                            <button class="removePopup"> <?php echo $this->lang->line('moderation_list_delete_obj'); ?> </button>
                         </td>
                     <?php } ?>
                     <?php if($goal=='relation'){ ?>
                         <td>
                             <?php echo form_open('moderation/modify_objet/add_relation') ?>
                                 <input type="hidden" name="objet_id" value="<?php echo $objet->get_objet_id(); ?>" />
-                                <input type="submit" value="Ajouter une relation" />
+                                <input type="submit" value="<?php echo $this->lang->line('moderation_list_addRel'); ?>" />
                             </form>
                         </td>
                         <td>
                             <?php echo form_open('moderation/modify_objet/delete_relation') ?>
                                 <input type="hidden" name="objet_id" value="<?php echo $objet->get_objet_id(); ?>" />
-                                <input type="submit" value="Supprimer une relation" />
+                                <input type="submit" value="<?php echo $this->lang->line('moderation_list_delRel'); ?>" />
                             </form>
                         </td>
                     <?php } ?>
@@ -228,7 +242,7 @@
                             <?php echo form_open('moderation/modify_objet/add_relation_form') ?>
                                 <input type="hidden" name="objet1_id" value="<?php echo $objetSource->get_objet_id(); ?>" />
                                 <input type="hidden" name="objet2_id" value="<?php echo $objet->get_objet_id(); ?>" />
-                                <input type="submit" value="Relier" />
+                                <input type="submit" value="<?php echo $this->lang->line('common_list_do_link'); ?>" />
                             </form>
                         </td>
                     <?php } ?>
@@ -236,7 +250,8 @@
                         <td>
                             <?php echo form_open('moderation/modify_ressource/add_doc_form/'.$typeRessource) ?>
                                 <?php if($typeRessource!='ressource_video'){ ?>
-                                    Lier la page :<input type="texte" name="page" value="0" pattern="[0-9]*" size="4">
+                                        <?php echo $this->lang->line('common_add_ress_link_doc'); ?>
+                                        <input type="texte" name="page" value="0" pattern="[0-9]*" size="4">
                                 <?php } ?>
                                 <input type="hidden" name="ressource_id" value="<?php if($typeRessource=='ressource_texte'){
                                                                                         echo $ressource->get_ressource_textuelle_id();
@@ -247,7 +262,7 @@
                                 <input type="hidden" name="objet_id" value="<?php echo $objet->get_objet_id(); ?>" />
                                 <input type="hidden" name="nom_objet" value="<?php echo $objet->get_nom_objet(); ?>" />
                                 <input type="hidden" name="ressource_titre" value="<?php echo $ressource->get_titre(); ?>" />
-                                <input type="submit" value="Relier" />
+                                <input type="submit" value="<?php echo $this->lang->line('common_list_do_link'); ?>" />
                             </form>
                         </td>
                     <?php } ?>

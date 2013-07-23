@@ -61,5 +61,20 @@ $lang['moderation_delDoc_warning_msg']       = "You are about to definitely dele
 //about ressource
 $lang['moderation_ress_re_upload']           = "Upload a new image";
 
+//list of objects
+$lang['moderation_go_back_link']            = "Go back to moderation center";
+$lang['moderation_list_modif_valid']        = "Modify/Validate";
+$lang['moderation_list_delete']             = "Delete";
+$lang['moderation_list_create_rel']         = "Create a relation with an object";
+$lang['moderation_list_delete_rel']         = "Delete a relation";
+$lang['moderation_list_modify_obj']         = "Modify this object";
+$lang['moderation_list_validate_obj']       = "Validate this object";
+$lang['moderation_list_delete_obj']         = "Delete this object";
+$lang['moderation_del_obj_warning']         = "You are about to definitively delete <em>%s</em>.
+                                                Its information will be lost, are you sure you would 
+                                                not rather like to unvalid it ?";
+$lang['moderation_list_addRel']             = "Add a relation";
+$lang['moderation_list_delRel']             = "Delete a relation";
+
 /* End of file common.php */
 /* Location : ./system/language/english/moderation_lang.php */
