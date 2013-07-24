@@ -248,6 +248,7 @@ class Select_data extends MY_Controller {
     }
 
     private function select_geo() {
+        $this->lang->load('map', $this->language);
         $data = array();
         //we consider if there is a focus on a particular objet
         if ($this->input->post('latitude') != null && $this->input->post('longitude') != null) {

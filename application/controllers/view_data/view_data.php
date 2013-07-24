@@ -19,7 +19,7 @@ class View_data extends MY_Controller {
         } elseif ($dataType == 'ressource_texte' || $dataType == 'ressource_graphique' || $dataType == 'ressource_video') {
             $this->view_ressource($data_id, $dataType);
         } else {
-            $this->load->view('view_data/error', array('error' => 'La ressource recherchée est inexistante'));
+            $this->load->view('view_data/error', array('error' => $this->lang->line('common_view_error_no_type')));
         }
     }
 
@@ -61,7 +61,7 @@ class View_data extends MY_Controller {
             $this->load->view('view_data/linked_sidebar', $sidebarData);
             $this->load->view('view_data/view_objet', $data);
         } else {
-            $message = 'Erreur : l\'objet selectionné semble inexistant';
+            $message = $this->lang->line('common_view_error_no_object');
             $this->load->view('data_center/success_form', array('success' => FALSE, 'message' => $message));
         }
         $this->load->view('footer');
@@ -85,12 +85,12 @@ class View_data extends MY_Controller {
                 $this->load->view('view_data/linked_sidebar_ress', $sidebarData);
                 $this->load->view('view_data/view_ressource', $data);
             } else {
-                $message = 'Erreur : la ressource selectionnée semble inexistante';
+                $message = $this->lang->line('common_view_error_no_ress');
                 $this->load->view('data_center/success_form', array('success' => FALSE, 'message' => $message));
             }
             $this->load->view('footer');
         } else {
-            $message = 'Erreur : la ressource selectionnée semble inexistante';
+            $message = $this->lang->line('common_view_error_no_ress');
             $this->load->view('data_center/success_form', array('success' => FALSE, 'message' => $message));
         }
     }

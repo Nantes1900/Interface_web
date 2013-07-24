@@ -1,13 +1,12 @@
 
-
-    <p><?php echo anchor('view_data/select_data/index', 'Revenir à la selection de données'); ?></p>
+    <p><?php echo anchor('view_data/select_data/index', $this->lang->line('common_view_go_back_link')); ?></p>
     
-    <h1>Selection de données</h1>
+    <h1><?php echo $this->lang->line('common_select_data'); ?></h1>
     
     <h2>
-        Liste des objets 
-        <?php if($goal=='add_doc'){ echo ' à relier à la ressource '.$ressource->get_titre(); } ?>
-        <?php if($goal=='add_geo'){ echo ' à relier à la coordonnée sélectionnée '; } ?>
+        <?php echo $this->lang->line('common_list_object'); ?>
+        <?php if($goal=='add_doc'){ echo $this->lang->line('common_list_link_doc').$ressource->get_titre(); } ?>
+        <?php if($goal=='add_geo'){ echo $this->lang->line('common_list_link_geo'); } ?>
     </h2>
 <!--    sorting form-->
     <?php if($goal!='add_geo'){
@@ -15,73 +14,73 @@
           }else{
                 echo form_open('data_center/ajout_objet/sort_sel_obj/add_geo/'.$latitude.'/'.$longitude);
           }   ?>
-        <label for="orderBy">Trier par:</label>
+        <label for="orderBy"><?php echo $this->lang->line('common_list_sort_by'); ?></label>
         <select name="orderBy" id="orderBy">
             <option value="nom_objet" <?php if($this->session->userdata('sel_obj_orderBy') == 'nom_objet'){ 
                                                 echo 'selected'; 
                                             } ?>>
-                Nom de l'objet
+                <?php echo $this->lang->line('common_list_nom_objet'); ?>
             </option>
             <option value="username" <?php if($this->session->userdata('sel_obj_orderBy') == 'username'){ 
                                                 echo 'selected'; 
                                             } ?>>
-                Pseudo du créateur
+                <?php echo $this->lang->line('common_list_creator_obj'); ?>
             </option>
             <option value="date_creation" <?php if($this->session->userdata('sel_obj_orderBy') == 'date_creation'){ 
                                                 echo 'selected'; 
                                             } ?>>
-                Date d'ajout de l'objet
+                <?php echo $this->lang->line('common_list_date_add_obj'); ?>
             </option>
         </select>
         <select name="orderDirection">
             <option value="asc" <?php if($this->session->userdata('sel_obj_orderDirection') == 'asc'){ 
                                           echo 'selected'; 
                                       } ?>>
-                Croissant
+                <?php echo $this->lang->line('common_list_sort_dir_asc'); ?>
             </option>
             <option value="desc" <?php if($this->session->userdata('sel_obj_orderDirection') == 'desc'){ 
                                           echo 'selected'; 
                                        } ?>>
-                Décroissant
+                <?php echo $this->lang->line('common_list_sort_dir_desc'); ?>
             </option>
         </select>
         <br/>
-        <label for="speAttribute">Rechercher un(e):</label>
+        <label for="speAttribute"><?php echo $this->lang->line('common_list_select'); ?></label>
         <select name="speAttribute" id="speAttribute">
             <option value="nom_objet" <?php if($this->session->userdata('sel_obj_speAttribute') == 'nom_objet'){ 
                                           echo 'selected'; 
                                        } ?>>
-                Nom de l'objet
+                <?php echo $this->lang->line('common_list_nom_objet'); ?>
             </option>
             <option value="username" <?php if($this->session->userdata('sel_obj_speAttribute') == 'username'){ 
                                           echo 'selected'; 
                                        } ?>>
-                Pseudo du créateur
+                <?php echo $this->lang->line('common_list_creator_obj'); ?>
             </option>
             <option value="mots_cles" <?php if($this->session->userdata('sel_obj_speAttribute') == 'mots_cles'){ 
                                           echo 'selected'; 
                                        } ?>>
-                Mot-clé
+                <?php echo $this->lang->line('common_obj_mots_cles'); ?>
             </option>
             <option value="resume" <?php if($this->session->userdata('sel_obj_speAttribute') == 'resume'){ 
                                           echo 'selected'; 
                                        } ?>>
-                Résumé
+                <?php echo $this->lang->line('common_obj_resume'); ?>
             </option>
             <option value="historique" <?php if($this->session->userdata('sel_obj_speAttribute') == 'historique'){ 
                                           echo 'selected'; 
                                        } ?>>
-                Historique
+                <?php echo $this->lang->line('common_obj_historique'); ?>
             </option>
             <option value="description" <?php if($this->session->userdata('sel_obj_speAttribute') == 'description'){ 
                                           echo 'selected'; 
                                        } ?>>
-                Description
+                <?php echo $this->lang->line('common_obj_description'); ?>
             </option>
             <option value="adresse_postale" <?php if($this->session->userdata('sel_obj_speAttribute') == 'adresse_postale'){ 
                                           echo 'selected'; 
                                        } ?>>
-                Adresse
+                <?php echo $this->lang->line('common_obj_adresse_postale'); ?>
             </option>
         </select>
         <input type="text" name="speAttributeValue" maxlength="50" 
@@ -98,7 +97,7 @@
                                                                   } ?>" />
             <input type="hidden" name="typeRessource" value="<?php echo $typeRessource; ?>">
         <?php } ?>
-        <input type="submit" value="Trier" />
+        <input type="submit" value="<?php echo $this->lang->line('common_list_sort_button'); ?>" />
 
 
     </form>
@@ -155,14 +154,17 @@
     <table>
         <thead>
             <tr>
-                <th>Objet</th><th>Créateur</th><th>Résumé</th><th>Mots-clés</th>
+                <th><?php echo $this->lang->line('common_objet'); ?></th>
+                <th><?php echo $this->lang->line('common_obj_creator'); ?></th>
+                <th><?php echo $this->lang->line('common_obj_resume'); ?></th>
+                <th><?php echo $this->lang->line('common_obj_mots_cles'); ?></th>
                 <?php if($goal=='view'){ ?>
-                            <th>Visualiser</th>
+                            <th><?php echo $this->lang->line('common_list_view'); ?></th>
                 <?php }elseif($goal=='add_doc'){ ?>
-                            <th>Validation</th>
-                            <th>Lier cet objet à <?php echo $ressource->get_titre();?></th>
+                            <th><?php echo $this->lang->line('common_list_is_valid'); ?></th>
+                            <th><?php echo $this->lang->line('common_list_link_obj_to').$ressource->get_titre();?></th>
                 <?php }elseif($goal=='add_geo'){ ?>
-                            <th>Localiser l'objet</th>
+                            <th><?php echo $this->lang->line('common_list_localize'); ?></th>
                 <?php } ?>
                 
             </tr>
@@ -180,15 +182,22 @@
                                 <?php echo form_open('view_data/view_data') ?>
                                     <input type="hidden" name="data_id" value="<?php echo $objet->get_objet_id(); ?>" />
                                     <input type="hidden" name="type" value="objet" />
-                                    <input type="submit" value="Voir cet objet" />
+                                    <input type="submit" value="<?php echo $this->lang->line('common_list_view_obj'); ?>" />
                                 </form>
                         </td>
                    <?php }  elseif ($goal=='add_doc') { ?>
-                        <td><?php echo $objet->get_validation()=='t'?'validé':'non validé'; ?></td>
+                        <td><?php if($objet->get_validation()=='t'){
+                                echo $this->lang->line('common_list_valid');
+                              }else{
+                                echo $this->lang->line('common_list_unvalid'); 
+                                
+                              }?>
+                        </td>
                         <td>
                              <?php echo form_open('data_center/ajout_documentation/add/'.$typeRessource) ?>
                                 <?php if($typeRessource!='ressource_video'){ ?>
-                                    Lier la page :<input type="texte" name="page" value="0" pattern="[0-9]*" size="4">
+                                    <?php echo $this->lang->line('common_add_ress_link_doc'); ?>
+                                    <input type="texte" name="page" value="0" pattern="[0-9]*" size="4">
                                 <?php } ?>
                                 <input type="hidden" name="objet_id" value="<?php echo $objet->get_objet_id(); ?>" />
                                 <input type="hidden" name="ressource_id" value="<?php if($typeRessource=='ressource_texte'){
@@ -199,14 +208,14 @@
                                                                                       } ?>" />
                                 <input type="hidden" name="nom_objet" value="<?php echo $objet->get_nom_objet(); ?>" />
                                 <input type="hidden" name="titre_ressource" value="<?php echo $ressource->get_titre(); ?>" />
-                                <input type="submit" value="Relier" />
+                                <input type="submit" value="<?php echo $this->lang->line('common_list_do_link'); ?>" />
                             </form>
                         </td>
                    <?php }  elseif ($goal=='add_geo') { ?>
                         <td>
                             <?php echo form_open('data_center/ajout_objet/geometry_form/'.$latitude.'/'.$longitude); ?>
                                  <input type="hidden" name="objet_id" value="<?php echo $objet->get_objet_id(); ?>" />
-                                 <input type="submit" value="Localiser à l'endroit sélectionné" />
+                                 <input type="submit" value="<?php echo $this->lang->line('common_list_localize'); ?>" />
                             </form>
                         </td>
                    <?php } ?>

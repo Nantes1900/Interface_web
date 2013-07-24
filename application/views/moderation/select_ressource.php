@@ -1,98 +1,97 @@
 
-
-    <p><?php echo anchor('moderation/moderation_center', 'Revenir au centre de modération'); ?></p>
+    <p><?php echo anchor('moderation/moderation_center', $this->lang->line('moderation_go_back_link')); ?></p>
     
-    <h1>Selection de données</h1>
+    <h1><?php echo $this->lang->line('common_select_data'); ?></h1>
     
     <h2>
-        Liste des ressources <?php if($typeRessource=='ressource_texte'){echo 'textuelles';} 
-                                   if($typeRessource=='ressource_video'){echo 'vidéos';}
-                                   if($typeRessource=='ressource_graphique'){echo 'graphiques';}?>
+        <?php if($typeRessource=='ressource_texte'){echo $this->lang->line('common_list_ress_txt');} 
+              if($typeRessource=='ressource_video'){echo $this->lang->line('common_list_ress_img');}
+              if($typeRessource=='ressource_graphique'){echo $this->lang->line('common_list_ress_vid');}?>
     </h2>
 <!--    sorting form-->
     <?php echo form_open('moderation/modify_ressource/sort_sel_ress/'.$typeRessource.'/'.$goal) ?>
-        <label for="orderBy">Trier par:</label>
+        <label for="orderBy"><?php echo $this->lang->line('common_list_sort_by'); ?></label>
         <select name="orderBy" id="orderBy">
             <option value="titre" <?php if($this->session->userdata('sel_ress_orderBy') == 'titre'){ 
                                                 echo 'selected'; 
                                             } ?>>
-                Titre de la ressource
+                <?php echo $this->lang->line('common_list_title_ress'); ?>
             </option>
             <option value="username" <?php if($this->session->userdata('sel_ress_orderBy') == 'username'){ 
                                                 echo 'selected'; 
                                             } ?>>
-                Pseudo du créateur
+                <?php echo $this->lang->line('common_list_creator_obj'); ?>
             </option>
             <option value="theme_ressource" <?php if($this->session->userdata('sel_ress_orderBy') == 'theme_ressource'){ 
                                                 echo 'selected'; 
                                             } ?>>
-                Thème de la ressource
+                <?php echo $this->lang->line('common_ress_theme_ressource'); ?>
             </option>
             <option value="date_debut_ressource" <?php if($this->session->userdata('sel_ress_orderBy') == 'date_debut_ressource'){ 
                                                 echo 'selected'; 
                                             } ?>>
-                Date de la ressource
+                <?php echo $this->lang->line('date_begin'); ?>
             </option>
             <option value="date_creation" <?php if($this->session->userdata('sel_ress_orderBy') == 'date_creation'){ 
                                                 echo 'selected'; 
                                             } ?>>
-                Date d'ajout de la ressource
+                <?php echo $this->lang->line('common_list_date_add_ress'); ?>
             </option>
         </select>
         <select name="orderDirection">
             <option value="asc" <?php if($this->session->userdata('sel_ress_orderDirection') == 'asc'){ 
                                           echo 'selected'; 
                                        } ?>>
-                Croissant
+                <?php echo $this->lang->line('common_list_sort_dir_asc'); ?>
             </option>
             <option value="desc" <?php if($this->session->userdata('sel_ress_orderDirection') == 'desc'){ 
                                           echo 'selected'; 
                                        } ?>>
-                Décroissant
+                <?php echo $this->lang->line('common_list_sort_dir_desc'); ?>
             </option>
         </select>
         <br/>
-        <label for="speAttribute">Rechercher un(e):</label>
+        <label for="speAttribute"><?php echo $this->lang->line('common_list_select'); ?></label>
         <select name="speAttribute" id="speAttribute">
             <option value="titre" <?php if($this->session->userdata('sel_ress_speAttribute') == 'titre'){ 
                                           echo 'selected'; 
                                        } ?>>
-                Titre de la ressource
+                <?php echo $this->lang->line('common_list_title_ress'); ?>
             </option>
             <option value="username" <?php if($this->session->userdata('sel_ress_speAttribute') == 'username'){ 
                                           echo 'selected'; 
                                        } ?>>
-                Pseudo du créateur
+                <?php echo $this->lang->line('common_list_creator_obj'); ?>
             </option>
             <option value="theme_ressource" <?php if($this->session->userdata('sel_ress_speAttribute') == 'theme_ressource'){ 
                                                 echo 'selected'; 
                                             } ?>>
-                Thème de la ressource
+                <?php echo $this->lang->line('common_ress_theme_ressource'); ?>
             </option>
             <option value="reference" <?php if($this->session->userdata('sel_ress_speAttribute') == 'reference'){ 
                                           echo 'selected'; 
                                        } ?>>
-                Référence de la ressource
+                <?php echo $this->lang->line('common_ress_reference'); ?>
             </option>
             <option value="mots_cles" <?php if($this->session->userdata('sel_ress_speAttribute') == 'mots_cles'){ 
                                           echo 'selected'; 
                                        } ?>>
-                Mot-clé
+                <?php echo $this->lang->line('common_ress_keywords'); ?>
             </option>
             <option value="description" <?php if($this->session->userdata('sel_ress_speAttribute') == 'description'){ 
                                           echo 'selected'; 
                                        } ?>>
-                Description
+                <?php echo $this->lang->line('common_ress_description'); ?>
             </option>
             <option value="auteur" <?php if($this->session->userdata('sel_ress_speAttribute') == 'auteur'){ 
                                           echo 'selected'; 
                                        } ?>>
-                Auteur
+                <?php echo $this->lang->line('common_ress_author'); ?>
             </option>
             <option value="editeur" <?php if($this->session->userdata('sel_ress_speAttribute') == 'editeur'){ 
                                           echo 'selected'; 
                                        } ?>>
-                Editeur
+                <?php echo $this->lang->line('common_ress_editor'); ?>
             </option>
         </select>
         <input type="text" name="speAttributeValue" maxlength="50" 
@@ -102,9 +101,9 @@
         <br/>
         <input type="checkbox" name="validation" value="TRUE" <?php if($this->session->userdata('sel_ress_valid') != null){ 
                                           echo 'checked'; 
-                                       } ?>>Ressources non validés uniquement
+                                       } ?>><?php echo $this->lang->line('common_list_filter_unvalid'); ?>
         <br/>
-        <input type="submit" value="Trier" />
+        <input type="submit" value="<?php echo $this->lang->line('common_list_sort_button'); ?>" />
 
 
     </form>
@@ -132,12 +131,19 @@
     <table>
         <thead>
             <tr>
-                <th>Ressource</th><th>Auteur(s)</th><th>Thème</th><th>Référence</th><th>Mots-clés</th><th>Validation</th>
+                <th><?php echo $this->lang->line('common_ressource'); ?></th>
+                <th><?php echo $this->lang->line('common_ress_author'); ?></th>
+                <th><?php echo $this->lang->line('common_ress_theme_ressource'); ?></th>
+                <th><?php echo $this->lang->line('common_ress_reference'); ?></th>
+                <th><?php echo $this->lang->line('common_ress_keywords'); ?></th>
+                <th><?php echo $this->lang->line('common_list_is_valid'); ?></th>
                 <?php if($goal=='modify'){ ?>
-                    <th>Modifier/Valider</th><th>Supprimer</th>
+                        <th><?php echo $this->lang->line('moderation_list_modif_valid'); ?></th>
+                        <th><?php echo $this->lang->line('moderation_list_delete'); ?></th>
                 <?php } ?>
                 <?php if($goal=='documentation'){ ?>
-                    <th>Documenter un objet avec cette ressource</th><th>Supprimer un lien de documentation</th>
+                    <th><?php echo $this->lang->line('moderation_list_create_doc'); ?></th>
+                    <th><?php echo $this->lang->line('moderation_list_delete_doc'); ?></th>
                 <?php } ?>
             </tr>
         </thead>
@@ -149,7 +155,12 @@
                     <td><?php echo $ressource->get_theme_ressource(); ?></td>
                     <td><?php echo $ressource->get_reference_ressource(); ?></td>
                     <td><?php echo $ressource->get_mots_cles(); ?></td>
-                    <td><?php echo $ressource->get_validation()=='t'?'validé':'non validé'; ?></td>
+                    <td><?php if($ressource->get_validation()=='t'){
+                                echo $this->lang->line('common_list_valid');
+                              }else{
+                                echo $this->lang->line('common_list_unvalid'); }
+                        ?>
+                    </td>
                     <?php if($goal=='modify'){ ?>
                         <td>
                             <?php echo form_open('moderation/modify_ressource/index/'.$typeRessource.'/modify') ?>
@@ -159,7 +170,7 @@
                                                                                         $getMethod='get_'.$typeRessource.'_id';
                                                                                         echo $ressource->$getMethod(); 
                                                                                     } ?>" />
-                                <input type="submit" value="Modifier cette ressource" />
+                                <input type="submit" value="<?php echo $this->lang->line('moderation_list_modify_ress'); ?>" />
                             </form>
                             <?php echo form_open('moderation/modify_ressource/validate_ressource/'.$typeRessource) ?>
                                 <input type="hidden" name="ressource_id" value="<?php if($typeRessource=='ressource_texte'){
@@ -168,7 +179,7 @@
                                                                                         $getMethod='get_'.$typeRessource.'_id';
                                                                                         echo $ressource->$getMethod(); 
                                                                                     } ?>" />
-                                <input type="submit" value="Valider cette ressource" />
+                                <input type="submit" value="<?php echo $this->lang->line('moderation_list_validate_ress'); ?>" />
                             </form>
                         </td>
                         <td>
@@ -182,16 +193,15 @@
                                 <input type="hidden" name="titre" value="<?php echo $ressource->get_titre(); ?>">
                                 <div class="message" style="left:15%; top:40%; display:none">
                                     <p>
-                                        Vous vous apprêtez à supprimer définitivement <em><?php echo $ressource->get_titre(); ?></em>,
-                                         les informations seront définitivement perdues, êtes vous certain de ne pas plutôt vouloir l'invalider?
+                                        <?php echo sprintf($this->lang->line('moderation_del_ress_warning'),$ressource->get_titre()); ?>
                                     </p>
-                                    <input type="submit" value="Supprimer cette ressource" />
-                                    <button type="reset" class="closePopup">Annuler</button>
+                                    <input type="submit" value="<?php echo $this->lang->line('moderation_list_delete_ress'); ?>" />
+                                    <button type="reset" class="closePopup"><?php echo $this->lang->line('common_cancel'); ?></button>
                                     <?php echo img(array('src'=>'assets/utils/close.png','alt'=>'fermer','width'=>'4%', 
                                                          'class'=>'removePopup')); ?>
                                 </div>
                             </form>
-                            <button class="removePopup"> Supprimer cette ressource </button>
+                            <button class="removePopup"> <?php echo $this->lang->line('moderation_list_delete_ress'); ?> </button>
                         </td>
                     <?php } ?>
                     <?php if($goal=='documentation'){ ?>
@@ -203,7 +213,7 @@
                                                                                         $getMethod='get_'.$typeRessource.'_id';
                                                                                         echo $ressource->$getMethod(); 
                                                                                     } ?>" />
-                                <input type="submit" value="Lier cette ressource" />
+                                <input type="submit" value="<?php echo $this->lang->line('common_list_link_ress'); ?>" />
                             </form>
                         </td>
                         <td>
@@ -214,7 +224,7 @@
                                                                                         $getMethod='get_'.$typeRessource.'_id';
                                                                                         echo $ressource->$getMethod(); 
                                                                                     } ?>" />
-                                <input type="submit" value="Supprimer une documentation" />
+                                <input type="submit" value="<?php echo $this->lang->line('common_list_del_doc'); ?>" />
                             </form>
                         </td>
                     <?php } ?>

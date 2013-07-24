@@ -137,8 +137,12 @@ $lang['common_ress_tec_used']             = "Technical specification";
 $lang['common_ress_media']                = "Medium used";
 $lang['common_ress_color']                = "Color";
 $lang['common_ress_color_BW']             = "Black and white";
+$lang['common_ress_size']                 = "Size";
 $lang['common_ress_img_upload']           = "Upload image";
-$lang['common_ress_img_url']              = "Image URL";
+$lang['common_ress_img_url']              = "Picture's URL";
+$lang['common_ress_img_title']            = "Picture";
+$lang['common_ress_link_to_img']          = "Link to the picture";
+$lang['common_ress_vid_title']            = "Video";
 $lang['common_ress_vid_upload']           = "Upload video";
 $lang['common_ress_vid_url']              = "Link to the page hosting the video";
 $lang['common_ress_length']               = "Length (minutes)";
@@ -146,6 +150,8 @@ $lang['common_ress_broadcast']            = "Broadcasted in:";
 $lang['common_ress_version']              = "Version";
 $lang['common_ress_distrib']              = "Distributed by";
 $lang['common_ress_prod']                 = "Produced by";
+$lang['common_ress_begin_date']           = "Starting date of this ".strtolower($lang['common_ressource']);
+$lang['common_ress_precision']            = "date accuracy : ";
 
 //about moderation center
 $lang['common_mod_obj']                     = "Modifying the ".strtolower($lang['common_objet']).": ";
@@ -154,11 +160,22 @@ $lang['common_mod_ress_img']                = "Modifying the ".strtolower($lang[
 $lang['common_mod_ress_vid']                = "Modifying the ".strtolower($lang['common_ressource_vid']).": ";
 $lang['common_cancel']                      = "Cancel";
 
+//about view_data in general
+$lang['common_view_error_no_type']          = "Error : wrong type of entity selected";
+$lang['common_view_error_no_object']        = "Error : the selected ".strtolower($lang['common_objet'])." do not seem to exist";
+$lang['common_view_error_no_ress']          = "Error : the selected ".strtolower($lang['common_ressource'])." do not seem to exist";
+$lang['common_view_select_type']            = "Select what you would like to see:";
+$lang['common_view_go_back_link']           = "Go back to the data selection";
+
 //about lists
 $lang['common_select_data']                 = "Selecting data";
 $lang['common_list_object']                 = $lang['common_objets']." list";
+$lang['common_list_ress_txt']               = $lang['common_ressources_txt']." list";
+$lang['common_list_ress_img']               = $lang['common_ressources_img']." list";
+$lang['common_list_ress_vid']               = $lang['common_ressources_vid']." list";
 $lang['common_list_link_rel']               = " to link to ";
 $lang['common_list_link_doc']               = " to link to the ".strtolower($lang['common_ressource'])." ";
+$lang['common_list_link_geo']               = " to link to the selected coordinate ";
 $lang['common_list_sort_by']                = "Sort by:";
 $lang['common_list_nom_objet']              = $lang['common_objets']."' name";
 $lang['common_list_creator_obj']            = $lang['common_obj_creator']."'s pseudo";
@@ -173,6 +190,32 @@ $lang['common_list_valid']                  = "Valid";
 $lang['common_list_unvalid']                = "Unvalid";
 $lang['common_list_link_obj_to']            = "Link this ".strtolower($lang['common_objet'])." to ";
 $lang['common_list_do_link']                = "Link";
+$lang['common_list_title_ress']             = $lang['common_ressource']."' title";
+$lang['common_list_date_add_ress']          = "Date when the ".strtolower($lang['common_ressource'])." was added";
+$lang['common_list_link_ress']              = "Link this ".strtolower($lang['common_ressource']);
+$lang['common_list_del_doc']                = "Delete a ".strtolower($lang['common_documentation']);
+$lang['common_list_view']                   = "View";
+$lang['common_list_view_obj']               = "View this ".strtolower($lang['common_objet']);
+$lang['common_list_view_ress']              = "View this ".strtolower($lang['common_ressource']);
+$lang['common_list_localize']               = "Localize this ".strtolower($lang['common_objet']);
+$lang['common_list_add_doc']                = "Create a documentation with this ".strtolower($lang['common_ressource']);
+
+//about detailed view of a data
+$lang['common_view_detail_obj']             = "Details of the ".strtolower($lang['common_objet']).": ";
+$lang['common_view_detail_ress']            = "Details of the ".strtolower($lang['common_ressource']).": ";
+$lang['common_view_author']                 = "Informations provided by";
+$lang['common_view_see_on_map']             = "See this ".strtolower($lang['common_objet'])." on the map";
+$lang['common_view_modify_obj']             = "Modify this ".strtolower($lang['common_objet']);
+$lang['common_view_modify_ress']            = "Modify this ".strtolower($lang['common_ressource']);
+$lang['common_view_add_ress']               = "Add a ".strtolower($lang['common_ressource'])." linked to this ".strtolower($lang['common_objet'])." :";
+$lang['common_view_do_add_ress']            = "Add ".strtolower($lang['common_ressource']);
+$lang['common_view_video_alt']              = "If the video is not working, try using another web browser";
+
+$lang['common_view_sidebar_obj']          = "Linked ".strtolower($lang['common_objets']);
+$lang['common_view_sidebar_ress']         = "Linked ".strtolower($lang['common_ressources']);
+$lang['common_view_sidebar_alt_obj']      = "see this ".strtolower($lang['common_objet']);
+$lang['common_view_sidebar_alt_ress']     = "see this ".strtolower($lang['common_ressource']);
+$lang['common_view_sidebar_page']         = "consult page ";
 
 /* End of file common.php */
 /* Location : ./system/language/english/common_lang.php */

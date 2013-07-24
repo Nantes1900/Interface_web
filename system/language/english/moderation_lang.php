@@ -44,7 +44,7 @@ $lang['moderation_delDoc_list']              = "List of the objects linked to : 
 $lang['moderation_delDoc_obj_name']          = "Linked object name";
 $lang['moderation_delDoc_remove']            = "Delete the documentation";
 $lang['moderation_delDoc_remove_this']       = "Delete this documentation";
-$lang['moderation_delDoc_warning_msg']       = "You are about to definitely delete the documentation between <em>%s</em>
+$lang['moderation_delDoc_warning_msg']       = "You are about to definitely delete the documentation link between <em>%s</em>
                                                  and <em>%s</em>. Informations about this link will be lost, 
                                                  are you sure about your decision?";
 
@@ -54,7 +54,7 @@ $lang['moderation_relation_type']            = "Relation type";
 $lang['moderation_delRel_title']             = "Deleting a documentation link";
 $lang['moderation_delRel_remove']            = "Delete the relation";
 $lang['moderation_delRel_remove_this']       = "Delete this relation";
-$lang['moderation_delDoc_warning_msg']       = "You are about to definitely delete the relation between <em>%s</em>
+$lang['moderation_delRel_warning_msg']       = "You are about to definitely delete the relation between <em>%s</em>
                                                  and <em>%s</em>. Informations about this link will be lost, 
                                                  are you sure about your decision?";
 
@@ -75,6 +75,14 @@ $lang['moderation_del_obj_warning']         = "You are about to definitively del
                                                 not rather like to unvalid it ?";
 $lang['moderation_list_addRel']             = "Add a relation";
 $lang['moderation_list_delRel']             = "Delete a relation";
+$lang['moderation_list_create_doc']         = "Create a documentation with this ressource";
+$lang['moderation_list_delete_doc']         = "Delete a documentation link";
+$lang['moderation_list_modify_ress']        = "Modify this ressource";
+$lang['moderation_list_validate_ress']      = "Validate this ressource";
+$lang['moderation_list_delete_ress']        = "Delete this ressource";
+$lang['moderation_del_ress_warning']        = "You are about to definitively delete <em>%s</em>.
+                                                Its information will be lost, are you sure you would 
+                                                not rather like to unvalid it ?";
 
 /* End of file common.php */
 /* Location : ./system/language/english/moderation_lang.php */

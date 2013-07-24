@@ -1,6 +1,6 @@
 
     <div class='rightSidebar'>
-        <h2>Objets en relation</h2>
+        <h2><?php echo $this->lang->line('common_view_sidebar_obj') ?></h2>
         
         <?php foreach ($linkedObjetArray as $objetArray){ ?>
             <?php echo form_open('view_data/view_data', array('style'=>'margin:0px')) ?>
@@ -8,8 +8,9 @@
                     <?php echo $objetArray['nom_objet'].' ('.$objetArray['type_relation'].')'; ?>
                     <input type="hidden" name="data_id" value="<?php echo $objetArray['objet_id']; ?>" />
                     <input type="hidden" name="type" value="objet" />
-                    <button type="submit" class="invisible"> 
-                        <?php echo img(array('src'=>'assets/utils/zoom.png','alt'=>'voir objet','width'=>'50%')); ?>
+                    <button type="submit" class="invisible" title="<?php echo $this->lang->line('common_view_sidebar_alt_obj');?>"> 
+                        <?php echo img(array('src'=>'assets/utils/zoom.png','alt'=>$this->lang->line('common_view_sidebar_alt_obj'),
+                                             'width'=>'50%')); ?>
                     </button>  
                     <span> 
                         <?php echo substr($objetArray['resume'],0,256);
@@ -24,7 +25,7 @@
             </form>
         <?php } ?>
         
-        <h2>Ressources en relation</h2>
+        <h2><?php echo $this->lang->line('common_view_sidebar_ress') ?></h2>
         
         <?php foreach ($linkedRessTxtArray as $ressArray){ ?>
             <?php echo form_open('view_data/view_data', array('style'=>'margin:0px')) ?>
@@ -32,8 +33,9 @@
                     <?php echo $ressArray['titre']; ?>
                     <input type="hidden" name="data_id" value="<?php echo $ressArray['ressource_id']; ?>" />
                     <input type="hidden" name="type" value="ressource_texte" />
-                    <button type="submit" class="invisible"> 
-                        <?php echo img(array('src'=>'assets/utils/zoom.png','alt'=>'voir objet','width'=>'50%')); ?>
+                    <button type="submit" class="invisible" title="<?php echo $this->lang->line('common_view_sidebar_alt_ress');?>"> 
+                        <?php echo img(array('src'=>'assets/utils/zoom.png','alt'=>$this->lang->line('common_view_sidebar_alt_ress'),
+                                             'width'=>'50%')); ?>
                     </button>  
                     <span> 
                         <?php echo substr($ressArray['description'],0,256);
@@ -45,7 +47,7 @@
                         <?php echo 'à partir du '.to_date_dmy($ressArray['date']); ?>
                         <?php if($ressArray['page_consultee']!=0){ ?>
                             <br>
-                                <?php echo 'voir page '.$ressArray['page_consultee']; ?>
+                                <?php echo $this->lang->line('common_view_sidebar_page').$ressArray['page_consultee']; ?>
                         <?php } ?>
                     </span>
                 </li>
@@ -57,8 +59,9 @@
                     <?php echo $ressArray['titre']; ?>
                     <input type="hidden" name="data_id" value="<?php echo $ressArray['ressource_id']; ?>" />
                     <input type="hidden" name="type" value="ressource_graphique" />
-                    <button type="submit" class="invisible"> 
-                        <?php echo img(array('src'=>'assets/utils/zoom.png','alt'=>'voir objet','width'=>'50%')); ?>
+                    <button type="submit" class="invisible" title="<?php echo $this->lang->line('common_view_sidebar_alt_ress');?>"> 
+                        <?php echo img(array('src'=>'assets/utils/zoom.png','alt'=>$this->lang->line('common_view_sidebar_alt_ress'),
+                                             'width'=>'50%')); ?>
                     </button>
                     <span> 
                         <?php echo substr($ressArray['description'],0,256);
@@ -70,7 +73,7 @@
                         <?php echo 'à partir du '.to_date_dmy($ressArray['date']); ?>
                         <?php if($ressArray['page_consultee']!=0){ ?>
                             <br>
-                                <?php echo 'voir page '.$ressArray['page_consultee']; ?>
+                                <?php echo $this->lang->line('common_view_sidebar_page').$ressArray['page_consultee']; ?>
                         <?php } ?>
                     </span>
                 </li>
@@ -82,8 +85,9 @@
                     <?php echo $ressArray['titre']; ?>
                     <input type="hidden" name="data_id" value="<?php echo $ressArray['ressource_id']; ?>" />
                     <input type="hidden" name="type" value="ressource_video" />
-                    <button type="submit" class="invisible"> 
-                        <?php echo img(array('src'=>'assets/utils/zoom.png','alt'=>'voir objet','width'=>'50%')); ?>
+                    <button type="submit" class="invisible" title="<?php echo $this->lang->line('common_view_sidebar_alt_ress');?>"> 
+                        <?php echo img(array('src'=>'assets/utils/zoom.png','alt'=>$this->lang->line('common_view_sidebar_alt_ress'),
+                                             'width'=>'50%')); ?>
                     </button>
                     <span> 
                         <?php echo substr($ressArray['description'],0,256);

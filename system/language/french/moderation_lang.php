@@ -75,6 +75,14 @@ $lang['moderation_del_obj_warning']         = "Vous vous apprêtez à supprimer 
                                                 certain de ne pas plutôt vouloir l'invalider?";
 $lang['moderation_list_addRel']             = "Ajouter une relation";
 $lang['moderation_list_delRel']             = "Supprimer une relation";
+$lang['moderation_list_create_doc']         = "Documenter un objet avec cette ressource";
+$lang['moderation_list_delete_doc']         = "Supprimer un lien de documentation";
+$lang['moderation_list_modify_ress']        = "Modifier cette ressource";
+$lang['moderation_list_validate_ress']      = "Valider cette ressource";
+$lang['moderation_list_delete_ress']        = "Supprimer cette ressource";
+$lang['moderation_del_ress_warning']        = "Vous vous apprêtez à supprimer définitivement <em>%s</em>,
+                                                les informations seront définitivement perdues, êtes vous 
+                                                certain de ne pas plutôt vouloir l'invalider?";
 
 /* End of file common.php */
 /* Location : ./system/language/french/moderation_lang.php */

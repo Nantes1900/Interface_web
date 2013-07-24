@@ -2,23 +2,24 @@
     <head>
 <link rel="stylesheet" type="text/css" media="screen" href="<?php echo css_url('leaflet'); ?>" />
     </head>    
-<p><?php echo anchor('view_data/select_data/index', 'Revenir à la selection de données'); ?></p>
+<p><?php echo anchor('view_data/select_data/index', $this->lang->line('common_view_go_back_link')); ?></p>
     
-    <h1>Selection de données par la carte</h1>
+    <h1><?php echo $this->lang->line('map_title'); ?></h1>
     
     <p>
-        Pour visualiser un objet en détails, cliquez dessus puis sur le lien voir l'objet
-        <?php if($this->session->userdata('user_level') >= 5) { ?>
-            <span id="moderateur">
-                , vous pouvez aussi cliquer sur "supprimer le marqueur" pour effacer 
-                la géométrie de l'objet. Ainsi il n'apparaîtra plus sur la carte à cet endroit.
-            </span>
-        <?php } ?>
+        <?php echo $this->lang->line('map_main_instruction'); ?>
     </p>
+    <?php if($this->session->userdata('user_level') >= 5) { ?>
+        <span id="moderateur">
+            <p>
+                <?php echo $this->lang->line('map_moderator_instruction'); ?>
+            </p>
+        </span>
+    <?php } ?>
+    
     <?php if($this->session->userdata('user_level') >= 4) { ?>
-    <p id="chercheur"> Pour créer un nouvel objet sur la carte, 
-        double cliquez à son emplacement sur la carte puis choisissez l'option qui vous convient. 
-        Si l'objet est bien validé mais que vous ne voyez pas son marqueur, essayez de nettoyer le cache de votre navigateur.
+    <p id="chercheur"> 
+        <?php echo $this->lang->line('map_researcher_instruction'); ?>
     </p>
     <?php } ?>
     

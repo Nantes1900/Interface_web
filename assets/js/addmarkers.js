@@ -30,7 +30,7 @@ $.getJSON(coord_file, function(json) { // this will show the info it in firebug 
                         if($('span#moderateur').attr('id')=='moderateur'){ 
                                 popupText += '<br><a href="'+base_url+'moderation/modify_objet/delete_geom/'+
                                             json[row].geom_id+'/'+json[row].objet_id+'"> Supprimer le marqueur </a>';
-                            }
+                        }
 			marker = L.marker([json[row].latitude, json[row].longitude]).addTo(map).
                                 bindPopup(popupText);
 		}

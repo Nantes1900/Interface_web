@@ -34,7 +34,7 @@
                             <input type="hidden" name="nom_objet_target" value="<?php echo $objetArray['nom_objet']; ?>" />
                             <div class="message" style="left:15%; top:40%; display:none">
                                 <p>
-                                    <?php echo sprintf($this->lang->line('moderation_delDoc_warning_msg'), 
+                                    <?php echo sprintf($this->lang->line('moderation_delRel_warning_msg'), 
                                             $objet->get_nom_objet(), $objetArray['nom_objet']); ?>
                                 </p>
                                 <input type="submit" value="<?php echo $this->lang->line('moderation_delRel_remove_this'); ?>" />
