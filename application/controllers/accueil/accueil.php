@@ -11,22 +11,20 @@ class Accueil extends MY_Controller {
 
         //Ce code sera executé charque fois que ce contrôleur sera appelé
         $this->load->library('form_validation');
-        $this->load->view('header');
     }
 
     public function accueil() {
-
-        $this->load->view('accueil/body');
+        
+        $this->layout->views('accueil/body');
 
         if (!$this->session->userdata('username')) { //Si l'utilisateur n'est pas loggé, on affiche le formulaire de connexion
-            $this->load->view('accueil/login/formulaire_login', array('titre' => $this->lang->line('common_need_login')));
+            $this->layout->view('accueil/login/formulaire_login', array('titre' => $this->lang->line('common_need_login')));
         } else { //Sinon, on affiche les zones restreintes
 
             $data = array('username' => $this->session->userdata('username'));
 
-            $this->load->view('accueil/welcome');
+            $this->layout->view('accueil/welcome');
 
-            $this->load->view('footer');
         }
     }
 
@@ -34,12 +32,11 @@ class Accueil extends MY_Controller {
         $this->lang->load('login_signin', $this->language);
         $this->load->library('form_validation');
         
-        $this->load->view('accueil/signin/formulaire_signin');
-        $this->load->view('footer');
+        $this->layout->view('accueil/signin/formulaire_signin');
     }
     
     public function not_connected(){
-        $this->load->view('accueil/login/formulaire_login',array('titre'=>$this->lang->line('common_do_need_login')));
+        $this->layout->view('accueil/login/formulaire_login',array('titre'=>$this->lang->line('common_do_need_login')));
     }
     
     public function change_lang(){
