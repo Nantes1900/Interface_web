@@ -35,6 +35,7 @@ $lang['common_ressource_vid']       = "Video ressource";
 $lang['common_ressources_vid']      = "Video ressources";
 $lang['common_ress_vid_detail']     = "Video ressource (short movie, clip...)";
 $lang['common_documentation']       = "Documentation";
+$lang['common_doc_detail']          = "Documentation between ".strtolower($lang['common_objets'])." and ".strtolower($lang['common_ressources']);
 $lang['common_doc_txt']             = "Textual documentation";
 $lang['common_doc_img']             = "Graphical documentation";
 $lang['common_doc_vid']             = "Video documentation";
@@ -217,6 +218,18 @@ $lang['common_view_sidebar_ress']         = "Linked ".strtolower($lang['common_r
 $lang['common_view_sidebar_alt_obj']      = "see this ".strtolower($lang['common_objet']);
 $lang['common_view_sidebar_alt_ress']     = "see this ".strtolower($lang['common_ressource']);
 $lang['common_view_sidebar_page']         = "consult page ";
+
+//about download section
+$lang['common_download_title']              = "Downloads section";
+$lang['common_download_presentation']       = "Here, you may find several tools to ease 
+                                               your use of this web application";
+$lang['common_download_csv']                = "Spreadsheet templates";
+$lang['common_download_csv_pres']           = "If you want to import csv files, the name of the 
+                                               columns must respect some rules, and some cells aslo 
+                                               have a specific format. You are strongly advised to use 
+                                               these spreadsheet templates.";
+$lang['common_download_csv_ods']            = ".ods files :";
+$lang['common_do_download_button']          = "Download file";
 
 /* End of file common.php */
 /* Location : ./system/language/english/common_lang.php */

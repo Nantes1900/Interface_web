@@ -35,6 +35,7 @@ $lang['common_ressource_vid']       = "Ressource vidéo";
 $lang['common_ressources_vid']      = "Ressources vidéos";
 $lang['common_ress_vid_detail']     = "Ressource vidéo (film, clip...)";
 $lang['common_documentation']       = "Documentation";
+$lang['common_doc_detail']          = "Documentation entre ".strtolower($lang['common_objets'])." et ".strtolower($lang['common_ressources']);
 $lang['common_doc_txt']             = "Documentation textuelle";
 $lang['common_doc_img']             = "Documentation graphique";
 $lang['common_doc_vid']             = "Documentation video";
@@ -217,6 +218,18 @@ $lang['common_view_sidebar_ress']         = $lang['common_ressources']." en rela
 $lang['common_view_sidebar_alt_obj']      = "voir ".strtolower($lang['common_objet']);
 $lang['common_view_sidebar_alt_ress']     = "voir ".strtolower($lang['common_ressource']);
 $lang['common_view_sidebar_page']         = "voir page ";
+
+//about download section
+$lang['common_download_title']              = "Section de téléchargement";
+$lang['common_download_presentation']       = "Ici, divers outils sont mis à votre disposition 
+                                              pour faciliter l'utilisation du site de ce projet.";
+$lang['common_download_csv']                = "Modèles de tableurs";
+$lang['common_download_csv_pres']           = "Si vous souhaitez utiliser des importations csv, il faut que 
+                                               le nom des colonnes respecte un certain formalisme, et certaines
+                                               cellules ont aussi un format particulier. Pour vous aider, voici en 
+                                               téléchargement les modèles à utiliser.";
+$lang['common_download_csv_ods']            = "Modèle au format ods :";
+$lang['common_do_download_button']          = "Télécharger le fichier";
 
 /* End of file common.php */
 /* Location : ./system/language/french/common_lang.php */

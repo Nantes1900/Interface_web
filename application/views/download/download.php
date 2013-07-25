@@ -1,24 +1,23 @@
 
-<h1>Section de téléchargement</h1>
+<h1><?php echo $this->lang->line('common_download_title'); ?></h1>
 
-<p>Ici, divers outils sont mis à votre disposition pour faciliter l'utilisation du site de ce projet.</p>
+<p><?php echo $this->lang->line('common_download_presentation'); ?></p>
 
-<h2>Modèles de tableurs</h2>
+<h2><?php echo $this->lang->line('common_download_csv'); ?></h2>
 
 <p>
-    Si vous souhaitez utiliser des importations csv, il faut que le nom des colonnes respecte un certain formalisme, et certaines
-    cellules ont aussi un format particulier. Pour vous aider, voici en téléchargement les modèles à utiliser.
+    <?php echo $this->lang->line('common_download_csv_pres'); ?>
 </p>
 
 <?php echo form_open('download/download/do_download'); ?>
-            Modèle au format ods :
+            <?php echo $this->lang->line('common_download_csv_ods'); ?>
             <select name="fileName">
-                <option value="template-objet.ods">Objet</option>
-                <option value="template-relation.ods">Relation entre objets</option>
-                <option value="template-ressource-texte.ods">Ressource textuelle</option>
-                <option value="template-ressource-graphique.ods">Ressource graphique</option>
-                <option value="template-ressource-video.ods">Ressource vidéo</option>
-                <option value="template-documentation.ods">Documentation entre objet et ressource</option>
+                <option value="template-objet.ods"><?php echo $this->lang->line('common_objet'); ?></option>
+                <option value="template-relation.ods"><?php echo $this->lang->line('common_obj_link'); ?></option>
+                <option value="template-ressource-texte.ods"><?php echo $this->lang->line('common_ressource_txt'); ?></option>
+                <option value="template-ressource-graphique.ods"><?php echo $this->lang->line('common_ressource_img'); ?></option>
+                <option value="template-ressource-video.ods"><?php echo $this->lang->line('common_ressource_vid'); ?></option>
+                <option value="template-documentation.ods"><?php echo $this->lang->line('common_doc_detail'); ?></option>
             </select>
-            <input type="submit" value="Télécharger le fichier" />
+            <input type="submit" value="<?php echo $this->lang->line('common_do_download_button'); ?>" />
 </form>
