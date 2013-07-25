@@ -66,6 +66,7 @@ $lang['common_lsidebar_tutorial']       = "Tutorial";
 $lang['common_lsidebar_logout']         = "Log out";
 $lang['common_menu_profile_panel']      = "Check your profile";
 $lang['common_menu_contact_panel']      = "Members' list";
+$lang['common_menu_admin_panel']        = "Members' list";
 
 //about data center
 $lang['common_add_data_instruction']      = "Choose what you want to add to the database :";
@@ -74,11 +75,11 @@ $lang['common_add_data_csv_import']       = "Add several elements with a CSV fil
 
 $lang['common_add_obj_form']              = "Add an historical ".strtolower($lang['common_objet'])." form";
 $lang['common_add_obj_form_submit']       = "Add this ".strtolower($lang['common_objet']);
-$lang['common_add_obj_form_success']      = "The object <b>%s</b> was successfuly added";
+$lang['common_add_obj_form_success']      = "The object <b>%s</b> was successfully added";
 $lang['common_add_obj_form_failure']      = "An error occured, <b>%s</b> has not been added";
-$lang['common_add_geo_form_success']      = "The object <b>%s</b> was successfuly located";
+$lang['common_add_geo_form_success']      = "The object <b>%s</b> was successfully located";
 $lang['common_add_geo_form_failure']      = "An error occured, <b>%s</b> has not been located";
-$lang['common_add_obj_geo_form_success']  = "The object <b>%s</b> was successfuly created and located";
+$lang['common_add_obj_geo_form_success']  = "The object <b>%s</b> was successfully created and located";
 $lang['common_add_obj_geo_form_failure']  = "An error occured, <b>%s</b> has been created but not located";
 $lang['common_add_obj_check_nom']         = "The name <b>%s</b> is already taken";
 $lang['common_add_obj_check_date']        = "Invalid date";
@@ -89,7 +90,7 @@ $lang['common_add_rel_obj2']              = " Select the second ".strtolower($la
 $lang['common_add_rel_sel_rel']           = " Select the kind of relation :";
 $lang['common_add_rel_parent_rel']        = "Parent-child relation";
 $lang['common_add_rel_form_submit']       = "Add this relation";
-$lang['common_add_rel_form_success']      = "The relation between <b>%s</b> and <b>%s</b> was successfuly created";
+$lang['common_add_rel_form_success']      = "The relation between <b>%s</b> and <b>%s</b> was successfully created";
 $lang['common_add_rel_form_failure']      = "An error occured, <b>%s</b> and <b>%s</b> have not been linked";
 
 $lang['common_add_ress_txt_form']         = "Adding a ".strtolower($lang['common_ress_txt_detail'])." form";
@@ -101,11 +102,11 @@ $lang['common_add_ress_create_doc_none']  = "None";
 $lang['common_add_ress_link_doc']         = "Link the page :";
 $lang['common_add_ress_link_doc_end']     = " of this ".strtolower($lang['common_ressource']);
 $lang['common_add_ress_form_submit']      = "Add this ".strtolower($lang['common_ressource']);
-$lang['common_add_ress_form_success']     = "The ".strtolower($lang['common_ressource'])." <b>%s</b> was successfuly added";
+$lang['common_add_ress_form_success']     = "The ".strtolower($lang['common_ressource'])." <b>%s</b> was successfully added";
 $lang['common_add_ress_form_failure']     = "An error occured, <b>%s</b> could not be added";
 $lang['common_add_ress_check_title']      = "The title <b>%s</b> already exist";
 
-$lang['common_add_doc_success']           = "The %s link between <b>%s</b> and <b>%s</b> was successfuly added";
+$lang['common_add_doc_success']           = "The %s link between <b>%s</b> and <b>%s</b> was successfully added";
 $lang['common_add_doc_failure']           = "Error : the %s link between <b>%s</b> and <b>%s</b> have not been added";
 
 //about objet

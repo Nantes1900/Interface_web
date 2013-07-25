@@ -81,7 +81,7 @@ class Profile_panel extends MY_Controller {
         if ( $hashedPW == $currentUser->get_hashedPassword() ){
             return TRUE;
         }else{
-            $this->form_validation->set_message('check_password', 'Mot de passe invalide');
+            $this->form_validation->set_message('check_password', $this->lang->line('user_wrong_password'));
             return FALSE;
         }
     }
@@ -94,7 +94,7 @@ class Profile_panel extends MY_Controller {
             if(!isset($userList['0']) || $userList['0']->get_email()==$currentUser->get_email() ){
                 return TRUE;
             } else {
-                $this->form_validation->set_message('check_unique_mail', 'L\'adresse mail : '.$mail.' est déjà prise');
+                $this->form_validation->set_message('check_unique_mail', sprintf($this->lang->line('user_check_email'),$mail));
                 return FALSE;
             }  
     }

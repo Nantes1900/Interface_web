@@ -139,7 +139,7 @@ class User_model extends CI_Model {
     //$speUserLevel allow specifiying a particular user level
     //user entity $notUser allow not querying this particular user (often self)
     public function get_user_list($speUserLevel = null, $orderBy = 'username', $orderDirection = 'asc', 
-                                    $speAttribute = null, $speAttributeValue = null, $notUser = null,
+                                    $speAttribute = null, $speAttributeValue = null, $notUser = null, $minLevel = null,
                                     $page = 1, $userPerPage = 20) {
         //db query
         $this->db->select('username, user_level, timestamp, nom, prenom, adresse_postale, email, telephone, profession');
@@ -150,6 +150,9 @@ class User_model extends CI_Model {
         }
         if ($notUser != null) {
             $this->db->where('username !=', $notUser);
+        }
+        if ($minLevel != null) {
+            $this->db->where('user_level >=', $minLevel);
         }
         if ($speAttribute != null && $speAttributeValue != null) {
             $this->db->like($speAttribute, $speAttributeValue);
@@ -168,13 +171,16 @@ class User_model extends CI_Model {
     
     //return the number of page depending on the sort option
     public function count_page_users($speUserLevel = null, $speAttribute = null, $speAttributeValue = null, 
-                                        $notUser = null, $userPerPage = 20){
+                                        $notUser = null, $minLevel = null, $userPerPage = 20){
         $this->db->from('users');
         if ($speUserLevel != null) {
             $this->db->where('user_level', $speUserLevel);
         }
         if ($notUser != null) {
             $this->db->where('username !=', $notUser);
+        }
+        if ($minLevel != null) {
+            $this->db->where('user_level >=', $minLevel);
         }
         if ($speAttribute != null && $speAttributeValue != null) {
             $this->db->like($speAttribute, $speAttributeValue);

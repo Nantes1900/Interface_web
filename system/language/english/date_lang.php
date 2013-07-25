@@ -15,6 +15,7 @@ $lang['date_minutes'] = "Minutes";
 $lang['date_second'] = "Second";
 $lang['date_seconds'] = "Seconds";
 
+$lang['date_crea'] = "Creation date";
 $lang['date_begin'] = "Starting date";
 $lang['date_end'] = "Ending date";
 $lang['date_edit'] = "Edition date";

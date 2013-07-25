@@ -24,6 +24,7 @@ class Admin_panel extends MY_Controller {
         parent::__construct();
 
         //Ce code sera executé charque fois que ce contrôleur sera appelé
+        $this->lang->load('user', $this->language);
         $this->load->model('user_model');
         require_once ('application/models/user.php');
         $this->load->library('form_validation');
@@ -110,10 +111,10 @@ class Admin_panel extends MY_Controller {
         
         //creating the list
         $data['listUser'] = $userManager->get_user_list($speUserLevel, $orderBy, $orderDirection, 
-                            $speAttribute, $speAttributeValue, $this->session->userdata('username'),
+                            $speAttribute, $speAttributeValue, $this->session->userdata('username'), null,
                             $page, $userPerPage);
         $data['numPage'] = $userManager->count_page_users($speUserLevel, $speAttribute, $speAttributeValue, 
-                                                            $this->session->userdata('username'), $userPerPage);
+                                                          $this->session->userdata('username'), null, $userPerPage);
         $data['currentPage'] = $page;
         $this->load->view('admin_panel/admin_panel', $data);
         $this->load->view('footer');
@@ -143,14 +144,13 @@ class Admin_panel extends MY_Controller {
             if ($user->get_contribution() < 1 && $user->get_userLevel() < 10) {
                 $success = $this->user_model->delete_user($username);
                 if ($success) {
-                    $message = 'L\'utilisateur <b>' . $username . '</b> a bien été supprimé';
+                    $message = sprintf($this->lang->line('user_admin_delete_msg'),$username);
                 } else {
-                    $message = 'Erreur : l\'utilisateur <b>' . $username . '</b> n\'a pas été supprimé';
+                    $message = sprintf($this->lang->line('user_delete_error_msg'),$username);
                 }
             } else {
                 $success = FALSE;
-                $message = 'Erreur : l\'utilisateur <b>' . $username .
-                            '</b> ne peut être supprimé car c\'est un contributeur actif';
+                $message = sprintf($this->lang->line('user_delete_error_forbidden'),$username);
             }
 
             $this->load->view('data_center/success_form', array('success' => $success, 'message' => $message));

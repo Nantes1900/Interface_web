@@ -66,6 +66,7 @@ $lang['common_lsidebar_tutorial']       = "Tutoriel";
 $lang['common_lsidebar_logout']         = "Déconnexion";
 $lang['common_menu_profile_panel']      = "Consulter le profil personnel";
 $lang['common_menu_contact_panel']      = "Listes des autres membres";
+$lang['common_menu_admin_panel']        = "Listes des membres";
 
 //about data center
 $lang['common_add_data_instruction']      = "Sélectionnez ce que vous souhaitez ajouter à la base :";
@@ -102,7 +103,7 @@ $lang['common_add_ress_link_doc']         = "Lier la page :";
 $lang['common_add_ress_link_doc_end']     = " de cette ".strtolower($lang['common_ressource']);
 $lang['common_add_ress_form_submit']      = "Ajouter cette ".strtolower($lang['common_ressource']);
 $lang['common_add_ress_form_success']     = "L'ajout de la ".strtolower($lang['common_ressource'])." <b>%s</b> s'est déroulé avec succès";
-$lang['common_add_ress_form_failure']     = "Une erreur a eu lieu, la ".strtolower($lang['common_ressource'])." <b>%s</b> n\'a pas été ajouté";
+$lang['common_add_ress_form_failure']     = "Une erreur a eu lieu, la ".strtolower($lang['common_ressource'])." <b>%s</b> n'a pas été ajouté";
 $lang['common_add_ress_check_title']      = "Le titre <b>%s</b> est déjà pris";
 
 $lang['common_add_doc_success']           = "Le lien de %s entre <b>%s</b> et <b>%s</b> a été ajouté avec succès";
