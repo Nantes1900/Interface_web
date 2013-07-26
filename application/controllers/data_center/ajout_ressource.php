@@ -16,7 +16,7 @@ class Ajout_ressource extends MY_Controller {
      * @access public
      */
     public function index() {
-        $this->load->view('data_center/data_center');
+        $this->layout->views('data_center/data_center');
         $this->choix_ressource();
     }
 
@@ -33,7 +33,6 @@ class Ajout_ressource extends MY_Controller {
         $this->load->model('objet_model');
         require_once ('application/models/objet.php');
         $this->load->helper(array('form', 'dates'));
-        $this->load->view('header');
         if (!$this->session->userdata('username')) {
             redirect('accueil/accueil/not_connected/', 'refresh');
         }
@@ -45,7 +44,7 @@ class Ajout_ressource extends MY_Controller {
      * @access public
      */
     public function choix_ressource() {
-        $this->load->view('data_center/choix_ressource');
+        $this->layout->view('data_center/choix_ressource');
     }
 
     /**
@@ -57,7 +56,7 @@ class Ajout_ressource extends MY_Controller {
      */
     public function formulaire_texte($linkedObjet_id = null) {
 
-        $this->load->view('data_center/data_center');
+        $this->layout->views('data_center/data_center');
         $this->load->model('ressource_texte_model');
 
         if ($this->form_validation->run('ajout_texte') == FALSE) {
@@ -68,8 +67,7 @@ class Ajout_ressource extends MY_Controller {
                 $linkedObjet = null;
             }
             $data = array('objet_list' => $objet_list, 'linkedObjet' => $linkedObjet);
-            $this->load->view('data_center/ajout_texte', $data);
-            $this->load->view('footer');
+            $this->layout->view('data_center/ajout_texte', $data);
         } else {
             $textedata = array();
             $textedata['titre'] = $this->input->post('titre');
@@ -99,10 +97,10 @@ class Ajout_ressource extends MY_Controller {
             //querying    
             if ($this->ressource_texte_model->ajout_texte($textedata)) {
                 $data = array('success' => TRUE, 
-                              'message' => sprintf($this->lang->line('common_add_rel_form_success'),$textedata['titre']));
+                              'message' => sprintf($this->lang->line('common_add_ress_form_success'),$textedata['titre']));
             } else {
                 $data = array('success' => FALSE, 
-                              'message' => sprintf($this->lang->line('common_add_rel_form_failure'),$textedata['titre']));
+                              'message' => sprintf($this->lang->line('common_add_ress_form_failure'),$textedata['titre']));
             }
 
             $ressource_id = $this->ressource_texte_model->last_insert_id();
@@ -112,13 +110,14 @@ class Ajout_ressource extends MY_Controller {
                 $page = $this->input->post('page');
                 $this->ressource_texte_model->add_documentation($objet_id, $ressource_id, $page);
             }
-            $this->load->view('data_center/success_form', $data);
+            $this->layout->add_js('close_message');
+            $this->layout->view('data_center/success_form', $data);
         }
     }
 
     public function formulaire_image($linkedObjet_id = null) {
         require ('application/models/ressource_graphique.php');
-        $this->load->view('data_center/data_center');
+        $this->layout->views('data_center/data_center');
         $this->load->model('ressource_graphique_model');
         $dir = './assets/images/';
         $config['upload_path'] = $dir;
@@ -136,10 +135,9 @@ class Ajout_ressource extends MY_Controller {
                 $linkedObjet = null;
             }
             $data = array('objet_list' => $objet_list, 'error' => ' ', 'linkedObjet' => $linkedObjet);
-            $this->load->view('data_center/ajout_image', $data);
-            $this->load->view('footer');
+            $this->layout->view('data_center/ajout_image', $data);
         } else {
-
+            $this->layout->add_js('close_message');
             if ($_FILES && $_FILES['image']['name'] !== "") { //we want to make image uploading optional
                 if (!$this->upload->do_upload('image')) {
                     $objet_list = $this->objet_model->get_objet_list();
@@ -150,7 +148,7 @@ class Ajout_ressource extends MY_Controller {
                     }
                     $data = array('objet_list' => $objet_list, 'error' => $this->upload->display_errors());
                     $data['linkedObjet'] = $linkedObjet;
-                    $this->load->view('data_center/ajout_image', $data);
+                    $this->layout->view('data_center/ajout_image', $data);
                 } else {
                     //getting info about upload
                     $imageData = $this->upload->data();
@@ -167,11 +165,11 @@ class Ajout_ressource extends MY_Controller {
                     $ressourceManager = new Ressource_graphique_model();
                     if ($ressourceManager->ajout_ressource($ressource)) {
                         $data = array('success' => TRUE, 'message' => 
-                                      sprintf($this->lang->line('common_add_rel_form_success'),$ressource->get_titre()));
+                                      sprintf($this->lang->line('common_add_ress_form_success'),$ressource->get_titre()));
                             
                     } else {
                         $data = array('success' => FALSE, 'message' => 
-                                      sprintf($this->lang->line('common_add_rel_form_failure'),$ressource->get_titre()));
+                                      sprintf($this->lang->line('common_add_ress_form_failure'),$ressource->get_titre()));
                     }
 
                     $ressource_id = $this->ressource_graphique_model->last_insert_id();
@@ -181,7 +179,7 @@ class Ajout_ressource extends MY_Controller {
                         $page = $this->input->post('page');
                         $this->ressource_graphique_model->add_documentation($objet_id, $ressource_id, $page);
                     }
-                    $this->load->view('data_center/success_form', $data);
+                    $this->layout->view('data_center/success_form', $data);
                 }
             } else {
                 //creating a Ressource_graphique entity out of post data
@@ -191,10 +189,10 @@ class Ajout_ressource extends MY_Controller {
                 $ressourceManager = new Ressource_graphique_model();
                 if ($ressourceManager->ajout_ressource($ressource)) {
                     $data = array('success' => TRUE, 'message' => 
-                                  sprintf($this->lang->line('common_add_rel_form_success'),$ressource->get_titre()));
+                                  sprintf($this->lang->line('common_add_ress_form_success'),$ressource->get_titre()));
                 } else {
                     $data = array('success' => FALSE, 'message' => 
-                                  sprintf($this->lang->line('common_add_rel_form_failure'),$ressource->get_titre()));
+                                  sprintf($this->lang->line('common_add_ress_form_failure'),$ressource->get_titre()));
                 }
 
                 $ressource_id = $this->ressource_graphique_model->last_insert_id();
@@ -203,7 +201,7 @@ class Ajout_ressource extends MY_Controller {
                 if ($objet_id != null) {
                     $this->ressource_graphique_model->add_documentation($objet_id, $ressource_id);
                 }
-                $this->load->view('data_center/success_form', $data);
+                $this->layout->view('data_center/success_form', $data);
             }
         }
     }
@@ -244,7 +242,7 @@ class Ajout_ressource extends MY_Controller {
 
     public function formulaire_video($linkedObjet_id = null) {
         require ('application/models/ressource_video.php');
-        $this->load->view('data_center/data_center');
+        $this->layout->views('data_center/data_center');
         $this->load->model('ressource_video_model');
         $dir = './assets/video/';
         $config['upload_path'] = $dir;
@@ -261,9 +259,9 @@ class Ajout_ressource extends MY_Controller {
                 $linkedObjet = null;
             }
             $data = array('objet_list' => $objet_list, 'error' => ' ', 'linkedObjet' => $linkedObjet);
-            $this->load->view('data_center/ajout_video', $data);
-            $this->load->view('footer');
+            $this->layout->view('data_center/ajout_video', $data);
         } else {
+            $this->layout->add_js('close_message');
             if ($_FILES && $_FILES['video']['name'] !== "") { //we want to make video uploading optional
                 if (!$this->upload->do_upload('video')) {
                     $objet_list = $this->objet_model->get_objet_list();
@@ -274,7 +272,7 @@ class Ajout_ressource extends MY_Controller {
                     }
                     $data = array('objet_list' => $objet_list, 'error' => $this->upload->display_errors());
                     $data['linkedObjet'] = $linkedObjet;
-                    $this->load->view('data_center/ajout_video', $data);
+                    $this->layout->view('data_center/ajout_video', $data);
                 } else {
                     //getting info about upload
                     $videoData = $this->upload->data();
@@ -290,10 +288,10 @@ class Ajout_ressource extends MY_Controller {
                     $ressourceManager = new Ressource_video_model();
                     if ($ressourceManager->ajout_ressource($ressource)) {
                         $data = array('success' => TRUE, 'message' => 
-                                      sprintf($this->lang->line('common_add_rel_form_success'),$ressource->get_titre()));
+                                      sprintf($this->lang->line('common_add_ress_form_success'),$ressource->get_titre()));
                     } else {
                         $data = array('success' => FALSE, 'message' => 
-                                      sprintf($this->lang->line('common_add_rel_form_failure'),$ressource->get_titre()));
+                                      sprintf($this->lang->line('common_add_ress_form_failure'),$ressource->get_titre()));
                     }
 
                     $ressource_id = $this->ressource_video_model->last_insert_id();
@@ -302,7 +300,7 @@ class Ajout_ressource extends MY_Controller {
                     if ($objet_id != null) {
                         $this->ressource_video_model->add_documentation($objet_id, $ressource_id);
                     }
-                    $this->load->view('data_center/success_form', $data);
+                    $this->layout->view('data_center/success_form', $data);
                 }
             } else {
                 //creating a Ressource_video entity out of post data
@@ -311,10 +309,10 @@ class Ajout_ressource extends MY_Controller {
                 $ressourceManager = new Ressource_video_model();
                 if ($ressourceManager->ajout_ressource($ressource)) {
                     $data = array('success' => TRUE, 'message' => 
-                                  sprintf($this->lang->line('common_add_rel_form_success'),$ressource->get_titre()));
+                                  sprintf($this->lang->line('common_add_ress_form_success'),$ressource->get_titre()));
                 } else {
                     $data = array('success' => FALSE, 'message' => 
-                                  sprintf($this->lang->line('common_add_rel_form_failure'),$ressource->get_titre()));
+                                  sprintf($this->lang->line('common_add_ress_form_failure'),$ressource->get_titre()));
                 }
 
                 $ressource_id = $this->ressource_video_model->last_insert_id();
@@ -323,7 +321,7 @@ class Ajout_ressource extends MY_Controller {
                 if ($objet_id != null) {
                     $this->ressource_video_model->add_documentation($objet_id, $ressource_id);
                 }
-                $this->load->view('data_center/success_form', $data);
+                $this->layout->view('data_center/success_form', $data);
             }
         }
     }

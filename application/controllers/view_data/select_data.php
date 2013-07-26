@@ -32,15 +32,13 @@ class Select_data extends MY_Controller {
         $this->load->model('objet_model');
         $this->load->library('form_validation');
         $this->load->helper(array('dates', 'ressource'));
-        $this->load->view('header');
         if (!$this->session->userdata('username')) {
             redirect('accueil/accueil/not_connected/', 'refresh');
         }
     }
 
     private function select_type() {
-        $this->load->view('view_data/select_type');
-        $this->load->view('footer');
+        $this->layout->view('view_data/select_type');
     }
 
     //setting the sort option of the objet list
@@ -143,8 +141,7 @@ class Select_data extends MY_Controller {
             $data['ressource'] = $ressource;
             $data['typeRessource'] = $typeRessource;
         }
-        $this->load->view('view_data/select_objet', $data);
-        $this->load->view('footer');
+        $this->layout->view('view_data/select_objet', $data);
     }
 
     //setting the sort option of the ressource list
@@ -243,8 +240,7 @@ class Select_data extends MY_Controller {
         $data['numPage'] = $ressourceManager->count_page_ress($speAttribute, $speAttributeValue, $valid);
         $data['currentPage'] = $page;
         //add info pages
-        $this->load->view('view_data/select_ressource', $data);
-        $this->load->view('footer');
+        $this->layout->view('view_data/select_ressource', $data);
     }
 
     private function select_geo() {
@@ -255,9 +251,10 @@ class Select_data extends MY_Controller {
             $data['latitude'] = $this->input->post('latitude');
             $data['longitude'] = $this->input->post('longitude');
         }
-
-        $this->load->view('view_data/select_geo', $data);
-        $this->load->view('footer');
+        $this->layout->add_css('leaflet');
+        $this->layout->add_js('leaflet');
+        $this->layout->add_js('addmarkers');
+        $this->layout->view('view_data/select_geo', $data);
     }
 
 }

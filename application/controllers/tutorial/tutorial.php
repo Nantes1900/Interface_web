@@ -14,17 +14,17 @@ class Tutorial extends MY_Controller {
 
         //Ce code sera executé charque fois que ce contrôleur sera appelé
         $this->load->library('form_validation');
-        $this->load->view('header');
         //security : we check that there is an user
         if(!$this->session->userdata('username')){
             redirect('accueil/accueil/not_connected/', 'refresh');
         }
+        $this->layout->add_js('tuto_sub_section');
     } 
     
     //render the tutorial main menu
     public function index(){
-        $this->load->view('tutorial/tuto_main');
-        $this->load->view('tutorial/section_nav_bar', array('section'=>'null'));
+        $this->layout->views('tutorial/tuto_main');
+        $this->layout->view('tutorial/section_nav_bar', array('section'=>'null'));
     }
     
     //return a list of available sections for user
@@ -69,52 +69,45 @@ class Tutorial extends MY_Controller {
     }
     
     public function data_center(){
-        $this->load->view('tutorial/tuto_h1');
-        $this->load->view('tutorial/section_nav_bar', array('section'=>'data_center'));
-        $this->load->view('tutorial/data_center');
-        $this->load->view('footer');
+        $this->layout->views('tutorial/tuto_h1');
+        $this->layout->views('tutorial/section_nav_bar', array('section'=>'data_center'));
+        $this->layout->view('tutorial/data_center');
     }
     
     public function moderation_center(){
-        $this->load->view('tutorial/tuto_h1');
-        $this->load->view('tutorial/section_nav_bar', array('section'=>'moderation_center'));
-        $this->load->view('tutorial/moderation_center');
-        $this->load->view('footer');
+        $this->layout->views('tutorial/tuto_h1');
+        $this->layout->views('tutorial/section_nav_bar', array('section'=>'moderation_center'));
+        $this->layout->view('tutorial/moderation_center');
     }
     
     public function view_data(){
-        $this->load->view('tutorial/tuto_h1');
-        $this->load->view('tutorial/section_nav_bar', array('section'=>'view_data'));
-        $this->load->view('tutorial/view_data');
-        $this->load->view('footer');
+        $this->layout->views('tutorial/tuto_h1');
+        $this->layout->views('tutorial/section_nav_bar', array('section'=>'view_data'));
+        $this->layout->view('tutorial/view_data');
     }
     
     public function profile_panel(){
-        $this->load->view('tutorial/tuto_h1');
-        $this->load->view('tutorial/section_nav_bar', array('section'=>'profile_panel'));
-        $this->load->view('tutorial/profile_panel');
-        $this->load->view('footer');
+        $this->layout->views('tutorial/tuto_h1');
+        $this->layout->views('tutorial/section_nav_bar', array('section'=>'profile_panel'));
+        $this->layout->view('tutorial/profile_panel');
     }
     
     public function admin_panel(){
-        $this->load->view('tutorial/tuto_h1');
-        $this->load->view('tutorial/section_nav_bar', array('section'=>'admin_panel'));
-        $this->load->view('tutorial/admin_panel');
-        $this->load->view('footer');
+        $this->layout->views('tutorial/tuto_h1');
+        $this->layout->views('tutorial/section_nav_bar', array('section'=>'admin_panel'));
+        $this->layout->view('tutorial/admin_panel');
     }
     
     public function contact_panel(){
-        $this->load->view('tutorial/tuto_h1');
-        $this->load->view('tutorial/section_nav_bar', array('section'=>'contact_panel'));
-        $this->load->view('tutorial/contact_panel');
-        $this->load->view('footer');
+        $this->layout->views('tutorial/tuto_h1');
+        $this->layout->views('tutorial/section_nav_bar', array('section'=>'contact_panel'));
+        $this->layout->view('tutorial/contact_panel');
     }
     
     public function download(){
-        $this->load->view('tutorial/tuto_h1');
-        $this->load->view('tutorial/section_nav_bar', array('section'=>'download'));
-        $this->load->view('tutorial/download');
-        $this->load->view('footer');
+        $this->layout->views('tutorial/tuto_h1');
+        $this->layout->views('tutorial/section_nav_bar', array('section'=>'download'));
+        $this->layout->view('tutorial/download');
     }
 }
 

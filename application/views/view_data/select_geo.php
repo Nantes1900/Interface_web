@@ -1,7 +1,4 @@
 
-    <head>
-<link rel="stylesheet" type="text/css" media="screen" href="<?php echo css_url('leaflet'); ?>" />
-    </head>    
 <p><?php echo anchor('view_data/select_data/index', $this->lang->line('common_view_go_back_link')); ?></p>
     
     <h1><?php echo $this->lang->line('map_title'); ?></h1>
@@ -30,7 +27,6 @@
     <?php } ?>
     
     <div id="map"></div>
-    <script src="<?php echo base_url();?>assets/js/leaflet.js"></script>
-    <script src="<?php echo base_url();?>assets/js/addmarkers.js"></script>
+
 
     

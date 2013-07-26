@@ -14,5 +14,3 @@
     Pour valider les modifications, vous devez entrer votre mot de passe. Si aucun message d'erreur 
     ne s'affiche quand vous validez, votre modification a été prise en compte.
 </p>
-
-<script src="<?php echo base_url();?>assets/js/tuto_sub_section.js"></script>

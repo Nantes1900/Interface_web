@@ -8,5 +8,3 @@
         <?php echo img(array('src'=>'assets/utils/close.png','alt'=>'fermer','width'=>'4%', 'onclick'=>'ok_message()')); ?>
     </div>
 <br/>
-<script src="<?php echo base_url();?>assets/js/jquery.js"></script>
-<script src="<?php echo base_url();?>assets/js/close_message.js"></script>

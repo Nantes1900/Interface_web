@@ -21,7 +21,6 @@ class Contact_panel extends MY_Controller{
         require ('application/models/user.php');
         $this->load->library('form_validation');
         $this->load->helper('dates_helper');
-        $this->load->view('header');
         if(!$this->session->userdata('username')){
             redirect('accueil/accueil/not_connected/', 'refresh');
         }
@@ -102,8 +101,7 @@ class Contact_panel extends MY_Controller{
        $data['numPage'] = $userManager->count_page_users($speUserLevel, $speAttribute, $speAttributeValue, 
                                                           $this->session->userdata('username'), 1, $userPerPage);
        $data['currentPage'] = $page;
-       $this->load->view('profile_panel/contact_panel', $data);
-       $this->load->view('footer');
+       $this->layout->view('profile_panel/contact_panel', $data);
     }
 }
 

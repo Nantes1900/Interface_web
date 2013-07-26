@@ -186,6 +186,7 @@ $lang['common_list_sort_dir_asc']           = "Croissant";
 $lang['common_list_sort_dir_desc']          = "Décroissant";
 $lang['common_list_select']                 = "Rechercher un(e) :";
 $lang['common_list_filter_unvalid']         = $lang['common_objets']." non validés uniquement";
+$lang['common_list_filter_unvalid_ress']    = $lang['common_ressources']." non validés uniquement";
 $lang['common_list_sort_button']            = "Trier";
 $lang['common_list_is_valid']               = "Validation";
 $lang['common_list_valid']                  = "Valide";

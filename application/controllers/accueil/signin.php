@@ -15,14 +15,12 @@ class Signin extends MY_Controller {
         require_once ('application/models/user.php');
         $this->load->library('form_validation');
         $this->load->helper(array('form'));
-        $this->load->view('header');
     }
 
     public function check_signin() {
         if ($this->form_validation->run('signin') == FALSE) {
-            $this->load->view('accueil/body');
-            $this->load->view('accueil/signin/formulaire_signin');
-            $this->load->view('footer');
+            $this->layout->views('accueil/body');
+            $this->layout->view('accueil/signin/formulaire_signin');
         } else {
             $userdata = array();
             $userdata['username'] = $this->input->post('username');
@@ -39,10 +37,10 @@ class Signin extends MY_Controller {
             } else {
                 $message = $this->lang->line('signin_failure');
             }
-            
-            $this->load->view('data_center/success_form', array('success'=>$success, 'message'=>$message));
-            $this->load->view('accueil/login/formulaire_login', array('titre' => $this->lang->line('common_need_login')));
-            $this->load->view('footer');
+            $this->layout->add_js('jquery');
+            $this->layout->add_js('close_message');
+            $this->layout->views('data_center/success_form', array('success'=>$success, 'message'=>$message));
+            $this->layout->view('accueil/login/formulaire_login', array('titre' => $this->lang->line('common_need_login')));
         }
     }
 
@@ -89,19 +87,19 @@ class Signin extends MY_Controller {
                 if ($user->get_userLevel() == 0 && $user->get_contribution() < 1) {
                     $user->set_userLevel(1);
                     $user->save();
-                    $this->load->view('accueil/login/formulaire_login', 
+                    $this->layout->view('accueil/login/formulaire_login', 
                                         array('titre' => sprintf($this->lang->line('signin_validation_success'),
                                                                     $username)));
                 } else {
-                    $this->load->view('accueil/login/formulaire_login', 
+                    $this->layout->view('accueil/login/formulaire_login', 
                                     array('titre' => $this->lang->line('signin_validation_fail_already')));
                 }
             } else {
-                $this->load->view('accueil/login/formulaire_login', 
+                $this->layout->view('accueil/login/formulaire_login', 
                                     array('titre' => $this->lang->line('signin_validation_fail_link')));
             }
         } else {
-            $this->load->view('accueil/login/formulaire_login', 
+            $this->layout->view('accueil/login/formulaire_login', 
                                 array('titre' => $this->lang->line('signin_validation_fail_unknown')));
         }
     }

@@ -18,9 +18,11 @@ class Ajout_objet extends MY_Controller {
     public function index() {
         $userLevel = $this->session->userdata('user_level');
         $data['userLevel'] = $userLevel;
-        $this->load->view('data_center/data_center', $data);
+        $this->layout->views('data_center/data_center', $data);
         if ($userLevel >= 4) {
             $this->formulaire();
+        } else {
+            redirect('accueil/accueil/', 'refresh');
         }
     }
 
@@ -35,7 +37,6 @@ class Ajout_objet extends MY_Controller {
         require('application/models/objet.php');
         $this->load->library('form_validation');
         $this->load->helper(array('form', 'dates', 'geom_helper'));
-        $this->load->view('header');
         if (!$this->session->userdata('username')) { //checking that user is connected
             redirect('accueil/accueil/not_connected/', 'refresh');
         }
@@ -50,8 +51,7 @@ class Ajout_objet extends MY_Controller {
     private function formulaire() {
 
         if ($this->form_validation->run('ajout_objet') == FALSE) {
-            $this->load->view('data_center/ajout_objet');
-            $this->load->view('footer');
+            $this->layout->view('data_center/ajout_objet');
         } else {
             $objetdata = array();
             $objetdata['nom_objet'] = $this->input->post('nom_objet');
@@ -69,8 +69,8 @@ class Ajout_objet extends MY_Controller {
                 $data = array('success' => FALSE, 'message' => sprintf($this->lang->line('common_add_obj_form_failure'),
                                                                         $objetdata['nom_objet']));
             }
-            
-            $this->load->view('data_center/success_form', $data);
+            $this->layout->add_js('close_message');
+            $this->layout->view('data_center/success_form', $data);
         }
     }
     
@@ -155,8 +155,7 @@ class Ajout_objet extends MY_Controller {
             $data['goal'] = $goal;
             $data['latitude'] = $latitude;
             $data['longitude'] = $longitude;
-            $this->load->view('view_data/select_objet', $data);
-            $this->load->view('footer');
+            $this->layout->view('view_data/select_objet', $data);
         } else {
             redirect('accueil/accueil/', 'refresh');
         }
@@ -169,8 +168,7 @@ class Ajout_objet extends MY_Controller {
             $objet_id = $this->input->post('objet_id');
             $objet = new Objet($objet_id);
             if ($this->form_validation->run('ajout_geom') == FALSE) {
-                $this->load->view('data_center/ajout_geom', array('objet' => $objet, 'latitude' => $latitude, 'longitude' => $longitude));
-                $this->load->view('footer');
+                $this->layout->view('data_center/ajout_geom', array('objet' => $objet, 'latitude' => $latitude, 'longitude' => $longitude));
             } else {
                 $geomdata = array('objet_id' => $objet->get_objet_id(), 'username' => $this->session->userdata('username'));
                 $geomdata['the_geom'] = 'ST_SetSRID(ST_MakePoint(' . $longitude . ', ' . $latitude . '), 4326)';
@@ -191,7 +189,8 @@ class Ajout_objet extends MY_Controller {
                                                                             $objet->get_nom_objet()));
                 }
                 update_coordonnes(); //we update the coordonnees.json file for the map
-                $this->load->view('data_center/success_form', $data);
+                $this->layout->add_js('close_message');
+                $this->layout->view('data_center/success_form', $data);
             }
         } else {
             redirect('accueil/accueil/', 'refresh');
@@ -203,8 +202,7 @@ class Ajout_objet extends MY_Controller {
     public function formulaire_objet_geo($latitude, $longitude) {
         if ($this->session->userdata('user_level') >= 4) {
             if ($this->form_validation->run('ajout_objet_geom') == FALSE) {
-                $this->load->view('data_center/ajout_objet_geom', array('latitude' => $latitude, 'longitude' => $longitude));
-                $this->load->view('footer');
+                $this->layout->view('data_center/ajout_objet_geom', array('latitude' => $latitude, 'longitude' => $longitude));
             } else {
                 //getting objet infos
                 $objetdata = array();
@@ -250,7 +248,8 @@ class Ajout_objet extends MY_Controller {
                                                            $objetdata['nom_objet']));
                 }
                 update_coordonnes(); //we update the coordonnees.json file for the map
-                $this->load->view('data_center/success_form', $data);
+                $this->layout->add_js('close_message');
+                $this->layout->view('data_center/success_form', $data);
             }
         } else {
             redirect('accueil/accueil/', 'refresh');

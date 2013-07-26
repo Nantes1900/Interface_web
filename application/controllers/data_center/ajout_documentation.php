@@ -14,7 +14,7 @@ class Ajout_documentation extends MY_Controller{
     * @access public
     */
     public function index(){
-        $this->load->view('data_center/data_center');
+        $this->layout->views('data_center/data_center');
         $this->choix_documentation();
     }
 
@@ -31,7 +31,6 @@ class Ajout_documentation extends MY_Controller{
         $this->load->model('objet_model');
         require_once ('application/models/objet.php');
         $this->load->helper(array('form','dates'));
-        $this->load->view('header');
         if (!$this->session->userdata('username')) {
             redirect('accueil/accueil/not_connected/', 'refresh');
         }
@@ -42,7 +41,7 @@ class Ajout_documentation extends MY_Controller{
      * an objet and then a ressource, finaly the links will call add controller
      */
     private function choix_documentation(){
-        $this->load->view('data_center/choix_documentation');
+        $this->layout->view('data_center/choix_documentation');
     }
     
     /*
@@ -94,7 +93,8 @@ class Ajout_documentation extends MY_Controller{
                 
                 $data = array('success' => FALSE, 'message' => $message);
             }
-            $this->load->view('data_center/success_form', $data);
+            $this->layout->add_js('close_message');
+            $this->layout->views('data_center/success_form', $data);
         }
         $this->index();
     }

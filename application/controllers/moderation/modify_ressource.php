@@ -33,7 +33,8 @@ class Modify_ressource extends MY_Controller{
         $this->load->model('ressource_video_model');
         $this->load->helper(array('dates','ressource'));
         $this->load->library('form_validation');
-        $this->load->view('header');
+        $this->layout->add_js('close_message');
+        $this->layout->add_js('removepopup');
         if (!$this->session->userdata('username')) { //checking that user is connected
             redirect('accueil/accueil/not_connected/', 'refresh');
         } elseif (!$this->session->userdata('user_level') >= 5) {
@@ -134,15 +135,13 @@ class Modify_ressource extends MY_Controller{
         $data['numPage'] = $ressourceManager->count_page_ress($speAttribute, $speAttributeValue, $valid);
         $data['currentPage'] = $page;
         
-        $this->load->view('moderation/select_ressource', $data);
-        $this->load->view('footer');
+        $this->layout->view('moderation/select_ressource', $data);
     }
     
     private function modify_texte($ressource_id){
         $ressource = new Ressource_texte($ressource_id);
         if ($this->form_validation->run('ajout_texte') == FALSE) {
-            $this->load->view('moderation/modify_texte',array('ressource'=>$ressource));
-            $this->load->view('footer');
+            $this->layout->view('moderation/modify_texte',array('ressource'=>$ressource));
         }else{
             $ressource->set_titre($this->input->post('titre'));
             $ressource->set_description($this->input->post('description'));
@@ -170,7 +169,7 @@ class Modify_ressource extends MY_Controller{
             //creation message
             $lastAction = 'modify_texte';
             $message = $this->create_success_message($success, $lastAction, $ressource->get_titre());
-            $this->load->view('data_center/success_form',array('success'=>$success, 'message'=> $message));
+            $this->layout->views('data_center/success_form',array('success'=>$success, 'message'=> $message));
             $this->select_ressource('ressource_texte', 'modify');
         }
     }
@@ -186,14 +185,12 @@ class Modify_ressource extends MY_Controller{
         $this->load->library('upload',$config);
         
         if ($this->form_validation->run('ajout_image') == FALSE) {
-            $this->load->view('moderation/modify_image',array('ressource'=>$ressource, 'error'=>''));
-            $this->load->view('footer');
+            $this->layout->view('moderation/modify_image',array('ressource'=>$ressource, 'error'=>''));
         }else{
             if ($_FILES && $_FILES['image']['name'] !== "") { //we want to make image re-uploading optional
                 if ( ! $this->upload->do_upload('image')){
                     $data = array('ressource' => $ressource,'error' => $this->upload->display_errors());
-                    $this->load->view('moderation/modify_image',$data);
-                    $this->load->view('footer');
+                    $this->layout->view('moderation/modify_image',$data);
                 }else{
                     //getting info about upload
                     $imageData = $this->upload->data();
@@ -220,7 +217,7 @@ class Modify_ressource extends MY_Controller{
                     //creation message
                     $lastAction = 'modify_image';
                     $message = $this->create_success_message($success, $lastAction, $ressource->get_titre());
-                    $this->load->view('data_center/success_form',array('success'=>$success, 'message'=> $message));
+                    $this->layout->views('data_center/success_form',array('success'=>$success, 'message'=> $message));
                     $this->select_ressource('ressource_graphique', 'modify');
                 }
             }else{
@@ -231,7 +228,7 @@ class Modify_ressource extends MY_Controller{
                 //creation message
                 $lastAction = 'modify_image';
                 $message = $this->create_success_message($success, $lastAction, $ressource->get_titre());
-                $this->load->view('data_center/success_form',array('success'=>$success, 'message'=> $message));
+                $this->layout->views('data_center/success_form',array('success'=>$success, 'message'=> $message));
                 $this->select_ressource('ressource_graphique', 'modify');
             }
         }
@@ -271,15 +268,13 @@ class Modify_ressource extends MY_Controller{
         set_time_limit(120); //change the max execution time of php to 120 sec for this method
         if($this->form_validation->run('ajout_video') == FALSE){
             
-            $this->load->view('moderation/modify_video',array('ressource'=>$ressource, 'error'=>''));
-            $this->load->view('footer');
+            $this->layout->view('moderation/modify_video',array('ressource'=>$ressource, 'error'=>''));
                 
         } else {
             if ($_FILES && $_FILES['video']['name'] !== "") { //we want to make video uploading optional
                 if ( ! $this->upload->do_upload('video')){
                     $data = array('ressource' => $ressource,'error' => $this->upload->display_errors());
-                    $this->load->view('moderation/modify_video',$data);
-                    $this->load->view('footer');
+                    $this->layout->view('moderation/modify_video',$data);
                 }else{
                     //getting info about upload
                     $videoData = $this->upload->data();
@@ -305,7 +300,7 @@ class Modify_ressource extends MY_Controller{
                     //creation message
                     $lastAction = 'modify_video';
                     $message = $this->create_success_message($success, $lastAction, $ressource->get_titre());
-                    $this->load->view('data_center/success_form',array('success'=>$success, 'message'=> $message));
+                    $this->layout->views('data_center/success_form',array('success'=>$success, 'message'=> $message));
                     $this->select_ressource('ressource_video', 'modify');
                 }
             }else{
@@ -316,7 +311,7 @@ class Modify_ressource extends MY_Controller{
                 //creation message
                 $lastAction = 'modify_video';
                 $message = $this->create_success_message($success, $lastAction, $ressource->get_titre());
-                $this->load->view('data_center/success_form',array('success'=>$success, 'message'=> $message));
+                $this->layout->views('data_center/success_form',array('success'=>$success, 'message'=> $message));
                 $this->select_ressource('ressource_video', 'modify');
             }
         }
@@ -356,7 +351,7 @@ class Modify_ressource extends MY_Controller{
             //creation message
             $lastAction = 'validate-' . $typeRessource;
             $message = $this->create_success_message($success, $lastAction, $ressource->get_titre());
-            $this->load->view('data_center/success_form', array('success' => $success, 'message' => $message));
+            $this->layout->views('data_center/success_form', array('success' => $success, 'message' => $message));
             $this->select_ressource($typeRessource, 'modify');
         }
     }
@@ -374,7 +369,7 @@ class Modify_ressource extends MY_Controller{
             //creation message
             $lastAction = 'delete-' . $typeRessource;
             $message = $this->create_success_message($success, $lastAction, $this->input->post('titre'));
-            $this->load->view('data_center/success_form', array('success' => $success, 'message' => $message));
+            $this->layout->views('data_center/success_form', array('success' => $success, 'message' => $message));
             $this->select_ressource($typeRessource, 'modify');
         }
     }
@@ -484,8 +479,7 @@ class Modify_ressource extends MY_Controller{
         $data['ressource'] = new $ressourceMethod($ressource_id);
         $data['typeRessource'] = $typeRessource;
         
-        $this->load->view('moderation/select_objet', $data);
-        $this->load->view('footer');
+        $this->layout->view('moderation/select_objet', $data);
     }
     
     public function add_doc_form($typeRessource){
@@ -511,7 +505,7 @@ class Modify_ressource extends MY_Controller{
             //creation message
             $lastAction = 'addDoc-'.$typeRessource;
             $message = $this->create_success_message($success, $lastAction, $this->input->post('ressource_titre'), $this->input->post('nom_objet'));
-            $this->load->view('data_center/success_form',array('success'=>$success, 'message'=> $message));
+            $this->layout->views('data_center/success_form',array('success'=>$success, 'message'=> $message));
             $this->select_ressource($typeRessource, 'documentation');
         }else{
             redirect('accueil/accueil/','refresh');
@@ -531,8 +525,7 @@ class Modify_ressource extends MY_Controller{
             $ressource = new $typeRessource($ressource_id);
             $data['ressource']=$ressource;
             
-            $this->load->view('moderation/delete_documentation', $data);
-            $this->load->view('footer');
+            $this->layout->view('moderation/delete_documentation', $data);
         }else{
             redirect('accueil/accueil/','refresh');
         }
@@ -557,7 +550,7 @@ class Modify_ressource extends MY_Controller{
             //creation message
             $lastAction = 'removeDoc-' . $typeRessource;
             $message = $this->create_success_message($success, $lastAction, $this->input->post('ressource_titre'), $this->input->post('nom_objet'));
-            $this->load->view('data_center/success_form', array('success' => $success, 'message' => $message));
+            $this->layout->views('data_center/success_form', array('success' => $success, 'message' => $message));
 
             $this->delete_doc($typeRessource);
         } else {

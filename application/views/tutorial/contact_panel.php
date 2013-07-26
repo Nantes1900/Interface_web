@@ -15,5 +15,3 @@
     Vous pouvez effectuer un tri, en particulier sur les niveaux d'utilisateur, 
     pour contacter plus facilement les modérateurs.
 </p>
-
-<script src="<?php echo base_url();?>assets/js/tuto_sub_section.js"></script>

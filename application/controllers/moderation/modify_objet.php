@@ -12,7 +12,7 @@ class Modify_objet extends MY_Controller {
         if ($this->input->post('objet_id') == null) {
             if (isset($success) && isset($lastAction)) {
                 $message = $this->create_success_message($success, $lastAction);
-                $this->load->view('data_center/success_form', array('success' => $success, 'message' => $message));
+                $this->layout->view('data_center/success_form', array('success' => $success, 'message' => $message));
             }
             $this->select_objet($goal);
         } else {
@@ -30,7 +30,8 @@ class Modify_objet extends MY_Controller {
         $this->load->model('objet_model');
         $this->load->library('form_validation');
         $this->load->helper(array('form', 'dates', 'geom'));
-        $this->load->view('header');
+        $this->layout->add_js('close_message');
+        $this->layout->add_js('removepopup');
         if (!$this->session->userdata('username')) { //checking that user is connected
             redirect('accueil/accueil/not_connected/', 'refresh');
         } elseif (!$this->session->userdata('user_level') >= 5) {
@@ -121,15 +122,13 @@ class Modify_objet extends MY_Controller {
         if ($objet1_id != null) {
             $data['objetSource'] = new Objet($objet1_id);
         }
-        $this->load->view('moderation/select_objet', $data);
-        $this->load->view('footer');
+        $this->layout->view('moderation/select_objet', $data);
     }
 
     private function modify($objet_id) {
         $objet = new Objet($objet_id);
         if ($this->form_validation->run('ajout_objet') == FALSE) {
-            $this->load->view('moderation/modify_objet', array('objet' => $objet));
-            $this->load->view('footer');
+            $this->layout->view('moderation/modify_objet', array('objet' => $objet));
         } else {
             $objet->set_nom_objet($this->input->post('nom_objet'));
             $objet->set_resume($this->input->post('resume'));
@@ -148,7 +147,7 @@ class Modify_objet extends MY_Controller {
             
             update_coordonnes(); //we update the coordonnees.json file for the map
             
-            $this->load->view('data_center/success_form', array('success' => $success, 'message' => $message));
+            $this->layout->views('data_center/success_form', array('success' => $success, 'message' => $message));
             $this->select_objet('modify');
         }
     }
@@ -161,7 +160,7 @@ class Modify_objet extends MY_Controller {
         //creation success message
         $lastAction = 'validate';
         $message = $this->create_success_message($success, $lastAction, $objet->get_nom_objet());
-        $this->load->view('data_center/success_form', array('success' => $success, 'message' => $message));
+        $this->layout->views('data_center/success_form', array('success' => $success, 'message' => $message));
         $this->select_objet('modify');
     }
 
@@ -177,7 +176,7 @@ class Modify_objet extends MY_Controller {
         
         $lastAction = 'deletion';
         $message = $this->create_success_message($success, $lastAction, $objet->get_nom_objet());
-        $this->load->view('data_center/success_form', array('success' => $success, 'message' => $message));
+        $this->layout->views('data_center/success_form', array('success' => $success, 'message' => $message));
         $this->select_objet('modify');
     }
 
@@ -198,8 +197,7 @@ class Modify_objet extends MY_Controller {
 
             $data = array('objet1' => $objet1, 'objet2' => $objet2, 'type_relation_list' => $type_relation_list);
 
-            $this->load->view('moderation/ajout_relation', $data);
-            $this->load->view('footer');
+            $this->layout->view('moderation/ajout_relation', $data);
         } else {
             $this->load->model('relation_model');
             $relationdata = array();
@@ -227,7 +225,7 @@ class Modify_objet extends MY_Controller {
             $objet2 = new Objet($objet2_id);
             $message = $this->create_success_message($success, $lastAction, $objet1->get_nom_objet(), $objet2->get_nom_objet());
 
-            $this->load->view('data_center/success_form', array('success' => $success, 'message' => $message));
+            $this->layout->views('data_center/success_form', array('success' => $success, 'message' => $message));
             $this->select_objet('add_relation', 1, $objet1_id);
         }
     }
@@ -240,8 +238,7 @@ class Modify_objet extends MY_Controller {
         $objet = new Objet($objet_id);
         $linkedObjetArray = $this->objet_model->get_linked_objet($objet_id, null);
         $data = array('objet' => $objet, 'linkedObjetArray' => $linkedObjetArray);
-        $this->load->view('moderation/delete_relation', $data);
-        $this->load->view('footer');
+        $this->layout->view('moderation/delete_relation', $data);
     }
 
     public function delete_relation_form() {
@@ -255,7 +252,7 @@ class Modify_objet extends MY_Controller {
         }
         $message = $this->create_success_message($success, 'relationDeletion', $this->input->post('nom_objet_source'), 
                                                     $this->input->post('nom_objet_target'));
-        $this->load->view('data_center/success_form', array('success' => $success, 'message' => $message));
+        $this->layout->views('data_center/success_form', array('success' => $success, 'message' => $message));
 
         $this->delete_relation($objet_id);
     }
@@ -270,7 +267,7 @@ class Modify_objet extends MY_Controller {
         update_coordonnes(); //we update the coordonnees.json file for the map
         
         $message = $this->create_success_message($success, 'geomDeletion', $objet->get_nom_objet());
-        $this->load->view('data_center/success_form', array('success' => $success, 'message' => $message));
+        $this->layout->view('data_center/success_form', array('success' => $success, 'message' => $message));
     }
 
     private function create_success_message($success, $lastAction, $firstEntity = null, $secondEntity = null) {

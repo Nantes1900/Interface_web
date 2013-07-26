@@ -17,9 +17,11 @@ class Ajout_relation extends MY_Controller {
      */
     public function index() {
         $userLevel = $this->session->userdata('user_level');
-        $this->load->view('data_center/data_center');
+        $this->layout->views('data_center/data_center');
         if ($userLevel >= 4) {
             $this->formulaire();
+        } else {
+            redirect('accueil/accueil/', 'refresh');
         }
     }
 
@@ -36,7 +38,6 @@ class Ajout_relation extends MY_Controller {
         require ('application/models/objet.php');
         $this->load->library('form_validation');
         $this->load->helper(array('form', 'dates'));
-        $this->load->view('header');
         if (!$this->session->userdata('username')) {
             redirect('accueil/accueil/not_connected/', 'refresh');
         }
@@ -60,8 +61,7 @@ class Ajout_relation extends MY_Controller {
             if ($this->form_validation->run('ajout_relation') == FALSE) {
                 $data = array('objet_list' => $objet_list, 'type_relation_list' => $type_relation_list);
 
-                $this->load->view('data_center/ajout_relation', $data);
-                $this->load->view('footer');
+                $this->layout->view('data_center/ajout_relation', $data);
             } else {
                 $relationdata = array();
                 $relationdata['objet_id_1'] = $this->input->post('objet1');
@@ -92,9 +92,8 @@ class Ajout_relation extends MY_Controller {
                                    'message' => sprintf($this->lang->line('common_add_rel_form_failure'),
                                                         $objet1->get_nom_objet(),$objet2->get_nom_objet()));
                 }
-
-                $this->load->view('data_center/success_form', $data);
-                $this->load->view('data_center/data_center');
+                $this->layout->add_js('close_message');
+                $this->layout->view('data_center/success_form', $data);
             }
         } else {
             redirect('accueil/accueil', 'refresh');

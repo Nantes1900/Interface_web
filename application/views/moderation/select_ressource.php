@@ -101,7 +101,7 @@
         <br/>
         <input type="checkbox" name="validation" value="TRUE" <?php if($this->session->userdata('sel_ress_valid') != null){ 
                                           echo 'checked'; 
-                                       } ?>><?php echo $this->lang->line('common_list_filter_unvalid'); ?>
+                                       } ?>><?php echo $this->lang->line('common_list_filter_unvalid_ress'); ?>
         <br/>
         <input type="submit" value="<?php echo $this->lang->line('common_list_sort_button'); ?>" />
 
@@ -251,4 +251,4 @@
     ?>
 </div>
 
-<script src="<?php echo base_url();?>assets/js/removepopup.js"></script>
+

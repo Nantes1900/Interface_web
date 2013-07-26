@@ -13,7 +13,6 @@ class Download extends MY_Controller {
         //Ce code sera executé charque fois que ce contrôleur sera appelé
         $this->load->helper('download');
         $this->load->library('form_validation');
-        $this->load->view('header');
         if (!$this->session->userdata('username')) { //checking that user is connected
             redirect('accueil/accueil/not_connected/', 'refresh');
         }
@@ -24,8 +23,7 @@ class Download extends MY_Controller {
     }
 
     private function download_page() {
-        $this->load->view('download/download');
-        $this->load->view('footer');
+        $this->layout->view('download/download');
     }
 
     public function do_download() {

@@ -29,10 +29,11 @@ class Admin_panel extends MY_Controller {
         require_once ('application/models/user.php');
         $this->load->library('form_validation');
         $this->load->helper('dates_helper');
-        $this->load->view('header');
         if (!$this->session->userdata('username')) {
             redirect('accueil/accueil/not_connected/', 'refresh');
         }
+        $this->layout->add_js('removepopup');
+        $this->layout->add_js('close_message');
     }
 
     public function sort_admin_panel(){
@@ -116,8 +117,7 @@ class Admin_panel extends MY_Controller {
         $data['numPage'] = $userManager->count_page_users($speUserLevel, $speAttribute, $speAttributeValue, 
                                                           $this->session->userdata('username'), null, $userPerPage);
         $data['currentPage'] = $page;
-        $this->load->view('admin_panel/admin_panel', $data);
-        $this->load->view('footer');
+        $this->layout->view('admin_panel/admin_panel', $data);
     }
 
     //change the level of an user (form)
@@ -152,8 +152,7 @@ class Admin_panel extends MY_Controller {
                 $success = FALSE;
                 $message = sprintf($this->lang->line('user_delete_error_forbidden'),$username);
             }
-
-            $this->load->view('data_center/success_form', array('success' => $success, 'message' => $message));
+            $this->layout->views('data_center/success_form', array('success' => $success, 'message' => $message));
             $this->admin_panel();
         } else {
             redirect('accueil/accueil/', 'refresh');

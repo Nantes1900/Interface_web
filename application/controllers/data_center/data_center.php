@@ -23,14 +23,13 @@ class Data_center extends MY_Controller {
         //Ce code sera executé charque fois que ce contrôleur sera appelé
 
         $this->load->library('form_validation');
-        $this->load->view('header');
         if (!$this->session->userdata('username')) { //checking that user is connected
             redirect('accueil/accueil/not_connected/', 'refresh');
         }
     }
 
     public function data_center() {
-        $this->load->view('data_center/data_center');
+        $this->layout->view('data_center/data_center');
     }
 
 }

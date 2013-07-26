@@ -52,7 +52,7 @@ class Layout {
       | . set_title
       | . set_charset
       | . add_css
-      | . add_javascript
+      | . add_js
       |===============================================================================
      */
     
@@ -83,8 +83,7 @@ class Layout {
     }
     
     public function add_css($nom) {
-        if (is_string($nom) AND !empty($nom) AND file_exists('./assets/css/' . $nom .
-                        '.css')) {
+        if (is_string($nom) AND !empty($nom) AND file_exists('./assets/css/'.$nom.'.css')) {
             $this->var['css'][] = css_url($nom);
             return true;
         }
@@ -92,8 +91,7 @@ class Layout {
     }
 
     public function add_js($nom) {
-        if (is_string($nom) AND !empty($nom) AND file_exists('./assets/js/' .
-                        $nom . '.js')) {
+        if (is_string($nom) AND !empty($nom) AND file_exists('./assets/js/'.$nom.'.js')) {
             $this->var['js'][] = js_url($nom);
             return true;
         }

@@ -30,5 +30,3 @@
     Si un utilisateur "pollueur" a rajouté des ressources dénuées de sens, vous devez aussi 
     supprimer ces ressources avant de supprimer son compte.
 </p>
-
-<script src="<?php echo base_url();?>assets/js/tuto_sub_section.js"></script>

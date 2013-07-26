@@ -6,10 +6,10 @@ class Import_csv extends MY_Controller {
         if ($this->session->userdata('username') && $this->session->userdata('user_level') >= 4) {
             $userLevel = $this->session->userdata('user_level');
             $data['userLevel'] = $userLevel;
-            $this->load->view('data_center/data_center', $data);
+            $this->layout->views('data_center/data_center', $data);
             $this->formulaire();
         } else {
-            $this->load->view('accueil/login/formulaire_login', 
+            $this->layout->view('accueil/login/formulaire_login', 
                                 array('titre'=>$this->lang->line('common_do_need_login')));
         }
     }
@@ -21,11 +21,10 @@ class Import_csv extends MY_Controller {
         $this->lang->load('csv', $this->language);
         $this->load->library('upload');
         $this->load->helper(array('form', 'csv', 'file'));
-        $this->load->view('header');
     }
 
     private function formulaire() {
-        $this->load->view('data_center/import_csv', array('error' => ' '));
+        $this->layout->view('data_center/import_csv', array('error' => ' '));
     }
 
     function do_upload() {
@@ -37,8 +36,7 @@ class Import_csv extends MY_Controller {
 
         if (!$this->upload->do_upload('csv_file')) {
             $error = array('error' => $this->upload->display_errors());
-            $this->load->view('data_center/import_csv', $error);
-            $this->load->view('footer');
+            $this->layout->view('data_center/import_csv', $error);
         } else {
             $this->load->library('csvreader');
             $csv_file = $this->upload->data();
@@ -102,18 +100,17 @@ class Import_csv extends MY_Controller {
                 $critError = TRUE;
             }
             if (!$critError) { //printing success message
-                $this->load->view('data_center/succes_csv', $message);
+                $this->layout->views('data_center/succes_csv', $message);
                 $this->index();
             } else {
                 $message = $this->lang->line('csv_rel_crit_error');
-                $this->load->view('data_center/import_csv', array('error' => $message));
-                $this->load->view('footer');
+                $this->layout->view('data_center/import_csv', array('error' => $message));
             }
         }
     }
 
     public function rollback($data) {
-        $this->load->view('footer');
+        $this->layout->view('footer');
     }
 
 }

@@ -23,7 +23,6 @@ class Profile_panel extends MY_Controller {
         $this->load->model('user_model');
         require ('application/models/user.php');
         $this->load->library('form_validation');
-        $this->load->view('header');
         $this->load->helper('security'); //to hash passwords
         if (!$this->session->userdata('username')) {
             redirect('accueil/accueil/not_connected/', 'refresh');
@@ -35,8 +34,7 @@ class Profile_panel extends MY_Controller {
         $userName = $this->session->userdata('username');
         $currentUser = new User($userName);
         $data['user'] = $currentUser;
-        $this->load->view('profile_panel/profile_panel', $data);
-        $this->load->view('footer');
+        $this->layout->view('profile_panel/profile_panel', $data);
     }
     
     public function change_profile(){ //change some of the user information

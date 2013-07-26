@@ -19,7 +19,7 @@ class View_data extends MY_Controller {
         } elseif ($dataType == 'ressource_texte' || $dataType == 'ressource_graphique' || $dataType == 'ressource_video') {
             $this->view_ressource($data_id, $dataType);
         } else {
-            $this->load->view('view_data/error', array('error' => $this->lang->line('common_view_error_no_type')));
+            $this->layout->view('view_data/error', array('error' => $this->lang->line('common_view_error_no_type')));
         }
     }
 
@@ -38,7 +38,6 @@ class View_data extends MY_Controller {
         $this->load->model('ressource_video_model');
         $this->load->library('form_validation');
         $this->load->helper('dates');
-        $this->load->view('header');
         if (!$this->session->userdata('username')) { //checking that user is connected
             redirect('accueil/accueil/not_connected/', 'refresh');
         }
@@ -58,13 +57,12 @@ class View_data extends MY_Controller {
                 'linkedRessGraphArray' => $linkedRessGraphArray, 'linkedRessVidArray' => $linkedRessVidArray);
 
 
-            $this->load->view('view_data/linked_sidebar', $sidebarData);
-            $this->load->view('view_data/view_objet', $data);
+            $this->layout->views('view_data/linked_sidebar', $sidebarData);
+            $this->layout->view('view_data/view_objet', $data);
         } else {
             $message = $this->lang->line('common_view_error_no_object');
-            $this->load->view('data_center/success_form', array('success' => FALSE, 'message' => $message));
+            $this->layout->view('data_center/success_form', array('success' => FALSE, 'message' => $message));
         }
-        $this->load->view('footer');
     }
 
     public function view_ressource($ressource_id, $typeRessource) {
@@ -82,16 +80,15 @@ class View_data extends MY_Controller {
                 $data = array('ressource' => $ressource, 'typeRessource' => strtolower($typeRessource));
                 $sidebarData = array('linkedObjetArray' => $linkedObjetArray);
 
-                $this->load->view('view_data/linked_sidebar_ress', $sidebarData);
-                $this->load->view('view_data/view_ressource', $data);
+                $this->layout->views('view_data/linked_sidebar_ress', $sidebarData);
+                $this->layout->view('view_data/view_ressource', $data);
             } else {
                 $message = $this->lang->line('common_view_error_no_ress');
-                $this->load->view('data_center/success_form', array('success' => FALSE, 'message' => $message));
+                $this->layout->view('data_center/success_form', array('success' => FALSE, 'message' => $message));
             }
-            $this->load->view('footer');
         } else {
             $message = $this->lang->line('common_view_error_no_ress');
-            $this->load->view('data_center/success_form', array('success' => FALSE, 'message' => $message));
+            $this->layout->view('data_center/success_form', array('success' => FALSE, 'message' => $message));
         }
     }
 

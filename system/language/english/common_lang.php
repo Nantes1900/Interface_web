@@ -186,6 +186,7 @@ $lang['common_list_sort_dir_asc']           = "Ascending";
 $lang['common_list_sort_dir_desc']          = "Descending";
 $lang['common_list_select']                 = "Search a specific:";
 $lang['common_list_filter_unvalid']         = "Unvalid ".strtolower($lang['common_objets'])." only";
+$lang['common_list_filter_unvalid_ress']    = "Unvalid ".strtolower($lang['common_ressources'])." only";
 $lang['common_list_sort_button']            = "Sort";
 $lang['common_list_is_valid']               = "Validation";
 $lang['common_list_valid']                  = "Valid";
