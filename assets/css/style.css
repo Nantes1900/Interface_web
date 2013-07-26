@@ -2,9 +2,15 @@
 /* CSS par défaut */
 
 html{
-
+    height:100%;
 }
-
+foot{
+   position:relative;
+   bottom:0%;
+   left:0%;
+   width:auto;
+   right:33%;
+}
 /* color panel 
 The color panel has two main colors (1st & 2nd), each with 3 level of brightness
 
@@ -174,16 +180,6 @@ error{
 	height: 230px;
 }
 
-
-/* footer */
-
-
-#footer{
-	clear:both;
-	position:relative;
-	vertical-align:bottom;
-	margin: 0 auto 0;
-}
 
 .copyright{
 	font-size:10px;

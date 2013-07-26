@@ -113,10 +113,7 @@
         
     <foot>
         <br/>
-        <div id="footer">
-
             <div class="copyright">Copyright © 2011. Tous droits réservés.</div>  
 
-        </div>
     </foot>
 </html>
