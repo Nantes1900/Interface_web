@@ -224,9 +224,7 @@
                 <th><?php echo $this->lang->line('date_crea'); ?></th>
                 <th><?php echo $this->lang->line('user_family_name'); ?></th>
                 <th><?php echo $this->lang->line('user_first_name'); ?></th>
-                <th><?php echo $this->lang->line('user_address'); ?></th>
                 <th><?php echo $this->lang->line('user_email'); ?></th>
-                <th><?php echo $this->lang->line('user_phone'); ?></th>
                 <th><?php echo $this->lang->line('user_job'); ?></th>
                 <th class="hint">
                     <?php echo $this->lang->line('user_delete'); ?>
@@ -301,9 +299,7 @@
                     <td><?php echo date('d/m/Y',$user->get_creationDate()); ?></td>
                     <td><?php echo $user->get_firstName(); ?></td>
                     <td><?php echo $user->get_name(); ?></td>
-                    <td><?php echo $user->get_adress(); ?></td>
                     <td><?php echo $user->get_email(); ?></td>
-                    <td><?php echo $user->get_phoneNumber(); ?></td>
                     <td><?php echo $user->get_job(); ?></td>
                     <td>
                         <?php if ($user->get_contribution()<1 && $user->get_userLevel() < 10){

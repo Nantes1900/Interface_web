@@ -69,7 +69,7 @@ class Signin extends MY_Controller {
         $msg = '<h1>Bienvenue dans le projet Nantes1900</h1>';
         $msg = $msg . '<p>Votre inscription a été prise en compte, votre pseudo est "' . $userdata['username'] . '" et ';
         $msg = $msg . 'votre mot de passe est "' . $userdata['password'] . '", le mot de passe ne vous sera jamais demandé, ne le communiquez pas.</p>';
-        $msg = $msg . '<p>Enfin, pour pouvoir vous connectez, vous devez valider votre compte à l\adresse suivante : ';
+        $msg = $msg . '<p>Enfin, pour pouvoir vous connectez, vous devez valider votre compte à l\'adresse suivante : ';
         $msg = $msg . anchor('accueil/signin/confirmation/' . $userdata['username'] . '/' . $user->get_hashedPassword()) . '</p>';
         $this->email->message('test');
 
