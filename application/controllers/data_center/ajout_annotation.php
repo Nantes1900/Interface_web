@@ -40,34 +40,42 @@ class Ajout_annotation extends MY_Controller {
     
     private function new_annotation(){
         
-        $annotData['titre'] = $this->input->post('titre');
-        $annotData['texte'] = $this->input->post('texte');
-        $annotData['username'] = ($this->session->userdata('username'));
         $annotData['type_target'] = ($this->input->post('type_target'));
         $annotData['target_id'] = ($this->input->post('target_id'));
         
-        $annotation = new Annotation($annotData);
-        $annotation->save();
-        if($annotation->get_type_target()=='objet'){
-            redirect('view_data/view_data/view_objet/'.$annotation->get_target_id());
-        } elseif (preg_match("#ressource_[a-z]*#", $annotation->get_type_target())){
-            redirect('view_data/view_data/view_ressource/'.$annotation->get_target_id().'/'.$annotation->get_type_target());
+        if($this->form_validation->run('add_annotation') == TRUE) {
+            $annotData['titre'] = $this->input->post('titre');
+            $annotData['texte'] = $this->input->post('texte');
+            $annotData['username'] = ($this->session->userdata('username'));
+
+            $annotation = new Annotation($annotData);
+            $annotation->save();
+        }
+        
+        if($annotData['type_target']=='objet'){
+            redirect('view_data/view_data/view_objet/'.$annotData['target_id']);
+        } elseif (preg_match("#ressource_[a-z]*#", $annotData['type_target'])){
+            redirect('view_data/view_data/view_ressource/'.$annotData['target_id'].'/'.$annotData['type_target']);
         }
     }
     
     private function answer_annotation(){
-        $annotData['texte'] = $this->input->post('texte');
-        $annotData['username'] = ($this->session->userdata('username'));
         $annotData['type_target'] = ($this->input->post('type_target'));
         $annotData['target_id'] = ($this->input->post('target_id'));
-        $annotData['parent_id'] = ($this->input->post('parent_id'));
         
-        $answer = new Annotation($annotData);
-        $answer->save();
-        if($answer->get_type_target()=='objet'){
-            redirect('view_data/view_data/view_objet/'.$answer->get_target_id());
-        } elseif (preg_match("#ressource_[a-z]*#", $answer->get_type_target())){
-            redirect('view_data/view_data/view_ressource/'.$answer->get_target_id().'/'.$answer->get_type_target());
+        if($this->form_validation->run('answer_annotation') == TRUE) {
+            $annotData['texte'] = $this->input->post('texte');
+            $annotData['username'] = ($this->session->userdata('username'));
+            $annotData['parent_id'] = ($this->input->post('parent_id'));
+
+            $answer = new Annotation($annotData);
+            $answer->save();
+        }
+        
+        if($annotData['type_target']=='objet'){
+            redirect('view_data/view_data/view_objet/'.$annotData['target_id']);
+        } elseif (preg_match("#ressource_[a-z]*#", $annotData['type_target'])){
+            redirect('view_data/view_data/view_ressource/'.$annotData['target_id'].'/'.$annotData['type_target']);
         }
     }
     

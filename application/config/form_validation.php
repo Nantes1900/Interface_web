@@ -622,6 +622,25 @@ $config = array(
                         'label'=>'speAttributeValue',
                         'rules'=>'trim|max_length[50]|xss_clean'
                     )
+                ),
+    'add_annotation' => array(
+                    array(
+                        'field'=>'titre',
+                        'label'=>'titre',
+                        'rules'=>'trim|required|max_length[125]|xss_clean'
+                    ),
+                    array(
+                        'field'=>'texte',
+                        'label'=>'texte',
+                        'rules'=>'trim|required|xss_clean'
+                    )
+                ),
+    'answer_annotation' => array(
+                    array(
+                        'field'=>'texte',
+                        'label'=>'texte',
+                        'rules'=>'trim|required|xss_clean'
+                    )
                 )
 );
 
