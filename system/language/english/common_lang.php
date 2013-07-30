@@ -232,6 +232,15 @@ $lang['common_download_csv_pres']           = "If you want to import csv files, 
 $lang['common_download_csv_ods']            = ".ods files :";
 $lang['common_do_download_button']          = "Download file";
 
+//about annotations
+$lang['common_new_annot']                   ="New annotation";
+$lang['common_new_annot_instruction']       ="Fill this with a new annotation";
+$lang['common_new_annot_create']            ="Create";
+$lang['common_annot_answer']                ="Answer";
+$lang['common_annot_delete']                ="Delete this annotation";
+$lang['common_annot_delete_com']            ="Delete this answer";
+$lang['common_annot_delete_warning']        ="You are about to delete the whole annotation, are you sure you want to do this?";
+
 /* End of file common.php */
 /* Location : ./system/language/english/common_lang.php */
 

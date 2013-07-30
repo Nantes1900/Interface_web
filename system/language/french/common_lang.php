@@ -232,6 +232,15 @@ $lang['common_download_csv_pres']           = "Si vous souhaitez utiliser des im
 $lang['common_download_csv_ods']            = "Modèle au format ods :";
 $lang['common_do_download_button']          = "Télécharger le fichier";
 
+//about annotations
+$lang['common_new_annot']                   ="Nouvelle annotation";
+$lang['common_new_annot_instruction']       ="Entrez ici votre nouvelle annotation";
+$lang['common_new_annot_create']            ="Créer";
+$lang['common_annot_answer']                ="Répondre";
+$lang['common_annot_delete']                ="Supprimer cette annotation";
+$lang['common_annot_delete_com']            ="Supprimer ce commentaire";
+$lang['common_annot_delete_warning']        ="Etes vous certain de vouloir supprimer l'annotation entière?";
+
 /* End of file common.php */
 /* Location : ./system/language/french/common_lang.php */
 
