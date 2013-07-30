@@ -138,16 +138,87 @@
         <h3> <?php echo $this->lang->line('common_view_author'); ?> </h3>
         <p> <?php echo $ressource->get_username(); ?> </p>
         
+        <?php if($typeRessource=='ressource_texte'){
+                  $ressource_id = $ressource->get_ressource_textuelle_id();
+              } else {
+                  $getMethod='get_'.$typeRessource.'_id';
+                  $ressource_id = $ressource->$getMethod(); 
+              } ?>
+        
+        
         <?php if($this->session->userdata('user_level') >= 5){ ?>
                 <?php echo form_open('moderation/modify_ressource/index/'.$typeRessource) ?>
-                            <input type="hidden" name="ressource_id" value="<?php if($typeRessource=='ressource_texte'){
-                                                                                    echo $ressource->get_ressource_textuelle_id();
-                                                                                  } else {
-                                                                                    $getMethod='get_'.$typeRessource.'_id';
-                                                                                    echo $ressource->$getMethod(); 
-                                                                                  } ?>" />
+                            <input type="hidden" name="ressource_id" value="<?php echo $ressource_id?>" />
                             <input type="submit" value="<?php echo $this->lang->line('common_view_modify_ress');?>" />
                 </form>
         <?php } ?>
         
-
+                
+        <?php if (isset($annotationList)){ 
+                    foreach ($annotationList as $annotations){ ?>
+                        <div class="annotation" title="<?php echo $annotations['father']->get_titre(); ?>">
+                            <?php echo '<b>'.$annotations['father']->get_username().
+                                        '</b>: '.$annotations['father']->get_texte(); ?>
+                            <div class="annotSeparator"></div>
+                            <?php foreach($annotations['children'] as $answer){ ?>
+                                <?php echo '<b>'.$answer->get_username().
+                                        '</b>: '.$answer->get_texte(); 
+                                        if($this->session->userdata('username')==$answer->get_username()){
+                                            echo form_open('data_center/ajout_annotation/index/delete');?>
+                                            <input type="hidden" name="type_target" value="<?php echo $typeRessource; ?>" />
+                                            <input type="hidden" name="target_id" value="<?php echo $ressource_id; ?>" />
+                                            <input type="hidden" name="annot_id" value="<?php echo $answer->get_annotation_id(); ?>" />
+                                            <button type="submit" class="invisible" title="Supprimer ce commentaire"> 
+                                                   <?php echo img(array('src'=>'assets/utils/delete.png','alt'=>'delete',
+                                                        'width'=>'50%')); ?>
+                                           </button>
+                                        <?php echo form_close();
+                                         } ?>
+                                <div class="annotSeparator"></div>
+                            <?php } 
+                            echo form_open('data_center/ajout_annotation/index/answer')?>
+                                <textarea name="texte" rows="4" cols="33"></textarea>
+                                <input type="hidden" name="type_target" value="<?php echo $typeRessource; ?>" />
+                                <input type="hidden" name="target_id" value="<?php echo $ressource_id; ?>" />
+                                <input type="hidden" name="parent_id" value="<?php echo $annotations['father']->get_annotation_id(); ?>" />
+                                <input type="submit" value="Répondre" />
+                            <?php echo form_close() ?>
+                                <?php if($this->session->userdata('username')==$annotations['father']->get_username()
+                                         || $this->session->userdata('user_level')>=5){
+                                          echo form_open('data_center/ajout_annotation/index/delete');?>
+                                             <input type="hidden" name="type_target" value="<?php echo $typeRessource; ?>" />
+                                             <input type="hidden" name="target_id" value="<?php echo $ressource_id; ?>" />
+                                             <input type="hidden" name="annot_id" 
+                                                   value="<?php echo $annotations['father']->get_annotation_id(); ?>" />
+                                             <div class="message" style="left:15%; top:40%; display:none">
+                                                 <p>Etes vous certain de vouloir supprimer l'annotation entière?</p>
+                                                <button type="submit" > Supprimer l'annotation </button>
+                                                 <button type="reset" class="closePopup"><?php echo $this->lang->line('common_cancel'); ?></button>
+                                                 <?php echo img(array('src'=>'assets/utils/close.png','alt'=>'fermer','width'=>'4%', 
+                                                         'class'=>'removePopup')); ?>
+                                             </div>
+                                <?php    echo form_close(); ?>
+                                             <button class="removePopup invisible" title="Supprimer cette annotation"> 
+                                                      <?php echo img(array('src'=>'assets/utils/delete.png','alt'=>'delete',
+                                                           'width'=>'50%')); ?>
+                                             </button>
+                                <?php      } ?>
+                        </div>
+        <?php        }
+            }?>
+           
+        <?php if ($this->session->userdata('user_level') >= 4){ ?>
+            <button id="newAnnot">Nouvelle annotation</button>
+            <div class="newAnnot"></div>
+            <div class="annotation new" title="Nouvelle annotation">
+                Entrez ici votre nouvelle annotation
+                <div class="annotSeparator"></div>
+                <?php echo form_open('data_center/ajout_annotation/index/new') ?>
+                    <input type="text" name="titre" placeholder="Titre annotation"/>
+                    <textarea name="texte"></textarea>
+                    <input type="hidden" name="type_target" value="<?php echo $typeRessource; ?>" />
+                    <input type="hidden" name="target_id" value="<?php echo $ressource_id; ?>" />
+                    <input type="submit" value="Créer" />
+                <?php echo form_close()?>
+            </div>
+        <?php } ?>

@@ -55,8 +55,11 @@ class View_data extends MY_Controller {
             $data = array('objet' => $objet);
             $sidebarData = array('linkedObjetArray' => $linkedObjetArray, 'linkedRessTxtArray' => $linkedRessTxtArray,
                 'linkedRessGraphArray' => $linkedRessGraphArray, 'linkedRessVidArray' => $linkedRessVidArray);
-
-
+            
+            //adding the annotations
+            if($this->session->userdata('user_level')>=4){
+                $data['annotationList'] = $this->add_annotations('objet', $objet_id);
+            }
             $this->layout->views('view_data/linked_sidebar', $sidebarData);
             $this->layout->view('view_data/view_objet', $data);
         } else {
@@ -79,7 +82,11 @@ class View_data extends MY_Controller {
 
                 $data = array('ressource' => $ressource, 'typeRessource' => strtolower($typeRessource));
                 $sidebarData = array('linkedObjetArray' => $linkedObjetArray);
-
+                
+                //adding the annotations
+                if($this->session->userdata('user_level')>=4){
+                    $data['annotationList'] = $this->add_annotations(strtolower($typeRessource), $ressource_id);
+                }
                 $this->layout->views('view_data/linked_sidebar_ress', $sidebarData);
                 $this->layout->view('view_data/view_ressource', $data);
             } else {
@@ -90,6 +97,19 @@ class View_data extends MY_Controller {
             $message = $this->lang->line('common_view_error_no_ress');
             $this->layout->view('data_center/success_form', array('success' => FALSE, 'message' => $message));
         }
+    }
+    
+    //set up the requirements for annotation (layout->add_js or css)
+    //return a list of annotation (arrays father, children)
+    private function add_annotations($type_target, $target_id){
+        $this->load->model('annotation_model');
+        require_once('application/models/annotation.php');
+        $this->layout->add_js('jquery-ui-custom.min');
+        $this->layout->add_css('redmond/jquery-ui-custom');
+        $this->layout->add_js('annotations');
+        $this->layout->add_js('removepopup');
+        
+        return $this->annotation_model->get_annotation_list($type_target, $target_id);
     }
 
 }
