@@ -155,7 +155,7 @@ class User_model extends CI_Model {
             $this->db->where('user_level >=', $minLevel);
         }
         if ($speAttribute != null && $speAttributeValue != null) {
-            $this->db->like($speAttribute, $speAttributeValue);
+            $this->db->like('LOWER('.$speAttribute.')', strtolower($speAttributeValue));
         }
         $this->db->limit($userPerPage,($page-1)*$userPerPage);
         $query = $this->db->get();
@@ -183,7 +183,7 @@ class User_model extends CI_Model {
             $this->db->where('user_level >=', $minLevel);
         }
         if ($speAttribute != null && $speAttributeValue != null) {
-            $this->db->like($speAttribute, $speAttributeValue);
+            $this->db->like('LOWER('.$speAttribute.')', strtolower($speAttributeValue));
         }
         $entries = $this->db->count_all_results();
         

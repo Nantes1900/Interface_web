@@ -54,7 +54,7 @@ class Ressource_video_model extends CI_Model
             $this->db->from('ressource_video');
             $this->db->order_by($orderBy,$orderDirection);
             if ($speAttribute!=null && $speAttributeValue!=null){
-                $this->db->like($speAttribute,$speAttributeValue);
+                $this->db->like('LOWER('.$speAttribute.')', strtolower($speAttributeValue));
             }
             if ($valid!=null){$this->db->where('validation', $valid);}
             $this->db->limit(10,($page-1)*10); //10 ressource per page
@@ -74,7 +74,7 @@ class Ressource_video_model extends CI_Model
     public function count_page_ress($speAttribute = null, $speAttributeValue = null, $valid = null) {
         $this->db->from('ressource_textuelle');
         if ($speAttribute != null && $speAttributeValue != null) {
-            $this->db->like($speAttribute, $speAttributeValue);
+            $this->db->like('LOWER('.$speAttribute.')', strtolower($speAttributeValue));
         }
         if ($valid != null) {
             $this->db->where('validation', $valid);

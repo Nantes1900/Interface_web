@@ -50,7 +50,7 @@ class Objet_model extends CI_Model {
         $this->db->from('objet');
         $this->db->order_by($orderBy, $orderDirection);
         if ($speAttribute != null && $speAttributeValue != null) {
-            $this->db->like($speAttribute, $speAttributeValue);
+            $this->db->like('LOWER('.$speAttribute.')', strtolower($speAttributeValue));
         }
         if ($valid != null) {
             $this->db->where('validation', $valid);
@@ -72,7 +72,7 @@ class Objet_model extends CI_Model {
         
         $this->db->from('objet');
         if ($speAttribute != null && $speAttributeValue != null) {
-            $this->db->like($speAttribute, $speAttributeValue);
+            $this->db->like('LOWER('.$speAttribute.')', strtolower($speAttributeValue));
         }
         if ($valid != null) {
             $this->db->where('validation', $valid);
