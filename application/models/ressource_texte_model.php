@@ -167,6 +167,11 @@ class Ressource_texte_model extends CI_Model
         //simply delete the ressource_textuelle with $ressource_id in the database
         //beware, it will delete all depending infos (some documentation of documentation table for example)
         public function delete($ressource_id){
+            //we first delete the annotations
+            $this->db->where('type_target','ressource_texte');
+            $this->db->where('target_id',$ressource_id);
+            $this->db->delete('annotation');
+        
             $this->db->where('ressource_textuelle_id',$ressource_id);
             return $this->db->delete('ressource_textuelle'); 
         }

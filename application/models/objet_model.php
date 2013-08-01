@@ -309,6 +309,11 @@ class Objet_model extends CI_Model {
     //simply delete the objet with $objet_id in the database
     //beware, it will delete all depending infos (some relation of relation table for example)
     public function delete($objet_id) {
+        //we first delete the annotations
+        $this->db->where('type_target','objet');
+        $this->db->where('target_id',$objet_id);
+        $this->db->delete('annotation');
+        
         $this->db->where('objet_id', $objet_id);
         return $this->db->delete('objet');
     }

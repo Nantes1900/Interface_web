@@ -157,6 +157,11 @@ class Ressource_graphique_model extends CI_Model
    //simply delete the ressource_graphique with $ressource_id in the database
    //beware, it will delete all depending infos (some documentation of documentation table for example)
     public function delete($ressource_id){
+        //we first delete the annotations
+        $this->db->where('type_target','ressource_graphique');
+        $this->db->where('target_id',$ressource_id);
+        $this->db->delete('annotation');
+        
         $ressource = new Ressource_graphique($ressource_id);
         if($ressource->get_image()!=null){
             $this->load->helper('file');
