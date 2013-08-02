@@ -14,7 +14,8 @@ class Signin extends MY_Controller {
         $this->load->model('user_model');
         require_once ('application/models/user.php');
         $this->load->library('form_validation');
-        $this->load->helper(array('form'));
+        $this->load->library('encrypt');
+        $this->load->helper(array('form','security'));
     }
 
     public function check_signin() {
@@ -70,7 +71,7 @@ class Signin extends MY_Controller {
         $msg = $msg . '<p>Votre inscription a été prise en compte, votre pseudo est "' . $userdata['username'] . '" et ';
         $msg = $msg . 'votre mot de passe est "' . $userdata['password'] . '", le mot de passe ne vous sera jamais demandé, ne le communiquez pas.</p>';
         $msg = $msg . '<p>Enfin, pour pouvoir vous connectez, vous devez valider votre compte à l\'adresse suivante : ';
-        $msg = $msg . anchor('accueil/signin/confirmation/' . $userdata['username'] . '/' . $user->get_hashedPassword()) . '</p>';
+        $msg = $msg . anchor('accueil/signin/confirmation/' . urlencode($this->encrypt->encode($userdata['username']))) . '</p>';
         $this->email->message('test');
 
         $this->email->send();
@@ -78,25 +79,22 @@ class Signin extends MY_Controller {
     }
 
     //available through link given in mail
-    public function confirmation($username = null, $hashedPassword = null) {
+    public function confirmation($cryptedUsername = null) {
+        
+        $username = $this->encrypt->decode(urldecode($cryptedUsername));
+        
         if ($this->user_model->check_ifuserexists($username) != 0) {
             $user = new User($username);
-            //checking password
-            if ($user->get_hashedPassword() == $hashedPassword) {
-                //checking that user is new unconfirmed user
-                if ($user->get_userLevel() == 0 && $user->get_contribution() < 1) {
-                    $user->set_userLevel(1);
-                    $user->save();
+            //checking that user is new unconfirmed user
+            if ($user->get_userLevel() == 0 && $user->get_contribution() < 1) {
+                $user->set_userLevel(1);
+                $user->save();
                     $this->layout->view('accueil/login/formulaire_login', 
                                         array('titre' => sprintf($this->lang->line('signin_validation_success'),
                                                                     $username)));
-                } else {
+            } else {
                     $this->layout->view('accueil/login/formulaire_login', 
                                     array('titre' => $this->lang->line('signin_validation_fail_already')));
-                }
-            } else {
-                $this->layout->view('accueil/login/formulaire_login', 
-                                    array('titre' => $this->lang->line('signin_validation_fail_link')));
             }
         } else {
             $this->layout->view('accueil/login/formulaire_login', 
