@@ -19,6 +19,7 @@ class View_data extends MY_Controller {
         } elseif ($dataType == 'ressource_texte' || $dataType == 'ressource_graphique' || $dataType == 'ressource_video') {
             $this->view_ressource($data_id, $dataType);
         } else {
+            $this->layout->add_js('close_message');
             $this->layout->view('view_data/error', array('error' => $this->lang->line('common_view_error_no_type')));
         }
     }
@@ -63,6 +64,7 @@ class View_data extends MY_Controller {
             $this->layout->views('view_data/linked_sidebar', $sidebarData);
             $this->layout->view('view_data/view_objet', $data);
         } else {
+            $this->layout->add_js('close_message');
             $message = $this->lang->line('common_view_error_no_object');
             $this->layout->view('data_center/success_form', array('success' => FALSE, 'message' => $message));
         }
@@ -90,10 +92,12 @@ class View_data extends MY_Controller {
                 $this->layout->views('view_data/linked_sidebar_ress', $sidebarData);
                 $this->layout->view('view_data/view_ressource', $data);
             } else {
+                $this->layout->add_js('close_message');
                 $message = $this->lang->line('common_view_error_no_ress');
                 $this->layout->view('data_center/success_form', array('success' => FALSE, 'message' => $message));
             }
         } else {
+            $this->layout->add_js('close_message');
             $message = $this->lang->line('common_view_error_no_ress');
             $this->layout->view('data_center/success_form', array('success' => FALSE, 'message' => $message));
         }
