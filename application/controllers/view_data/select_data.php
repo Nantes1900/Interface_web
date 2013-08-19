@@ -32,9 +32,6 @@ class Select_data extends MY_Controller {
         $this->load->model('objet_model');
         $this->load->library('form_validation');
         $this->load->helper(array('dates', 'ressource'));
-        if (!$this->session->userdata('username')) {
-            redirect('accueil/accueil/not_connected/', 'refresh');
-        }
     }
 
     private function select_type() {
@@ -86,6 +83,10 @@ class Select_data extends MY_Controller {
     // - view, to display a detailed view with numerous information about the ressource
     // - add_doc, to link this objet to a particular ressource (as posted argument) and create a documentation link
     public function select_objet($goal, $page = 1, $typeRessource = null, $ressource_id = null) {
+        //security for add_doc
+        if ((!$this->session->userdata('username')) && $goal=="add_doc") {
+            redirect('accueil/accueil/not_connected/', 'refresh');
+        }
         //getting the sort option
         if ($this->session->userdata('sel_obj_orderBy') != null) {
             $orderBy = $this->session->userdata('sel_obj_orderBy');
@@ -154,6 +155,11 @@ class Select_data extends MY_Controller {
         if (!check_typeRessource($typeRessource)) {
             redirect('accueil/accueil');
         }
+        //security for add_doc
+        if ((!$this->session->userdata('username')) && $goal=="add_doc") {
+            redirect('accueil/accueil/not_connected/', 'refresh');
+        }
+        
         //managing the sort option
         $orderBy = $this->input->post('orderBy');
         if ($orderBy == null) {

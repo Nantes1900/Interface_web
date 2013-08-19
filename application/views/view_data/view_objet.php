@@ -37,7 +37,9 @@
                             <input type="submit" value="<?php echo $this->lang->line('common_view_modify_obj');?>" />
                 </form>
         <?php } ?>
-        <?php echo form_open('data_center/ajout_ressource/add_on_the_fly')?>
+        <?php 
+        if($this->session->userdata('username')){
+            echo form_open('data_center/ajout_ressource/add_on_the_fly')?>
             <p>
                 <?php echo $this->lang->line('common_view_add_ress');?>
                 <select name="typeFormulaire">
@@ -48,7 +50,9 @@
                 <input type="hidden" name="objet_id" value="<?php echo $objet->get_objet_id(); ?>" />
                 <input type="submit" value="<?php echo $this->lang->line('common_view_do_add_ress');?>" />
             </p>
-        </form>
+        <?php 
+            echo form_close();
+        }?>
  
 <!-- printing existing annotation-->
         <?php if (isset($annotationList)){ 

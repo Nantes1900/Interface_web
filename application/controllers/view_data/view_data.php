@@ -39,9 +39,6 @@ class View_data extends MY_Controller {
         $this->load->model('ressource_video_model');
         $this->load->library('form_validation');
         $this->load->helper('dates');
-        if (!$this->session->userdata('username')) { //checking that user is connected
-            redirect('accueil/accueil/not_connected/', 'refresh');
-        }
     }
 
     public function view_objet($objet_id) {

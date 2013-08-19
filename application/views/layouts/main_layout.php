@@ -21,7 +21,7 @@
     </head>
     
     <body>
-    <?php if($this->session->userdata('username')){ ?>
+
         <div class='leftSidebar'>
 
             <h2>Menu</h2>
@@ -30,6 +30,7 @@
                     <?php echo img(array('src'=>'assets/utils/go-home.png','width'=>'8%')); ?>
                     <?php echo anchor('accueil', $this->lang->line('common_lsidebar_welcome')); ?>
                 </li>
+     <?php if($this->session->userdata('username')){ ?>
                 <li>
                     <?php echo img(array('src'=>'assets/utils/db_add.png','width'=>'8%')); ?>
                     <span class="cursorPointer"><?php echo $this->lang->line('common_lsidebar_addData'); ?></span>
@@ -59,6 +60,8 @@
                             </ul>
                         </li>
                 <?php } ?>
+                
+      <?php } ?>
                 <li>
                     <?php echo img(array('src'=>'assets/utils/zoom-2.png','width'=>'8%')); ?>
                     <span class="cursorPointer"><?php echo $this->lang->line('common_lsidebar_view_data'); ?></span>
@@ -70,6 +73,7 @@
                         <li><?php echo anchor('view_data/select_data/index/carte', $this->lang->line('common_lsidebar_view_map')); ?></li>
                     </ul>
                 </li>
+     <?php if($this->session->userdata('username')){ ?>
                 <li>
                     <?php echo img(array('src'=>'assets/utils/edit-user.png','width'=>'8%')); ?>
                     <?php echo anchor('profile_panel/profile_panel', $this->lang->line('common_lsidebar_profile_panel')); ?>
@@ -96,17 +100,16 @@
                     <?php echo img(array('src'=>'assets/utils/system-logout.png','width'=>'8%')); ?>
                     <?php echo anchor('accueil/login/logout', $this->lang->line('common_lsidebar_logout')); ?>
                 </li>
+    <?php } ?>
             </ul>
         </div>
-    <?php } ?>
+
         <div id="contenu">
             <?php echo $output; ?>
         </div>
     </body>
     <script src="<?php echo base_url();?>assets/js/jquery.js"></script>
-    <?php if($this->session->userdata('username')){ ?>
-        <script src="<?php echo base_url();?>assets/js/dropdownmenu.js"></script>
-    <?php } ?>
+    <script src="<?php echo base_url();?>assets/js/dropdownmenu.js"></script>
     <?php foreach ($js as $url): ?>
         <script type="text/javascript" src="<?php echo $url; ?>"></script>
     <?php endforeach; ?>
