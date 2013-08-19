@@ -13,6 +13,8 @@ class Login extends MY_Controller {
         $this->lang->load('login_signin', $this->language);
         $this->load->library('form_validation');
         $this->load->helper(array('form'));
+        require_once ('application/models/user.php');
+        $this->load->model('user_model');
     }
 
     public function check_login() {
@@ -31,9 +33,9 @@ class Login extends MY_Controller {
         $username = $this->input->post('username');
         $password = $this->input->post('password');
 
-        $this->load->model('user_model', 'login');
+        $this->load->model('user_model');
 
-        $check = $this->login->check_login_info($username, $password);
+        $check = $this->user_model->check_login_info($username, $password);
 
         if ($check['0']) {
             return $check['0'];
@@ -55,7 +57,7 @@ class Login extends MY_Controller {
     private function login($username) {
 
         $data = array('username' => $username,
-            'user_level' => $this->login->get_user_level($username));
+            'user_level' => $this->user_model->get_user_level($username));
 
         $this->session->set_userdata('username', $data['username']);
         $this->session->set_userdata('user_level', $data['user_level']);
@@ -68,6 +70,71 @@ class Login extends MY_Controller {
         $this->session->sess_destroy();
         $this->layout->view('accueil/login/success_logout');
         redirect('accueil/', 'refresh');
+    }
+    
+    public function lostpw(){
+        if ($this->form_validation->run('lost_password') == FALSE) {
+            redirect('accueil/', 'refresh');
+        } else {
+            $user = new User($this->input->post('username'));
+            
+            $user->set_lostpw('t');
+            $user->save();
+            
+            //insert here the email sending
+            $this->load->library('encrypt');
+            
+            
+            $this->layout->views('accueil/body');
+            $this->layout->views('accueil/login/formulaire_login', array('titre' => $this->lang->line('common_need_login')));
+            $this->layout->add_js('close_message');
+            $messageData = array('success'=>TRUE, 'message'=>'un email vous a été envoyé pour changer votre mot de passe');
+            $this->layout->view('data_center/success_form', $messageData);
+        }
+    }
+    
+    public function set_new_password($cryptedUsername){
+        $this->load->library('encrypt');
+        $this->load->helper('security');
+        
+        $username = $this->encrypt->decode(urldecode($cryptedUsername));
+        
+        $user = new User($username);
+        if((!isset($user))||$user->get_lostpw()!='t'){
+            redirect('accueil');
+        }
+        if ($this->form_validation->run('set_new_password') == FALSE) {
+            $this->layout->view('accueil/pw_recovery', array('cryptedUsername'=>$cryptedUsername, 'username'=>$username));
+        } else {
+            $user->set_hashedPassword(do_hash($this->input->post('password1')));
+            $user->set_lostpw('f');
+            $user->save();
+            
+            $this->layout->views('accueil/body');
+            $this->layout->views('accueil/login/formulaire_login', array('titre' => $this->lang->line('common_need_login')));
+            $this->layout->add_js('close_message');
+            $messageData = array('success'=>TRUE, 'message'=>'Votre nouveau mot de passe a été correctement enregistré');
+            $this->layout->view('data_center/success_form', $messageData);
+        }
+    }
+    
+    //form validation callback functions for password loss
+    public function check_username($username){
+        $exist = $this->user_model->check_ifuserexists($username);
+        if($exist!=0){
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
+    
+    public function check_email($email){
+        $user = new User($this->input->post('username'));
+        if($email==$user->get_email()){
+            return TRUE;
+        }else{
+            return FALSE;
+        }
     }
 
 }

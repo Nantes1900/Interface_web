@@ -18,7 +18,7 @@ class User
     protected $_email;
     protected $_phoneNumber;
     protected $_job;        //these are the common traits of an user
-    
+    protected $_lostpw;
 
         
     //with an array of datas (typically the result of a db query), we directly call the hydrate function
@@ -65,6 +65,9 @@ class User
         }
         if (isset($donnees['profession'])){
             $this->set_job($donnees['profession']);
+        }
+        if (isset($donnees['lostpw'])){
+            $this->set_lostpw($donnees['lostpw']);
         }
     }
     
@@ -192,6 +195,15 @@ class User
     public function set_job($_job) {
         $this->_job = (string) $_job;
     }
+    
+    public function get_lostpw() {
+        return $this->_lostpw;
+    }
+
+    public function set_lostpw($_lostpw) {
+        $this->_lostpw = $_lostpw;
+    }
+
 }
 
 

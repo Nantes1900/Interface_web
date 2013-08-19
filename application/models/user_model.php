@@ -90,6 +90,9 @@ class User_model extends CI_Model {
         if ($user->get_job() != null) {
             $this->db->set('profession', $user->get_job());
         }
+        if ($user->get_lostpw() != null) {
+            $this->db->set('lostpw', $user->get_lostpw());
+        }
 
         $this->db->where('username', $user->get_userName());
 
@@ -125,7 +128,7 @@ class User_model extends CI_Model {
         //get an user by its username in an array
     public function get_user($username) {
         //Création de la requête
-        $this->db->select('username, password, user_level, timestamp, nom, prenom, adresse_postale, email, telephone, profession');
+        $this->db->select('username, password, user_level, timestamp, nom, prenom, adresse_postale, email, telephone, profession,lostpw');
         $this->db->from('users');
         $this->db->where('username', $username);
         $query = $this->db->get();

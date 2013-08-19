@@ -29,7 +29,7 @@
 
 <p>
     <button class="forgotPW">Mot de passe oublié?</button>
-    <?php echo form_open(); ?>
+    <?php echo form_open('accueil/login/lostpw'); ?>
     <div class="message" style="display:none; left:15%; top:40%; ">
         <p>
             Veuillez entrer votre pseudo et e-mail

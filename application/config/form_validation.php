@@ -641,6 +641,30 @@ $config = array(
                         'label'=>'texte',
                         'rules'=>'trim|required|xss_clean'
                     )
+                ),
+    'lost_password' => array(
+                    array(
+                        'field'=>'username',
+                        'label'=>'Pseudo',
+                        'rules'=>'trim|required|min_length[2]|max_length[30]|xss_clean|callback_check_username'
+                    ),
+                    array(
+                        'field'=>'email',
+                        'label'=>'e-mail',
+                        'rules'=>'trim|required|valid_email|max_length[127]|xss_clean'
+                    )
+                ),
+    'set_new_password' => array(
+                    array(
+                        'field'=>'password1',
+                        'label'=>'Password1',
+                        'rules'=>'required|matches[password2]|xss_clean'
+                    ),
+                    array(
+                        'field'=>'password2',
+                        'label'=>'Password2',
+                        'rules'=>'required|xss_clean'
+                    )
                 )
 );
 
