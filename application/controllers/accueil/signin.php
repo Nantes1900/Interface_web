@@ -38,8 +38,8 @@ class Signin extends MY_Controller {
             } else {
                 $message = $this->lang->line('signin_failure');
             }
-            $this->layout->add_js('jquery');
             $this->layout->add_js('close_message');
+            $this->layout->add_js('removepopup');
             $this->layout->views('data_center/success_form', array('success'=>$success, 'message'=>$message));
             $this->layout->view('accueil/login/formulaire_login', array('titre' => $this->lang->line('common_need_login')));
         }
@@ -82,7 +82,9 @@ class Signin extends MY_Controller {
     public function confirmation($cryptedUsername = null) {
         
         $username = $this->encrypt->decode(urldecode($cryptedUsername));
-        
+        $this->layout->add_js('close_message');
+        $this->layout->add_js('removepopup');
+            
         if ($this->user_model->check_ifuserexists($username) != 0) {
             $user = new User($username);
             //checking that user is new unconfirmed user

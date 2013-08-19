@@ -18,6 +18,7 @@ class Accueil extends MY_Controller {
         $this->layout->views('accueil/body');
 
         if (!$this->session->userdata('username')) { //Si l'utilisateur n'est pas loggé, on affiche le formulaire de connexion
+            $this->layout->add_js('removepopup');
             $this->layout->view('accueil/login/formulaire_login', array('titre' => $this->lang->line('common_need_login')));
         } else { //Sinon, on affiche les zones restreintes
 

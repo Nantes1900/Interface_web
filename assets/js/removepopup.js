@@ -15,4 +15,8 @@ $(function(){
         $("button.closePopup").click(function(){
             $(this).parent().css("display","none");
         });
+        
+        $("button.forgotPW").click(function(){
+            $("div.message").css("display","inline");
+        });
 });

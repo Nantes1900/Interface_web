@@ -103,8 +103,8 @@
             <?php echo $output; ?>
         </div>
     </body>
+    <script src="<?php echo base_url();?>assets/js/jquery.js"></script>
     <?php if($this->session->userdata('username')){ ?>
-        <script src="<?php echo base_url();?>assets/js/jquery.js"></script>
         <script src="<?php echo base_url();?>assets/js/dropdownmenu.js"></script>
     <?php } ?>
     <?php foreach ($js as $url): ?>
