@@ -42,7 +42,7 @@ class Accueil extends MY_Controller {
     
     public function change_lang(){
         $language = $this->input->post('language');
-        $languages = ['french','english'];
+        $languages = array('french','english');
         if(in_array($language, $languages)){
             $this->session->set_userdata('language',$language);
         }
