@@ -25,7 +25,7 @@ if (!function_exists('update_coordonnees')) {
     }
 }
 
-if (!function_exists('update_coordonnees')) {
+if (!function_exists('geomTxtToLatLng')) {
     //get an array with a geometry in text form
     //convert so that the array contains latitude and longitude
     //and also a typeGeom attribute
