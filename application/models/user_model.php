@@ -132,10 +132,14 @@ class User_model extends CI_Model {
         $this->db->from('users');
         $this->db->where('username', $username);
         $query = $this->db->get();
+        if($query!= null){
+            $result = $query->result_array();
 
-        $result = $query->result_array();
-
-        return $result['0'];
+            return $result['0'];
+        } else {
+            $result = array();
+            return $result;
+        }
     }
         
     //get a list of user entities, with some parameter restriction

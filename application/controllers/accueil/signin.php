@@ -58,7 +58,7 @@ class Signin extends MY_Controller {
         $this->load->library('email');
         $this->email->initialize($config);
 
-        $this->email->from('noreply@nantes1900.com', 'email automatique');
+        $this->email->from('noreply@nantes1900.com', 'email automatique'); //mettre une adresse valide
         $this->email->to($userdata['email']);
         $this->email->subject('[Nantes1900] Noreply : mail de confirmation');
         $msg = '<h1>Bienvenue dans le projet Nantes1900</h1>';
@@ -66,10 +66,9 @@ class Signin extends MY_Controller {
         $msg = $msg . 'votre mot de passe est "' . $userdata['password'] . '", le mot de passe ne vous sera jamais demandé, ne le communiquez pas.</p>';
         $msg = $msg . '<p>Enfin, pour pouvoir vous connectez, vous devez valider votre compte à l\'adresse suivante : ';
         $msg = $msg . anchor('accueil/signin/confirmation/' . urlencode($this->encrypt->encode($userdata['username']))) . '</p>';
-        $this->email->message('test');
+        $this->email->message($msg);
 
         $this->email->send();
-        echo $this->email->print_debugger();
     }
 
     //available through link given in mail
