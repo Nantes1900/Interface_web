@@ -33,7 +33,7 @@ class Signin extends MY_Controller {
             $success = $this->user_model->create_user($userdata); //Transmission des données au modèle user_model
             
             if($success){
-                //$this->confirm_mail($userdata); //to test during deployment as it doesn't work with localhost
+                $this->confirm_mail($userdata); //to test during deployment as it doesn't work with localhost
                 $message = sprintf($this->lang->line('signin_validation'),$userdata['username']);
             } else {
                 $message = $this->lang->line('signin_failure');
@@ -49,17 +49,11 @@ class Signin extends MY_Controller {
     public function confirm_mail($userdata) {
         $user = new User($userdata['username']);
 
-        $config = array();
-        $config['useragent'] = "CodeIgniter";
-        $config['mailpath'] = "/usr/sbin/sendmail"; // or "/usr/bin/sendmail"
-        $config['protocol'] = "smtp";
-        $config['smtp_host'] = "localhost";
-        $config['smtp_port'] = "25";
+        $config = array();        
         $config['mailtype'] = 'html';
         $config['charset'] = 'utf-8';
         $config['newline'] = "\r\n";
         $config['wordwrap'] = TRUE;
-        $config['mailpath'] = '/usr/sbin/sendmail';
 
         $this->load->library('email');
         $this->email->initialize($config);
