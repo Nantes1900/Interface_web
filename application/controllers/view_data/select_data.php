@@ -21,6 +21,9 @@ class Select_data extends MY_Controller {
         } elseif ($dataType == 'carte') {
             $this->select_geo();
         } elseif ($dataType == 'polygon') {
+            if($this->session->userdata('user_level') < 4){
+                redirect('accueil');
+            }
             $objet_id = $this->input->post('objet_id');
             $this->select_geo($objet_id);
         }
