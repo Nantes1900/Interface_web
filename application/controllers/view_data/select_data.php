@@ -20,6 +20,9 @@ class Select_data extends MY_Controller {
             $this->select_ressource($dataType, $goal);
         } elseif ($dataType == 'carte') {
             $this->select_geo();
+        } elseif ($dataType == 'polygon') {
+            $objet_id = $this->input->post('objet_id');
+            $this->select_geo($objet_id);
         }
     }
 
@@ -249,13 +252,17 @@ class Select_data extends MY_Controller {
         $this->layout->view('view_data/select_ressource', $data);
     }
 
-    private function select_geo() {
+    private function select_geo($objet_id=null) {
         $this->lang->load('map', $this->language);
         $data = array();
         //we consider if there is a focus on a particular objet
         if ($this->input->post('latitude') != null && $this->input->post('longitude') != null) {
             $data['latitude'] = $this->input->post('latitude');
             $data['longitude'] = $this->input->post('longitude');
+        }
+        //checking if we want to add a polygon
+        if($objet_id!=null){
+            $data['objet'] = new Objet($objet_id);
         }
         $this->layout->add_css('leaflet');
         $this->layout->add_js('leaflet');

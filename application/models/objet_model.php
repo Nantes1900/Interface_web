@@ -84,7 +84,7 @@ class Objet_model extends CI_Model {
     }
     
     public function get_objet_geo_list() {
-        $sql = 'SELECT objet.objet_id, nom_objet, resume, ST_X(temp_geom.the_geom) AS longitude, ST_Y(temp_geom.the_geom) AS latitude, geom_id, ' .
+        $sql = 'SELECT objet.objet_id, nom_objet, resume, ST_AsText(temp_geom.the_geom) AS geomtxt, geom_id, ' .
                 'date_debut_geom, date_fin_geom, date_precision '.
                 'FROM objet JOIN temp_geom ON objet.objet_id = temp_geom.objet_id ' .
                 'WHERE objet.validation = TRUE ';
@@ -101,12 +101,17 @@ class Objet_model extends CI_Model {
     }
 
     public function get_objet_geo($objet_id) {
-        $sql = 'SELECT ST_X(temp_geom.the_geom) AS longitude, ST_Y(temp_geom.the_geom) AS latitude ' .
+        $sql = 'SELECT ST_AsText(temp_geom.the_geom) AS geomtxt ' .
                 'FROM objet JOIN temp_geom ON objet.objet_id = temp_geom.objet_id ' .
                 'WHERE objet.validation = TRUE AND objet.objet_id = ' . $objet_id;
         $query = $this->db->query($sql);
         $result = $query->result_array();
         if (isset($result['0'])) {
+            $geomInfo = $result['0'];
+            //we get the coord of the first point (unique point if it is not a polygon)
+            $geomTxt = preg_split("/[\s\(\)\,]+/", $geomInfo['geomtxt']);
+            $result['0']['longitude'] = $geomTxt[1];
+            $result['0']['latitude'] = $geomTxt[2];
             return $result['0'];
         } else {
             return null;

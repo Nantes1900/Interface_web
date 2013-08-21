@@ -28,8 +28,12 @@
                 <input type="hidden" name="latitude" value="<?php echo $latlng['latitude']; ?>" />
                 <input type="submit" value="<?php echo $this->lang->line('common_view_see_on_map');?>" />
             </form>
+        <?php } else {?>
+            <?php echo form_open('view_data/select_data/index/polygon') ?>
+                        <input type="hidden" name="objet_id" value="<?php echo $objet->get_objet_id(); ?>" />
+                        <input type="submit" value="Placer un polygone correspondant à cet objet sur la carte" />
+            <?php echo form_close(); ?>
         <?php } ?>
-        
         
         <?php if($this->session->userdata('user_level') >= 5){ ?>
                 <?php echo form_open('moderation/modify_objet/index/modify') ?>

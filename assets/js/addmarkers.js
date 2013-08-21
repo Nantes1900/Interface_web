@@ -31,20 +31,34 @@ $.getJSON(coord_file, function(json) { // this will show the info it in firebug 
                                 popupText += '<br><a href="'+base_url+'moderation/modify_objet/delete_geom/'+
                                             json[row].geom_id+'/'+json[row].objet_id+'"> Supprimer le marqueur </a>';
                         }
-			marker = L.marker([json[row].latitude, json[row].longitude]).addTo(map).
+                        if(json[row].typeGeom == 'POINT'){
+                            marker = L.marker([json[row].latitude, json[row].longitude]).addTo(map).
                                 bindPopup(popupText);
+                        } else if (json[row].typeGeom == 'POLYGON') {
+                            var arrayLng = json[row].longitude.split(" ");
+                            var arrayLat = json[row].latitude.split(" ");
+                            var length = arrayLng.length;
+                            if (length === arrayLat.length){
+                                var LatLngs = [];
+                                for (var i = 0; i<length; i++){
+                                    if (arrayLat[i]!=='' && arrayLng[i]!==''){
+                                        var latlng = new L.LatLng(arrayLat[i], arrayLng[i]);
+                                        LatLngs.push(latlng);
+                                    }
+                                }
+                                var polygon = new L.Polygon(LatLngs, {color: 'blue'}).addTo(map).
+                                bindPopup(popupText);;
+                            }
+                        } 
 		}
 	}
 });
 
-//Draw polygon representing mock-up bounds
-var bounds = [[47.19447, -1.60970], [47.18908, -1.60863], [47.18599, -1.60611], [47.20479, -1.55415], [47.21052, -1.55556], [47.21317, -1.55857]];
-L.polygon(bounds, {color: "#ff7800", weight: 5}).addTo(map);
 
 //if the user has a level equal or superior to 4 (chercheur), the following script will apply
-//adding a new temporary marker to add objet
+
 if($('p#chercheur').attr('id')=='chercheur'){ 
-    
+    //adding a new temporary marker to add objet
     map.on('dblclick', function(e){
         var latitude = e.latlng.lat;
         var longitude = e.latlng.lng;
@@ -66,6 +80,54 @@ if($('p#chercheur').attr('id')=='chercheur'){
         });
     });
 }
+if($('p#addPolygon').attr('id')=='addPolygon'){ 
+    //adding a temporary polygon to the map
+    var coord = new Array();
+    var polyline = new L.Polyline(coord, {color: 'red'}).addTo(map);
+    var polygon = new L.Polygon(coord, {color: 'green'});
+    map.on('click', function(e){
+        coord.push(e.latlng);
+        polyline.setLatLngs(coord);
+        
+    });
+    
+    $("button#delPolygon").click(function(){
+        coord = [];
+        polyline.setLatLngs(coord);
+        polygon.setLatLngs(coord);
+    });
+    
+    $("button#okPolygon").click(function(){
+        var length = coord.length;
+        if(length>1){
+            polygon.setLatLngs(coord).addTo(map);
+            polyline.setLatLngs([]);
+            //getting latitudes and longitudes
+            var lats = '';
+            var lngs = '';
+            for(var i=0; i<length; i++){
+                if(i!=0){
+                    lats = lats+'%20';
+                    lngs = lngs+'%20';
+                }
+                lats = lats+coord[i].lat;
+                lngs = lngs+coord[i].lng;
+            }
+            //creating the popup
+            var objet_id = $('div#objet_id').html();
+            var popupText = '<b style="color : blue"> Nouvel objet ! </b><br>'+
+                    '<form action="'+base_url+'data_center/ajout_objet/geometry_form/'+lats+'/'+lngs+'" method="post" accept-charset="utf-8">'+
+                    '<input type="hidden" name="objet_id" value="'+objet_id+'" />'+
+                    '<input type="hidden" name="latitudes" value="'+lats+'" />'+
+                    '<input type="hidden" name="longitudes" value="'+lngs+'" />'+
+                    '<input type="submit" value="Enregistrer ce polygone" />'+
+                    '</form>';
+            polygon.bindPopup(popupText);
+            coord = [];
+        }
+    });
+}
+
 //zooming if a focus on a particular objet was in arguments of the page
 if($('div#latitude').attr('id')=='latitude'){ 
     var lat = $('div#latitude').html();

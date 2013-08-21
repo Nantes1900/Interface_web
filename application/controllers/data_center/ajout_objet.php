@@ -164,14 +164,36 @@ class Ajout_objet extends MY_Controller {
     //render the form for adding a geometry to an existing object
     //if form is valid, call the objet_model to add the geometry
     public function geometry_form($latitude, $longitude) {
-        if ($this->session->userdata('user_level') >= 4) {
-            $objet_id = $this->input->post('objet_id');
+        $objet_id = $this->input->post('objet_id');
+        if ($this->session->userdata('user_level') >= 4 && $objet_id!='') {
             $objet = new Objet($objet_id);
             if ($this->form_validation->run('ajout_geom') == FALSE) {
                 $this->layout->view('data_center/ajout_geom', array('objet' => $objet, 'latitude' => $latitude, 'longitude' => $longitude));
             } else {
                 $geomdata = array('objet_id' => $objet->get_objet_id(), 'username' => $this->session->userdata('username'));
-                $geomdata['the_geom'] = 'ST_SetSRID(ST_MakePoint(' . $longitude . ', ' . $latitude . '), 4326)';
+                //checking if we have a point or a polygon
+                if(!preg_match("#%20#", $latitude)){
+                    //point case
+                    $geomdata['the_geom'] = 'ST_SetSRID(ST_MakePoint(' . $longitude . ', ' . $latitude . '), 4326)';
+                }else{
+                    //polygon case
+                    $latitudes = explode('%20', $latitude);
+                    $longitudes = explode('%20', $longitude);
+                    $length = count($latitudes);
+                    if ($length!=count($longitudes)){
+                        redirect('accueil');
+                    }
+                    $polygon = 'POLYGON((';
+                    for($i=0; $i<$length; $i++){
+                        if($i!=0){
+                            $polygon.=', ';
+                        }
+                        $polygon.=$longitudes[$i].' '.$latitudes[$i];
+                    }
+                    $polygon.=', '.$longitudes[0].' '.$latitudes[0];
+                    $polygon.='))';
+                    $geomdata['the_geom'] = 'ST_SetSRID(ST_GeomFromText(\'' . $polygon . '\'),4326)';
+                }
                 $geomdata['mots_cles'] = $this->input->post('mots_cles');
                 $dates_infos = conc_2_date($this->input->post('jour_debut'), $this->input->post('mois_debut'), $this->input->post('annee_debut'), $this->input->post('jour_fin'), $this->input->post('mois_fin'), $this->input->post('annee_fin'));
 

@@ -26,6 +26,15 @@
         <div id="longitude" style="display : none;"><?php echo $longitude; ?></div>
     <?php } ?>
     
+    <?php if(isset($objet) && $objet instanceof Objet){ ?>
+        <h2>Ajout d'un polygone représentant <em><?php echo $objet->get_nom_objet(); ?></em></h2>
+        <p id="addPolygon"> 
+            Cliquez sur la carte pour ajouter les sommets d'un polygone.
+            <button id='okPolygon'>Valider le polygone</button>
+            <button id='delPolygon'>Annuler le polygone</button>
+            <div id="objet_id" style="display : none;"><?php echo $objet->get_objet_id(); ?></div>
+        </p>    
+    <?php } ?>    
     <div id="map"></div>
 
 
