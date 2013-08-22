@@ -330,7 +330,11 @@ class Modify_objet extends MY_Controller {
         $day = (int) $this->input->post('jour_' . $boundary);
         $month = (int) $this->input->post('mois_' . $boundary);
         $year = (int) $this->input->post('annee_' . $boundary);
-        $valid = checkdate($month, $day, $year);
+        if ($day != null && $month != null){
+            $valid = checkdate($month, $day, $year);
+        } else{
+            $valid = (bool) $year;
+        }
         if (!$valid) {
             $this->form_validation->set_message('check_date', $this->lang->line('common_add_obj_check_date'));
         }

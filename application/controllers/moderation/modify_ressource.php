@@ -562,7 +562,11 @@ class Modify_ressource extends MY_Controller{
         $day = (int) $this->input->post('jour'.$extension);
         $month = (int) $this->input->post('mois'.$extension);
         $year = (int) $this->input->post('annee'.$extension);
-        $valid = checkdate($month,$day,$year);
+        if ($day != null && $month != null){
+            $valid = checkdate($month, $day, $year);
+        } else{
+            $valid = (bool) $year;
+        }
         if (!$valid){
             $this->form_validation->set_message('check_date', $this->lang->line('common_add_obj_check_date'));
         }
