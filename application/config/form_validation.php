@@ -326,7 +326,7 @@ $config = array(
                     ),
                     array(
                         'field'=>'duree',
-                        'label'=>'Legende',
+                        'label'=>'Duree',
                         'rules'=>'trim|is_natural|max_length[200]|xss_clean'
                     ),
                     array(
