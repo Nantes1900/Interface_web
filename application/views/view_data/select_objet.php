@@ -164,6 +164,9 @@
                             <th><?php echo $this->lang->line('common_list_is_valid'); ?></th>
                             <th><?php echo $this->lang->line('common_list_link_obj_to').$ressource->get_titre();?></th>
                 <?php }elseif($goal=='add_geo'){ ?>
+                            <th><span class="hint"><?php echo $this->lang->line('common_list_is_valid'); ?><span>
+                                        Un objet non validé n'apparaîtra sur la carte qu'une fois validé
+                                    </span></span></th>
                             <th><?php echo $this->lang->line('common_list_localize'); ?></th>
                 <?php } ?>
                 
@@ -212,6 +215,13 @@
                             </form>
                         </td>
                    <?php }  elseif ($goal=='add_geo') { ?>
+                        <td><?php if($objet->get_validation()=='t'){
+                                echo $this->lang->line('common_list_valid');
+                              }else{
+                                echo $this->lang->line('common_list_unvalid'); 
+                                
+                              }?>
+                        </td>
                         <td>
                             <?php echo form_open('data_center/ajout_objet/geometry_form/'.$latitude.'/'.$longitude); ?>
                                  <input type="hidden" name="objet_id" value="<?php echo $objet->get_objet_id(); ?>" />
