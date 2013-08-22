@@ -152,6 +152,14 @@
                             <input type="submit" value="<?php echo $this->lang->line('common_view_modify_ress');?>" />
                 </form>
         <?php } ?>
+                
+        <?php if($this->session->userdata('user_level') >= 4){ ?>
+                <?php echo form_open('view_data/select_data/select_objet/add_doc') ?>
+                            <input type="hidden" name="ressource_id" value="<?php echo $ressource_id?>" />
+                            <input type="hidden" name="typeRessource" value="<?php echo $typeRessource; ?>">
+                            <input type="submit" value="<?php echo $this->lang->line('common_list_link_ress'); ?>" />
+                </form>
+        <?php } ?>
         
 <!--    printing the annotations            -->
         <?php if (isset($annotationList)){ 
