@@ -18,7 +18,8 @@
                         ?> 
                         <br/>
                         <?php if(($objetArray['date_debut_relation']!=null)&&($objetArray['date_fin_relation']!=null)){
-                                echo 'du '.to_date_dmy($objetArray['date_debut_relation']).' au '.to_date_dmy($objetArray['date_fin_relation']); 
+                                echo 'du '.to_date_dmy($objetArray['date_debut_relation']).' au '.to_date_dmy($objetArray['date_fin_relation']);
+                                echo ', précision : '.$objetArray['date_precision'];
                         }?>
                     </span>
                 </li>
@@ -44,7 +45,7 @@
                         <br/>
                         <?php echo 'Ref : '.$ressArray['reference_ressource']; ?>
                         <br/>
-                        <?php echo 'à partir du '.to_date_dmy($ressArray['date']); ?>
+                        <?php echo 'à partir du '.to_date_dmy($ressArray['date']).', précision : '.$ressArray['date_precision']; ?>
                         <?php if($ressArray['page_consultee']!=0){ ?>
                             <br>
                                 <?php echo $this->lang->line('common_view_sidebar_page').$ressArray['page_consultee']; ?>
@@ -70,7 +71,7 @@
                         <br/>
                         <?php echo 'Ref : '.$ressArray['reference_ressource']; ?>
                         <br/>
-                        <?php echo 'à partir du '.to_date_dmy($ressArray['date']); ?>
+                        <?php echo 'à partir du '.to_date_dmy($ressArray['date']).', précision : '.$ressArray['date_precision']; ?>
                         <?php if($ressArray['page_consultee']!=0){ ?>
                             <br>
                                 <?php echo $this->lang->line('common_view_sidebar_page').$ressArray['page_consultee']; ?>
@@ -96,7 +97,7 @@
                         <br/>
                         <?php echo 'Ref : '.$ressArray['reference_ressource']; ?>
                         <br/>
-                        <?php echo 'à partir du '.to_date_dmy($ressArray['date']); ?>
+                        <?php echo 'à partir du '.to_date_dmy($ressArray['date']).', précision : '.$ressArray['date_precision']; ?>
                     </span>
             </li>
             </form>

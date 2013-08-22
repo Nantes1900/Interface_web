@@ -249,7 +249,7 @@ class Objet_model extends CI_Model {
     //arrays are like relation_id, objet_id, nom_objet, username, resume, type relation, date_debut_relation, date_fin_relation, parent
     public function get_linked_objet($objet_id, $valid = 't') {
         $this->db->select('relation_id, objet_id,nom_objet, objet.username AS username, resume, type_relation, date_debut_relation, 
-                                date_fin_relation, parent');
+                                date_fin_relation, date_precision, parent');
         $this->db->from('objet');
         $this->db->join('relation', 'objet.objet_id=relation.objet_id_1');
         $this->db->join('type_relation', 'relation.type_relation_id=type_relation.type_relation_id');
@@ -264,7 +264,7 @@ class Objet_model extends CI_Model {
 
         //second request for inversed roles
         $this->db->select('relation_id, objet_id,nom_objet, objet.username AS username, resume, type_relation, date_debut_relation, 
-                                date_fin_relation, parent');
+                                date_fin_relation, date_precision, parent');
         $this->db->from('objet');
         $this->db->join('relation', 'objet.objet_id=relation.objet_id_2');
         $this->db->join('type_relation', 'relation.type_relation_id=type_relation.type_relation_id');
@@ -290,12 +290,12 @@ class Objet_model extends CI_Model {
             $this->db->select('documentation_' . $typeRessource . '_id, ressource_' . $typeRessource .
                             '.ressource_' . $typeRessource . '_id AS ressource_id, 
                             titre, ressource_' . $typeRessource . '.username AS username, description, page_consultee,
-                                reference_ressource, date_debut_ressource AS date');
+                                reference_ressource, date_debut_ressource AS date, date_precision');
         } else {
             $this->db->select('documentation_' . $typeRessource . '_id, ressource_' . $typeRessource . 
                             '.ressource_' . $typeRessource . '_id AS ressource_id, 
                             titre, ressource_' . $typeRessource . '.username AS username, description, 
-                                reference_ressource, date_debut_ressource AS date');
+                                reference_ressource, date_debut_ressource AS date, date_precision');
         }
         $this->db->from('ressource_' . $typeRessource);
         $this->db->join('documentation_' . $typeRessource . ' AS d', 'ressource_' . 
