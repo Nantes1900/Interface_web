@@ -81,9 +81,27 @@ class Login extends MY_Controller {
             $user->set_lostpw('t');
             $user->save();
             
-            //insert here the email sending
+            //email sending
             $this->load->library('encrypt');
-            
+            $config = array();        
+            $config['mailtype'] = 'html';
+            $config['charset'] = 'utf-8';
+            $config['newline'] = "\r\n";
+            $config['wordwrap'] = TRUE;
+
+            $this->load->library('email');
+            $this->email->initialize($config);
+
+            $this->email->from('noreply@nantes1900.com', 'email automatique'); //mettre une adresse valide
+            $this->email->to($user->get_email());
+            $this->email->subject('[Nantes1900] Noreply : réinitialisation de mot de passe');
+            $msg = '<h1>Nantes1900</h1>';
+            $msg = $msg . '<p>Votre demande de réinitialisation de mot de passe a été prise en compte';
+            $msg = $msg . '<p>Pour entrer un nouveau mot de passe, rendez vous au lien suivant : ';
+            $msg = $msg . anchor('accueil/login/set_new_password/' . urlencode($this->encrypt->encode($user->get_userName()))) . '</p>';
+            $this->email->message($msg);
+
+            $this->email->send();
             
             $this->layout->views('accueil/body');
             $this->layout->views('accueil/login/formulaire_login', array('titre' => $this->lang->line('common_need_login')));
@@ -93,7 +111,7 @@ class Login extends MY_Controller {
         }
     }
     
-    public function set_new_password($cryptedUsername){
+    public function set_new_password($cryptedUsername=null){
         $this->load->library('encrypt');
         $this->load->helper('security');
         

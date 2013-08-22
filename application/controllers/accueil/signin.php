@@ -48,13 +48,15 @@ class Signin extends MY_Controller {
     //this send a confirmation mail with a link to set your userlevel to 1
     public function confirm_mail($userdata) {
         $user = new User($userdata['username']);
-
+        $admins = $this->user_model->get_user_list(10); //get a list of users with level 10
+        $admin = $admins[0];
+        
         $config = array();        
         $config['mailtype'] = 'html';
         $config['charset'] = 'utf-8';
         $config['newline'] = "\r\n";
         $config['wordwrap'] = TRUE;
-
+        
         $this->load->library('email');
         $this->email->initialize($config);
 
@@ -66,6 +68,7 @@ class Signin extends MY_Controller {
         $msg = $msg . 'votre mot de passe est "' . $userdata['password'] . '", le mot de passe ne vous sera jamais demandé, ne le communiquez pas.</p>';
         $msg = $msg . '<p>Enfin, pour pouvoir vous connectez, vous devez valider votre compte à l\'adresse suivante : ';
         $msg = $msg . anchor('accueil/signin/confirmation/' . urlencode($this->encrypt->encode($userdata['username']))) . '</p>';
+        $msg = $msg . '<p>En cas de problème, essayez de contacter l\'administrateur principal à l\'adresse : '.$admin->get_email().'</p>';
         $this->email->message($msg);
 
         $this->email->send();
