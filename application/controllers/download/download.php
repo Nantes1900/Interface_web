@@ -28,7 +28,7 @@ class Download extends MY_Controller {
 
     public function do_download() {
         $fileName = $this->input->post('fileName');
-        $data = file_get_contents(base_url() . 'assets/utils/' . $fileName); //we prepare the file
+        $data = file_get_contents('assets/utils/' . $fileName); //we prepare the file
         force_download($fileName, $data); //we download the file
         $this->download_page();
     }
