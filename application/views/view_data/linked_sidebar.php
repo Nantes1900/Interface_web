@@ -1,4 +1,3 @@
-
     <div class='rightSidebar'>
         <h2><?php echo $this->lang->line('common_view_sidebar_obj') ?></h2>
         
@@ -18,9 +17,36 @@
                         ?> 
                         <br/>
                         <?php if(($objetArray['date_debut_relation']!=null)&&($objetArray['date_fin_relation']!=null)){
-                                echo 'du '.to_date_dmy($objetArray['date_debut_relation']).' au '.to_date_dmy($objetArray['date_fin_relation']);
-                                echo ', précision : '.$objetArray['date_precision'];
-                        }?>
+                                if($objetArray['date_precision']=="Jour"){
+									echo 'du '.to_date_dmy($objetArray['date_debut_relation']).' au '.to_date_dmy($objetArray['date_fin_relation']);
+								}
+								else if ($objetArray['date_precision']=="Mois"){
+									$date_debut = date_parse(to_date_dmy($objetArray['date_debut_relation']));
+									$date_fin = date_parse(to_date_dmy($objetArray['date_fin_relation']));
+									echo 'du '.$date_debut['month'].'/'.$date_debut['year'].' au '.$date_fin['month'].'/'.$date_fin['year'];
+								}
+								else if ($objetArray['date_precision']=="Annee"){
+									$date_debut = date_parse(to_date_dmy($objetArray['date_debut_relation']));
+									$date_fin = date_parse(to_date_dmy($objetArray['date_fin_relation']));
+									echo 'de '.$date_debut['year'].' à '.$date_fin['year'];
+								}
+							}
+							else if(($objetArray['date_debut_relation']!=null)&&($objetArray['date_fin_relation']==null)){
+								if($objetArray['date_precision']=="jour"){
+									echo 'du '.to_date_dmy($objetArray['date_debut_relation']).' à aujourd\'hui';
+								}
+								else if ($objetArray['date_precision']=="mois"){
+									$date_debut = date_parse(to_date_dmy($objetArray['date_debut_relation']));
+									$date_fin = date_parse(to_date_dmy($objetArray['date_fin_relation']));
+									echo 'du '.$date_debut['month'].'/'.$date_debut['year'].' à aujourd\'hui';
+								}
+								else if ($objetArray['date_precision']=="annee"){
+									$date_debut = date_parse(to_date_dmy($objetArray['date_debut_relation']));
+									$date_fin = date_parse(to_date_dmy($objetArray['date_fin_relation']));
+									echo 'du '.$date_debut['year'].' à aujourd\'hui';
+								}
+							}
+                        ?>
                     </span>
                 </li>
             </form>
