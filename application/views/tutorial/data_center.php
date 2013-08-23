@@ -150,7 +150,7 @@
             En particulier :
             <ul>
                 <li>
-                    les dates sont de type mm/jj/aaaa (mais pas les précision)
+                    les dates sont de type jj/mm/aaaa (mais pas les précision)
                 </li>
                 <li>
                     pour les objets, vous n'êtes pas obligé de renseigner de coordonnées (colonnes à partir de latitude)

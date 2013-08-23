@@ -203,11 +203,11 @@ class Ressource_texte_model extends CI_Model
                         $errorBegin = array_pop($failure);
                         $failure[] = $errorBegin.$ressource->get_titre().$this->lang->line('csv_ress_already_exist');
                     }
-                    if(!valid_MDY($ressource->get_date_debut_ressource())){
+                    if(!valid_DMY($ressource->get_date_debut_ressource())){
                         $errorBegin = array_pop($failure);
                         $failure[] = $errorBegin.$this->lang->line('csv_ress_date_begin');
                     }
-                    if(!(is_numeric($ressource->get_pagination())||$ressource->get_pagination()==null)){
+                    if(!(is_numeric($ressource->get_pagination())||$ressource->get_pagination()=='')){
                         $errorBegin = array_pop($failure);
                         $failure[] = $errorBegin.$this->lang->line('csv_ress_pagination');
                     }

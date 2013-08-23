@@ -2,7 +2,7 @@
 
 if (!function_exists('conc_date')) {
 
-    //Permet de créer automatiquement une date concaténée au format MM/DD/YYYY, 
+    //Permet de créer automatiquement une date concaténée au format DD/MM/YYYY, 
     //et renvoie également la précision de la date
     function conc_date($jour, $mois, $annee) {
         //Calcul automatique de la précision de la date
@@ -33,7 +33,7 @@ if (!function_exists('conc_date')) {
 
 
             //On concaténe la date complète
-            $date = $mois . "/" . $jour . "/" . $annee;
+            $date = $jour . "/" . $mois . "/" . $annee;
         }
 
         return array('date' => $date,
@@ -44,7 +44,7 @@ if (!function_exists('conc_date')) {
 
 if (!function_exists('conc_2_date')) {
 
-    //Permet de créer automatiquement une date_debut et une date_fin concaténées format MM/DD/YYYY,
+    //Permet de créer automatiquement une date_debut et une date_fin concaténées format DD/MM/YYYY,
     // et renvoie également la précision des dates
     function conc_2_date($jour_debut, $mois_debut, $annee_debut, $jour_fin, $mois_fin, $annee_fin) {
         //Calcul automatique de la précision de la date
@@ -74,7 +74,7 @@ if (!function_exists('conc_2_date')) {
             }
 
             //On concaténe la date début complète
-            $date_debut = $mois_debut . "/" . $jour_debut . "/" . $annee_debut;
+            $date_debut = $jour_debut . "/" . $mois_debut . "/" . $annee_debut;
         }
 
         if (!$annee_fin) {
@@ -92,7 +92,7 @@ if (!function_exists('conc_2_date')) {
             }
 
             //On concaténe la date fin complète
-            $date_fin = $mois_fin . "/" . $jour_fin . "/" . $annee_fin;
+            $date_fin = $jour_fin . "/" . $mois_fin . "/" . $annee_fin;
         }
 
         return array('date_debut' => $date_debut,
@@ -148,9 +148,9 @@ if ( ! function_exists('break_date_Ymd')){
 
 if ( ! function_exists('valid_MDY')){
     //check if a date is in MM/DD/YYYY format and is valid
-    function valid_MDY($date) {
+    function valid_DMY($date) {
         if (preg_match("#\d\d/\d\d/\d\d\d\d#", $date)){
-            list($month, $day, $year) = explode('/', $date);
+            list($day, $month, $year) = explode('/', $date);
             return checkdate($month, $day, $year);
         } else {
             return FALSE;

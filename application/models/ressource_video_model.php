@@ -203,11 +203,11 @@ class Ressource_video_model extends CI_Model
                     $errorBegin = array_pop($failure);
                     $failure[] = $errorBegin.' '.$ressource->get_titre().$this->lang->line('csv_ress_already_exist');
                 }
-                if(!valid_MDY($ressource->get_date_debut_ressource())){
+                if(!valid_DMY($ressource->get_date_debut_ressource())){
                     $errorBegin = array_pop($failure);
                     $failure[] = $errorBegin.$this->lang->line('csv_ress_date_begin');
                 }
-                if(!valid_MDY($ressource->get_date_production())){
+                if(!valid_DMY($ressource->get_date_production())){
                     $errorBegin = array_pop($failure);
                     $failure[] = $errorBegin.$this->lang->line('csv_ress_vid_date_begin');
                 }

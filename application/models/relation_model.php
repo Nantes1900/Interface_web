@@ -95,9 +95,9 @@ class Relation_model extends CI_Model {
                     $relation_id_array[] = $this->db->insert_id();
                 } else {
                     if ($relationdata['type_relation_id'] != null) {
-                        if (!valid_MDY($relationcsv['date debut'])) {
+                        if (!valid_DMY($relationcsv['date debut'])) {
                             $failure[] = $errorBegin . $this->lang->line('csv_rel_date_begin');
-                        } elseif (!valid_MDY($relationcsv['date fin'])) {
+                        } elseif (!valid_DMY($relationcsv['date fin'])) {
                             $failure[] = $errorBegin . $this->lang->line('csv_rel_date_end');
                         } else {
                             $failure[] = $errorBegin . $this->lang->line('csv_rel_invalid');
