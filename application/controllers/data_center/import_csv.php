@@ -28,7 +28,7 @@ class Import_csv extends MY_Controller {
     }
 
     function do_upload() {
-        $config['upload_path'] = './assets/csv/';
+        $config['upload_path'] = FCPATH.'/assets/csv/';
         $config['allowed_types'] = 'csv';
         $config['max_size'] = '256';
 
