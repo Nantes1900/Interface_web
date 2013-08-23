@@ -20,7 +20,7 @@ class Import_csv extends MY_Controller {
         //Ce code sera executé charque fois que ce contrôleur sera appelé
         $this->lang->load('csv', $this->language);
         $this->load->library('upload');
-        $this->load->helper(array('form', 'csv', 'file'));
+        $this->load->helper(array('form', 'csv', 'file', 'dates'));
     }
 
     private function formulaire() {

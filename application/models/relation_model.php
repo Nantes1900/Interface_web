@@ -78,8 +78,8 @@ class Relation_model extends CI_Model {
                 if ($relationcsv['date fin'] != null) {
                     $relationdata['date_fin_relation'] = $relationcsv['date fin'];
                 }
-                if ($relationcsv['precision date'] != null) {
-                    $relationdata['date_precision'] = $relationcsv['precision date'];
+                if ($relationcsv['date debut'] != null && $relationcsv['date fin'] != null) {
+                    $relationdata['date_precision'] = 'Jour';
                 }
                 if ($relationcsv['indication debut'] != null) {
                     $relationdata['datation_indication_debut'] = $relationcsv['indication debut'];
