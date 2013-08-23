@@ -83,7 +83,7 @@ if($('p#chercheur').attr('id')=='chercheur'){
 if($('p#addPolygon').attr('id')=='addPolygon'){
     //change pointer style for accurate position
     leafletContainer = document.getElementsByClassName('leaflet-container');
-    for (var i =0; (element = leafletMap[i]) != null; i++) {
+    for (var i =0; (element = leafletContainer[i]) != null; i++) {
     	element.style.cursor = 'crosshair';
     }
     
