@@ -22,7 +22,7 @@
             <?php foreach ($linkedObjetArray as $objetArray){ ?>
                 <tr>
                     <td><?php echo $objetArray['nom_objet']; ?></td>
-                    <td><?php echo $objetArray['username']; ?></td>
+                    <td><?php echo $objetArray['relcreator']; ?></td>
                     <td><?php echo $objetArray['type_relation']; ?></td>
                     <td><?php echo 'du '.to_date_dmy($objetArray['date_debut_relation']).' au '.to_date_dmy($objetArray['date_fin_relation']); ?></td>
                     <td><?php echo $objetArray['resume']; ?></td>
