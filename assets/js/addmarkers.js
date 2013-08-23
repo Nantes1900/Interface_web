@@ -80,7 +80,13 @@ if($('p#chercheur').attr('id')=='chercheur'){
         });
     });
 }
-if($('p#addPolygon').attr('id')=='addPolygon'){ 
+if($('p#addPolygon').attr('id')=='addPolygon'){
+    //change pointer style for accurate position
+    leafletContainer = document.getElementsByClassName('leaflet-container');
+    for (var i =0; (element = leafletMap[i]) != null; i++) {
+    	element.style.cursor = 'crosshair';
+    }
+    
     //adding a temporary polygon to the map
     var coord = new Array();
     var polyline = new L.Polyline(coord, {color: 'red'}).addTo(map);
