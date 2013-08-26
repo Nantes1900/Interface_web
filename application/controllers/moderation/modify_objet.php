@@ -267,7 +267,13 @@ class Modify_objet extends MY_Controller {
         update_coordonnes(); //we update the coordonnees.json file for the map
         
         $message = $this->create_success_message($success, 'geomDeletion', $objet->get_nom_objet());
-        $this->layout->view('data_center/success_form', array('success' => $success, 'message' => $message));
+        $this->layout->views('data_center/success_form', array('success' => $success, 'message' => $message));
+        $this->lang->load('map', $this->language);
+        $data = array();
+        $this->layout->add_css('leaflet');
+        $this->layout->add_js('leaflet');
+        $this->layout->add_js('addmarkers');
+        $this->layout->view('view_data/select_geo', $data);
     }
 
     private function create_success_message($success, $lastAction, $firstEntity = null, $secondEntity = null) {

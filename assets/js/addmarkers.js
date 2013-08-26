@@ -57,7 +57,7 @@ $.getJSON(coord_file, function(json) { // this will show the info it in firebug 
 
 //if the user has a level equal or superior to 4 (chercheur), the following script will apply
 
-if($('p#chercheur').attr('id')=='chercheur'){ 
+if($('p#chercheur').attr('id')=='chercheur' && $('p#addPolygon').attr('id')!='addPolygon'){ 
     //adding a new temporary marker to add objet
     map.on('dblclick', function(e){
         var latitude = e.latlng.lat;
