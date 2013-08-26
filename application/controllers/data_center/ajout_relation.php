@@ -51,21 +51,22 @@ class Ajout_relation extends MY_Controller {
      */
     public function formulaire() {
         $userLevel = $this->session->userdata('user_level');
-        if ($userLevel >= 4) {
-            //On va récupérer une liste des objets existants dans la base, afin de les proposer
-            $objet_list = $this->objet_model->get_all_objet();
-
+        $relationdata = array();
+        $relationdata['objet_id_1'] = $this->input->post('objet_id_1');
+        $relationdata['objet_id_2'] = $this->input->post('objet_id_2');
+        if ($userLevel >= 4 && $this->objet_model->exist($relationdata['objet_id_1'])
+                            && $this->objet_model->exist($relationdata['objet_id_2'])) {
+            //On va récupérer les objets 
+            $objet1 = new Objet($relationdata['objet_id_1']);
+            $objet2 = new Objet($relationdata['objet_id_2']);
             //On va récupérer une liste des types de relation existants dans la base, afin de les proposer
             $type_relation_list = $this->relation_model->get_type_relation_list();
 
             if ($this->form_validation->run('ajout_relation') == FALSE) {
-                $data = array('objet_list' => $objet_list, 'type_relation_list' => $type_relation_list);
+                $data = array('objet1' => $objet1, 'objet2'=>$objet2, 'type_relation_list' => $type_relation_list);
 
                 $this->layout->view('data_center/ajout_relation', $data);
             } else {
-                $relationdata = array();
-                $relationdata['objet_id_1'] = $this->input->post('objet1');
-                $relationdata['objet_id_2'] = $this->input->post('objet2');
                 $relationdata['type_relation_id'] = $this->input->post('type_relation');
                 $relationdata['username'] = $this->session->userdata('username');
                 $relationdata['datation_indication_debut'] = $this->input->post('datation_indication_debut');
@@ -81,8 +82,6 @@ class Ajout_relation extends MY_Controller {
 
                 $relationdata['parent'] = $this->input->post('parent') ? 'true' : 'false';
 
-                $objet1 = new Objet($relationdata['objet_id_1']);
-                $objet2 = new Objet($relationdata['objet_id_2']);
                 if ($this->relation_model->ajout_relation($relationdata)) {
                     $data = array('success' => TRUE, 
                                   'message' => sprintf($this->lang->line('common_add_rel_form_success'),

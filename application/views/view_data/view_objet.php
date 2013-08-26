@@ -20,7 +20,7 @@
         <h3> <?php echo $this->lang->line('common_view_author');?> </h3>
         <p> <?php echo $objet->get_username(); ?> </p>
         
-        
+        <h3>Actions supplémentaires</h3>
         <?php if($objet->get_geom()!=null){ ?>
             <?php echo form_open('view_data/select_data/index/carte') ?>
                 <?php $latlng = $objet->get_geom(); ?>
@@ -33,6 +33,10 @@
             <?php echo form_open('view_data/select_data/index/polygon') ?>
                         <input type="hidden" name="objet_id" value="<?php echo $objet->get_objet_id(); ?>" />
                         <input type="submit" value="Placer un polygone correspondant à cet objet sur la carte" />
+            <?php echo form_close(); ?>
+            <?php echo form_open('view_data/select_data/select_objet/add_rel') ?>
+                        <input type="hidden" name="ressource_id" value="<?php echo $objet->get_objet_id(); ?>" />
+                        <input type="submit" value="Relier cet objet à un autre" />
             <?php echo form_close(); ?>
         <?php } ?>
         

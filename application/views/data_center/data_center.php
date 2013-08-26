@@ -5,7 +5,7 @@
     <ul class='navigation'>
         <?php if ( $this->session->userdata('user_level') >= 4 ) {?>
               <li><?php echo anchor('data_center/ajout_objet', $this->lang->line('common_lsidebar_objet')); ?></li>
-              <li><?php echo anchor('data_center/ajout_relation', $this->lang->line('common_lsidebar_relation')); ?></li>
+              <li><?php echo anchor('view_data/select_data/index/objet/add_rel', $this->lang->line('common_lsidebar_relation')); ?></li>
               <li><?php echo anchor('data_center/import_csv', $this->lang->line('common_add_data_csv_import')); ?></li>
         <?php } ?>
         <li>

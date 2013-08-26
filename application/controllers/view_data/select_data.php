@@ -49,6 +49,7 @@ class Select_data extends MY_Controller {
     //$goal can be :
     // - view, to display a detailed view with numerous information about the ressource
     // - add_doc, to link this objet to a particular ressource (as posted argument) and create a documentation link
+    // - add_rel to add a relation link between objet
     public function sort_sel_obj($goal) {
         //managing the sort option
         $orderBy = $this->input->post('orderBy');
@@ -88,6 +89,7 @@ class Select_data extends MY_Controller {
     //$goal can be :
     // - view, to display a detailed view with numerous information about the ressource
     // - add_doc, to link this objet to a particular ressource (as posted argument) and create a documentation link
+    // - add_rel to add a relation link between objet
     public function select_objet($goal, $page = 1, $typeRessource = null, $ressource_id = null) {
         //security for add_doc
         if ((!$this->session->userdata('username')) && $goal=="add_doc") {
@@ -117,7 +119,7 @@ class Select_data extends MY_Controller {
         if ($this->session->userdata('sel_obj_valid') != null && $goal != 'view') {
             $valid = $this->session->userdata('sel_obj_valid');
         } else {
-            if ($goal != 'add_doc' && $goal != 'add_geo') {
+            if ($goal != 'add_doc' && $goal != 'add_geo' && $goal != 'add_rel') {
                 $valid = 't';
             } else {
                 $valid = null;
@@ -138,6 +140,15 @@ class Select_data extends MY_Controller {
             $ressource = new $typeRessourceMethod($ressource_id);
             $valid = null;
         }
+        if($goal == 'add_rel'){
+            //here ressource_id stand for the objet_id
+            if ($ressource_id == null){
+                $ressource_id = $this->input->post('ressource_id');
+            }
+            if($ressource_id != null){
+                $targetObjet = new Objet($ressource_id);
+            }
+        }
 
         //creating the list
         $data = array('listObjet' => $this->objet_model->get_objet_list($orderBy, $orderDirection, $speAttribute, $speAttributeValue, $valid, $page));
@@ -147,6 +158,9 @@ class Select_data extends MY_Controller {
         if ($goal == 'add_doc') { //we put some info about the related ressource if we are adding a documentation
             $data['ressource'] = $ressource;
             $data['typeRessource'] = $typeRessource;
+        }
+        if ($goal == 'add_rel' && isset($targetObjet)){
+            $data['targetObjet'] = $targetObjet;
         }
         $this->layout->view('view_data/select_objet', $data);
     }

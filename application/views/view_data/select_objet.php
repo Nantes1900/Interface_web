@@ -7,6 +7,8 @@
         <?php echo $this->lang->line('common_list_object'); ?>
         <?php if($goal=='add_doc'){ echo $this->lang->line('common_list_link_doc').$ressource->get_titre(); } ?>
         <?php if($goal=='add_geo'){ echo $this->lang->line('common_list_link_geo'); } ?>
+        <?php if($goal=='add_rel'){ echo ' à relier'; } ?>
+        <?php if($goal=='add_rel' && isset($targetObjet)){ echo ' à <em>'.$targetObjet->get_nom_objet().'</em>'; } ?>
     </h2>
 <!--    sorting form-->
     <?php if($goal!='add_geo'){
@@ -97,6 +99,9 @@
                                                                   } ?>" />
             <input type="hidden" name="typeRessource" value="<?php echo $typeRessource; ?>">
         <?php } ?>
+        <?php if($goal=='add_rel' && isset($targetObjet)){ ?>
+            <input type="hidden" name="ressource_id" value="<?php echo $targetObjet->get_objet_id(); ?>" />
+        <?php } ?>
         <input type="submit" value="<?php echo $this->lang->line('common_list_sort_button'); ?>" />
 
 
@@ -106,7 +111,7 @@
 <div style="text-align: right;">
     Page : 
     <?php
-    if ($goal != 'add_doc' && $goal != 'add_geo') {
+    if ($goal != 'add_doc' && $goal != 'add_geo' && !isset($targetObjet)) {
         for ($i = 1; $i <= $numPage; $i++) {
             if($i != $currentPage){
                 echo anchor('view_data/select_data/select_objet/' . $goal . '/' . $i, $i, array('class'=>'otherPage'));
@@ -144,6 +149,18 @@
                 echo '&nbsp;';
             }
         }
+    } elseif($goal == 'add_rel' && isset ($targetObjet)){
+        for ($i = 1; $i <= $numPage; $i++) {
+            if($i != $currentPage){
+                echo anchor('view_data/select_data/select_objet/' . $goal . '/' . 
+                            $i . '/null/' . $targetObjet->get_objet_id(), $i, array('class'=>'otherPage'));
+                echo '&nbsp;';
+            }else{
+                echo anchor('view_data/select_data/select_objet/' . $goal . '/' . 
+                            $i . '/null/' . $targetObjet->get_objet_id(), $i, array('class'=>'currentPage'));
+                echo '&nbsp;';
+            }
+        }
     }
     ?>
 </div>
@@ -163,6 +180,15 @@
                 <?php }elseif($goal=='add_doc'){ ?>
                             <th><?php echo $this->lang->line('common_list_is_valid'); ?></th>
                             <th><?php echo $this->lang->line('common_list_link_obj_to').$ressource->get_titre();?></th>
+                <?php }elseif($goal=='add_rel'){ ?>
+                            <th><?php echo $this->lang->line('common_list_is_valid'); ?></th>
+                            <th>
+                                <?php echo 'Relier';
+                                if(isset($targetObjet)){
+                                    echo ' à '.$targetObjet->get_nom_objet();
+                                }
+                            ?>
+                            </th>
                 <?php }elseif($goal=='add_geo'){ ?>
                             <th><span class="hint"><?php echo $this->lang->line('common_list_is_valid'); ?><span>
                                         Un objet non validé n'apparaîtra sur la carte qu'une fois validé
@@ -214,6 +240,28 @@
                                 <input type="submit" value="<?php echo $this->lang->line('common_list_do_link'); ?>" />
                             </form>
                         </td>
+                   <?php }  elseif ($goal=='add_rel') { ?>
+                        <td><?php if($objet->get_validation()=='t'){
+                                echo $this->lang->line('common_list_valid');
+                              }else{
+                                echo $this->lang->line('common_list_unvalid'); 
+                                
+                              }?>
+                        </td>
+                        <td>
+                             <?php if(!isset($targetObjet)){
+                                    echo form_open('view_data/select_data/select_objet/add_rel') ?>
+                                    <input type="hidden" name="ressource_id" value="<?php echo $objet->get_objet_id(); ?>" />
+                                    <input type="submit" value="<?php echo 'Relier cet objet'; ?>" />
+                            <?php  echo form_close();
+                             } else {
+                                    echo form_open('data_center/ajout_relation/'); ?>
+                                    <input type="hidden" name="objet_id_1" value="<?php echo $targetObjet->get_objet_id(); ?>" />
+                                    <input type="hidden" name="objet_id_2" value="<?php echo $objet->get_objet_id(); ?>" />
+                                    <input type="submit" value="<?php echo 'Relier ces objet'; ?>" />
+                                    <?php echo form_close();
+                             } ?>
+                        </td>
                    <?php }  elseif ($goal=='add_geo') { ?>
                         <td><?php if($objet->get_validation()=='t'){
                                 echo $this->lang->line('common_list_valid');
@@ -240,7 +288,7 @@
 <div style="text-align: right;">
     Page : 
     <?php
-    if ($goal != 'add_doc' && $goal != 'add_geo') {
+    if ($goal != 'add_doc' && $goal != 'add_geo' && !isset($targetObjet)) {
         for ($i = 1; $i <= $numPage; $i++) {
             if($i != $currentPage){
                 echo anchor('view_data/select_data/select_objet/' . $goal . '/' . $i, $i, array('class'=>'otherPage'));
@@ -275,6 +323,18 @@
                 echo '&nbsp;';
             }else{
                 echo anchor('data_center/ajout_objet/select_objet_geo/' . $goal . '/' . $latitude . '/' . $longitude . '/' . $i, $i, array('class'=>'currentPage'));
+                echo '&nbsp;';
+            }
+        }
+    } elseif($goal == 'add_rel' && isset ($targetObjet)){
+        for ($i = 1; $i <= $numPage; $i++) {
+            if($i != $currentPage){
+                echo anchor('view_data/select_data/select_objet/' . $goal . '/' . 
+                            $i . '/null/' . $targetObjet->get_objet_id(), $i, array('class'=>'otherPage'));
+                echo '&nbsp;';
+            }else{
+                echo anchor('view_data/select_data/select_objet/' . $goal . '/' . 
+                            $i . '/null/' . $targetObjet->get_objet_id(), $i, array('class'=>'currentPage'));
                 echo '&nbsp;';
             }
         }

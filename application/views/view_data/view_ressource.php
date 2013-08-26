@@ -138,6 +138,8 @@
         <h3> <?php echo $this->lang->line('common_view_author'); ?> </h3>
         <p> <?php echo $ressource->get_username(); ?> </p>
         
+        <h3>Actions supplémentaires</h3>
+        
         <?php if($typeRessource=='ressource_texte'){
                   $ressource_id = $ressource->get_ressource_textuelle_id();
               } else {

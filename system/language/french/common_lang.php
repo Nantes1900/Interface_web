@@ -85,7 +85,7 @@ $lang['common_add_obj_geo_form_failure']  = "Une erreur a eu lieu, l'objet <b>%s
 $lang['common_add_obj_check_nom']         = "Le nom <b>%s</b> est déjà pris";
 $lang['common_add_obj_check_date']        = "Date invalide";
 
-$lang['common_add_rel_form']              = "Formulaire d'ajout d'une relation entre deux ".strtolower($lang['common_objets']);
+$lang['common_add_rel_form']              = "Formulaire d'ajout d'une relation entre <em>%s</em> et <em>%s</em>";
 $lang['common_add_rel_obj1']              = " Selectionner le premier ".strtolower($lang['common_objet'])." :";
 $lang['common_add_rel_obj2']              = " Selectionner le second ".strtolower($lang['common_objet'])." :";
 $lang['common_add_rel_sel_rel']           = " Selectionner le type de relation :";

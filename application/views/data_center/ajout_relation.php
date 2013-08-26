@@ -1,28 +1,10 @@
 
-	<h1><?php echo $this->lang->line('common_add_rel_form'); ?></h1>
+	<h1><?php echo sprintf($this->lang->line('common_add_rel_form'), $objet1->get_nom_objet(), $objet2->get_nom_objet()); ?></h1>
         
         <?php echo form_open('data_center/ajout_relation/formulaire'); ?>
-        
+        <input type="hidden" name="objet_id_1" value="<?php echo $objet1->get_objet_id(); ?>" />
+        <input type="hidden" name="objet_id_2" value="<?php echo $objet2->get_objet_id(); ?>" />
         <table>
-            
-            <tr>
-                    <td><?php echo $this->lang->line('common_add_rel_obj1'); ?></td>
-                    <td> <select name="objet1">
-                            <?php foreach($objet_list as $objet): 
-                                    echo '<option value="'.$objet->get_objet_id().'">'.$objet->get_nom_objet().'</option>'; 
-                                  endforeach; ?>
-                            
-                         </select> </td>
-            </tr>
-            <tr>
-                    <td><?php echo $this->lang->line('common_add_rel_obj2'); ?></td>
-                    <td> <select name="objet2">
-                            <?php foreach($objet_list as $objet): 
-                                    echo '<option value="'.$objet->get_objet_id().'">'.$objet->get_nom_objet().'</option>'; 
-                                  endforeach; ?>
-                            
-                         </select> </td>
-            </tr>
             <tr>
                     <td><?php echo $this->lang->line('common_add_rel_sel_rel'); ?></td>
                     <td> <select name="type_relation">
