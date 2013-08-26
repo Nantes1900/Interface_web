@@ -51,12 +51,15 @@ $lang['moderation_delDoc_warning_msg']       = "You are about to definitely dele
 //about relation
 $lang['moderation_relation_creator']         = "Relation's creator";
 $lang['moderation_relation_type']            = "Relation type";
-$lang['moderation_delRel_title']             = "Deleting a documentation link";
+$lang['moderation_delRel_title']             = "Modifying or deleting a documentation link";
 $lang['moderation_delRel_remove']            = "Delete the relation";
+$lang['moderation_delRel_modify']            = "Modify the relation";
 $lang['moderation_delRel_remove_this']       = "Delete this relation";
 $lang['moderation_delRel_warning_msg']       = "You are about to definitely delete the relation between <em>%s</em>
                                                  and <em>%s</em>. Informations about this link will be lost, 
                                                  are you sure about your decision?";
+$lang['moderation_modRel_modify_this']       = "Modify this relation";
+$lang['moderation_modRel_title']             = "Modifying the relation between <em>%s</em> and <em>%s</em>";
 
 //about ressource
 $lang['moderation_ress_re_upload']           = "Upload a new image";
@@ -66,7 +69,7 @@ $lang['moderation_go_back_link']            = "Go back to moderation center";
 $lang['moderation_list_modif_valid']        = "Modify/Validate";
 $lang['moderation_list_delete']             = "Delete";
 $lang['moderation_list_create_rel']         = "Create a relation with an object";
-$lang['moderation_list_delete_rel']         = "Delete a relation";
+$lang['moderation_list_delete_rel']         = "Modifying or deleting a documentation link";
 $lang['moderation_list_modify_obj']         = "Modify this object";
 $lang['moderation_list_validate_obj']       = "Validate this object";
 $lang['moderation_list_delete_obj']         = "Delete this object";
@@ -74,7 +77,7 @@ $lang['moderation_del_obj_warning']         = "You are about to definitively del
                                                 Its information will be lost, are you sure you would 
                                                 not rather like to unvalid it ?";
 $lang['moderation_list_addRel']             = "Add a relation";
-$lang['moderation_list_delRel']             = "Delete a relation";
+$lang['moderation_list_delRel']             = "Modify/delete";
 $lang['moderation_list_create_doc']         = "Create a documentation with this ressource";
 $lang['moderation_list_delete_doc']         = "Delete a documentation link";
 $lang['moderation_list_modify_ress']        = "Modify this ressource";

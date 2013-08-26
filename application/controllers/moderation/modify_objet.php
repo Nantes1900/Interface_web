@@ -256,7 +256,45 @@ class Modify_objet extends MY_Controller {
 
         $this->delete_relation($objet_id);
     }
+    
+    public function modify_relation_form(){
+        $relation_id = $this->input->post('relation_id');
+        $this->load->model('relation_model');
+        $objet_source_id = $this->input->post('objet_id');
+        if ($this->form_validation->run('ajout_relation') == FALSE){
+            $objet_source_name = $this->input->post('nom_objet_source');
+            $objet_target_name = $this->input->post('nom_objet_target');
+            $relation_info = $this->relation_model->get_relation($relation_id);
+            $type_relation_list = $this->relation_model->get_type_relation_list();
+            $data = array ('relation_id'=>$relation_id, 'objet_source_name'=>$objet_source_name,
+                            'objet_target_name'=>$objet_target_name, 'relation_info'=>$relation_info,
+                            'type_relation_list'=>$type_relation_list, 'objet_source_id'=>$objet_source_id);
+            $this->layout->view('moderation/modify_relation', $data);
+        } else {
+            $relationdata['type_relation_id'] = $this->input->post('type_relation');
+            $relationdata['username'] = $this->session->userdata('username');
+            $relationdata['datation_indication_debut'] = $this->input->post('datation_indication_debut');
+            $relationdata['datation_indication_fin'] = $this->input->post('datation_indication_fin');
 
+            $dates_infos = conc_2_date($this->input->post('jour_debut'), $this->input->post('mois_debut'), 
+                                        $this->input->post('annee_debut'), $this->input->post('jour_fin'), 
+                                        $this->input->post('mois_fin'), $this->input->post('annee_fin'));
+
+            $relationdata['date_debut_relation'] = $dates_infos['date_debut'];
+            $relationdata['date_fin_relation'] = $dates_infos['date_fin'];
+            $relationdata['date_precision'] = $dates_infos['date_precision'];
+
+            $relationdata['parent'] = $this->input->post('parent') ? 't' : 'f';
+
+            $success = $this->relation_model->update_relation($relation_id, $relationdata);
+            $message = $this->create_success_message($success, 'modRelation', $this->input->post('nom_objet_source'), 
+                                                    $this->input->post('nom_objet_target'));
+            $this->layout->views('data_center/success_form', array('success' => $success, 'message' => $message));
+
+            $this->delete_relation($objet_source_id);
+        }
+    }
+    
     public function delete_geom($geom_id, $objet_id) {
         $objet = new Objet($objet_id);
         if ($objet->get_nom_objet() != null && $geom_id != null) {
@@ -316,6 +354,12 @@ class Modify_objet extends MY_Controller {
                 } else {
                     $message = $this->lang->line('moderation_obj_geomDel_unknown');
                 }
+            }
+        } elseif ($lastAction == 'modRelation') {
+            if ($success) {
+                $message = 'La relation entre '.$firstEntity.' et '.$secondEntity.' a été modifié avec succès';
+            } else {
+                $message = 'Erreur : la relation entre '.$firstEntity.' et '.$secondEntity.' n\'a pas pu être modifiée';
             }
         }
         return $message;

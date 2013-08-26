@@ -15,6 +15,7 @@
                 <th><?php echo $this->lang->line('moderation_relation_type'); ?></th>
                 <th><?php echo $this->lang->line('date_dates'); ?></th>
                 <th><?php echo $this->lang->line('common_obj_resume'); ?></th>
+                <th><?php echo $this->lang->line('moderation_delRel_modify'); ?></th>
                 <th><?php echo $this->lang->line('moderation_delRel_remove'); ?></th>
             </tr>
         </thead>
@@ -24,8 +25,24 @@
                     <td><?php echo $objetArray['nom_objet']; ?></td>
                     <td><?php echo $objetArray['relcreator']; ?></td>
                     <td><?php echo $objetArray['type_relation']; ?></td>
-                    <td><?php echo 'du '.to_date_dmy($objetArray['date_debut_relation']).' au '.to_date_dmy($objetArray['date_fin_relation']); ?></td>
+                    <td><?php 
+                        if($objetArray['date_debut_relation']!=null && $objetArray['date_fin_relation']!=null){
+                            echo 'du '.to_date_dmy($objetArray['date_debut_relation']).' au '.to_date_dmy($objetArray['date_fin_relation']);
+                            if($objetArray['date_precision']!=null)echo '<br>(précision :'.$objetArray['date_precision'].')';
+                        }else{
+                            echo 'datation incorrecte';
+                        }
+                     ?></td>
                     <td><?php echo $objetArray['resume']; ?></td>
+                    <td>
+                        <?php echo form_open('moderation/modify_objet/modify_relation_form'); ?>
+                            <input type="hidden" name="objet_id" value="<?php echo $objet->get_objet_id(); ?>" />
+                            <input type="hidden" name="relation_id" value="<?php echo $objetArray['relation_id']; ?>" />
+                            <input type="hidden" name="nom_objet_source" value="<?php echo $objet->get_nom_objet(); ?>" />
+                            <input type="hidden" name="nom_objet_target" value="<?php echo $objetArray['nom_objet']; ?>" />
+                            <input type="submit" value="<?php echo $this->lang->line('moderation_modRel_modify_this'); ?>" />
+                        <?php echo form_close();?>
+                    </td>
                     <td>
                         <?php echo form_open('moderation/modify_objet/delete_relation_form'); ?>
                             <input type="hidden" name="objet_id" value="<?php echo $objet->get_objet_id(); ?>" />

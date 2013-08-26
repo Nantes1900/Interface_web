@@ -51,12 +51,15 @@ $lang['moderation_delDoc_warning_msg']       = "Vous vous apprêtez à supprimer
 //about relation
 $lang['moderation_relation_creator']         = "Créateur de la relation";
 $lang['moderation_relation_type']            = "Type de relation";
-$lang['moderation_delRel_title']             = "Suppression de relation";
+$lang['moderation_delRel_title']             = "Modification et suppression de relation";
 $lang['moderation_delRel_remove']            = "Supprimer la relation";
+$lang['moderation_delRel_modify']            = "Modifier la relation";
 $lang['moderation_delRel_remove_this']       = "Supprimer cette relation";
 $lang['moderation_delRel_warning_msg']       = "Vous vous apprêtez à supprimer définitivement la relation entre <em>%s</em>
                                                  et <em>%s</em>. Les informations de relation seront perdues, 
                                                  êtes vous certain de bien vouloir faire cela?";
+$lang['moderation_modRel_modify_this']       = "Modifier cette relation";
+$lang['moderation_modRel_title']             = "Modification de la relation entre <em>%s</em> et <em>%s</em>";
 
 //about ressource
 $lang['moderation_ress_re_upload']           = "Télécharger une nouvelle image";
@@ -66,7 +69,7 @@ $lang['moderation_go_back_link']            = "Revenir au centre de modération"
 $lang['moderation_list_modif_valid']        = "Modifier/Valider";
 $lang['moderation_list_delete']             = "Supprimer";
 $lang['moderation_list_create_rel']         = "Créer une relation avec un objet";
-$lang['moderation_list_delete_rel']         = "Supprimer une relation";
+$lang['moderation_list_delete_rel']         = "Modification et suppression de relation";
 $lang['moderation_list_modify_obj']         = "Modifier cet objet";
 $lang['moderation_list_validate_obj']       = "Valider cet objet";
 $lang['moderation_list_delete_obj']         = "Supprimer cet objet";
@@ -74,7 +77,7 @@ $lang['moderation_del_obj_warning']         = "Vous vous apprêtez à supprimer 
                                                 les informations seront définitivement perdues, êtes vous 
                                                 certain de ne pas plutôt vouloir l'invalider?";
 $lang['moderation_list_addRel']             = "Ajouter une relation";
-$lang['moderation_list_delRel']             = "Supprimer une relation";
+$lang['moderation_list_delRel']             = "Modifier/supprimer";
 $lang['moderation_list_create_doc']         = "Documenter un objet avec cette ressource";
 $lang['moderation_list_delete_doc']         = "Supprimer un lien de documentation";
 $lang['moderation_list_modify_ress']        = "Modifier cette ressource";

@@ -136,7 +136,24 @@ class Relation_model extends CI_Model {
             return null;
         }
     }
+    
+    public function get_relation($relation_id){
+        $this->db->select('relation_id, type_relation.type_relation, date_debut_relation, date_fin_relation,
+                            datation_indication_debut, datation_indication_fin, date_precision, parent');
+        $this->db->from('relation');
+        $this->db->join('type_relation', 'relation.type_relation_id=type_relation.type_relation_id');
+        $this->db->where('relation_id', $relation_id);
+        $query = $this->db->get(); //Exécution
 
+        $result = $query->result_array(); //Récupération des résultats
+        return $result[0];
+    }
+    
+    public function update_relation($relation_id, $relation_data_array){
+        $this->db->where('relation_id', $relation_id);
+        return $this->db->update('relation', $relation_data_array); 
+    }
+    
     public function delete_relation($relation_id) {
         $this->db->where('relation_id', $relation_id);
 
