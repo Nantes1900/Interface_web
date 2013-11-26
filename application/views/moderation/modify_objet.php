@@ -40,8 +40,9 @@
             
             <tr>
                 <td>
-                    <input type="checkbox" name="validate" value="TRUE" <?php if($objet->get_validation()=='t'){echo 'checked';} ?>>
-                    <?php echo $this->lang->line('moderation_validate_box'); ?>
+                    <input type="checkbox" name="validate" value="conservation" <?php if($objet->get_validation_status('conservation')==True){echo 'checked';} ?>><?php echo $this->lang->line('common_list_is_valid_conservation');?><br>
+                    <input type="checkbox" name="validate" value="public" <?php if($objet->get_validation_status('public')==True){echo 'checked';} ?>><?php echo $this->lang->line('common_list_is_valid_public');?><br>
+                    <input type="checkbox" name="validate" value="edition" <?php if($objet->get_validation_status('edition')==True){echo 'checked';} ?>><?php echo $this->lang->line('common_list_is_valid_edition');?>
                 </td>
             </tr>
             

@@ -373,7 +373,7 @@ class Objet_model extends CI_Model {
     public function delete_geometry($geom_id) {
         $this->db->where('geom_id', $geom_id);
         return $this->db->delete('temp_geom');
-    }
+    }    
 
 }
 

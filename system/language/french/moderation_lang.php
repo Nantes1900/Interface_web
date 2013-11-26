@@ -9,6 +9,7 @@ $lang['moderation_mod_concerning']      = " vers un ";
 
 $lang['moderation_validate_button']     = "Enregistrer les modifications";
 $lang['moderation_validate_box']        = "Valider";
+$lang['moderation_print_sheet']         = "Imprimer la fiche";
 
 //objet success/failure message
 $lang['moderation_obj_modify_success']      = "La modification de l'objet <b>%s</b> s'est déroulée avec succès";

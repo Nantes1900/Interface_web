@@ -200,6 +200,20 @@ class Objet{
         $this->_geom_maquette = $_geom_maquette;
     }
     
+    //Get validation status for reviewing process : conservation, public, edition
+    //Return True or False
+    public function get_validation_status($type_validation) {
+        if (file_exists(FCPATH . 'assets/utils/review.json')) {
+            $jsonList = file_get_contents(FCPATH . 'assets/utils/review.json');
+            $liste = json_decode($jsonList,true);
+        
+            if ( array_key_exists($type_validation, $liste[$this->_objet_id]) ) {
+                return $liste[$this->_objet_id][$type_validation];
+            } else { return False; }
+        }
+        else { return False;}
+    }
+    
 }
 
 /* End of file objet.php */

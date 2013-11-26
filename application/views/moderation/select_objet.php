@@ -166,6 +166,9 @@
                 <th><?php echo $this->lang->line('common_obj_resume'); ?></th>
                 <th><?php echo $this->lang->line('common_obj_mots_cles'); ?></th>
                 <th><?php echo $this->lang->line('common_list_is_valid'); ?></th>
+                <th><?php echo $this->lang->line('common_list_is_valid_conservation'); ?></th>
+                <th><?php echo $this->lang->line('common_list_is_valid_public'); ?></th>
+                <th><?php echo $this->lang->line('common_list_is_valid_edition'); ?></th>
                 <?php if($goal=='modify'){ ?>
                         <th><?php echo $this->lang->line('moderation_list_modif_valid'); ?></th>
                         <th><?php echo $this->lang->line('moderation_list_delete'); ?></th>
@@ -195,6 +198,21 @@
                                 echo $this->lang->line('common_list_unvalid'); }
                         ?>
                     </td>
+                    <td><?php if ($objet->get_validation_status('conservation') == True) {
+                                echo $this->lang->line('common_list_valid');
+                              } else {
+                                echo $this->lang->line('common_list_unvalid'); }
+                        ?></td>
+                    <td><?php if ($objet->get_validation_status('public') == True) {
+                                echo $this->lang->line('common_list_valid');
+                              }else{
+                                echo $this->lang->line('common_list_unvalid'); }
+                        ?></td>
+                    <td><?php if ($objet->get_validation_status('edition') == True) {
+                                echo $this->lang->line('common_list_valid');
+                              }else{
+                                echo $this->lang->line('common_list_unvalid'); }
+                        ?></td>
                     <?php if($goal=='modify'){ ?>
                         <td>
                             <?php echo form_open('moderation/modify_objet/index/'.$goal) ?>

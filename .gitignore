@@ -3,3 +3,5 @@ application/config/database.php
 /*~
 .project/
 .idea/
+assets/utils/review.json
+assets/utils/coordonnees.json

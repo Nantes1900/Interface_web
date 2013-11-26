@@ -136,11 +136,15 @@ class Modify_objet extends MY_Controller {
             $objet->set_description($this->input->post('description'));
             $objet->set_adresse_postale($this->input->post('adresse_postale'));
             $objet->set_mots_cles($this->input->post('mots_cles'));
-            if ($this->input->post('validate') == TRUE) { //beware, in database, booleans are t (for TRUE) and f (FALSE)
+            //Validation
+            if ($this->input->post('validate') == 'conservation' && !$objet->get_validation_status('conservation')) { //beware, in database, booleans are t (for TRUE) and f (FALSE)
+                $this->update_validation($objet_id,'conservation');
+            } else if ($this->input->post('validate') == 'public' && $objet->get_validation_status('public') == False && $objet->get_validation_status('conservation') == True){
+                $this->update_validation($objet_id,'public');
+            } else if ($this->input->post($objet_id,'validate') == 'edition' && $objet->get_validation_status('edition') == False && $objet->get_validation_status('public') == True && $objet->get_validation_status('conservation') == True) {
+                $this->update_validation($objet_id,'edition');
                 $objet->set_validation('t');
-            } else {
-                $objet->set_validation('f');
-            }
+            } else $objet->set_validation('f');
             $success = $objet->save();
             $lastAction = 'modify';
             $message = $this->create_success_message($success, $lastAction, $objet->get_nom_objet());
@@ -390,7 +394,64 @@ class Modify_objet extends MY_Controller {
         }
         return $valid;
     }
+    
+    //update review.json file, should be called after each validation
+    //3 possible validation : conservation, public, edition
+    //each step triggers email for next step
+    //each validation is recorded into json file
+    public function update_validation($objet_id,$validation_type) {
+        $objetManager = new Objet_model($objet_id);
+        //Request the db for more info
+        //$object_name = $objetManager.get_nom_objet();
 
+        if (file_exists(FCPATH . 'assets/utils/review.json')) {
+            $jsonList = file_get_contents(FCPATH . 'assets/utils/review.json');
+            $liste = json_decode($jsonList);
+        
+            $liste[$objet_id][$validation_type] = True;
+        } else { 
+            $liste = array(); 
+            $liste[$objet_id][$validation_type] = True;
+        }
+        
+            $newJsonList = json_encode($liste);
+            file_put_contents(FCPATH . 'assets/utils/review.json', $newJsonList);
+        
+        //send email
+        $admins = $this->user_model->get_user_list(10); //get a list of users with level 10
+        $admin = $admins[0];
+        $config = array();        
+        $config['mailtype'] = 'html';
+        $config['charset'] = 'utf-8';
+        $config['newline'] = "\r\n";
+        $config['wordwrap'] = TRUE;
+        
+        $this->load->library('email');
+        $this->email->initialize($config);
+
+        $this->email->from('benjamin.hervy@chateau-nantes.fr', 'email automatique'); //mettre une adresse valide
+        if ($validation_type == 'conservation') {
+            $to_email = 'benjamin.hervy@ec-nantes.fr';
+        }
+        else if ($validation_type == 'public') {
+            $to_email = 'benjamin.hervy@irccyn.ec-nantes.fr';
+        }
+        else if ($validation_type == 'edition') {
+            $to_email = $admin->get_email();
+        }
+        $this->email->to($to_email);
+        $this->email->subject('[Nantes1900] Noreply : validation d\'une fiche');
+        $msg = '<h1>Une fiche a été validée par le service'. $validation_type .'</h1>';
+        $msg = $msg . '<p>La fiche n°'. $objet_id .' a été validée.';
+        $msg = $msg . 'Vous pouvez désormais y accéder pour la modifier puis la valider.</p>';
+        $msg = $msg . '<p>Pour y accéder, vous devez vous connectez à l\'adresse suivante : ';
+        $msg = $msg . anchor('accueil') .'</p>';
+        $msg = $msg . '<p>Vous retrouverez la fiche dans le menu "Modération", puis "Modifier un objet"</p>'; 
+        $msg = $msg . '<p>En cas de problème, essayez de contacter l\'administrateur principal à l\'adresse : '.$admin->get_email().'</p>';
+        $this->email->message($msg);
+
+        //$this->email->send();
+    }
 }
 
 /* End of file modify_objet.php */

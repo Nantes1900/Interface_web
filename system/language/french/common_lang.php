@@ -202,6 +202,10 @@ $lang['common_list_view_obj']               = "Visualiser cet ".strtolower($lang
 $lang['common_list_view_ress']              = "Visualiser cette ".strtolower($lang['common_ressource']);
 $lang['common_list_localize']               = "Localiser l'".strtolower($lang['common_objet']);
 $lang['common_list_add_doc']                = "Documenter un ".strtolower($lang['common_objet'])." avec cette ".strtolower($lang['common_ressource']);
+$lang['common_list_is_valid_conservation']  = "Validation Service Conservation";
+$lang['common_list_is_valid_public']        = "Validation Service des publics";
+$lang['common_list_is_valid_edition']       = "Validation Service des éditions";
+
 
 //about detailed view of a data
 $lang['common_view_detail_obj']             = "Détails de l'".strtolower($lang['common_objet'])." : ";
