@@ -10,7 +10,7 @@
 
         <link rel="shortcut icon" href="<?php echo base_url() . 'assets/utils/ACL.jpg' ?>">
         <link rel="stylesheet" type="text/css" media="screen" href="<?php echo css_url('style'); ?>" />
-        
+        <link rel="stylesheet" type="text/css" media="print" href="<?php echo css_url('print'); ?>" />
         <?php foreach ($css as $url): ?>
             <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $url; ?>" />
         <?php endforeach; ?>
