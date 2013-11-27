@@ -11,5 +11,13 @@
    Syntax recommendation http://www.w3.org/TR/REC-CSS2/
 */
 
-#header, #nav, .leftSidebar, .banniere, .noprint, .copyright, .error_form {display: none;}
+/* Remove unwanted elements */
+/* General layout elements */
+#header, #nav, .leftSidebar, .banniere, .copyright, .error_form,
+/* First column in modify form containing titles */
+table td:first-child,
+/* Specific elements with dedicated class */
+.noprint {display: none;}
+
+/* Ensure the content spans the full width */
 .printable {width: 100%; margin: 0; float: none;}
