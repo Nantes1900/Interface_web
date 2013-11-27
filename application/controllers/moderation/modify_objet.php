@@ -136,15 +136,15 @@ class Modify_objet extends MY_Controller {
             $objet->set_description($this->input->post('description'));
             $objet->set_adresse_postale($this->input->post('adresse_postale'));
             $objet->set_mots_cles($this->input->post('mots_cles'));
+            
             //Validation
-            if ($this->input->post('validate') == 'conservation' && !$objet->get_validation_status('conservation')) { //beware, in database, booleans are t (for TRUE) and f (FALSE)
+            if ($this->input->post('validate') == 'conservation' && !$objet->get_validation_status('conservation')) {
                 $this->update_validation($objet_id,'conservation');
-            } else if ($this->input->post('validate') == 'public' && $objet->get_validation_status('public') == False && $objet->get_validation_status('conservation') == True){
+            } else if ($this->input->post('validate') == 'public' && !$objet->get_validation_status('public') && $objet->get_validation_status('conservation')){
                 $this->update_validation($objet_id,'public');
-            } else if ($this->input->post($objet_id,'validate') == 'edition' && $objet->get_validation_status('edition') == False && $objet->get_validation_status('public') == True && $objet->get_validation_status('conservation') == True) {
+            } else if ($this->input->post('validate') == 'edition' && !$objet->get_validation_status('edition') && $objet->get_validation_status('public') && $objet->get_validation_status('conservation')) {
                 $this->update_validation($objet_id,'edition');
-                $objet->set_validation('t');
-            } else $objet->set_validation('f');
+            }
             $success = $objet->save();
             $lastAction = 'modify';
             $message = $this->create_success_message($success, $lastAction, $objet->get_nom_objet());
@@ -406,8 +406,7 @@ class Modify_objet extends MY_Controller {
 
         if (file_exists(FCPATH . 'assets/utils/review.json')) {
             $jsonList = file_get_contents(FCPATH . 'assets/utils/review.json');
-            $liste = json_decode($jsonList);
-        
+            $liste = json_decode($jsonList, true);
             $liste[$objet_id][$validation_type] = True;
         } else { 
             $liste = array(); 
@@ -418,8 +417,6 @@ class Modify_objet extends MY_Controller {
             file_put_contents(FCPATH . 'assets/utils/review.json', $newJsonList);
         
         //send email
-        $admins = $this->user_model->get_user_list(10); //get a list of users with level 10
-        $admin = $admins[0];
         $config = array();        
         $config['mailtype'] = 'html';
         $config['charset'] = 'utf-8';
@@ -437,7 +434,7 @@ class Modify_objet extends MY_Controller {
             $to_email = 'benjamin.hervy@irccyn.ec-nantes.fr';
         }
         else if ($validation_type == 'edition') {
-            $to_email = $admin->get_email();
+            $to_email = 'benjamin.hervy@chateau-nantes.fr';
         }
         $this->email->to($to_email);
         $this->email->subject('[Nantes1900] Noreply : validation d\'une fiche');
@@ -447,7 +444,7 @@ class Modify_objet extends MY_Controller {
         $msg = $msg . '<p>Pour y accéder, vous devez vous connectez à l\'adresse suivante : ';
         $msg = $msg . anchor('accueil') .'</p>';
         $msg = $msg . '<p>Vous retrouverez la fiche dans le menu "Modération", puis "Modifier un objet"</p>'; 
-        $msg = $msg . '<p>En cas de problème, essayez de contacter l\'administrateur principal à l\'adresse : '.$admin->get_email().'</p>';
+        $msg = $msg . '<p>En cas de problème, essayez de contacter l\'administrateur principal à l\'adresse de l\'expéditeur.</p>';
         $this->email->message($msg);
 
         //$this->email->send();

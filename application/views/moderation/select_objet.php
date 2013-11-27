@@ -219,10 +219,13 @@
                                 <input type="hidden" name="objet_id" value="<?php echo $objet->get_objet_id(); ?>" />
                                 <input type="submit" value="<?php echo $this->lang->line('moderation_list_modify_obj'); ?>" />
                             </form>
-                            <?php echo form_open('moderation/modify_objet/validate') ?>
-                                <input type="hidden" name="objet_id" value="<?php echo $objet->get_objet_id(); ?>" />
-                                <input type="submit" value="<?php echo $this->lang->line('moderation_list_validate_obj'); ?>" />
-                            </form>
+                            <?php 
+                                if ($objet->get_validation_status('conservation') && $objet->get_validation_status('public') && $objet->get_validation_status('edition')) {
+                                    echo form_open('moderation/modify_objet/validate');
+                                    echo '<input type="hidden" name="objet_id" value="'; echo $objet->get_objet_id(); echo '" />';
+                                    echo '<input type="submit" value="'; echo $this->lang->line('moderation_list_validate_obj'); echo '" />';
+                                    echo '</form>';
+                                } ?>
                         </td>
                         <td>
                             <?php echo form_open('moderation/modify_objet/delete_objet') ?>

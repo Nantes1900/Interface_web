@@ -72,7 +72,7 @@ class Objet{
     }
     
     public function validate(){
-        $this->set_validation('t');
+        $this->set_validation('t'); //beware, in database, booleans are t (for TRUE) and f (FALSE)
         return $this->save();
     }
     
