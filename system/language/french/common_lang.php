@@ -8,7 +8,7 @@ $lang['common_welcome_site']        = "Bienvenue sur le projet Nantes1900";
 $lang['common_lang_title']          = "Paramètres de langue";
 $lang['common_change_lang']         = "Changer la langue";
 $lang['common_welcome_info']        = "Le site est actuellement en <span class=\"hint\">développement
-                                      <span>Si vous notez un disfonctionnement, informez-en les administrateurs</span></span>";
+                                      <span>Si vous notez un dysfonctionnement, informez-en les administrateurs</span></span>";
 $lang['common_welcome_warning']     = "Une grande partie des fonctionnalités de ce site repose sur l'utilisation des cookies. 
                                        Vous devez accepter les cookies pour pouvoir l'utiliser.";
 $lang['common_need_login']          = "Connectez-vous :";

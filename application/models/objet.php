@@ -207,11 +207,14 @@ class Objet{
             $jsonList = file_get_contents(FCPATH . 'assets/utils/review.json');
             $liste = json_decode($jsonList,true);
         
-            if ( array_key_exists($type_validation, $liste[$this->_objet_id]) ) {
-                return $liste[$this->_objet_id][$type_validation];
-            } else { return False; }
-        }
-        else { return False;}
+            if ($liste != null) {
+                if ( array_key_exists($this->_objet_id, $liste) ) {
+                    if ( array_key_exists($type_validation, $liste[$this->_objet_id]) ) {
+                        return $liste[$this->_objet_id][$type_validation];
+                    } else return False;
+                } else return False;
+            } else return False;
+        } else return False;
     }
     
 }

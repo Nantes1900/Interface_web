@@ -16,7 +16,7 @@
         <?php endforeach; ?>
 
         <div class=banniere></div>
-        <p><?php echo anchor('accueil', $this->lang->line('common_welcome_page_link')); ?></p>
+        <p class="noprint"><?php echo anchor('accueil', $this->lang->line('common_welcome_page_link')); ?></p>
 
     </head>
     

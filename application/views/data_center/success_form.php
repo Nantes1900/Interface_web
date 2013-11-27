@@ -5,6 +5,6 @@
             <div class="message error">
     <?php } ?>
         <?php echo $message; ?>
-        <?php echo img(array('src'=>'assets/utils/close.png','alt'=>'fermer','width'=>'4%', 'onclick'=>'ok_message()')); ?>
+        <?php echo img(array('src'=>'assets/utils/close.png','alt'=>'fermer','width'=>'4%', 'onclick'=>'$(this).parent().css("display","none")')); ?>
     </div>
 <br/>

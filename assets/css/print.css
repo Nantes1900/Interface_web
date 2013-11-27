@@ -11,5 +11,5 @@
    Syntax recommendation http://www.w3.org/TR/REC-CSS2/
 */
 
-#header, #nav, .leftSidebar, .banniere, .noprint {display: none;}
+#header, #nav, .leftSidebar, .banniere, .noprint, .copyright, .error_form {display: none;}
 .printable {width: 100%; margin: 0; float: none;}
