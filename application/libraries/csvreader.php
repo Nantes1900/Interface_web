@@ -1,74 +1,51 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-/**
-* CSVReader Class
-*
-* $Id: csvreader.php 147 2007-07-09 23:12:45Z Pierre-Jean $
-*
-* Allows to retrieve a CSV file content as a two dimensional array.
-* The first text line shall contains the column names.
-*
-* @author        Pierre-Jean Turpeau
-* @link        http://www.codeigniter.com/wiki/CSVReader
-*/
 class CSVReader {
-    
-    var $fields;        /** columns names retrieved after parsing */
-    var $separator = '@@';    /** separator used to explode each line */
-    
-    /**
-     * Parse a text containing CSV formatted data.
-     *
-     * @access    public
-     * @param    string
-     * @return    array
-     */
-    function parse_text($p_Text) {
-        $lines = explode("\n", $p_Text);
-        return $this->parse_lines($lines);
-    }
-    
-    /**
-     * Parse a file containing CSV formatted data.
-     *
-     * @access    public
-     * @param    string
-     * @return    array
-     */
+
+    var $fields;            /** columns names retrieved after parsing */ 
+    var $separator = '@';    /** separator used to explode each line */
+    var $enclosure = '#';    /** enclosure used to decorate each field */
+
+    var $max_row_size = 4096;    /** maximum row size to be used for decoding */
+
     function parse_file($p_Filepath) {
-        $lines = file($p_Filepath);
-        return $this->parse_lines($lines);
-    }
-    /**
-     * Parse an array of text lines containing CSV formatted data.
-     *
-     * @access    public
-     * @param    array
-     * @return    array
-     */
-    function parse_lines($p_CSVLines) {    
-        $content = FALSE;
-        foreach( $p_CSVLines as $line_num => $line ) {
-            if( $line != '' ) { // skip empty lines
-                $elements = explode($this->separator, $line);
- 
-                if( !is_array($content) ) { // the first line contains fields names
-                    $this->fields = $elements;
-                    $content = array();
-                } else {
-                    $item = array();
-                    foreach( $this->fields as $id => $field ) {
-                        if( isset($elements[$id]) ) {
-                            $item[trim($field)] = $elements[$id];
+
+        $file = fopen($p_Filepath, 'r');
+        $this->fields = fgetcsv($file, $this->max_row_size, $this->separator, $this->enclosure);
+        $keys_values = $this->fields;
+
+        $content    =   array();
+        $keys   =   $this->escape_string($keys_values);
+
+        $i  =   1;
+        while( ($row = fgetcsv($file, $this->max_row_size, $this->separator, $this->enclosure)) != false ) {            
+            if( $row != null ) { // skip empty lines
+                $values =   $row;
+                if(count($keys) == count($values)){
+                    $arr    =   array();
+                    $new_values =   array();
+                    $new_values =   $this->escape_string($values);
+                    for($j=0;$j<count($keys);$j++){
+                        if($keys[$j] != ""){
+                            $arr[$keys[$j]] =   $new_values[$j];
                         }
                     }
-                    $content[] = $item;
+
+                    $content[$i]=   $arr;
+                    $i++;
                 }
             }
         }
+        fclose($file);
         return $content;
     }
-}
 
-/* End of file csvreader.php */
-/* Location : ./application/libraries/csvreader.php */
+    function escape_string($data){
+        $result =   array();
+        foreach($data as $row){
+            $result[]   =   str_replace('"', '',$row);
+        }
+        return $result;
+    }   
+}
+?> 

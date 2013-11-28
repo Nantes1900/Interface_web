@@ -166,29 +166,50 @@ class Objet_model extends CI_Model {
                     $failure[] = $objetcsv['Nom de l\'objet'].$this->lang->line('csv_obj_already_exist');
                 }
             } else {
-                $objet_id = $this->db->insert_id();
+                $objet_id = $this->last_insert_id();
                 $objet_id_array[] = $objet_id;
 
                 if ($objetcsv['Latitude'] != null && $objetcsv['Longitude'] != null) { //trying to insert the_geom if coordinate does exist.
                     $geomData['objet_id'] = $objet_id;
                     $geomData['username'] = $this->session->userdata('username');
                     $geomData['the_geom'] = 'ST_SetSRID(ST_MakePoint(' . $objetcsv['Longitude'] . ', ' . $objetcsv['Latitude'] . '), 4326)';
+                    //Processing dates depending on precision field
+                    //Date format from csv sheet is DD/MM/YYYY
+                    //@todo Improve database schema to handle precision on begin and end dates
+                    //@todo Improve precision processing to only permit 3 types of precision
+                    //@todo Improve date processing to check if precision is given when inserting date
+                    if (($objetcsv['Précision']) != null) {
+                        $geomData['date_precision'] = trim($objetcsv['Précision']);
+                    }
                     if ($objetcsv['Date début'] != null) {
-                        $geomData['date_debut_geom'] = $objetcsv['Date début'];
+                        if ($geomData['date_precision'] == 'année') {
+                            $geomData['date_debut_geom'] = '01/01/'.$objetcsv['Date début'];
+                        }
+                        else if ($geomData['date_precision'] == 'mois') {
+                            $geomData['date_debut_geom'] = '01/'.$objetcsv['Date début'];
+                        }
+                        else if ($geomData['date_precision'] == 'jour') {
+                            $geomData['date_debut_geom'] = $objetcsv['Date début'];
+                        }
                     }
                     if (($objetcsv['Date fin']) != null) {
-                        $geomData['date_fin_geom'] = $objetcsv['Date fin'];
-                    }
-                    if (($objetcsv['Précision']) != null) {
-                        $geomData['date_precision'] = $objetcsv['Précision'];
+                        if ($geomData['date_precision'] == 'année') {
+                            $geomData['date_fin_geom'] = '01/01/'.$objetcsv['Date fin'];
+                        }
+                        else if ($geomData['date_precision'] == 'mois') {
+                            $geomData['date_fin_geom'] = '01/'.$objetcsv['Date fin'];
+                        }
+                        else if ($geomData['date_precision'] == 'jour') {
+                            $geomData['date_fin_geom'] = $objetcsv['Date fin'];
+                        }
                     }
                     if (($objetcsv['Date de modification']) != null) {
+                        //@todo Problem, this is BS
                         $geomData['datation_indication_debut'] = $objetcsv['Date de modification'];
                     }
                     if (($objetcsv['Mots-clefs']) != null) {
                         $geomData['mots_cles'] = $objetcsv['Mots-clefs'];
                     }
-
                     if (!$this->ajout_geom($geomData)) { //if the insertion did not work, we delete the info
                         $failure[] = $objetcsv['Nom de l\'objet'].$this->lang->line('csv_obj_geom_or_date');
                         $this->delete($objet_id);

@@ -28,7 +28,7 @@ class Import_csv extends MY_Controller {
     }
 
     function do_upload() {
-        $config['upload_path'] = FCPATH.'/assets/csv/';
+        $config['upload_path'] = FCPATH.'assets/csv/';
         $config['allowed_types'] = 'csv';
         $config['max_size'] = '256';
 
@@ -43,7 +43,7 @@ class Import_csv extends MY_Controller {
             //getting the data out of the file thanks to the library
             $data = $this->csvreader->parse_file($csv_file['full_path']);
             delete_files($csv_file['file_path']); //deleting the csv file, we won't need it anymore
-            $csv_type = guess_csv_type($data['0']);
+            $csv_type = guess_csv_type($data['1']);
             if ($this->input->post('transaction') == 'FALSE') { //seeing if we want transaction or not
                 $transaction = FALSE;
             } else {
