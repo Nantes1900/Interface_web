@@ -164,13 +164,13 @@
                 <th><?php echo $this->lang->line('common_objet'); ?></th>
                 <th><?php echo $this->lang->line('common_obj_creator'); ?></th>
                 <th><?php echo $this->lang->line('common_obj_resume'); ?></th>
-                <th><?php echo $this->lang->line('common_obj_mots_cles'); ?></th>
                 <th><?php echo $this->lang->line('common_list_is_valid'); ?></th>
                 <th><?php echo $this->lang->line('common_list_is_valid_conservation'); ?></th>
                 <th><?php echo $this->lang->line('common_list_is_valid_public'); ?></th>
                 <th><?php echo $this->lang->line('common_list_is_valid_edition'); ?></th>
                 <?php if($goal=='modify'){ ?>
                         <th><?php echo $this->lang->line('moderation_list_modif_valid'); ?></th>
+                        <th><?php echo $this->lang->line('moderation_list_lock_review'); ?></th>
                         <th><?php echo $this->lang->line('moderation_list_delete'); ?></th>
                 <?php } ?>
                 <?php if($goal=='relation'){ ?>
@@ -191,7 +191,6 @@
                     <td><?php echo $objet->get_nom_objet(); ?></td>
                     <td><?php echo $objet->get_username(); ?></td>
                     <td><?php echo $objet->get_resume(); ?></td>
-                    <td><?php echo $objet->get_mots_cles(); ?></td>
                     <td><?php if($objet->get_validation()=='t'){
                                 echo $this->lang->line('common_list_valid');
                               }else{
@@ -217,7 +216,7 @@
                         <td>
                             <?php echo form_open('moderation/modify_objet/index/'.$goal) ?>
                                 <input type="hidden" name="objet_id" value="<?php echo $objet->get_objet_id(); ?>" />
-                                <input type="submit" value="<?php echo $this->lang->line('moderation_list_modify_obj'); ?>" />
+                                <?php if ($objet->get_review_status() == $this->session->userdata('username') || !$objet->get_review_status()) { echo '<input type="submit" value="'; echo $this->lang->line('moderation_list_modify_obj'); echo '" />';} ?>
                             </form>
                             <?php 
                                 if ($objet->get_validation_status('conservation') && $objet->get_validation_status('public') && $objet->get_validation_status('edition')) {
@@ -226,6 +225,15 @@
                                     echo '<input type="submit" value="'; echo $this->lang->line('moderation_list_validate_obj'); echo '" />';
                                     echo '</form>';
                                 } ?>
+                        </td>
+                        <td>
+                            <?php 
+                                if (!$objet->get_review_status()) {
+                                    echo form_open('moderation/modify_objet/lock_review');
+                                    echo '<input type="hidden" name="objet_id" value="'; echo $objet->get_objet_id(); echo '" />';
+                                    echo '<input type="submit" value="'; echo $this->lang->line('moderation_list_review_obj'); echo '" />';
+                                    echo '</form>';
+                                } else echo $objet->get_review_status(); ?>
                         </td>
                         <td>
                             <?php echo form_open('moderation/modify_objet/delete_objet') ?>

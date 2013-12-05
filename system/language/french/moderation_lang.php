@@ -68,11 +68,13 @@ $lang['moderation_ress_re_upload']           = "Télécharger une nouvelle image
 //list of objects
 $lang['moderation_go_back_link']            = "Revenir au centre de modération";
 $lang['moderation_list_modif_valid']        = "Modifier/Valider";
+$lang['moderation_list_lock_review']        = "Verrouillé par";
 $lang['moderation_list_delete']             = "Supprimer";
 $lang['moderation_list_create_rel']         = "Créer une relation avec un objet";
 $lang['moderation_list_delete_rel']         = "Modification et suppression de relation";
 $lang['moderation_list_modify_obj']         = "Modifier cet objet";
 $lang['moderation_list_validate_obj']       = "Valider cet objet";
+$lang['moderation_list_review_obj']         = "Verrouiller la modification";
 $lang['moderation_list_delete_obj']         = "Supprimer cet objet";
 $lang['moderation_del_obj_warning']         = "Vous vous apprêtez à supprimer définitivement <em>%s</em>,
                                                 les informations seront définitivement perdues, êtes vous 

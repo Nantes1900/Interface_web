@@ -406,11 +406,13 @@ class Modify_objet extends MY_Controller {
 
         if (file_exists(FCPATH . 'assets/utils/review.json')) {
             $jsonList = file_get_contents(FCPATH . 'assets/utils/review.json');
-            $liste = json_decode($jsonList, true);
+            $liste = json_decode($jsonList, true); //true parameter is mandatory
             $liste[$objet_id][$validation_type] = True;
+            $liste[$objet_id]['reviewer'] = False; // Reset current review locking
         } else { 
             $liste = array(); 
             $liste[$objet_id][$validation_type] = True;
+            $liste[$objet_id]['reviewer'] = False;
         }
         
             $newJsonList = json_encode($liste);
@@ -448,6 +450,30 @@ class Modify_objet extends MY_Controller {
         $this->email->message($msg);
 
         //$this->email->send();
+    }
+    
+    //Function purpose: lock modification when moderator is working on
+    function lock_review(){
+        
+        $objet_id = $this->input->post('objet_id');
+        $objet = new Objet($objet_id);
+        
+        $this->select_objet('modify');
+        
+        $username = $this->session->userdata('username');
+        $objetManager = new Objet_model($objet_id);
+
+        if (file_exists(FCPATH . 'assets/utils/review.json')) {
+            $jsonList = file_get_contents(FCPATH . 'assets/utils/review.json');
+            $liste = json_decode($jsonList, true);
+            $liste[$objet_id]['reviewer'] = $username;
+        } else { 
+            $liste = array(); 
+            $liste[$objet_id]['reviewer'] = $username;
+        }
+        
+            $newJsonList = json_encode($liste);
+            file_put_contents(FCPATH . 'assets/utils/review.json', $newJsonList);
     }
 }
 

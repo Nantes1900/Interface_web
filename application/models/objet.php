@@ -217,6 +217,23 @@ class Objet{
         } else return False;
     }
     
+    //Get current status if reviewing
+    //Return reviewer name
+    public function get_review_status() {
+        if (file_exists(FCPATH . 'assets/utils/review.json')) {
+            $jsonList = file_get_contents(FCPATH . 'assets/utils/review.json');
+            $liste = json_decode($jsonList,true);
+        
+            if ($liste != null) {
+                if ( array_key_exists($this->_objet_id, $liste) ) {
+                    if ( array_key_exists('reviewer', $liste[$this->_objet_id]) ) {
+                        return $liste[$this->_objet_id]['reviewer'];
+                    } else return False;
+                } else return False;
+            } else return False;
+        } else return False;
+    }
+    
 }
 
 /* End of file objet.php */
