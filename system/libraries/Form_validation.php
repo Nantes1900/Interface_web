@@ -713,6 +713,9 @@ class CI_Form_validation {
 		return $fieldname;
 	}
 
+        public function has_rule($field){
+            return isset($this->_field_data[$field]);
+        }
 	// --------------------------------------------------------------------
 
 	/**

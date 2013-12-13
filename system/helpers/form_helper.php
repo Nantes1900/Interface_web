@@ -674,17 +674,23 @@ if ( ! function_exists('set_value'))
 {
 	function set_value($field = '', $default = '')
 	{
-		if (FALSE === ($OBJ =& _get_validation_object()))
+            $CI =& get_instance();
+            $value = (isset($CI->form_validation) && is_object($CI->form_validation) && $CI->form_validation->has_rule($field))
+                    ? $CI->form_validation->set_value($field, $default)
+                    : $CI->input->post($field, FALSE);
+            return form_prep($value === NULL ? $default : $value);
+        
+		/*if (FALSE === ($OBJ =& _get_validation_object()))
 		{
 			if ( ! isset($_POST[$field]))
 			{
-				return $default;
+                            return $default;
 			}
 
 			return form_prep($_POST[$field], $field);
 		}
 
-		return form_prep($OBJ->set_value($field, $default), $field);
+		return form_prep($OBJ->set_value($field, $default), $field);*/
 	}
 }
 
