@@ -324,6 +324,7 @@ div.message img{
 	-webkit-border-top-left-radius:7px;
 	border-top-left-radius:7px;
 }.classyTable table{
+        table-layout: fixed;
 	width:100%;
 	margin:0px;padding:0px;
 }.classyTable tr:last-child td:last-child {
@@ -384,6 +385,8 @@ div.message img{
 	font-family:Arial;
 	font-weight:bold;
 	color:#ffffff;
+        
+        overflow: hidden;
 }
 .classyTable tr:first-child:hover th{
 	background:-o-linear-gradient(bottom, #ff7f00 5%, #bf5f00 100%);	
