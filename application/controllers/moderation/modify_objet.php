@@ -145,7 +145,7 @@ class Modify_objet extends MY_Controller {
             } else if ($this->input->post('validate') == 'edition' && !$objet->get_validation_status('edition') && $objet->get_validation_status('public') && $objet->get_validation_status('conservation')) {
                 $this->update_validation($objet_id,'edition');
             }
-            $success = $objet->save();
+            $success = $objet->save($this->session->userdata('username'));
             $lastAction = 'modify';
             $message = $this->create_success_message($success, $lastAction, $objet->get_nom_objet());
             
