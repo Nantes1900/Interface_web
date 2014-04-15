@@ -76,6 +76,14 @@ class Modify_objet extends MY_Controller {
             $valid = null;
         }
         $this->session->set_userdata('sel_obj_valid', $valid);
+        if ($this->input->post('valAttribute') == 'conservation') { //we check if we only want non validated object for specific staff
+            $valid_service = 'conservation';
+        } else if ($this->input->post('valAttribute') == 'public') {
+            $valid_service = 'public';
+        } else {
+            $valid_service = null;
+        }
+        $this->session->set_userdata('sel_obj_valid_service',$valid_service);
         $this->select_objet($goal, 1, $objet1_id);
     }
     
@@ -113,9 +121,14 @@ class Modify_objet extends MY_Controller {
         }else{
             $valid = null;
         }
+        if($this->session->userdata('sel_obj_valid_service')!=null){
+            $valid_service = $this->session->userdata('sel_obj_valid_service');
+        }else{
+            $valid_service = null;
+        }
 
         //creating the list
-        $data = array('listObjet' => $this->objet_model->get_objet_list($orderBy, $orderDirection, $speAttribute, $speAttributeValue, $valid, $page));
+        $data = array('listObjet' => $this->objet_model->get_objet_list($orderBy, $orderDirection, $speAttribute, $speAttributeValue, $valid, $valid_service, $page));
         $data['numPage'] = $this->objet_model->count_page_obj($speAttribute, $speAttributeValue, $valid);
         $data['currentPage'] = $page;
         $data['goal'] = $goal;

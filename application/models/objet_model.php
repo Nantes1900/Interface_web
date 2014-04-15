@@ -45,7 +45,7 @@ class Objet_model extends CI_Model {
     }
     
     
-    public function get_objet_list($orderBy = 'objet_id', $orderDirection = 'asc', $speAttribute = null, $speAttributeValue = null, $valid = null, $page = 1) {
+    public function get_objet_list($orderBy = 'objet_id', $orderDirection = 'asc', $speAttribute = null, $speAttributeValue = null, $valid = null, $service = null, $page = 1) {
         $this->db->select('*');
         $this->db->from('objet');
         $this->db->order_by($orderBy, $orderDirection);
@@ -64,7 +64,37 @@ class Objet_model extends CI_Model {
         foreach ($tempArray as $objetArray) {
             $resultArray[] = new Objet($objetArray);
         }
-        return $resultArray;
+        if ($service != null) {
+            $exceptList = $this->get_list_by_service($service);
+            // filter result list
+            
+            $resultList = array_filter($resultArray, function($item) use($exceptList){
+                        return !in_array($item->get_objet_id(), $exceptList);
+                 });
+            return $resultList;
+        } else {
+            return $resultArray;
+        }
+        
+    }
+    
+    //Get object list by reviewing step
+    public function get_list_by_service($service) {
+        if (file_exists(FCPATH . 'assets/utils/review.json')) {
+            $jsonList = file_get_contents(FCPATH . 'assets/utils/review.json');
+            $liste = json_decode($jsonList,true);
+            if ($liste != null) {
+                $filteredItems = array_filter($liste, function($item) use($service){
+                    if (isset($item[$service])) {
+                         return $item[$service] == true;
+                    } else return false;
+                 });
+                 function tostr($item) {
+                     return((string)$item);
+                 }
+                return array_map("tostr", array_keys($filteredItems));
+            } else return False;
+        } else return False;
     }
     
     //return the number of page depending on the sort option

@@ -234,7 +234,6 @@ class Objet{
             } else return False;
         } else return False;
     }
-    
 }
 
 /* End of file objet.php */

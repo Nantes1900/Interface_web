@@ -73,11 +73,6 @@
                                        } ?>>
                 <?php echo $this->lang->line('common_obj_mots_cles'); ?>
             </option>
-            <option value="resume" <?php if($this->session->userdata('sel_obj_speAttribute') == 'resume'){ 
-                                          echo 'selected'; 
-                                       } ?>>
-                <?php echo $this->lang->line('common_obj_resume'); ?>
-            </option>
             <option value="historique" <?php if($this->session->userdata('sel_obj_speAttribute') == 'historique'){ 
                                           echo 'selected'; 
                                        } ?>>
@@ -103,11 +98,20 @@
                                           echo 'checked'; 
                                        } ?>><?php echo $this->lang->line('common_list_filter_unvalid'); ?>
         <br/>
+        <label for="valAttribute"><?php echo $this->lang->line('common_list_select_valid_service'); ?></label>
+        <select name="valAttribute" id="valAttribute">
+            <option value="conservation">
+                <?php echo $this->lang->line('common_list_service_cons'); ?>
+            </option>
+            <option value="public">
+                <?php echo $this->lang->line('common_list_service_pub'); ?>
+            </option>
+        </select>
+        <br/>
         <input type="submit" value="<?php echo $this->lang->line('common_list_sort_button'); ?>" />
 
 
     </form>
-
     
 <!--    page navigation-->
 <div style="text-align: right;">
@@ -163,7 +167,6 @@
             <tr>
                 <th><?php echo $this->lang->line('common_objet'); ?></th>
                 <th><?php echo $this->lang->line('common_obj_creator'); ?></th>
-                <th><?php echo $this->lang->line('common_obj_resume'); ?></th>
                 <th><?php echo $this->lang->line('common_list_is_valid'); ?></th>
                 <th><?php echo $this->lang->line('common_list_is_valid_conservation'); ?></th>
                 <th><?php echo $this->lang->line('common_list_is_valid_public'); ?></th>
@@ -190,7 +193,6 @@
                 <tr>
                     <td><?php echo $objet->get_nom_objet(); ?></td>
                     <td><?php echo $objet->get_username(); ?></td>
-                    <td><?php echo $objet->get_resume(); ?></td>
                     <td><?php if($objet->get_validation()=='t'){
                                 echo $this->lang->line('common_list_valid');
                               }else{
