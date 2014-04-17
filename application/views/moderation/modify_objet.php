@@ -1,5 +1,5 @@
 
-
+        <p><?php echo anchor('moderation/modify_objet/index/modify', $this->lang->line('moderation_list_go_back_link')); ?></p>
 	<h1><?php echo $this->lang->line('common_mod_obj').$objet->get_nom_objet(); ?></h1>
         <button name="print" onclick="window.print(); return false;"><?php echo $this->lang->line('moderation_print_sheet'); ?></button>
         

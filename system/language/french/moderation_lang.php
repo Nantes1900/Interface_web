@@ -67,6 +67,7 @@ $lang['moderation_ress_re_upload']           = "Télécharger une nouvelle image
 
 //list of objects
 $lang['moderation_go_back_link']            = "Revenir au centre de modération";
+$lang['moderation_list_go_back_link']       = "Revenir à la liste";
 $lang['moderation_list_modif_valid']        = "Modifier et Valider";
 $lang['moderation_list_lock_review']        = "Bloqué par";
 $lang['moderation_list_delete']             = "Supprimer";
