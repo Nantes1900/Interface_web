@@ -24,11 +24,6 @@
                     <td class="error_form"><?php echo form_error('historique'); ?></td>
             </tr>
             <tr>
-                    <td> <?php echo $this->lang->line('common_obj_description'); ?> </td>
-                    <td class="printable"> <textarea name=description rows="5" cols="75"><?php echo set_value('description',$objet->get_description()); ?></textarea> </td>
-                    <td class="error_form"><?php echo form_error('description'); ?></td>
-            </tr>
-            <tr>
                     <td class="printable"> <?php echo $this->lang->line('common_obj_adresse_postale'); ?> </td>
                     <td> <input type=text name=adresse_postale value="<?php echo set_value('adresse_postale',$objet->get_adresse_postale()); ?>" size="30"/> </td>
                     <td class="error_form"><?php echo form_error('adresse_postale'); ?></td>
@@ -64,9 +59,20 @@
                         } ?>
                 </td>
             </tr>
+            <tr><td><?php
+                    echo $this->lang->line('moderation_statute'); 
+                    if ($objet->get_statut() != null) {   
+                        echo $objet->get_statut();
+                    } else {
+                        ?>
+                    <select name="statut">
+                        <option value=""></option>
+                        <option value="ebauche"><?php echo $this->lang->line('common_list_statut_ebauche'); ?></option>
+                        <option value="a_revoir"><?php echo $this->lang->line('common_list_statut_revoir'); ?></option>
+                    </select>
+                    <?php }
+            ?></td></tr>
             <tr><td><input type="submit" value="<?php echo $this->lang->line('moderation_validate_button'); ?>" /><tr><td>
                             
         </table>
 </form>
-
-

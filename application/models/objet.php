@@ -12,7 +12,7 @@ class Objet{
     protected $_nom_objet;
     protected $_resume;
     protected $_historique;
-    protected $_description;
+    protected $_statut;
     protected $_adresse_postale;
     protected $_validation;
     protected $_archive_objet;
@@ -129,12 +129,12 @@ class Objet{
         $this->_historique = $_historique;
     }
 
-    public function get_description() {
-        return $this->_description;
+    public function get_statut() {
+        return $this->_statut;
     }
 
-    public function set_description($_description) {
-        $this->_description = $_description;
+    public function set_statut($_statut) {
+        $this->_statut = $_statut;
     }
 
     public function get_adresse_postale() {

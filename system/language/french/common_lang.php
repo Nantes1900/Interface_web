@@ -210,7 +210,9 @@ $lang['common_list_add_doc']                = "Documenter un ".strtolower($lang[
 $lang['common_list_is_valid_conservation']  = "Validation Service Conservation";
 $lang['common_list_is_valid_public']        = "Validation Service des publics";
 $lang['common_list_is_valid_edition']       = "Validation Service des éditions";
-
+$lang['common_list_statut_ebauche']         = "Ébauche";
+$lang['common_list_statut_revoir']          = "Notice à revoir";
+$lang['common_list_statut']                 = "Statut";
 
 //about detailed view of a data
 $lang['common_view_detail_obj']             = "Détails de l'".strtolower($lang['common_objet'])." : ";

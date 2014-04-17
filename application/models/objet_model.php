@@ -16,8 +16,6 @@ class Objet_model extends CI_Model {
             $this->db->set('resume', $objetdata['resume']);
         }if (isset($objetdata['historique'])) {
             $this->db->set('historique', $objetdata['historique']);
-        }if (isset($objetdata['description'])) {
-            $this->db->set('description', $objetdata['description']);
         }if (isset($objetdata['adresse_postale'])) {
             $this->db->set('adresse_postale', $objetdata['adresse_postale']);
         }if (isset($objetdata['mots_cles'])) {
@@ -178,9 +176,6 @@ class Objet_model extends CI_Model {
             }
             if (isset($objetcsv['Historique'])) {
                 $objetdata['historique'] = $objetcsv['Historique'];
-            }
-            if (isset($objetcsv['Description'])) {
-                $objetdata['description'] = $objetcsv['Description'];
             }
             if (isset($objetcsv['Adresse'])) {
                 $objetdata['adresse_postale'] = $objetcsv['Adresse'];

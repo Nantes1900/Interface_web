@@ -8,6 +8,7 @@ $lang['moderation_mod_manage_p']        = "Gérer les ";
 $lang['moderation_mod_concerning']      = " vers un ";
 
 $lang['moderation_validate_button']     = "Enregistrer les modifications";
+$lang['moderation_statute']             = "Statut de la fiche";
 $lang['moderation_validate_box']        = "Valider";
 $lang['moderation_print_sheet']         = "Imprimer la fiche";
 

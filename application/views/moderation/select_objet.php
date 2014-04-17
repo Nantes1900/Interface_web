@@ -170,6 +170,7 @@
                 <th><?php echo $this->lang->line('common_objet'); ?></th>
                 <th><?php echo $this->lang->line('common_obj_creator'); ?></th>
                 <th><?php echo $this->lang->line('common_list_is_valid'); ?></th>
+                <th><?php echo $this->lang->line('common_list_statut'); ?></th>
                 <th><?php echo $this->lang->line('common_list_is_valid_conservation'); ?></th>
                 <th><?php echo $this->lang->line('common_list_is_valid_public'); ?></th>
                 <th><?php echo $this->lang->line('common_list_is_valid_edition'); ?></th>
@@ -201,6 +202,7 @@
                                 echo $this->lang->line('common_list_unvalid'); }
                         ?>
                     </td>
+                    <td><?php echo $objet->get_statut(); ?></td>
                     <td><?php if ($objet->get_validation_status('conservation') == True) {
                                 echo $this->lang->line('common_list_valid');
                               } else {

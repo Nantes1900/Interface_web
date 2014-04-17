@@ -126,7 +126,6 @@ class Modify_objet extends MY_Controller {
         }else{
             $valid_service = null;
         }
-
         //creating the list
         $data = array('listObjet' => $this->objet_model->get_objet_list($orderBy, $orderDirection, $speAttribute, $speAttributeValue, $valid, $valid_service, $page));
         $data['numPage'] = $this->objet_model->count_page_obj($speAttribute, $speAttributeValue, $valid);
@@ -146,7 +145,6 @@ class Modify_objet extends MY_Controller {
             $objet->set_nom_objet($this->input->post('nom_objet'));
             $objet->set_resume($this->input->post('resume'));
             $objet->set_historique($this->input->post('historique'));
-            $objet->set_description($this->input->post('description'));
             $objet->set_adresse_postale($this->input->post('adresse_postale'));
             $objet->set_mots_cles($this->input->post('mots_cles'));
             
@@ -158,6 +156,9 @@ class Modify_objet extends MY_Controller {
             } else if ($this->input->post('validate') == 'edition' && !$objet->get_validation_status('edition') && $objet->get_validation_status('public') && $objet->get_validation_status('conservation')) {
                 $this->update_validation($objet_id,'edition');
             }
+            /*if (isset($this->input->post('statut'))) {
+                $objet->set_statut($this->input->post('statut'));
+            }*/
             $success = $objet->save($this->session->userdata('username'));
             $lastAction = 'modify';
             $message = $this->create_success_message($success, $lastAction, $objet->get_nom_objet());
