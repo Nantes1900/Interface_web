@@ -100,6 +100,8 @@
         <br/>
         <label for="valAttribute"><?php echo $this->lang->line('common_list_select_valid_service'); ?></label>
         <select name="valAttribute" id="valAttribute">
+            <option value="">
+            </option>
             <option value="conservation">
                 <?php echo $this->lang->line('common_list_service_cons'); ?>
             </option>
