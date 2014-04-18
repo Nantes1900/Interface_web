@@ -5,9 +5,6 @@
         <h2> <?php echo $this->lang->line('common_obj_resume');?> </h2>
         <p> <?php echo $objet->get_resume(); ?> </p>
         
-        <h2> <?php echo $this->lang->line('common_obj_description');?> </h2>
-        <p> <?php echo $objet->get_description(); ?> </p> 
-        
         <h2> <?php echo $this->lang->line('common_obj_historique');?> </h2>
         <p> <?php echo $objet->get_historique(); ?> </p>
         

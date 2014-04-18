@@ -11,6 +11,8 @@ class Moderation_center extends MY_Controller {
     public function index() {
         if ($this->session->userdata('user_level') >= 5) {
             $this->moderation_center();
+        }else {
+            redirect('accueil/accueil/', 'refresh');
         }
     }
 

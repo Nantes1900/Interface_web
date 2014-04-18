@@ -62,7 +62,7 @@ class Objet_model extends CI_Model {
         foreach ($tempArray as $objetArray) {
             $resultArray[] = new Objet($objetArray);
         }
-        if ($service != null) {
+        if ($service == 'conservation' || $service == 'public') {
             $exceptList = $this->get_list_by_service($service);
             // filter result list
             

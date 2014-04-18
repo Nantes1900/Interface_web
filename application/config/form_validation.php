@@ -633,6 +633,11 @@ $config = array(
                         'field'=>'texte',
                         'label'=>'texte',
                         'rules'=>'trim|required|xss_clean'
+                    ),
+                    array(
+                        'field'=>'redir',
+                        'label'=>'redir',
+                        'rules'=>'trim|xss_clean'
                     )
                 ),
     'answer_annotation' => array(

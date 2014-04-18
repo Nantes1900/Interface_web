@@ -30,6 +30,9 @@ class Ajout_annotation extends MY_Controller {
         parent::__construct();
 
         //Ce code sera executé charque fois que ce contrôleur sera appelé
+        require_once ('application/models/objet.php');
+        $this->load->model('objet_model');
+        
         $this->load->model('annotation_model');
         require_once('application/models/annotation.php');
         $this->load->library('form_validation');
@@ -41,7 +44,7 @@ class Ajout_annotation extends MY_Controller {
     private function new_annotation(){
         
         $annotData['type_target'] = ($this->input->post('type_target'));
-        $annotData['target_id'] = ($this->input->post('target_id'));
+        $annotData['target_id'] = ($this->input->post('target_id'));        
         
         if($this->form_validation->run('add_annotation') == TRUE) {
             $annotData['titre'] = $this->input->post('titre');
@@ -51,9 +54,8 @@ class Ajout_annotation extends MY_Controller {
             $annotation = new Annotation($annotData);
             $annotation->save();
         }
-        
         if($annotData['type_target']=='objet'){
-            redirect('view_data/view_data/view_objet/'.$annotData['target_id']);
+                $this->redirect_back($annotData);
         } elseif (preg_match("#ressource_[a-z]*#", $annotData['type_target'])){
             redirect('view_data/view_data/view_ressource/'.$annotData['target_id'].'/'.$annotData['type_target']);
         }
@@ -73,23 +75,40 @@ class Ajout_annotation extends MY_Controller {
         }
         
         if($annotData['type_target']=='objet'){
-            redirect('view_data/view_data/view_objet/'.$annotData['target_id']);
+            $this->redirect_back($annotData);
         } elseif (preg_match("#ressource_[a-z]*#", $annotData['type_target'])){
             redirect('view_data/view_data/view_ressource/'.$annotData['target_id'].'/'.$annotData['type_target']);
         }
     }
     
     private function delete_annotation(){
-        $type_target = ($this->input->post('type_target'));
-        $target_id = ($this->input->post('target_id'));
+        $annotData['type_target'] = ($this->input->post('type_target'));
+        $annotData['target_id'] = ($this->input->post('target_id'));
         
         $annot = new Annotation($this->input->post('annot_id'));
         $annot->delete();
-        if($type_target=='objet'){
-            redirect('view_data/view_data/view_objet/'.$target_id);
+        if($annotData['type_target'] =='objet'){
+            $this->redirect_back($annotData);
         } elseif (preg_match("#ressource_[a-z]*#", $type_target)){
             redirect('view_data/view_data/view_ressource/'.$target_id.'/'.$type_target);
         }
+    }
+    
+    private function redirect_back($annotData) {
+        $uri = $this->session->flashdata('redir');
+        
+        $uri_ref = 'moderation/modify_objet/modify';
+            if ( $uri == 'moderation/modify_objet/index/modify' || substr($uri,0,strlen($uri_ref)) === $uri_ref) {
+                $objet = new Objet($annotData['target_id']);
+                $this->session->set_flashdata('nom_objet',$objet->get_nom_objet());
+                $this->session->set_flashdata('resume',$objet->get_resume());
+                $this->session->set_flashdata('historique',$objet->get_historique());
+                $this->session->set_flashdata('adresse_postale',$objet->get_adresse_postale());
+                $this->session->set_flashdata('mots_cles',$objet->get_mots_cles());
+                redirect('moderation/modify_objet/modify/'.$annotData['target_id']);
+            } else {
+            redirect('view_data/view_data/view_objet/'.$annotData['target_id']);
+            }
     }
 }
 

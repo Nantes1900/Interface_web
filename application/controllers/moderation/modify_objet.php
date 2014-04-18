@@ -9,14 +9,18 @@
 class Modify_objet extends MY_Controller {
 
     public function index($goal, $success = null, $lastAction = null) {
-        if ($this->input->post('objet_id') == null) {
-            if (isset($success) && isset($lastAction)) {
-                $message = $this->create_success_message($success, $lastAction);
-                $this->layout->view('data_center/success_form', array('success' => $success, 'message' => $message));
-            }
-            $this->select_objet($goal);
-        } else {
+        if ($this->session->userdata('user_level') >= 5) {
+            if ($this->input->post('objet_id') == null) {
+                if (isset($success) && isset($lastAction)) {
+                    $message = $this->create_success_message($success, $lastAction);
+                    $this->layout->view('data_center/success_form', array('success' => $success, 'message' => $message));
+                }
+                $this->select_objet($goal);
+            } else {
             $this->modify($this->input->post('objet_id'));
+            }
+        }else {
+            redirect('accueil/accueil/', 'refresh');
         }
     }
 
@@ -137,10 +141,15 @@ class Modify_objet extends MY_Controller {
         $this->layout->view('moderation/select_objet', $data);
     }
 
-    private function modify($objet_id) {
+    public function modify($objet_id) {
         $objet = new Objet($objet_id);
-        if ($this->form_validation->run('ajout_objet') == FALSE) {
-            $this->layout->view('moderation/modify_objet', array('objet' => $objet));
+        if ($this->form_validation->run('ajout_objet') == FALSE) {            
+            $data = array('objet' => $objet);
+            //adding the annotations
+            if($this->session->userdata('user_level')>=4){
+                $data['annotationList'] = $this->add_annotations('objet', $objet_id);
+            }
+            $this->layout->view('moderation/modify_objet', $data);
         } else {
             $objet->set_nom_objet($this->input->post('nom_objet'));
             $objet->set_resume($this->input->post('resume'));
@@ -156,9 +165,7 @@ class Modify_objet extends MY_Controller {
             } else if ($this->input->post('validate') == 'edition' && !$objet->get_validation_status('edition') && $objet->get_validation_status('public') && $objet->get_validation_status('conservation')) {
                 $this->update_validation($objet_id,'edition');
             }
-            /*if (isset($this->input->post('statut'))) {
-                $objet->set_statut($this->input->post('statut'));
-            }*/
+            
             $success = $objet->save($this->session->userdata('username'));
             $lastAction = 'modify';
             $message = $this->create_success_message($success, $lastAction, $objet->get_nom_objet());
@@ -488,6 +495,19 @@ class Modify_objet extends MY_Controller {
         
             $newJsonList = json_encode($liste);
             file_put_contents(FCPATH . 'assets/utils/review.json', $newJsonList);
+    }
+    
+    //set up the requirements for annotation (layout->add_js or css)
+    //return a list of annotation (arrays father, children)
+    private function add_annotations($type_target, $target_id){
+        $this->load->model('annotation_model');
+        require_once('application/models/annotation.php');
+        $this->layout->add_js('jquery-ui-custom.min');
+        $this->layout->add_css('redmond/jquery-ui-custom');
+        $this->layout->add_js('annotations');
+        $this->layout->add_js('removepopup');
+        
+        return $this->annotation_model->get_annotation_list($type_target, $target_id);
     }
 }
 
