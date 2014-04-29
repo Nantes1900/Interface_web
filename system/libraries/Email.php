@@ -701,12 +701,12 @@ class CI_Email {
 	 */
 	protected function _set_date()
 	{
-		$timezone = date("Z");
+		$timezone = gmdate("Z");
 		$operator = (strncmp($timezone, '-', 1) == 0) ? '-' : '+';
 		$timezone = abs($timezone);
 		$timezone = floor($timezone/3600) * 100 + ($timezone % 3600 ) / 60;
 
-		return sprintf("%s %s%04d", date("D, j M Y H:i:s"), $operator, $timezone);
+		return sprintf("%s %s%04d", gmdate("D, j M Y H:i:s"), $operator, $timezone);
 	}
 
 	// --------------------------------------------------------------------

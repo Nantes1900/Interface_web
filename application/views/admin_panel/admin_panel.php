@@ -296,7 +296,7 @@
                                 echo $this->lang->line('user_userlevel_'.$user->get_userLevel());
                         } ?>
                     </td>
-                    <td><?php echo date('d/m/Y',$user->get_creationDate()); ?></td>
+                    <td><?php echo gmdate('d/m/Y',$user->get_creationDate()); ?></td>
                     <td><?php echo $user->get_firstName(); ?></td>
                     <td><?php echo $user->get_name(); ?></td>
                     <td><?php echo $user->get_email(); ?></td>

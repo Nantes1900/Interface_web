@@ -1,6 +1,6 @@
     <div class='rightSidebar'>
         <h2><?php echo $this->lang->line('common_view_sidebar_obj') ?></h2>
-        
+        <?php //@TODO mieux gérer l'affichage des données liées : pas de bandeau si pas d'objets liés ou que bandeau ress text pour modération ?>
         <?php foreach ($linkedObjetArray as $objetArray){ ?>
             <?php echo form_open('view_data/view_data', array('style'=>'margin:0px')) ?>
                 <li class="helpbox">
@@ -65,13 +65,27 @@
                                              'width'=>'50%')); ?>
                     </button>  
                     <span> 
-                        <?php echo substr($ressArray['description'],0,256);
-                            if(strlen($ressArray['description'])>256){echo '...';}
+                        <?php echo $ressArray['auteurs'];
                         ?> 
                         <br/>
-                        <?php echo 'Ref : '.$ressArray['reference_ressource']; ?>
+                        <?php echo ' '.$ressArray['editeur'];
+                        ?> 
                         <br/>
-                        <?php echo 'à partir du '.to_date_dmy($ressArray['date']).', précision : '.$ressArray['date_precision']; ?>
+                        <?php if ($ressArray['reference_ressource'] != null) { echo $ressArray['reference_ressource']; } ?>
+                        <br/>
+                        <?php 
+                            if ($ressArray['date_precision'] == 'jour') {
+                                echo 'Date de publication '.to_date_dmy_prec($ressArray['date'],'jour');
+                            }
+                            else if ($ressArray['date_precision'] == 'mois') {
+                                $date = to_date_dmy_prec($ressArray['date'],'mois');
+                                echo 'Date de publication '.$date;
+                            }
+                            else if ($ressArray['date_precision'] == 'année') {
+                                $date = to_date_dmy_prec($ressArray['date'],'année');
+                                echo 'Date de publication '.$date;
+                            }
+                        ?>
                         <?php if($ressArray['page_consultee']!=0){ ?>
                             <br>
                                 <?php echo $this->lang->line('common_view_sidebar_page').$ressArray['page_consultee']; ?>

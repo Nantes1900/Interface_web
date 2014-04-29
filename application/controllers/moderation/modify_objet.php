@@ -31,7 +31,15 @@ class Modify_objet extends MY_Controller {
         //Ce code sera executé charque fois que ce contrôleur sera appelé
         $this->lang->load('moderation', $this->language);
         require_once ('application/models/objet.php');
+        require_once ('application/models/ressource_graphique.php');
+        require_once ('application/models/ressource_texte.php');
+        require_once ('application/models/ressource_video.php');
+        
         $this->load->model('objet_model');
+        $this->load->model('ressource_graphique_model');
+        $this->load->model('ressource_texte_model');
+        $this->load->model('ressource_video_model');
+        
         $this->load->library('form_validation');
         $this->load->helper(array('form', 'dates', 'geom'));
         $this->layout->add_js('close_message');
@@ -145,10 +153,19 @@ class Modify_objet extends MY_Controller {
         $objet = new Objet($objet_id);
         if ($this->form_validation->run('ajout_objet') == FALSE) {            
             $data = array('objet' => $objet);
+            
+            $linkedObjetArray = $this->objet_model->get_linked_objet($objet_id);
+            $linkedRessTxtArray = $this->objet_model->get_linked_ressource($objet_id, 'textuelle');
+            $linkedRessGraphArray = $this->objet_model->get_linked_ressource($objet_id, 'graphique');
+            $linkedRessVidArray = $this->objet_model->get_linked_ressource($objet_id, 'video');
+             $sidebarData = array('linkedObjetArray' => $linkedObjetArray, 'linkedRessTxtArray' => $linkedRessTxtArray,
+                'linkedRessGraphArray' => $linkedRessGraphArray, 'linkedRessVidArray' => $linkedRessVidArray);
+             
             //adding the annotations
             if($this->session->userdata('user_level')>=4){
                 $data['annotationList'] = $this->add_annotations('objet', $objet_id);
             }
+            $this->layout->views('view_data/linked_sidebar', $sidebarData);
             $this->layout->view('moderation/modify_objet', $data);
         } else {
             $objet->set_nom_objet($this->input->post('nom_objet'));
@@ -156,6 +173,7 @@ class Modify_objet extends MY_Controller {
             $objet->set_historique($this->input->post('historique'));
             $objet->set_adresse_postale($this->input->post('adresse_postale'));
             $objet->set_mots_cles($this->input->post('mots_cles'));
+            $objet->set_statut($this->input->post('statut'));
             
             //Validation
             if ($this->input->post('validate') == 'conservation' && !$objet->get_validation_status('conservation')) {

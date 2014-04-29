@@ -134,6 +134,28 @@ if ( ! function_exists('to_date_dmY')){
     }
 }
 
+if ( ! function_exists('to_date_dmY_prec')){
+    //convert date YYYY-mm-dd to dd/mm/YYYY depending on precision
+    function to_date_dmy_prec($date,$precision) {
+        //first we check that the format is valid
+        if (preg_match("#\d\d\d\d-\d\d-\d\d#", $date)){
+            list($year, $month, $day) = explode('-', $date);
+            if ($precision == 'jour') {
+                $newDate = $day.'/'.$month.'/'.$year;
+            }
+            else if ($precision == 'mois') {
+                $newDate = $month.'/'.$year;
+            }
+            else if ($precision == 'année') {
+                $newDate = $year;
+            }
+            return $newDate;
+        } else { //if non valid format, we do nothing
+            return $date;
+        }
+    }
+}
+
 if ( ! function_exists('break_date_Ymd')){
     //convert date YYYY-mm-dd to arraylist 'year','month','date'
     function break_date_Ymd($date) {

@@ -59,7 +59,7 @@ class Objet{
     public  function save($username){
         $objetManager = new Objet_model();
         if ($objetManager->exist($this->get_objet_id())){
-            $this->set_last_modified(date('Y-m-d H:i:s'));
+            $this->set_last_modified(gmdate('Y-m-d H:i:s'));
             $this->set_username($username); // Store session username for version control
             if($this->_date_maj!=null){ //date maj arrays are not true array but string like "{value1, value2, ...}" 
                 $this->_date_maj= substr($this->_date_maj, 0,  strlen($this->_date_maj)-1 ).','.$this->get_last_modified().'}';

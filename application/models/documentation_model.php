@@ -32,7 +32,7 @@ class Documentation_model extends CI_Model{
                                     $documentationCsv['Titre de la ressource']); 
             
             $typeDoc = $documentationCsv['Type de documentation'];
-            $objet_id = $this->objet_model->get_objet_by_name($documentationCsv['Nom de l\'objet']);
+            $objet_id = $this->objet_model->get_objet_by_name(strtolower($documentationCsv['Nom de l\'objet']),'lower');
             $ressource_id = 'noType'; //alert value for error tracking
             if($typeDoc=='textuelle'){
                 $ressource = $this->ressource_texte_model->get_ressource('titre',$documentationCsv['Titre de la ressource']);

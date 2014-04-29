@@ -63,12 +63,17 @@ class Objet_model extends CI_Model {
             $resultArray[] = new Objet($objetArray);
         }
         if ($service == 'conservation' || $service == 'public') {
-            $exceptList = $this->get_list_by_service($service);
+            $exceptList = $this->get_list_by_service($service,$resultArray);
             // filter result list
-            
+            if ($service == 'public') {
+                $resultList = array_filter($resultArray, function($item) use($exceptList){
+                        return (array_search($item->get_objet_id(), $exceptList) !== false);
+                 });
+            } else {
             $resultList = array_filter($resultArray, function($item) use($exceptList){
                         return !in_array($item->get_objet_id(), $exceptList);
                  });
+            }
             return $resultList;
         } else {
             return $resultArray;
@@ -76,8 +81,8 @@ class Objet_model extends CI_Model {
         
     }
     
-    //Get object list by reviewing step
-    public function get_list_by_service($service) {
+    //Get object list depending on whose staff member is working 
+    public function get_list_by_service($service,$globalList) {
         if (file_exists(FCPATH . 'assets/utils/review.json')) {
             $jsonList = file_get_contents(FCPATH . 'assets/utils/review.json');
             $liste = json_decode($jsonList,true);
@@ -85,12 +90,35 @@ class Objet_model extends CI_Model {
                 $filteredItems = array_filter($liste, function($item) use($service){
                     if (isset($item[$service])) {
                          return $item[$service] == true;
-                    } else return false;
+                    } else {
+                        if ($service == 'public') {
+                            if (isset($item['conservation'])) {
+                                return $item['conservation'] == true ;
+                            } else return true;
+                        } else return false;
+                    }
                  });
+                 
                  function tostr($item) {
                      return((string)$item);
                  }
-                return array_map("tostr", array_keys($filteredItems));
+                 
+                 // If the concerned service is 'public' one, filter every item not in the list (which means 'conservation' staff didn't validate)
+                 if ($service == 'public') {
+                     function mdArrayMap($arr) {
+                         $ret = Array();
+                         foreach ($arr as $key => $value) {
+                             $ret[$key] = $value->get_objet_id();
+                         } return $ret;
+                     }
+                     $global = mdArrayMap($globalList);
+                     $validItems = array_intersect($global, array_keys($liste));
+                     $filteredItems = array_diff_key($validItems, $filteredItems);
+                     
+                     return array_map("tostr", $filteredItems);
+                 } else {
+                    return array_map("tostr", array_keys($filteredItems));
+                 }
             } else return False;
         } else return False;
     }
@@ -147,10 +175,15 @@ class Objet_model extends CI_Model {
     }
 
     //return objet_id out of the name
-    public function get_objet_by_name($name) {
+    public function get_objet_by_name($name,$low=null) {
         $this->db->select('objet_id');
         $this->db->from('objet');
-        $this->db->where('nom_objet', $name);
+        if ($low == 'lower') {
+            $this->db->where('lower(nom_objet)', $name);
+        }
+        else {
+            $this->db->where('nom_objet', $name);
+        }
 
         $query = $this->db->get(); //Exécution
 
@@ -335,7 +368,7 @@ class Objet_model extends CI_Model {
         if ($typeRessource != 'video') {
             $this->db->select('documentation_' . $typeRessource . '_id, ressource_' . $typeRessource .
                             '.ressource_' . $typeRessource . '_id AS ressource_id, 
-                            titre, ressource_' . $typeRessource . '.username AS username, description, page_consultee,
+                            titre, ressource_' . $typeRessource . '.username AS username, description, auteurs, editeur, page_consultee,
                                 reference_ressource, date_debut_ressource AS date, date_precision');
         } else {
             $this->db->select('documentation_' . $typeRessource . '_id, ressource_' . $typeRessource . 
